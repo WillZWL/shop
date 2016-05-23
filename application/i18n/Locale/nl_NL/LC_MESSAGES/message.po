@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Panther\n"
 "POT-Creation-Date: 2016-05-06 11:43+0800\n"
-"PO-Revision-Date: 2016-05-06 15:07+0800\n"
+"PO-Revision-Date: 2016-05-23 11:13+0800\n"
 "Language-Team: it@eservicesgroup.net <it@eservicesgroup.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,11 +43,11 @@ msgstr "Categorieën"
 
 #: cat.php:45 cat.php:86 search.php:28 search.php:62
 msgid "Show more"
-msgstr "Laat meer zien"
+msgstr "Toon meer"
 
 #: cat.php:46 cat.php:87
 msgid "Show less"
-msgstr "Laat minder zien"
+msgstr "Toon minder"
 
 #: cat.php:56 search.php:43
 msgid "Brands"
@@ -63,7 +63,7 @@ msgstr "Rooster"
 
 #: cat.php:154 search.php:140
 msgid "Sort By"
-msgstr "Winkelen per"
+msgstr "Sorteren op"
 
 #: cat.php:161 search.php:146
 msgid "Default"
@@ -95,24 +95,24 @@ msgstr "Laatst bijgewerkt"
 
 #: cat.php:184
 msgid "Display:"
-msgstr "Tonen"
+msgstr "Producten per pagina"
 
 #: cat.php:208 product/grid.php:41 product/related_product.php:22
 #: search.php:193
 msgid "Quick View"
-msgstr "Snelle kijk"
+msgstr "Overzicht"
 
 #: cat.php:219 search.php:207
 msgid "List Price"
-msgstr "Van Prijs"
+msgstr "Adviesprijs"
 
 #: cat.php:220 search.php:208
 msgid "You Pay"
-msgstr "Je betaalt"
+msgstr "U betaalt"
 
 #: cat.php:227 search.php:211
 msgid "Save"
-msgstr "Save"
+msgstr "Bespaar"
 
 #: cat.php:235 cat.php:241 product/accessories.php:119
 #: product/accessories.php:125 product/detail.php:130 product/grid.php:68
@@ -138,15 +138,15 @@ msgstr "Conference Phones"
 
 #: category.php:33 search.php:24
 msgid "Accessories"
-msgstr "Accessories"
+msgstr "Accessoires"
 
 #: category.php:36 search.php:35
 msgid "Software"
-msgstr "Accessories"
+msgstr "Software"
 
 #: category.php:39 search.php:38
 msgid "Computing"
-msgstr "Computing"
+msgstr "Computer"
 
 #: category.php:54
 msgid "Menu"
@@ -154,7 +154,7 @@ msgstr "Menu"
 
 #: checkout/index.php:13
 msgid "Step 1: Checkout Options"
-msgstr "Stap 1 : Afrekenen Opties"
+msgstr "Stap 1: Checkout opties"
 
 #: checkout/index.php:22 myaccount/login.php:36
 msgid "New Customer"
@@ -162,17 +162,17 @@ msgstr "Nieuwe klant"
 
 #: checkout/index.php:23
 msgid "Guest Checkout"
-msgstr "Gast Afrekenen"
+msgstr "Afrekenen als gast"
 
 #: checkout/index.php:26 checkout/index.php:40 checkout/index.php:41
 #: checkout/index.php:146 checkout/index.php:237 checkout/index.php:284
 msgid "Loading..."
-msgstr "Loading..."
+msgstr "Laden..."
 
 #: checkout/index.php:26 checkout/index.php:146 checkout/index.php:237
 #: checkout/index.php:284
 msgid "Continue"
-msgstr "Voortzetten"
+msgstr "Doorgaan"
 
 #: checkout/index.php:30
 msgid "Returning Customer"
@@ -180,7 +180,7 @@ msgstr "Terugkomende klant"
 
 #: checkout/index.php:31
 msgid "I am a returning customer"
-msgstr "Ik ben een terugkomende klant"
+msgstr "Ik ben een al klant"
 
 #: checkout/index.php:33 checkout/index.php:34 checkout/index.php:73
 #: checkout/index.php:74
@@ -202,15 +202,15 @@ msgstr "Inloggen"
 
 #: checkout/index.php:41
 msgid "You have logged in, please click here to continue"
-msgstr "You have logged in, please click here to continue"
+msgstr "U bent ingelogd, klik hier om door te gaan"
 
 #: checkout/index.php:53
 msgid "Step 2: Account &amp; Billing Details"
-msgstr "Step 2: Account &amp; Billing Details"
+msgstr "Step 2: Account &amp; Factuurgegevens"
 
 #: checkout/index.php:63
 msgid "Your Personal Details"
-msgstr "Jouw persoonlijke gegevens"
+msgstr "Uw persoonlijke gegevens"
 
 #: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:130
 #: myaccount/index.php:131 myaccount/index.php:316 myaccount/index.php:317
@@ -234,11 +234,11 @@ msgstr "Landcode"
 #: checkout/index.php:79 myaccount/index.php:365 myaccount/index.php:366
 #: myaccount/login.php:74
 msgid "Area Code"
-msgstr "netnummer"
+msgstr "Netnummer"
 
 #: checkout/index.php:85
 msgid "Your Password"
-msgstr "Je Wachtwoord"
+msgstr "Uw Wachtwoord"
 
 #: checkout/index.php:90 checkout/index.php:91
 msgid "Password Confirm"
@@ -246,7 +246,7 @@ msgstr "Wachtwoord Bevestigen"
 
 #: checkout/index.php:97
 msgid "Your Address"
-msgstr "Jouw adres"
+msgstr "Uw adres"
 
 #: checkout/index.php:99 checkout/index.php:100
 msgid "Company"
@@ -281,199 +281,198 @@ msgstr "Provincie"
 
 #: checkout/index.php:127
 msgid "select County / State"
-msgstr "kiezen Provincie"
+msgstr "Selecteer Provincie"
 
 #: checkout/index.php:156
 msgid "Step 3: Delivery Details"
-msgstr "Stap 3 : Levering Details"
+msgstr "Stap 3 : Leveringsgegevens"
 
 #: checkout/index.php:165
 msgid "We could only ship to the billing address!"
-msgstr "We kunnen alleen maar verzenden naar het factuuradres !"
+msgstr "We kunnen alleen verzenden naar het factuuradres !"
 
 #: checkout/index.php:262
 msgid "Step 4: Payment Method"
-msgstr "Stap 4 : Betaling Methode"
+msgstr "Stap 4 : Betalingsmethode"
 
 #: checkout/index.php:277
 msgid "Please contact our CS!"
-msgstr "Neem contact op met onze CS !"
+msgstr "Neem contact op met onze klantenservice !"
 
 #: checkout/index.php:381
 msgid "Please note: remote surcharge has been applied to your basket!"
-msgstr "Please note: remote surcharge has been applied to your basket!"
+msgstr "Let op: Toeslag voor afgelegen gebieden is toegepast op uw mandje!"
 
 #: checkout/index.php:502 checkout/index.php:713
 msgid "The email is required"
-msgstr "The email is required"
+msgstr "Een e-mail is vereist"
 
 #: checkout/index.php:505 checkout/index.php:721
 msgid "The value is not a valid email address"
-msgstr "The value is not a valid email address"
+msgstr "Geen geldig e-mailadres"
 
 #: checkout/index.php:513
 msgid "Please input a password"
-msgstr "The value is not a valid email address"
+msgstr "Voer een wachtwoord in"
 
 #: checkout/index.php:582
 msgid "The billing first name is required"
-msgstr "The billing first name is required"
+msgstr "Naam is vereist"
 
 #: checkout/index.php:587
 msgid ""
 "The billing first name must be more than 1 and less than 50 characters long"
-msgstr ""
-"The billing first name must be more than 1 and less than 50 characters long"
+msgstr "Voornaam moet tussen 1 en 50 tekens lang zijn"
 
 #: checkout/index.php:591
 msgid "The billing first name can only consist of alphabetical, number"
-msgstr "The billing first name can only consist of alphabetical, number"
+msgstr "Voornaam mag alleen letters van het alfabet bevatten"
 
 #: checkout/index.php:599
 msgid "The billing last name is required"
-msgstr "The billing last name is required"
+msgstr "Achternaam is vereist"
 
 #: checkout/index.php:604
 msgid ""
 "The billing last name must be more than 1 and less than 50 characters long"
-msgstr ""
-"The billing last name must be more than 1 and less than 50 characters long"
+msgstr "Achternaam moet tussen 1 en 50 tekens lang zijn"
 
 #: checkout/index.php:608
 msgid "The billing last name can only consist of alphabetical, number"
-msgstr "The billing last name can only consist of alphabetical, number"
+msgstr "Achternaam mag alleen letters van het alfabet bevatten"
 
 #: checkout/index.php:617
 msgid "The billing company name cannot be longer than 50 characters"
-msgstr "The billing company name cannot be longer than 50 characters"
+msgstr "Bedrijfsnaam mag niet langer zijn dan 50 tekens"
 
 #: checkout/index.php:621
 msgid "The billing company name can only consist of alphabetical, number"
-msgstr "The billing company name can only consist of alphabetical, number"
+msgstr "Bedrijfsnaam mag alleen letters van het alfabet bevatten"
 
 #: checkout/index.php:629
 msgid "The billing address 1 is required"
-msgstr "The billing address 1 is required"
+msgstr "Adres 1 is vereist"
 
 #: checkout/index.php:633
 msgid "The billing address1 name can only consist of alphabetical, number"
-msgstr "The billing address1 name can only consist of alphabetical, number"
+msgstr "Adres 1 mag alleen letters van het alfabet bevatten"
 
 #: checkout/index.php:638 checkout/index.php:658
 msgid ""
 "The billing address must be more than 1 and less than 1024 characters long"
-msgstr ""
-"The billing address must be more than 1 and less than 1024 characters long"
+msgstr "Adres moet tussen 1 en 1024 tekens lang zijn"
 
 #: checkout/index.php:641 checkout/index.php:661
 msgid "POBox Address is not allowed"
-msgstr "POBox Address is not allowed"
+msgstr "Postbusadressen zijn niet toegestaan"
 
 #: checkout/index.php:653
 msgid "The billing address2 name can only consist of alphabetical, number"
-msgstr "The billing address2 name can only consist of alphabetical, number"
+msgstr "Adres 2 mag alleen letters van het alfabet bevatten"
 
 #: checkout/index.php:672
 msgid "The billing city is required"
-msgstr "The billing city is required"
+msgstr "Stad is vereist"
 
 #: checkout/index.php:677
 msgid "The billing city must be more than 1 and less than 128 characters long"
-msgstr "The billing city must be more than 1 and less than 128 characters long"
+msgstr "Stad moet tussen 1 en 128 tekens lang zijn"
 
 #: checkout/index.php:681
 msgid "The billing city can only consist of alphabetical, number"
-msgstr "The billing city can only consist of alphabetical, number"
+msgstr "Stad moet tussen 1 en 1024 tekens lang zijn"
 
 #: checkout/index.php:689
 msgid "The Zip/Postal Code is required"
-msgstr "The Zip/Postal Code is required"
+msgstr "Een postcodes is vereist"
 
 #: checkout/index.php:693
 #, php-format
 msgid "The value is not valid %s Zip/Postal Code"
-msgstr "The value is not valid %s Zip/Postal Code"
+msgstr "De waarde is geen geldige %s postcode"
 
 #: checkout/index.php:701
 msgid "The billing telephone number is required"
-msgstr "The billing telephone number is required"
+msgstr "Telefoonnummer is vereist"
 
 #: checkout/index.php:705
 msgid "The billing telephone is not valid"
-msgstr "The billing telephone is not valid"
+msgstr "De telefoonnummer is niet geldig"
 
 #: checkout/index.php:718
 msgid "Email must be more than 3 and less than 256 characters long"
-msgstr "Email must be more than 3 and less than 256 characters long"
+msgstr "E-maildres moet tussen 3 en 256 tekens lang zijn"
 
 #: checkout/index.php:730
 msgid "The password and its confirm are not the same"
-msgstr "The password and its confirm are not the same"
+msgstr "De wachtwoorden komen niet overeen"
 
 #: checkout/index.php:739
 msgid "Please Select a state"
-msgstr "Please Select a state"
+msgstr "Selecteer een provincie"
 
 #: checkout/index.php:748
 msgid "Please select a card"
-msgstr "Please select a card"
+msgstr "Selecteer een kaart"
 
 #: checkout/index.php:794
 msgid "Unknow error: Please contact our CS!"
-msgstr "Unknow error: Please contact our CS!"
+msgstr "Onbekende fout: Neem contact op met onze klantenservice!"
 
 #: checkout/paymentFail.php:4
 msgid "Payment Fail"
-msgstr "Payment Fail"
+msgstr "Betaling mislukt"
 
 #: checkout/paymentFail.php:6
 msgid "We're sorry. This payment has been declined by your card issuer."
-msgstr "We're sorry. This payment has been declined by your card issuer."
+msgstr "Onze excuses. De betaling is geweigerd door uw kaartverstrekker."
 
 #: checkout/paymentFail.php:9
 msgid "1 - make sure that the billing address entered matches your bank record"
 msgstr ""
-"1 - make sure that the billing address entered matches your bank record"
+"1 - Zorg ervoor dat het ingevulde factuuradres overeenkomt met uw "
+"bankgegevens"
 
 #: checkout/paymentFail.php:10
 msgid ""
 "2 - double check your card details especially the CVV number (last 3 digits "
 "on the back of the card) and expiry date are correct"
 msgstr ""
-"2 - double check your card details especially the CVV number (last 3 digits "
-"on the back of the card) and expiry date are correct"
+"2 - Controleer uw kaartgegevens, voornamelijk het CVV-nummer (laatste 3 "
+"getallen op uw kaart) en het vervaldatum"
 
 #: checkout/paymentFail.php:11
 msgid ""
 "3 - check with your bank before re-attempting to order if payment was "
 "blocked for any particular reason and ask them to unblock your card if so"
 msgstr ""
-"3 - check with your bank before re-attempting to order if payment was "
-"blocked for any particular reason and ask them to unblock your card if so"
+"3 - Neem contact op met uw bank voordat u een nieuwe poging doet om te "
+"bestellen als de betaling wordt geblokkeerd voor een bepaalde reden en vraag "
+"hen om uw kaart te deblokkeren"
 
 #: checkout/paymentFail.php:12
 msgid "4 - try again with the same, or a different card"
-msgstr "4 - try again with the same, or a different card"
+msgstr "4 - Probeer opnieuw of gebruik een ander kaart"
 
 #: checkout/paymentFail.php:13
 msgid "5 - still having trouble? "
-msgstr "5 - still having trouble? "
+msgstr "5 - Nog steeds problemen?"
 
 #: checkout/paymentFail.php:13
 msgid "Contact us"
-msgstr "Contact"
+msgstr "Contacteer ons"
 
 #: checkout/paymentFail.php:13
 msgid " via email"
-msgstr " via email"
+msgstr "via e-mail"
 
 #: checkout/paymentReview.php:4
 msgid "Payment Review"
-msgstr "Payment Review"
+msgstr "Betalingsoverzicht"
 
 #: checkout/paymentReview.php:6 checkout/paymentSuccess.php:6
 msgid "Thank you for your purchase!"
-msgstr "Thank you for your purchase!"
+msgstr "Dank u voor uw aankoop!"
 
 #: checkout/paymentReview.php:8
 #, php-format
@@ -482,47 +481,47 @@ msgid ""
 "payment service provider [%s] which can take a few hours to a couple of "
 "days’ time. Money has not been taken from your credit card yet."
 msgstr ""
-"Your order is in a queue for the payment to be checked and processed by our "
-"payment service provider [%s] which can take a few hours to a couple of "
-"days’ time. Money has not been taken from your credit card yet."
+"Uw bestelling wordt in de wachtrij voor een betalingscontrole en wordt "
+"verwerkt door onze payment service provider [% s], die een paar uur tot een "
+"paar dagen tijd kan duren. Het bedrag is nog niet afgeschreven van uw "
+"creditcard."
 
 #: checkout/paymentReview.php:9
 msgid "We'll send you an email as soon as the payment has been verified!"
-msgstr "We'll send you an email as soon as the payment has been verified!"
+msgstr "We zullen uw een e-mail versturen wanneer de betaling geverifieerd is!"
 
 #: checkout/paymentSuccess.php:4
 msgid "Payment Successful"
-msgstr "Payment Successful"
+msgstr "Betaling gelukt"
 
 #: checkout/paymentSuccess.php:8
 #, php-format
 msgid "Your order number is %s."
-msgstr "Your order number is %s."
+msgstr "Uw ordernummer is %s"
 
 #: checkout/paymentSuccess.php:10
 msgid ""
 "You will receive an order confirmation email with details of your order and "
 "a link to track its progress."
 msgstr ""
-"You will receive an order confirmation email with details of your order and "
-"a link to track its progress."
+"U ontvangt een bevestigings e-mail met de gegevens van uw bestelling en een "
+"link om de voortgang te traceren"
 
 #: checkout/paymentSuccess.php:12
 msgid "Please note all charges will appear on your statement as CHATANDVISION."
 msgstr ""
-"Please note all charges will appear on your statement as CHATANDVISION."
 
 #: checkout/paymentSuccess.php:14
 msgid "We'll send you an email as soon as it's shipped!"
-msgstr "We'll send you an email as soon as it's shipped!"
+msgstr "Wij zullen u een e-mail versturen zodra uw bestelling is verzonden!"
 
 #: contact.php:3 display/contact.php:6
 msgid "CONTACT US"
-msgstr "CONTACT"
+msgstr "CONTACTEER ONS"
 
 #: contact.php:4
 msgid "We're here to help you!"
-msgstr "We zijn hier om u te helpen !"
+msgstr "Wij zijn hier om u te helpen!"
 
 #: contact.php:6
 msgid ""
@@ -530,81 +529,82 @@ msgid ""
 "Team, which has gained extensive experience and knowledge of our products "
 "and services in order to serve our customers better."
 msgstr ""
-"Our principal route for all enquiries is via our Sales and Customer Care "
-"Team, which has gained extensive experience and knowledge of our products "
-"and services in order to serve our customers better."
+"Onze belangrijkste route voor alle vragen is via onze Sales en Customer Care "
+"Team, die een uitgebreide ervaring en kennis van onze producten en diensten "
+"heeft opgedaan om onze klanten beter te bedienen."
 
 #: contact.php:7
 msgid ""
 "Our goal is to assist you with your queries in a friendly and helpful manner."
 msgstr ""
-"Our goal is to assist you with your queries in a friendly and helpful manner."
+"Ons doel is om u te helpen met uw vragen in een vriendelijke en behulpzame "
+"manier."
 
 #: contact.php:10
 msgid ""
 "DigitalDiscount.co.uk Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle "
 "Street, Kowloon, Hong Kong"
 msgstr ""
-"9Digital.nl Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle Street, "
+"9digital.nl Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle Street, "
 "Kowloon, Hong Kong"
 
 #: contact.php:13 display/contact.php:64
 msgid "Tel"
-msgstr "Tel"
+msgstr "Telefoon"
 
 #: contact.php:15
 msgid "Email Enquiries"
-msgstr "Email Enquiries"
+msgstr "E-mailaanvragen"
 
 #: contact.php:17
 msgid ""
 "Our ticketing system is designed to ensure that your queries are responded "
 "by the most qualified staff and as quickly as possible."
 msgstr ""
-"Our ticketing system is designed to ensure that your queries are responded "
-"by the most qualified staff and as quickly as possible."
+"Ons ticketing systeem is ontworpen om ervoor te zorgen dat uw vragen zo snel "
+"mogelijk te beantwoorden door het meest gekwalificeerde personeel."
 
 #: contact.php:18
 msgid ""
 "In order to take advantage of this, please kindly choose the correct "
 "department and the most relevant \"Query\"."
 msgstr ""
-"In order to take advantage of this, please kindly choose the correct "
-"department and the most relevant \"Query\"."
+"Om te profiteren van dit, kies de juiste afdeling en de meest relevante "
+"\"Vraag\"."
 
 #: contact.php:23
 msgid "Subject"
-msgstr "Subject"
+msgstr "Onderwerp"
 
 #: contact.php:27
 msgid "Message"
-msgstr "Message"
+msgstr "Bericht"
 
 #: contact.php:31
 msgid "Your Name"
-msgstr "Your Name"
+msgstr "Uw naam"
 
 #: contact.php:35 display/contact.php:59 myaccount/forget_password.php:41
 #: myaccount/login.php:14 myaccount/login.php:15
 msgid "Email"
-msgstr "Email"
+msgstr "E-mailadres"
 
 #: contact.php:39
 msgid "Order Number"
-msgstr "Order Number"
+msgstr "Ordernummer"
 
 #: contact.php:42 myaccount/index.php:279 myaccount/index.php:373
 #: myaccount/login.php:128
 msgid "Submit"
-msgstr "Submit"
+msgstr "Bevestig"
 
 #: display/about_us.php:2
 msgid "About ChatandVision"
-msgstr "About ChatandVision"
+msgstr "Over 9digital"
 
 #: display/about_us.php:3
 msgid "Who are we? "
-msgstr "Who are we? "
+msgstr "Wie zijn wij?"
 
 #: display/about_us.php:6
 #, php-format
@@ -615,27 +615,25 @@ msgid ""
 "all of Skype’s stringent specifications for quality ensuring that you will "
 "have a wonderful Skype experience."
 msgstr ""
-"ChatandVision is one of Skype’s Global Merchant Partners, bringing %s high "
-"quality communication products %s to our valued customers. Partnering with "
-"Skype, ChatandVision has a variety of Skype Certified products that have met "
-"all of Skype’s stringent specifications for quality ensuring that you will "
-"have a wonderful Skype experience."
 
 #: display/about_us.php:8
 msgid ""
 "We are driven by the strong desire to bring people closer together and offer "
 "the products to help people all over the world communicate with each other. "
 msgstr ""
-"We are driven by the strong desire to bring people closer together and offer "
-"the products to help people all over the world communicate with each other. "
+"We worden gedreven door de sterke wens om mensen dichter bij elkaar te "
+"brengen en bieden de producten om mensen te helpen over de hele wereld met "
+"elkaar communiceren."
 
 #: display/about_us.php:9
 msgid "Whether it’s for use at home or in the office, we’re here to help."
-msgstr "Whether it’s for use at home or in the office, we’re here to help."
+msgstr ""
+"Of het voor thuisgebruik is of voor op het kantoor, wij zijn er om u te "
+"helpen."
 
 #: display/about_us.php:22
 msgid "Buying Experience"
-msgstr "Buying Experience"
+msgstr "Koopervaring"
 
 #: display/about_us.php:25
 #, php-format
@@ -650,15 +648,16 @@ msgid ""
 "customers total peace of mind and provide them with not only flexibility but "
 "the highest level of security when paying on our site."
 msgstr ""
-"We do our best to try and make this experience as simple as possible for our "
-"valued customers and act as your local online retailer. Delivering to over "
-"%s 70 countries %s, we manage all customs clearance, import duties and sales "
-"taxes – meaning the price you see on the site is the final delivered price "
-"that will be charged to you. We offer local payment options and currencies "
-"in order to provide you with a completely hassle free experience. By "
-"partnering with various reputable payment gateways we hope to give our "
-"customers total peace of mind and provide them with not only flexibility but "
-"the highest level of security when paying on our site."
+"Wij doen ons best om te proberen deze ervaring zo eenvoudig mogelijk te "
+"maken voor onze gewaardeerde klanten en fungeren als uw lokale online "
+"retailer. Door het leveren aan meer dan% s 70 landen% s, hebben wij kennis "
+"van alle douane-inklaring, invoerrechten en belastingen - wat betekent dat "
+"de prijs die u ziet op de site ook de prijs is die u betaalt. Wij bieden "
+"lokale betaalmogelijkheden en valuta's om u te voorzien van een volledig "
+"probleemloze ervaring. Door de samenwerking met diverse gerenommeerde "
+"betalingsgateways hopen we onze klanten niet alleen te voorzien van "
+"flexibiliteit, maar ook het hoogste niveau van beveiliging bij het betalen "
+"op onze site."
 
 #: display/about_us.php:27
 msgid ""
@@ -666,13 +665,14 @@ msgid ""
 "faster, and have chosen to partner with reputable courier companies to "
 "ensure that your order arrives safely."
 msgstr ""
-"We ship from several hubs worldwide so that you can receive your products "
-"faster, and have chosen to partner with reputable courier companies to "
-"ensure that your order arrives safely."
+"Wij verzenden uit verschillende hubs over de hele wereld zodat u uw "
+"producten sneller kunnen ontvangen en hebben ervoor gekozen om samen te "
+"werken met gerenommeerde koeriersbedrijven om ervoor te zorgen dat uw "
+"bestelling veilig aankomt."
 
 #: display/about_us.php:33
 msgid "We're always here for you!"
-msgstr "We're always here for you!"
+msgstr "Wij zijn er altijd voor u!"
 
 #: display/about_us.php:36
 #, php-format
@@ -685,33 +685,33 @@ msgid ""
 "to assist if you should encounter any difficulties in choosing the right "
 "product or have any enquiries about the ordering process."
 msgstr ""
-"Our priority is in providing customer focused service, and we continually "
-"strive to put our customers first in all aspects. In order to provide the "
-"best shopping experience we make sure to communicate with you every step of "
-"the way – from the buying process, to order acknowledgement, and finally to "
-"dispatch. Our friendly %s customer service team %s is standing by and happy "
-"to assist if you should encounter any difficulties in choosing the right "
-"product or have any enquiries about the ordering process."
+"Onze prioriteit is in het leveren van klantgerichte dienstverlening en we "
+"voortdurend streven ernaar om onze klanten op de eerste plaats te plaatsen. "
+"Om de beste winkelervaring te bieden zorgen we ervoor dat elke stap met u te "
+"communiceren - van het koopproces, de orderbevestiging en uiteindelijk aan "
+"de verzending. Onze vriendelijke %s klantenservice % s staat klaar om u te "
+"helpen wanneer u problemen hebt bij het kiezen van het juiste product of "
+"vragen hebt over het bestelproces."
 
 #: display/contact.php:8
 msgid ""
 "Having an issue? There are a number of ways you can get in touch with our "
 "experienced Sales and Customer Service teams. "
 msgstr ""
-"Het hebben van een probleem ? Er zijn een aantal manieren waarop je in "
-"contact kunt komen met onze ervaren Sales en Customer Service teams."
+"Hebt u een probleem? Er zijn een aantal manieren waarop u in contact kunt "
+"komen met onze ervaren Sales en Customer Service teams."
 
 #: display/contact.php:9
 msgid ""
 "Select one of the enquiry types below and we'll repond to you as soon as we "
 "can!"
 msgstr ""
-"Selecteer een van de soorten onderzoek in en wij zullen zo snel als we "
-"kunnen repond aan u!"
+"Selecteer een van de vragen hieronder in en wij zullen zo snel mogelijk "
+"reageren!"
 
 #: display/contact.php:17 display/contact.php:19
 msgid "GENERAL AND AFTER-SALES"
-msgstr "ALGEMEEN EN AFTER-SALES"
+msgstr "ALGEMEEN EN AFTERSALES"
 
 #: display/contact.php:27 display/contact.php:29
 msgid "PRE-SALES"
@@ -719,11 +719,11 @@ msgstr "PRE-SALES"
 
 #: display/contact.php:37 display/contact.php:39
 msgid "FAULTY GOODS OR RETURNED ITEMS"
-msgstr "DEFECTE GOEDEREN OF RETOUREN"
+msgstr "DEFECTE EN GERETOURNEERDE PRODUCTEN"
 
 #: display/contact.php:48
 msgid "Our Address"
-msgstr "Ons Adres"
+msgstr "Ons adres"
 
 #: display/faq.php:13
 msgid "NEED HELP?"
@@ -731,9 +731,7 @@ msgstr "HULP NODIG?"
 
 #: display/faq.php:15
 msgid "You've got a Question? We've got the Answer! Check out our FAQs."
-msgstr ""
-"Je hebt een vraag gekregen ? Wij hebben het antwoord gekregen ! Bekijk onze "
-"veelgestelde vragen."
+msgstr "U hebt een vraag? Wij hebben het antwoord! Bekijk onze FAQs."
 
 #: display/faq.php:24
 #, php-format
@@ -741,49 +739,49 @@ msgid ""
 "If you still can't find the answer, please refer to the %s Contact Us %s on "
 "page and get in touch! Thank you."
 msgstr ""
-"If you still can't find the answer, please refer to the %s Contact Us %s on "
-"page and get in touch! Thank you."
+"Kunt u nog steeds het antwoord niet vinden? Ga dan naar %s Contacteer ons "
+"%s ! Bedankt."
 
 #: display/privacy_policy.php:2 footer.php:278
 msgid "Privacy Policy"
-msgstr "Privacy Beleid"
+msgstr "Privacybeleid"
 
 #: display/privacy_policy.php:3
 #, php-format
 msgid "%s Privacy Policy"
-msgstr "%s Privacy Beleid"
+msgstr "%s Privacybeleid"
 
 #: display/privacy_policy.php:6
 msgid "CONTENTS"
-msgstr "CONTENTS"
+msgstr "INHOUD"
 
 #: display/privacy_policy.php:9 display/privacy_policy.php:24
 msgid "WHY WE COLLECT"
-msgstr "WHY WE COLLECT"
+msgstr "WAAROM VERZAMELEN WE"
 
 #: display/privacy_policy.php:10 display/privacy_policy.php:31
 msgid "WHAT WE COLLECT"
-msgstr "WHAT WE COLLECT"
+msgstr "WAT VERZAMELEN WE"
 
 #: display/privacy_policy.php:11 display/privacy_policy.php:42
 msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
-msgstr "WHAT WE DO WITH THE INFORMATION WE GATHER"
+msgstr "WAT DOEN WE MET DE INFORMATIE DIE WIJ VERZAMELEN"
 
 #: display/privacy_policy.php:12 display/privacy_policy.php:54
 msgid "SECURITY"
-msgstr "SECURITY"
+msgstr "BEVEILIGING"
 
 #: display/privacy_policy.php:13 display/privacy_policy.php:67
 msgid "HOW WE USE COOKIES"
-msgstr "HOW WE USE COOKIES"
+msgstr "HOE GEBRUIKEN WE COOKIES"
 
 #: display/privacy_policy.php:14 display/privacy_policy.php:80
 msgid "LINKS TO OTHER WEBSITES"
-msgstr "LINKS TO OTHER WEBSITES"
+msgstr "LINKS NAAR ANDERE WEBSITES"
 
 #: display/privacy_policy.php:15 display/privacy_policy.php:87
 msgid "PRIVACY QUESTIONS"
-msgstr "PRIVACY QUESTIONS"
+msgstr "PRIVACY VRAGEN"
 
 #: display/privacy_policy.php:19
 #, php-format
@@ -798,15 +796,16 @@ msgid ""
 "safe and secure. Your privacy is a priority at %s and we do what we can to "
 "protect it."
 msgstr ""
-"%s's Customer Privacy Policy covers the collection, use, and disclosure of "
-"personal information that may be collected by %s anytime you interact with "
-"%s such as when visiting our website, purchasing products, or using our "
-"sales or support facilities. Please take a moment to read the following to "
-"learn more about our practices with regards to this, including what type of "
-"information we gather, how and for what purposes we use the information, to "
-"whom we disclose the information, and how the personal information is kept "
-"safe and secure. Your privacy is a priority at %s and we do what we can to "
-"protect it."
+"%s Customer Privacy Policy heeft betrekking op het verzamelen, gebruiken en "
+"openbaar maken van persoonlijke informatie die op elk moment verzameld "
+"kunnen worden wanner %s u interactie hebt met% s onze website, zoals bij een "
+"bezoek, een aankoop van producten of het gebruik van onze verkoop- of "
+"ondersteunende diensten. Neem even de tijd om het volgende te lezen om meer "
+"informatie over onze werkwijze te leren met betrekking tot deze, met "
+"inbegrip van welke informatie wij verzamelen, hoe en voor welke doeleinden "
+"we deze informatie gebruiken, aan wie we de informatie onthullen en hoe de "
+"persoonlijke informatie is beveiligd. Uw privacy is een prioriteit op %s en "
+"we doen wat we kunnen om het te beschermen."
 
 #: display/privacy_policy.php:21
 #, php-format
@@ -815,9 +814,10 @@ msgid ""
 "should check this page from time to time to ensure that you are happy with "
 "any changes. This policy is effective from 31 May 2010."
 msgstr ""
-"%s may change this policy from time to time by updating this page. You "
-"should check this page from time to time to ensure that you are happy with "
-"any changes. This policy is effective from 31 May 2010."
+"%s kan dit beleid van tijd tot tijd veranderen door bijwerking van deze "
+"pagina. U dient deze pagina van tijd tot tijd door te nmen om ervoor te "
+"zorgen dat u tevreden bent met eventuele wijzigingen. Dit beleid is van "
+"kracht vanaf 31 mei 2010."
 
 #: display/privacy_policy.php:27
 msgid ""
@@ -828,40 +828,41 @@ msgid ""
 "the latest product announcements, special offers, and events that you might "
 "like to hear about."
 msgstr ""
-"We collect personal information because it helps us to deliver a customised "
-"customer service experience for you. This affords you convenient access to "
-"our product range and helps focus on categories most likely to interest you. "
-"In addition, your personal information helps allow us to keep you updated on "
-"the latest product announcements, special offers, and events that you might "
-"like to hear about."
+"Wij verzamelen persoonlijke informatie, omdat het ons helpt om een "
+"aangepaste klantenserviceervaring te leveren voor u. Dit biedt u "
+"gemakkelijke toegang tot ons assortiment en helpt ons te richten op "
+"categorieën die u waarschijnlijk het meest interesseren. Bovendien helpt uw "
+"persoonlijke informatie ons in staat om u op de hoogte te houden over de "
+"nieuwste producten, speciale aanbiedingen en evenementen die u misschien "
+"interesseren."
 
 #: display/privacy_policy.php:34
 msgid "We may collect the following information:"
-msgstr "We may collect the following information:"
+msgstr "Wij kunnen mogelijk de volgende informatie verzamelen:"
 
 #: display/privacy_policy.php:36
 msgid "name and job title"
-msgstr "name and job title"
+msgstr "Naam en titel"
 
 #: display/privacy_policy.php:37
 msgid "contact information including email address"
-msgstr "contact information including email address"
+msgstr "Contact informatie inclusief e-mailadres"
 
 #: display/privacy_policy.php:38
 msgid "demographic information such as postcode, preferences and interests"
-msgstr "demographic information such as postcode, preferences and interests"
+msgstr "Demografische informatie zoals postcode, voorkeuren en interesses"
 
 #: display/privacy_policy.php:39
 msgid "other information relevant to customer surveys and/or offers"
-msgstr "other information relevant to customer surveys and/or offers"
+msgstr "andere informatie gerelateerd tot klantenonderzoek en/of aanbiedingen"
 
 #: display/privacy_policy.php:45
 msgid ""
 "The personal information may help us give you a better shopping experience "
 "with us in the following areas:"
 msgstr ""
-"The personal information may help us give you a better shopping experience "
-"with us in the following areas:"
+"De persoonlijke informatie kan ons helpen u een beter winkelervaring bij ons "
+"te geven op de volgende gebieden:"
 
 #: display/privacy_policy.php:47
 msgid ""
@@ -869,15 +870,16 @@ msgid ""
 "issue on the phone with a representative, making a purchase, or registering "
 "your product."
 msgstr ""
-"we may ask for your personal information when you're discussing a service "
-"issue on the phone with a representative, making a purchase, or registering "
-"your product."
+"We zouden kunnen vragen om uw persoonlijke gegevens, wanneer u een service "
+"probleem bespreekt,  het maken van een aankoop of het registreren van uw "
+"product aan de telefoon met een vertegenwoordiger,"
 
 #: display/privacy_policy.php:48
 msgid ""
 "we may use the information to improve our product range and services offered."
 msgstr ""
-"we may use the information to improve our product range and services offered."
+"We zouden uw informatie kunnen gebruiken om onze productengamma en service  "
+"te verbeteren."
 
 #: display/privacy_policy.php:49
 msgid ""
@@ -885,9 +887,9 @@ msgid ""
 "products, special offers or other information which we think you may find "
 "interesting."
 msgstr ""
-"we may send promotional emails (to the email address provided) about new "
-"products, special offers or other information which we think you may find "
-"interesting."
+"Wij zouden u promotionele e-mails te sturen (naar het e-mailadres) kunnen "
+"sturen over nieuwe producten, speciale aanbiedingen of andere informatie "
+"waarvan wij denken dat u wellicht interessant vindt."
 
 #: display/privacy_policy.php:50
 msgid ""
@@ -895,17 +897,18 @@ msgid ""
 "market research purposes. We may contact you by email, phone, or mail. We "
 "may use the information to customise the website according to your interests."
 msgstr ""
-"from time to time, we may also use your information to contact you for "
-"market research purposes. We may contact you by email, phone, or mail. We "
-"may use the information to customise the website according to your interests."
+"Van tijd tot tijd kunnen we uw gegevens ook gebruiken om u te contacteren "
+"voor een marktonderzoek. We kunnen contact met u opnemen via e-mail, "
+"telefoon of per post. We kunnen de informatie gebruiken om de website aan te "
+"passen aan uw interesses."
 
 #: display/privacy_policy.php:51
 msgid ""
 "We will use the information to create an account area to which you can login "
 "and access your order history."
 msgstr ""
-"We will use the information to create an account area to which you can login "
-"and access your order history."
+"Wij zullen de informatie gebruiken om een account te creëren waarop u kunt "
+"inloggen en toegang kunt krijgen tot uw bestelgeschiedenis."
 
 #: display/privacy_policy.php:57
 msgid ""
@@ -914,10 +917,10 @@ msgid ""
 "physical, electronic and managerial procedures to safeguard and secure the "
 "information we collect online."
 msgstr ""
-"We are committed to ensuring that your information is secure. In order to "
-"prevent unauthorised access or disclosure, we have put in place suitable "
-"physical, electronic and managerial procedures to safeguard and secure the "
-"information we collect online."
+"Wij zijn vastbesloten ervoor te zorgen dat uw informatie veilig is. Om "
+"onbevoegde toegang of openbaarmaking te voorkomen, hebben we geschikte "
+"fysieke, elektronische en bestuurlijke procedures de informatie die we "
+"online verzamelen te beschermen en te beveiligen."
 
 #: display/privacy_policy.php:59
 #, php-format
@@ -925,8 +928,8 @@ msgid ""
 "%s takes your privacy very seriously. %s does not sell or rent your contact "
 "information to other marketers."
 msgstr ""
-"%s takes your privacy very seriously. %s does not sell or rent your contact "
-"information to other marketers."
+"%s neemt uw privacy zeer serieus. %s zal uw contactgegevens niet aan andere "
+"marketeers verkopen of verhuren."
 
 #: display/privacy_policy.php:61
 #, php-format
@@ -944,18 +947,19 @@ msgid ""
 "otherwise be difficult to have products purchased, customer service offered, "
 "feedback provided to us, or have access to special offers or content from %s."
 msgstr ""
-"%s may share certain personal information with other companies with which %s "
-"have a strategic relationship and/or provide services on our behalf to your "
-"advantage. These companies may help process information, fulfil customer "
-"orders, deliver products, manage and enhance customer data, provide customer "
-"service, assess levels of interest in our product range, or carry out "
-"customer research or satisfaction surveys. These companies are also obliged "
-"to protect your personal information, except if exchange of information is "
-"required for your purchase. For example, when an extended warranty is "
-"purchased, you authorise %s and the Warranty Provider to exchange "
-"information to carry out the service. Without the exchange, it would be "
-"otherwise be difficult to have products purchased, customer service offered, "
-"feedback provided to us, or have access to special offers or content from %s."
+"%s kan bepaalde persoonlijke gegevens delen met andere bedrijven waarmee % s "
+"een strategische relatie en/of diensten levert. Deze bedrijven kunnen helpen "
+"bij het verwerken van deze informatie, de afhandeling van bestellingen, het "
+"leveren van producten, het beheren en vergroten van de klantbestand, "
+"klantenservice, beoordelen van interesse in ons assortiment of het uitvoeren "
+"van klanttevredenheidsonderzoeken. Deze bedrijven zijn ook verplicht om uw "
+"persoonsgegevens te beschermen, behalve wanneer de uitwisseling van "
+"informatie nodig is voor uw aankoop. Bijvoorbeeld wanneer een "
+"garantieverlenging wordt gekocht, machtigt u %s en de garantieaanbieder om "
+"informatie uit te wisselenom de dienst uit te kunnen voeren. Zonder de "
+"uitwisseling, zou het anders moeilijk zijn om de producten aan te schaffen, "
+"klantenservice aan te bieden, feedback aan ons te geven of het hebben van "
+"toegang tot speciale aanbiedingen of de inhoud van %s."
 
 #: display/privacy_policy.php:63
 msgid ""
@@ -963,9 +967,10 @@ msgid ""
 "information. We may also disclose information if it is determined that it is "
 "necessary for security, law enforcement or other issues of public importance."
 msgstr ""
-"We may also be required by law or litigation to disclose your personal "
-"information. We may also disclose information if it is determined that it is "
-"necessary for security, law enforcement or other issues of public importance."
+"Wij kunnen ook door de wet of geschillen verplicht worden om uw persoonlijke "
+"gegevens bekend te maken. We kunnen ook informatie openbaar maken indien "
+"wordt vastgesteld dat het noodzakelijk is voor de veiligheid, de "
+"rechtshandhaving of andere zaken dat van algemeen belang is."
 
 #: display/privacy_policy.php:70
 msgid ""
@@ -976,12 +981,13 @@ msgid ""
 "application can tailor its operations to your needs, likes and dislikes by "
 "gathering and remembering information about your preferences."
 msgstr ""
-"A cookie is a small file which asks permission to be placed on your "
-"computer's hard drive. Once you agree, the file is added and the cookie "
-"helps analyse web traffic or lets you know when you visit a particular site. "
-"Cookies allow web applications to respond to you as an individual. The web "
-"application can tailor its operations to your needs, likes and dislikes by "
-"gathering and remembering information about your preferences."
+"Een cookie is een klein bestand dat toestemming vraagt om op de harde schijf "
+"van uw computer te worden geplaatst. Als u hiermee instemt, wordt het "
+"bestand toegevoegd en de cookies analyseren webverkeer of laat u weten "
+"wanneer u een bepaalde site bezoekt. Cookies stellen webapplicaties om te "
+"reageren op u als individu. De webapplicatie kan haar activiteiten op maat "
+"maken naar uw behoeften, sympathieën en antipathieën door het verzamelen en "
+"onthouden van informatie over uw voorkeuren."
 
 #: display/privacy_policy.php:72
 msgid ""
@@ -990,10 +996,11 @@ msgid ""
 "order to tailor it to customer needs. We only use this information for "
 "statistical analysis purposes and then the data is removed from the system."
 msgstr ""
-"We use traffic log cookies to identify which pages are being used. This "
-"helps us analyse data about web page traffic and improve our website in "
-"order to tailor it to customer needs. We only use this information for "
-"statistical analysis purposes and then the data is removed from the system."
+"Wij gebruiken traffic log cookies om te bepalen welke pagina's worden "
+"gebruikt. Dit helpt ons de gegevens over web pagina verkeer te analyseren en "
+"verbeteren van onze website om af te stemmen op de behoeften van klanten. "
+"Wij gebruiken deze informatie alleen voor statistische analyse doeleinden en "
+"vervolgens worden de gegevens uit het systeem verwijderd."
 
 #: display/privacy_policy.php:74
 msgid ""
@@ -1002,10 +1009,11 @@ msgid ""
 "way gives us access to your computer or any information about you, other "
 "than the data you choose to share with us."
 msgstr ""
-"Overall, cookies help us provide you with a better website, by enabling us "
-"to monitor which pages you find useful and which you do not. A cookie in no "
-"way gives us access to your computer or any information about you, other "
-"than the data you choose to share with us."
+"Over het algemeen helpen cookies ons u te voorzien van een betere website, "
+"door ons in staat te stellen om toezicht te houden welke pagina's u nuttig "
+"vindt en welke niet. Een cookie geeft op geen enkele wijze ons toegang tot "
+"uw computer of enige informatie over u, met uitzondering van de gegevens die "
+"u ervoor kiest om met ons te delen."
 
 #: display/privacy_policy.php:76
 msgid ""
@@ -1014,10 +1022,10 @@ msgid ""
 "cookies if you prefer. This may prevent you from taking full advantage of "
 "the website."
 msgstr ""
-"You can choose to accept or decline cookies. Most web browsers automatically "
-"accept cookies, but you can usually modify your browser setting to decline "
-"cookies if you prefer. This may prevent you from taking full advantage of "
-"the website."
+"U kunt ervoor kiezen om cookies te accepteren of te weigeren. Meeste "
+"webbrowsers accepteren automatisch cookies, maar u kunt uw browser instellen "
+"om cookies te weigeren als u dit prefereert. Dit kan voorkomen dat u de "
+"website volledig kunt benutten."
 
 #: display/privacy_policy.php:83
 msgid ""
@@ -1029,42 +1037,42 @@ msgid ""
 "privacy statement. You should exercise caution and look at the privacy "
 "statement applicable to the website in question."
 msgstr ""
-"Our website may contain links to other websites of interest. However, once "
-"you have used these links to leave our site, you should note that we do not "
-"have any control over that other website. Therefore, we cannot be "
-"responsible for the protection and privacy of any information which you "
-"provide whilst visiting such sites and such sites are not governed by this "
-"privacy statement. You should exercise caution and look at the privacy "
-"statement applicable to the website in question."
+"Onze website kan links naar andere websites bevatten. Echter, zodra u deze "
+"links gebruikt om onze site te verlaten, moet u er rekening mee dat wij geen "
+"enkele controle over de andere website. Daarom kunnen wij niet "
+"verantwoordelijk gesteld worden voor de bescherming en de privacy van alle "
+"informatie die u tijdens uw bezoek aan dergelijke sites en dergelijke sites "
+"vallen niet onder dit privacy statement. U moet voorzichtig zijn en kijken "
+"naar de privacy statement die van toepassing zijn op de website in kwestie."
 
 #: display/privacy_policy.php:90
 msgid ""
 "If you have any questions or concerns, you can email us using our "
 "interactive web form located at our "
 msgstr ""
-"If you have any questions or concerns, you can email us using our "
-"interactive web form located at our "
+"Mocht u nog vragen of opmerkingen hebben, dan kunt u ons een e-mail sturen "
+"met behulp van onze interactieve webformulier op onze"
 
 #: display/privacy_policy.php:90 header.php:116
 msgid "Contact Us"
-msgstr "Contact Us"
+msgstr "Contacteer ons"
 
 #: display/privacy_policy.php:90
 msgid " page"
-msgstr " page"
+msgstr "pagina"
 
 #: display/privacy_policy.php:94
 msgid "Last updated 9th July 2015"
-msgstr "Last updated 9th July 2015"
+msgstr "Laatste update 9 juli 2015"
 
 #: display/privacy_policy.php:95
 #, php-format
 msgid "%s Limited. All rights reserved."
-msgstr "%s Limited. All rights reserved."
+msgstr "%s Limited. Alle rechten voorbehouden."
 
 #: display/shipping.php:1
 msgid "FREE Shipping"
-msgstr "FREE Shipping"
+msgstr "Gratis levering"
 
 #: display/shipping.php:3
 #, php-format
@@ -1074,14 +1082,14 @@ msgid ""
 "payment in your local currency but also ships directly to your doorstep free "
 "of charge* via our courier partners."
 msgstr ""
-"When you shop with us we like to keep it simple, our free shipping offer "
-"applies to all orders no matter the size or value. %s not only accepts "
-"payment in your local currency but also ships directly to your doorstep free "
-"of charge* via our courier partners."
+"Wanneer u winkelt bij ons, willen wij dit simpel te houden. Onze gratis "
+"verzending geldt voor alle bestellingen, ongeacht de grootte of de waarde. "
+"%s accepteert niet alleen betalingen in uw lokale valuta, maar verzend ook "
+"rechtstreeks tot uw deur gratis * via onze koerierpartners."
 
 #: display/shipping.php:10
 msgid "Taxes and Duties"
-msgstr "Taxes and Duties"
+msgstr "belastingen"
 
 #: display/shipping.php:12
 msgid ""
@@ -1090,14 +1098,14 @@ msgid ""
 "the final amount you pay. Rest assured that your buying experience with us "
 "will be completely hassle free."
 msgstr ""
-"Worried about hidden costs? Please don't be, we'll take care of any "
-"applicable taxes and duties prior to delivery so the price on the website is "
-"the final amount you pay. Rest assured that your buying experience with us "
-"will be completely hassle free."
+"Bezorgd over de verborgen kosten? Nergens voor nodig. Wij zorgen voor "
+"eventuele belastingen en heffingen vóór aflevering. Dus de prijs op de "
+"website is het uiteindelijke bedrag dat u betaalt. Wees er gerust op dat uw "
+"koopervaring met ons volledig probleemloos zal zijn."
 
 #: display/shipping.php:15
 msgid "Tracking Your Order"
-msgstr "Tracking Your Order"
+msgstr "Traceer uw order"
 
 #: display/shipping.php:17
 msgid ""
@@ -1106,14 +1114,14 @@ msgid ""
 "check the status of your order by visiting the My Account page on our "
 "website and viewing your order history."
 msgstr ""
-"Once your order has been processed, an email containing your order and "
-"account information will be sent to your registered email. You can always "
-"check the status of your order by visiting the My Account page on our "
-"website and viewing your order history."
+"Zodra uw bestelling is verwerkt, wordt een e-mail met uw bestelling en "
+"accountinformatie naar uw geregistreerde e-mail verzonden. U kunt altijd de "
+"status van uw bestelling controleren door naar de pagina Mijn account op "
+"onze website te gaan en uw bestellingsgeschiedenis bekijken."
 
 #: display/shipping.php:20
 msgid "FREE Shipping Delivery Times"
-msgstr "FREE Shipping Delivery Times"
+msgstr "GRATIS verzending Levertijd"
 
 #: display/shipping.php:22
 msgid ""
@@ -1126,14 +1134,16 @@ msgid ""
 "customers from our global fulfillment centers in the UK, US and HK, however "
 "please bear in mind some regions may experience longer shipping lead times.**"
 msgstr ""
-"Orders delivered with free shipping typically arrive within 5 to 12 business "
-"days; although this is dependent on your delivery region, with many orders "
-"often arriving sooner.\n"
-"                        In order to facilitate free shipping and pass on "
-"savings to our customers, we endeavor to use reliable and cost effective "
-"couriers to deliver globally. To minimize delays we ship directly to our "
-"customers from our global fulfillment centers in the UK, US and HK, however "
-"please bear in mind some regions may experience longer shipping lead times.**"
+"Bestellingen geleverd met gratis verzending komen meestal binnen 5 tot 12 "
+"werkdagen; hoewel dit afhankelijk is van het leveringsgebied, zullen de "
+"meeste order vaak eerder aankomen.\n"
+"                         Om de gratis verzending te vergemakkelijken en voor "
+"de bepsaring van onze klanten, streven we naar gebruik te maken van  "
+"betrouwbare en kosteneffectieve koeriers om wereldwijd te leveren. Om "
+"vertragingen te minimaliseren vbezorgen wij direct naar onze klanten van "
+"onze wereldwijde vervulling centra in het Verenigd Koninkrijk, de VS en Hong "
+"Kong. Maar houdt er rekening mee sommige regio's langere looptijden kunnen "
+"ervaren. **"
 
 #: display/shipping.php:26
 msgid ""
@@ -1142,22 +1152,23 @@ msgid ""
 "remote area surcharges will be added to your final order amount in order to "
 "more accurately reflect the cost of providing service to these areas."
 msgstr ""
-"* Shipping to and from less populated or accessible domestic and "
-"international areas carries higher operating costs. Delivery and extended or "
-"remote area surcharges will be added to your final order amount in order to "
-"more accurately reflect the cost of providing service to these areas."
+"* Verzending naar minder bevolkte of toegankelijk binnenlandse en "
+"internationale gebieden draagt hogere operationele kosten. Leveringen met "
+"toeslagen voor of afgelegen gebieden zal in uw definitieve bestelling worden "
+"toegevoegd met het oog op een betere weerspiegeling van de kosten van de "
+"dienstverlening aan deze gebieden."
 
 #: display/shipping.php:28
 msgid ""
 "United States: extended or remote areas within the contingent 48 states, "
 "Hawaii and Alaska"
 msgstr ""
-"United States: extended or remote areas within the contingent 48 states, "
-"Hawaii and Alaska"
+"Verenigde Staten: uitgebreide of afgelegen gebieden binnen het continent 48 "
+"staten, Hawaï en Alaska"
 
 #: display/shipping.php:31
 msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
-msgstr "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
+msgstr "Verenigd Koninkrijk: de gebieden in Guernsey, Jersey en het eiland Man"
 
 #: display/shipping.php:36
 msgid ""
@@ -1166,10 +1177,10 @@ msgid ""
 "variety of factors (e.g. specific address location and customs delay) which "
 "are outside of our control."
 msgstr ""
-"** Although we do our best to ensure a smooth shipping process please note "
-"delivery speed to some regions may experience delays depending on a wide "
-"variety of factors (e.g. specific address location and customs delay) which "
-"are outside of our control."
+"** Hoewel we ons best doen om een soepele verzending te garanderen, zullen "
+"de leveringen naar sommige regio's vertagingen kunnen oplopen, afhankelijk "
+"van een breed scala van factoren (bijvoorbeeld specifiek adres en douane "
+"vertraging) die buiten onze controle zijn."
 
 #: footer.php:10
 msgid " PAY WITH CONFIDENCE "
@@ -1203,7 +1214,7 @@ msgstr "Aanmelden voor Nieuwsbrief"
 
 #: footer.php:188
 msgid "Enter you email address"
-msgstr "Vul uw e-mailadres"
+msgstr "Vul uw e-mailadres in"
 
 #: footer.php:198
 msgid "Subscribe"
@@ -1268,19 +1279,19 @@ msgstr "Verzenden & retourneren"
 
 #: footer.php:277
 msgid "Billing Terms and Conditions"
-msgstr "Billing Algemene conditons"
+msgstr "Algemene Factureringsvoorwaarde"
 
 #: footer.php:283
 msgid "SELECT SHIPPING COUNTRY"
-msgstr "SELECT SHIPPING COUNTRY"
+msgstr "SELECTEER LAND"
 
 #: footer.php:286
 msgid "Australia"
-msgstr "Australia"
+msgstr "Australië"
 
 #: footer.php:287
 msgid "Belgium"
-msgstr "Belgium"
+msgstr "België"
 
 #: footer.php:288
 msgid "Finland"
@@ -1288,11 +1299,11 @@ msgstr "Finland"
 
 #: footer.php:289
 msgid "France"
-msgstr "France"
+msgstr "Frankrijk"
 
 #: footer.php:290
 msgid "Great Britain"
-msgstr "Great Britain"
+msgstr "Groot-Brittannië"
 
 #: footer.php:291
 msgid "Hong Kong"
@@ -1305,7 +1316,7 @@ msgstr "%s producten - %s"
 
 #: header.php:110
 msgid "We won't be beaten on electronics!"
-msgstr "We zullen niet worden geslagen op de elektronica!"
+msgstr "We zullen niet verslagen worden op de elektronica!"
 
 #: header.php:115
 msgid "Warranty"
@@ -1333,7 +1344,7 @@ msgstr "Aanmelden"
 
 #: header.php:150
 msgid "Free Delivery For All Orders"
-msgstr "Gratis Delivery voor alle bestellingen"
+msgstr "Gratis levering voor alle bestellingen"
 
 #: header.php:154
 msgid "Up to 2 Years Warranty"
@@ -1353,7 +1364,7 @@ msgstr "bestseller"
 
 #: index.php:4
 msgid "latest arrival"
-msgstr "laatste aankomst"
+msgstr "Nieuwste producten"
 
 #: index.php:67
 msgid "Collections"
@@ -1361,63 +1372,63 @@ msgstr "Collecties"
 
 #: index.php:88
 msgid "camera collection"
-msgstr "camera collection"
+msgstr "Camera collectie"
 
 #: index.php:92 index.php:112
 msgid "Shop now"
-msgstr "Shop now"
+msgstr "Shop nu"
 
 #: index.php:108
 msgid "mobile collection"
-msgstr "mobile collection"
+msgstr "Mobiele telefoon collectie"
 
 #: myaccount/forget_password.php:4
 msgid "Reset your password"
-msgstr "Reset your password"
+msgstr "Reset uw wachtwoord"
 
 #: myaccount/forget_password.php:34
 msgid "Please enter your registered email address!"
-msgstr "Please enter your registered email address!"
+msgstr "Voer uw geregistreerde e-mailadres in!"
 
 #: myaccount/forget_password.php:43
 msgid "Go"
-msgstr "Go"
+msgstr "Gaan"
 
 #: myaccount/forget_password.php:50
 msgid ""
 "An email containing a temporary password will be sent to your registered "
 "email shortly."
 msgstr ""
-"An email containing a temporary password will be sent to your registered "
-"email shortly."
+"Een e-mail met een tijdelijk wachtwoord zal binnenkort naar uw "
+"geregistreerde e-mail worden verzonden."
 
 #: myaccount/forget_password.php:51
 msgid ""
 "Kindly check your spam folder in the event our email is not received within "
 "a couple of minutes."
 msgstr ""
-"Kindly check your spam folder in the event our email is not received within "
-"a couple of minutes."
+"Controleer uw spam-map in het geval u onze e-mail niet binnen een paar "
+"minuten ontvangt."
 
 #: myaccount/index.php:23
 msgid "Order History"
-msgstr "Order History"
+msgstr "Ordergeschiedenis"
 
 #: myaccount/index.php:24
 msgid "Returns Request"
-msgstr "Returns Request"
+msgstr "Retouraanvraag"
 
 #: myaccount/index.php:25
 msgid "Edit Your Profile"
-msgstr "Edit Your Profile"
+msgstr "Bewerk uw profiel"
 
 #: myaccount/index.php:30
 msgid ""
 "Your order has been split at no extra cost to ensure all item(s) purchased "
 "are received at the soonest available opportunity."
 msgstr ""
-"Your order has been split at no extra cost to ensure all item(s) purchased "
-"are received at the soonest available opportunity."
+"Uw bestelling is gesplitst zonder extra kosten zodat u de gekochte "
+"product(en) zo snel mogelijk kunt ontvangen."
 
 #: myaccount/index.php:43 myaccount/index.php:76
 msgid "Order"
@@ -1425,11 +1436,11 @@ msgstr "Order"
 
 #: myaccount/index.php:44 myaccount/index.php:77
 msgid "Date"
-msgstr "Date"
+msgstr "Datum"
 
 #: myaccount/index.php:45 myaccount/index.php:78
 msgid "Shipped to"
-msgstr "Shipped to"
+msgstr "Verzenden naar"
 
 #: myaccount/index.php:46 myaccount/index.php:79
 msgid "Product"
@@ -1437,7 +1448,7 @@ msgstr "Product"
 
 #: myaccount/index.php:47 myaccount/index.php:80
 msgid "Order total"
-msgstr "Order total"
+msgstr "Order totaal"
 
 #: myaccount/index.php:48 myaccount/index.php:81
 msgid "Status"
@@ -1445,39 +1456,39 @@ msgstr "Status"
 
 #: myaccount/index.php:69
 msgid "Have you paid by bank transfer?<br>Contact us "
-msgstr "Have you paid by bank transfer?<br>Contact us "
+msgstr "Hebt u betaald via bankoverschrijving? <br>Neem contact op met ons"
 
 #: myaccount/index.php:70 myaccount/index.php:114
 msgid "here"
-msgstr "here"
+msgstr "hier"
 
 #: myaccount/index.php:94
 msgid "Pending Payment"
-msgstr "Pending Payment"
+msgstr "In afwachting van uw betaling"
 
 #: myaccount/index.php:95
 msgid "We have not received the payment for your order."
-msgstr "We have not received the payment for your order."
+msgstr "We hebben de betaling van uw order nog niet ontvangen."
 
 #: myaccount/index.php:98
 msgid "Incomplete Payment"
-msgstr "Incomplete Payment"
+msgstr "Incomplete Betaling"
 
 #: myaccount/index.php:99
 msgid ""
 "The amount received in our bank account does not correspond to the total "
 "amount of your order."
 msgstr ""
-"The amount received in our bank account does not correspond to the total "
-"amount of your order."
+"De ontvangen bedrag op onze bankrekening komt niet overeenmet het totale "
+"bedrag van uw bestelling."
 
 #: myaccount/index.php:112
 msgid ""
 "Your request has been submitted. Please kindly review the information below "
 "as your RMA confirmation."
 msgstr ""
-"Your request has been submitted. Please kindly review the information below "
-"as your RMA confirmation."
+"Uw aanvraag is ingediend. Controleer de onderstaande informatie van uw RMA-"
+"bevestiging."
 
 #: myaccount/index.php:113
 msgid "Please click"
@@ -1488,26 +1499,28 @@ msgid ""
 "to print this page and send it back to us together with the returned "
 "package. Items returned without this RMA form will not be processed."
 msgstr ""
-"to print this page and send it back to us together with the returned "
-"package. Items returned without this RMA form will not be processed."
+"om deze pagina af te drukken en stuur deze terug naar ons, samen met de te "
+"retourneren pakket. Items die zonder dit RMA-formulier worden niet in "
+"behandeling genomen."
 
 #: myaccount/index.php:119
 msgid "Important Notice"
-msgstr "Important Notice"
+msgstr "Belangrijke Notitie"
 
 #: myaccount/index.php:121
 msgid "Please read the following before filling in the web form below."
-msgstr "Please read the following before filling in the web form below."
+msgstr "Lees het volgende voor het invullen de onderstaande webformulier."
 
 #: myaccount/index.php:123
 msgid ""
 "- Any items returned without a returns form enclosed will not be entertained"
 msgstr ""
-"- Any items returned without a returns form enclosed will not be entertained"
+"- Alle producten  geretourneerd zonder een retourformulier zal niet in "
+"behandeling genomen worden."
 
 #: myaccount/index.php:124
 msgid "- Read our returns policy that can be found at the bottom of this page"
-msgstr "- Read our returns policy that can be found at the bottom of this page"
+msgstr "- Lees onze retourbeleid die u kunt vinen onderaan deze pagina"
 
 #: myaccount/index.php:125
 msgid ""
@@ -1515,33 +1528,33 @@ msgid ""
 "confirm your intention to return your goods and we will then advise you with "
 "our returns address"
 msgstr ""
-"- Kindly use our webform for &quot;Faulty goods or returned items&quot; to "
-"confirm your intention to return your goods and we will then advise you with "
-"our returns address"
+"- Gelieve gebruik te maken van onze webformulier voor &quot;Defecte goederen "
+"of geretourneerde producten&quot; om te bevestigen dat u goederen wenst te "
+"retourneren en wij zullen dan adviseren u met onze retouradres"
 
 #: myaccount/index.php:127
 msgid "Personal Details"
-msgstr "Personal Details"
+msgstr "Persoonlijke gegevens"
 
 #: myaccount/index.php:134 myaccount/index.php:135 myaccount/index.php:320
 #: myaccount/index.php:321 myaccount/login.php:93 myaccount/login.php:94
 msgid "Surname"
-msgstr "Surname"
+msgstr "Voornaam"
 
 #: myaccount/index.php:151 myaccount/index.php:152 myaccount/index.php:345
 #: myaccount/index.php:346 myaccount/login.php:54 myaccount/login.php:55
 msgid "State"
-msgstr "State"
+msgstr "Provincie"
 
 #: myaccount/index.php:155 myaccount/index.php:156 myaccount/index.php:350
 #: myaccount/login.php:59
 msgid "Address Line 1"
-msgstr "Address Line 1"
+msgstr "Adres 1"
 
 #: myaccount/index.php:159 myaccount/index.php:160 myaccount/index.php:351
 #: myaccount/login.php:60
 msgid "Address Line 2"
-msgstr "Address Line 2"
+msgstr "Adres 2"
 
 #: myaccount/index.php:163 myaccount/index.php:164 myaccount/index.php:354
 #: myaccount/index.php:355
@@ -1550,51 +1563,51 @@ msgstr "Postcode"
 
 #: myaccount/index.php:170
 msgid "Order Details"
-msgstr "Order Details"
+msgstr "Orderdetails"
 
 #: myaccount/index.php:173 myaccount/index.php:174
 msgid "Order number"
-msgstr "Order number"
+msgstr "Ordernummer"
 
 #: myaccount/index.php:180
 msgid "Product Details"
-msgstr "Product Details"
+msgstr "Productdetails"
 
 #: myaccount/index.php:183 myaccount/index.php:184
 msgid "Product Returned"
-msgstr "Product Returned"
+msgstr "Product Geretourneerd"
 
 #: myaccount/index.php:198
 msgid "Serial No"
-msgstr "Serial No"
+msgstr "Serienummer"
 
 #: myaccount/index.php:205
 msgid "Returns Details"
-msgstr "Returns Details"
+msgstr "Retourgegevens"
 
 #: myaccount/index.php:208 myaccount/index.php:209
 msgid "Reasons for Returns"
-msgstr "Reasons for Returns"
+msgstr "Reden voor retour"
 
 #: myaccount/index.php:222 myaccount/index.php:223
 msgid "Action Required"
-msgstr "Action Required"
+msgstr "Actie vereist"
 
 #: myaccount/index.php:235 myaccount/index.php:236
 msgid "Detailed Description of Fault"
-msgstr "Detailed Description of Fault"
+msgstr "Gedetailleerde omschrijving defect"
 
 #: myaccount/index.php:244
 msgid "ValueBasket Returns Policy"
-msgstr "ValueBasket Returns Policy"
+msgstr "9digital retournbeleid"
 
 #: myaccount/index.php:247
 msgid ""
 "Where the dispatch has been made, you may request for a refund up to 14 days "
 "after the goods are delivered."
 msgstr ""
-"Where the dispatch has been made, you may request for a refund up to 14 days "
-"after the goods are delivered."
+"Indien de verzending is gemaakt, kunt u een verzoek om terugbetaling tot 14 "
+"dagen nadat de goederen zijn geleverd."
 
 #: myaccount/index.php:248
 msgid ""
@@ -1602,39 +1615,44 @@ msgid ""
 "you are eligible for a refund, Valuebasket.com will provide authorization "
 "and a returns address if appropriate."
 msgstr ""
-"To submit a returns request, simply email us to start the process.  Where "
-"you are eligible for a refund, Valuebasket.com will provide authorization "
-"and a returns address if appropriate."
+"Om een retourverzoek in te dienen, kunt u met een e-mail het proces te "
+"starten. Wanneer u in aanmerking komt voor een terugbetaling, zal 9digital."
+"nl toestemming verlenen en een retouradres geven indien deze van toepassing "
+"is."
 
 #: myaccount/index.php:249
 msgid "Returning an order within the 14-day grace period from delivery date;"
-msgstr "Returning an order within the 14-day grace period from delivery date;"
+msgstr ""
+"Retourneren van een bestelling binnen de 14-dagen bedenktijd vanaf "
+"leveringsdatum;"
 
 #: myaccount/index.php:251
 msgid "that are new unopened item, will be eligible for refund"
-msgstr "that are new unopened item, will be eligible for refund"
+msgstr ""
+"de nieuwe ongeopende producten, komen in aanmerking voor een restitutie"
 
 #: myaccount/index.php:252
 msgid ""
 "that are found to be faulty will be eligible for replacement order or refund"
 msgstr ""
-"that are found to be faulty will be eligible for replacement order or refund"
+"die een defect hebben, komen in aanmerking voor vervangingsbestelling of "
+"restitutie"
 
 #: myaccount/index.php:255
 msgid ""
 "Good returned for a refund must be in their original condition with all "
 "original packing, accessories and included materials."
 msgstr ""
-"Good returned for a refund must be in their original condition with all "
-"original packing, accessories and included materials."
+"Geretourneerde goederen voor een restitutie moeten in hun originele staat "
+"met alle originele verpakkingen, accessoires en materialen bevatten."
 
 #: myaccount/index.php:256
 msgid ""
 "You must take all due reasonable care of the goods and return them in its "
 "original and undamaged condition."
 msgstr ""
-"You must take all due reasonable care of the goods and return them in its "
-"original and undamaged condition."
+"U bent verantwoordelijk voor de goederen en deze te retourneren in de "
+"originele en onbeschadigde staat."
 
 #: myaccount/index.php:257
 msgid ""
@@ -1643,48 +1661,56 @@ msgid ""
 "the item(s) are found to be defective and if proper authorization from "
 "ValueBasket.com is sought and provided prior to the return of the item(s)."
 msgstr ""
-"You will agree to bear the costs of returning the item(s).  The cost "
-"incurred in returning the item(s) may be eligible for reimbursement where "
-"the item(s) are found to be defective and if proper authorization from "
-"ValueBasket.com is sought and provided prior to the return of the item(s)."
+"U zal instemmen verantwoordelijk te zijn voor de kosten voor het terugzenden "
+"van het product(en). De kosten van het terugzenden van het product(en) "
+"kunnen in aanmerking komen voor vergoeding wanneer de product(en) defect "
+"blijken te zijn, als de juiste toestemming van 9digital.nl wordt aangevraagd "
+"en toegekend voorafgaande het retourneren van de product(en)."
 
 #: myaccount/index.php:258
 msgid ""
 "Where the purchases are opened and are of usable software, consumable goods, "
 "or items impacted by hygiene, such items will be ineligible for refund."
 msgstr ""
-"Where the purchases are opened and are of usable software, consumable goods, "
-"or items impacted by hygiene, such items will be ineligible for refund."
+"Wanneer de aankopen zijn geopend en zijn van bruikbare software, "
+"verbruiksgoederen of items beïnvloed door hygiëne, zullen dergelijke items "
+"niet in aanmerking komen voor een restitutie."
 
 #: myaccount/index.php:259
 msgid "A restocking fee may be applicable at the discretion of ValueBasket.com"
 msgstr ""
-"A restocking fee may be applicable at the discretion of ValueBasket.com"
+"Een herbevoorraadkosten kunnen van toepassing zijn naar het oordeel van "
+"9digital.nl."
 
 #: myaccount/index.php:260
 msgid "An admin fee may be incurred if no fault found or fault caused by user"
-msgstr "An admin fee may be incurred if no fault found or fault caused by user"
+msgstr ""
+"Een administratieve vergoeding kan in rekening gebracht worden, wanneer er "
+"geen fout/defect gevonden wordt of defecten veroorzaakt zijn door de "
+"gebruiker."
 
 #: myaccount/index.php:267 myaccount/index.php:271
 msgid "Declaration"
-msgstr "Declaration"
+msgstr "Verklaring"
 
 #: myaccount/index.php:272
 msgid "I declare that I have read and agree to the Returns Policy"
-msgstr "I declare that I have read and agree to the Returns Policy"
+msgstr ""
+"Hierbij verklaar ik het bovengenoemde te hebben gelezen, begrepen en akkoord "
+"te hebben bevonden."
 
 #: myaccount/index.php:285
 msgid "Profile"
-msgstr "Profile"
+msgstr "Profiel"
 
 #: myaccount/index.php:288 myaccount/login.php:105 myaccount/login.php:108
 #: myaccount/login.php:109
 msgid "Email Address"
-msgstr "Email Address"
+msgstr "E-mailadres"
 
 #: myaccount/index.php:293 myaccount/index.php:294
 msgid "Old Password"
-msgstr "Old Password"
+msgstr "Oud wachtwoord"
 
 #: myaccount/index.php:297 myaccount/login.php:118
 msgid ""
@@ -1692,89 +1718,89 @@ msgid ""
 "make your password secure by including a mixture of upper and lower case "
 "characters, numbers and symbols (e.g. #, @, !)"
 msgstr ""
-"Password must be between 6 to 20 characters in length. We recommend that you "
-"make your password secure by including a mixture of upper and lower case "
-"characters, numbers and symbols (e.g. #, @, !)"
+"Wachtwoord moet tussen de 6 tot 20 tekens lang zijn. Wij raden u aan uw "
+"wachtwoord veiliger te maken door een combinatie van hoofdletters en kleine "
+"letters, cijfers en symbolen (bijv. #, @,!)"
 
 #: myaccount/index.php:300 myaccount/index.php:301
 msgid "Choose a New Password"
-msgstr "Choose a New Password"
+msgstr "Kies een nieuw wachtwoord"
 
 #: myaccount/index.php:300 myaccount/index.php:304
 msgid "(Optional)"
-msgstr "(Optional)"
+msgstr "(Optioneel)"
 
 #: myaccount/index.php:304 myaccount/index.php:305
 msgid "Re-enter New Password"
-msgstr "Re-enter New Password"
+msgstr "Nieuw wachtwoord opnieuw invoeren"
 
 #: myaccount/index.php:308 myaccount/login.php:85
 msgid "Title"
-msgstr "Title"
+msgstr "Titel"
 
 #: myaccount/index.php:324 myaccount/index.php:325 myaccount/login.php:101
 msgid "Company Name"
-msgstr "Company Name"
+msgstr "Bedrijfsnaam"
 
 #: myaccount/index.php:329
 msgid "Billing Address"
-msgstr "Billing Address"
+msgstr "Factuuradres"
 
 #: myaccount/index.php:349 myaccount/login.php:58
 msgid "Address"
-msgstr "Address"
+msgstr "Adres"
 
 #: myaccount/index.php:358
 msgid "Phone"
-msgstr "Phone"
+msgstr "Telefoon"
 
 #: myaccount/index.php:369 myaccount/index.php:370 myaccount/login.php:78
 msgid "Number"
-msgstr "Number"
+msgstr "Nummer"
 
 #: myaccount/login.php:9
 msgid "Existing Customer"
-msgstr "Existing Customer"
+msgstr "Bestaande klant"
 
 #: myaccount/login.php:22
 msgid "Log In"
-msgstr "Log In"
+msgstr "Login"
 
 #: myaccount/login.php:31
 msgid ""
 "Order shipped? Track your delivery progress by entering your tracking number "
 "below:"
 msgstr ""
-"Order shipped? Track your delivery progress by entering your tracking number "
-"below:"
+"Order verzonden? Traceer uw verzending door uw tracenummer hieronder in te "
+"vullen:"
 
 #: myaccount/login.php:39
 msgid "Delivery Address"
-msgstr "Delivery Address"
+msgstr "Leveringsadres"
 
 #: myaccount/login.php:63 myaccount/login.php:64
 msgid "Postal code"
-msgstr "Postal code"
+msgstr "Postcode"
 
 #: myaccount/login.php:82
 msgid "Recipient Details"
-msgstr "Recipient Details"
+msgstr "Ontvangersgegevens"
 
 #: myaccount/login.php:112 myaccount/login.php:113
 msgid "Confirm Email Address"
-msgstr "Confirm Email Address"
+msgstr "Bevestig E-mailadres"
 
 #: myaccount/login.php:121 myaccount/login.php:122
 msgid "New Password"
-msgstr "New Password"
+msgstr "Nieuw wachtwoord"
 
 #: myaccount/login.php:125 myaccount/login.php:126
 msgid "Confirm Password"
-msgstr "Confirm Password"
+msgstr "Bevestig wachtwoord"
 
 #: product/detail.php:23 product/detail.php:31 product/related_product.php:16
 msgid "Sale"
-msgstr "Sale"
+msgstr "Uitverkoop"
 
 #: product/detail.php:82
 #, php-format
@@ -1783,47 +1809,47 @@ msgstr "%s review(s)"
 
 #: product/detail.php:82
 msgid "Write a review"
-msgstr "Write a review"
+msgstr "Schrijf een review"
 
 #: product/detail.php:93
 msgid "Availability"
-msgstr "Availability"
+msgstr "Beschikbaarheid"
 
 #: product/detail.php:97 product/detail.php:103
 msgid " In Stock"
-msgstr " In Stock"
+msgstr "Op voorraad"
 
 #: product/detail.php:99
 msgid "Out of Stock"
-msgstr "Out of Stock"
+msgstr "Niet op voorraad"
 
 #: product/detail.php:101
 msgid "Pre Order"
-msgstr "Pre Order"
+msgstr "Pre-order"
 
 #: product/detail.php:112
 msgid "Qty:"
-msgstr "Qty:"
+msgstr "Aantal:"
 
 #: product/detail.php:135
 msgid "4-7 working days delivery"
-msgstr "4-7 working days delivery"
+msgstr "4-7 werkdagen levering"
 
 #: product/detail.php:169
 msgid "Specification"
-msgstr "Specification"
+msgstr "Specificatie"
 
 #: product/detail.php:170
 msgid "Overview"
-msgstr "Overview"
+msgstr "Overzicht"
 
 #: product/detail.php:171
 msgid "In the box"
-msgstr "In the box"
+msgstr "In de doos"
 
 #: product/detail.php:172
 msgid "Recommended Accessories"
-msgstr "Recommended Accessories"
+msgstr "Aanbevolen Accessoires"
 
 #: product/detail.php:173
 #, php-format
@@ -1832,62 +1858,62 @@ msgstr "Reviews %s"
 
 #: product/related_product.php:4
 msgid "Related Products"
-msgstr "Related Products"
+msgstr "Gerelateerde Producten"
 
 #: review.php:5 reviewEmptyCart.php:5
 msgid "Shopping Cart"
-msgstr "Shopping Cart"
+msgstr "Winkelwagen"
 
 #: review.php:11
 msgid "Image"
-msgstr "Image"
+msgstr "Afbeelding"
 
 #: review.php:12
 msgid "Product Name"
-msgstr "Product Name"
+msgstr "Productnaam"
 
 #: review.php:13
 msgid "Quantity"
-msgstr "Quantity"
+msgstr "Aantal"
 
 #: review.php:14
 msgid "Unit Price"
-msgstr "Unit Price"
+msgstr "stukprijs"
 
 #: review.php:30
 msgid "Update"
-msgstr "Update"
+msgstr "Verversen"
 
 #: review.php:31
 msgid "Remove"
-msgstr "Remove"
+msgstr "Verwijderen"
 
 #: review.php:48
 msgid "Subtotal"
-msgstr "Subtotal"
+msgstr "Subtotaal"
 
 #: review.php:52
 msgid "Shipping"
-msgstr "Shipping"
+msgstr "Verzending"
 
 #: review.php:64 reviewEmptyCart.php:7
 msgid "Continue Shopping"
-msgstr "Continue Shopping"
+msgstr "Veder winkelen"
 
 #: reviewEmptyCart.php:6
 msgid "Empty Cart"
-msgstr "Empty Cart"
+msgstr "Lege winkelwagen"
 
 #: search.php:118
 #, php-format
 msgid "%s to %s of %s"
-msgstr "%s to %s of %s"
+msgstr "%s tot %s van %s"
 
 #: search.php:124
 #, php-format
 msgid " Search Results for \"%s\""
-msgstr " Search Results for \"%s\""
+msgstr "Zoekresultaten voor \"%s\""
 
 #: search.php:162
 msgid "Display"
-msgstr "Display"
+msgstr ""
