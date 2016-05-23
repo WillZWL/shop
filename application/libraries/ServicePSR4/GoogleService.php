@@ -20,7 +20,8 @@ class GoogleService extends BaseService
         , "WEBPL" => ["account_name" => "ElektroRaj PL", "account_id" => 106487577, "country" => array("PL"), "language" => array("pl")]
         , "WEBBE" => ["account_name" => "NumeriStock BE", "account_id" => 106487592, "country" => array("BE"), "language" => array("fr")]
         , "WEBFR" => ["account_name" => "NumeriStock FR", "account_id" => 106487574, "country" => array("FR"), "language" => array("fr")]
-        , "WEBIT" => ["account_name" => "NuovaDigitale IT", "account_id" => 106501714, "country" => array("IT"), "language" => array("it")]];
+        , "WEBIT" => ["account_name" => "NuovaDigitale IT", "account_id" => 106501714, "country" => array("IT"), "language" => array("it")]
+        , "WEBNL" => ["account_name" => "9Digital NL", "account_id" => 111353546, "country" => array("NL"), "language" => array("nl")]];
 
     public function __construct() {
         parent::__construct();
