@@ -87,7 +87,7 @@ class CronProductDelivery extends MY_Controller
                 $debug_msg .= "<br>END PLATFORM $platform_id. Total: $i <hr></hr>";
                 $headers = "From: admin@digitaldiscount.co.uk\r\n";
                 $message = "Delivery timeframe triggered for platform_id: $platform_id. Generated @ GMT 0 ".date("Y-m-d H:i:s");
-                mail("bd@eservicesgroup.net", "[Panther] $platform_id - Delivery timeframe triggerd", $message, $headers);
+                mail("bd@eservicesgroup.net", "[Panther] $platform_id - Delivery timeframe triggered", $message, $headers);
             }
         } else {
             $error_msg = __FILE__ . " Line " . __LINE__ . " \nCannot get selling platforms list. No products updated. \nDB error: " . $this->db->_error_message();
