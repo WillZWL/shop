@@ -9,42 +9,56 @@
         <div id="notification"></div>
     </div>
 </div>
+<?php
+    $siteobj = \PUB_Controller::$siteInfo;
+    $lang_id = $siteobj->getLangId();
 
-
+    $banner_total = 2;
+?>
 <div class="pav-container ">
-                        <div class="pav-inner ">
-                            <div class="row row-level-1 ">
-                                <div class="row-inner clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-inner ">
-                                            <script type="text/javascript">
-                                                $(document).ready(function() {
-                                                    $('#iview').iView({
-                                                        pauseTime: 9000,
-                                                        directionNav: false,
-                                                        directionNavHide: false,
-                                                        controlNavNextPrev: true,
-                                                        controlNav: true,
-                                                        tooltipY: -15,
-                                                    });
-                                                });
-                                            </script>
-                                            <div class="layerslider-wrapper carousel slide pavcontentslider">
-                                                <div class="fix-margin-right" style="padding: 0;margin: 0 0 50px !important;">
-                                                      <div id="iview" class="hidden-xs" style="width:100%;height:300px; " >
-                                                        <div data-iview-thumbnail="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-image="<?= base_url('/images/banner/banner.jpg') ?>" data-iview-transition="slice-top-fade,slice-right-fade">
-                                                            <div class="iview-caption tp-caption " data-start="632" data-x="299" data-y="172" data-width="600" data-transition="fade">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="pav-inner ">
+        <div class="row row-level-1 ">
+            <div class="row-inner clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-inner ">
+                        <div id="carousel-example-generic" class="carousel slide carousel-banner" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                            <?php
+                                for ($i=1; $i <= $banner_total; $i++) :
+                                    $active = $i == 1 ? 'active' : "";
+                            ?>
+                                <li data-target="#carousel-example-generic" data-slide-to="<?= ($i - 1) ?>" class="<?= $active ?>"></li>
+                            <?php
+                                endfor;
+                            ?>
+                            </ol>
+                            <div class="carousel-inner" role="listbox" style="width:100%;max-height:300px; ">
+                            <?php
+                                for ($i=1; $i <= $banner_total; $i++) :
+                                    $active = $i == 1 ? ' active' : "";
+                            ?>
+                                <div class="item<?= $active ?>">
+                                    <img data-src="<?= base_url('/images/banner/'. $lang_id .'_banner'.$i.'.jpg') ?>"
+                                    src="<?= base_url('/images/banner/'. $lang_id .'_banner'.$i.'.jpg') ?>"
+                                    data-holder-rendered="true">
                                 </div>
+                            <?php
+                                endfor;
+                            ?>
                             </div>
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /sys-notification -->
 <div class="main-columns container-fluid">
     <div class="row">
