@@ -163,6 +163,8 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                 $soNumber = $data["transaction_id"];
                 $this->so = $this->getSo($soNumber);
                 if ($this->so) {
+                    if (isset($data["mb_transaction_id"]))
+                        $this->so->setTxnId($data["mb_transaction_id"]);
                     if (($data["mb_amount"] == 0)
                         || ($this->so->getAmount() != $data["mb_amount"])) {
                         $sopsPara[$remark] = "status:invalid amount" . $data["mb_amount"];
@@ -234,6 +236,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                 $siteDown = true;
             } else {
                 $redirectUrl = MoneybookersRequest::MONEYBOOKERS_SERVER_PAYMENT . "?sid=" . $session;
+                $responseData = $redirectUrl;
                 $callResult = true;
             }
         } else {
