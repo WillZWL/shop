@@ -3,11 +3,12 @@
 class ClientVo extends \BaseVo
 {
     private $id;
-    private $ext_client_id;
+    private $ext_client_id = '';
     private $client_id_no = '';
     private $email;
     private $password;
-    private $title;
+    private $verify_code;
+    private $title = '';
     private $forename;
     private $surname;
     private $companyname;
@@ -16,29 +17,29 @@ class ClientVo extends \BaseVo
     private $address_3;
     private $postcode;
     private $city;
-    private $state;
+    private $state = '';
     private $country_id;
     private $del_name;
     private $del_company;
     private $del_address_1;
-    private $del_address_2;
-    private $del_address_3;
+    private $del_address_2 = '';
+    private $del_address_3 = '';
     private $del_postcode;
     private $del_city;
-    private $del_state;
+    private $del_state = '';
     private $del_country_id;
     private $tel_1;
     private $tel_2;
     private $tel_3;
-    private $mobile;
+    private $mobile = '';
     private $del_tel_1;
     private $del_tel_2;
     private $del_tel_3;
-    private $del_mobile;
+    private $del_mobile = '';
     private $subscriber = '0';
     private $party_subscriber = '0';
     private $vip = '0';
-    private $vip_joined_date;
+    private $vip_joined_date = '';
     private $status = '1';
 
     protected $primary_key = ['id'];
@@ -102,6 +103,18 @@ class ClientVo extends \BaseVo
     public function getPassword()
     {
         return $this->password;
+    }
+
+    public function setVerifyCode($verify_code)
+    {
+        if ($verify_code !== null) {
+            $this->verify_code = $verify_code;
+        }
+    }
+
+    public function getVerifyCode()
+    {
+        return $this->verify_code;
     }
 
     public function setTitle($title)

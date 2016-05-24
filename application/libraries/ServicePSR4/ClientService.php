@@ -12,8 +12,9 @@ class ClientService extends BaseService
     {
         parent::__construct();
         $CI =& get_instance();
-        $CI->load->library('encryption');
+        $CI->load->library(array('encryption', 'encrypt'));
         $this->encryption = $CI->encryption;
+        $this->encrypt = $CI->encrypt;
     }
 
     public function login($email, $password)
@@ -136,10 +137,21 @@ class ClientService extends BaseService
         if ($checkInfoDto->getEmail())
             $clientObj->setEmail($checkInfoDto->getEmail());
 
+        $ck_pwd = 0;
         if ($checkInfoDto->getBillPassword()) {
             $clientObj->setPassword($this->encryption->encrypt($checkInfoDto->getBillPassword()));
-        } elseif (!$clientObj->getPassword())
+            $ck_pwd += 1;
+        } elseif (!$clientObj->getPassword()) {
             $clientObj->setPassword($this->encryption->encrypt(mktime()));
+            $ck_pwd += 1;
+        }
+
+        if ($ck_pwd > 0) {
+            $depassword = $this->encryption->decrypt($clientObj->getPassword());
+            $encryptCode = $this->encrypt->encode($depassword);
+
+            $clientObj->setVerifyCode($encryptCode);
+        }
 
         if ($checkInfoDto->getExtClientId())
             $clientObj->setExtClientId($checkInfoDto->getExtClientId());
@@ -327,6 +339,12 @@ class ClientService extends BaseService
             return 0;
         }
         $client_obj->setPassword($this->encryption->encrypt($newPassword));
+
+        $depassword = $this->encryption->decrypt($client_obj->getPassword());
+        $encryptCode = $this->encrypt->encode($depassword);
+
+        $client_obj->setVerifyCode($encryptCode);
+
         $result = $this->getDao('Client')->update($client_obj);
         return $result;
     }
