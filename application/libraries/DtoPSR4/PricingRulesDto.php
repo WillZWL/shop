@@ -17,6 +17,7 @@ class PricingRulesDto
     private $saturday = '0';
     private $sunday = '0';
     private $status;
+    private $need_round_nearest;
     private $create_on;
     private $create_at;
     private $create_by;
@@ -183,6 +184,17 @@ class PricingRulesDto
     {
         return $this->status;
     }
+
+     public function setNeedRoundNearest($need_round_nearest)
+    {
+        $this->status = $need_round_nearest;
+    }
+
+    public function getNeedRoundNearest()
+    {
+        return $this->need_round_nearest;
+    }
+    
 
     public function setCreateOn($create_on)
     {

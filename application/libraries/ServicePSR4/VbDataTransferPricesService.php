@@ -79,7 +79,12 @@ class VbDataTransferPricesService extends VbDataTransferService
 
                     if ($pricing_rule_obj) {
                         $min_margin = $pricing_rule_obj->getMinMargin();
-
+                        //Strat Round Nearest Price
+                        if($pricing_rule_obj->getNeedRoundNearest() == "Y"){
+                           //$required_selling_price=round($required_selling_price)-0.01;
+                           $required_selling_price=ceil($required_selling_price)-0.01;
+                        }
+                        //End Round Nearest Price
                         if ($new_margin < $min_margin) {
                             $reason = "Error in margin. New: " . $new_margin . " New Price: " . $price_obj->getPrice();
                             $result_status = 6;
@@ -155,6 +160,12 @@ class VbDataTransferPricesService extends VbDataTransferService
                 $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup / 100);
             }
         }
+        //Strat Round Nearest Price
+        if($pricing_rule_obj->getNeedRoundNearest() == "Y"){
+           //$required_selling_price=round($required_selling_price)-0.01;
+           $required_selling_price=ceil($required_selling_price)-0.01;
+        }
+        //End Round Nearest Price
 
         $vb_price_obj->required_selling_price = $required_selling_price;
     }
