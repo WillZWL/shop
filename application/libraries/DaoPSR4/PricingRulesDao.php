@@ -73,11 +73,11 @@ class PricingRulesDao extends BaseDao
         return false;
     }
 
-    public function getPricingRulesByPlatform($where = [], $option = [], $classname = 'PricingRulesVo')
+    public function getPricingRulesByPlatform($where = [], $option = [], $classname = 'PricingRulesDto')
     {
         $this->db->from('pricing_rules as pr');
         $this->db->join('platform_biz_var as pbv', 'pbv.platform_country_id = pr.country_id', 'INNER');
-        $select_str = 'pr.id, pr.country_id, pr.range_min, pr.range_max, pr.mark_up_value, pr.mark_up_type, pr.min_margin';
+        $select_str = 'pr.id, pr.country_id, pr.range_min, pr.range_max, pr.mark_up_value, pr.mark_up_type, pr.min_margin,pbv.need_round_nearest';
 
         return $this->commonGetList($classname, $where, $option, $select_str);
     }

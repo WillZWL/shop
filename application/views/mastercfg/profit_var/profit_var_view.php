@@ -110,6 +110,15 @@
                 <span id="curr2"><?= $profit_obj->getPlatformCurrencyId() ?></span></td>
             </tr>
             <tr>
+                <td width="150" class="field">&nbsp;&nbsp;<?= $lang["need_round_nearest"] ?></td>
+                <td height="20" class="value">&nbsp;&nbsp;
+                    <select name="need_round_nearest">
+                        <option value="Y" <?= ($profit_obj->getNeedRoundNearest() == "Y" ? "SELECTED" : "") ?>><?= $lang["YES"] ?></option>
+                        <option value="N" <?= ($profit_obj->getNeedRoundNearest() == "N" ? "SELECTED" : "") ?>><?= $lang["NO"] ?></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td width="150" class="field">&nbsp;&nbsp;<?= $lang["country"] ?></td>
                 <td height="20" class="value">&nbsp;&nbsp;<select name="platform_country_id"
                                                                   class="input" <?= $editable ? "" : "DISABLED" ?>><?php
