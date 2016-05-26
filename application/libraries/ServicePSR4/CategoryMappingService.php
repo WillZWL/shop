@@ -63,7 +63,6 @@ class CategoryMappingService extends BaseService
         $newObj->setLangId((string) $obj->lang_id);
         $newObj->setCountryId((string) $obj->country_id);
         $this->updateCategoryMapping($newObj, $obj);
-
         return $newObj;
     }
 
