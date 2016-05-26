@@ -232,7 +232,7 @@ abstract class PmgwReportService extends BaseService
                     $ifsf_dao = $this->getDao('InterfaceFlexSoFee');
                     $fsf_vo = $fsf_dao->get();
                     $where = ["so_no" => $ifsf_obj->getSoNo(), "gateway_id" => $ifsf_obj->getGatewayId(), "status" => $ifsf_obj->getStatus(), "txn_id" => $ifsf_obj->getTxnId(), "txn_time" => $ifsf_obj->getTxnTime()];
-                    if (($fsf_obj = $fsf_dao->getList($where))) {
+                    if (($fsf_obj = $fsf_dao->getList($where, array('limit'=>1)))) {
                         if (($fsf_obj->getAmount() == $ifsf_obj->getAmount())) {
                             $this->updateInterfaceSoFeeStatusByGroup($batch_id, $ifsf_obj->getSoNo(), $ifsf_obj->getStatus(), "C", "duplicated record");
                         } else {
