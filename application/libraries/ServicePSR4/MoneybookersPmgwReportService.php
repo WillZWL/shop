@@ -204,7 +204,7 @@ class MoneybookersPmgwReportService extends PmgwReportService
                 if ($ifgf_dao = $this->getDao('InterfaceFlexGatewayFee')->insert($ifgf_obj)) {
                     if ($ifsf_obj = $this->getDao('InterfaceFlexSoFee')->get(["txn_id" => $nut_obj->getTxnId(), "gateway_id" => $this->getPmgw(), "status" => $nut_obj->getStatus()])) {
                         $ifsf_obj->setBatchStatus("S");
-                        $ifsf_obj->setFailedReason("move from interface_so_fee to interface_gateway_fee");
+                        $ifsf_obj->setFailedReason("move from interface_flex_so_fee to interface_flex_gateway_fee");
                         $this->getDao('InterfaceFlexSoFee')->update($ifsf_obj);
                     }
                 }
