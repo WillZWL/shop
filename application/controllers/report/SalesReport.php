@@ -54,7 +54,7 @@ class SalesReport extends MY_Controller
                     $where['(soid.profit > 0 OR clearance = 0)'] = null;
                     break;
             }
-            $data['output'] = $this->sc['RptSales']->getCsv($from_date, $to_date, $where, $is_sales_rpt, $is_light_version);
+            $data['output'] = $this->sc['RptSales']->getCsv($where, $is_sales_rpt, $is_light_version);
             if ($is_light_version) {
                 $data['filename'] = "light_sales_report.csv";
             } else {
@@ -125,19 +125,19 @@ class SalesReport extends MY_Controller
                 }
             }
             // if any errors, redirect back with notice
-            Redirect(base_url() . "report/sales_report/split_orders_report");
+            Redirect(base_url() . "report/salesReport/splitOrdersReport");
         }
         $this->load->view('report/split_orders_report', $data);
     }
 
     private function querySplitOrder()
     {
-        $data['lang'] = $this->_load_parent_lang();
+        $data['lang'] = $this->loadParentLang();
         $ret["status"] = false;
         if ($this->input->post('is_query')) {
             $from_date = $this->input->post("start_date");
             $to_date = $this->input->post("end_date");
-            $ret = $this->sc['RptSalesService']->getSplitOrderCsv($from_date, $to_date);
+            $ret = $this->sc['RptSales']->getSplitOrderCsv($from_date, $to_date);
 
         }
         return $ret;

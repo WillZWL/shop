@@ -48,7 +48,7 @@ class SoDao extends BaseDao
                 sops.pay_date,
                 DATEDIFF(NOW(),sops.pay_date) AS pay_day_diff,
                 soprs.score AS priority_score,
-                soid.line_no, skum.ext_sku AS master_sku, soid.item_sku, p.`name`,
+                soid.line_no, sm.ext_sku AS master_sku, soid.item_sku, p.`name`,
                 soid.qty,
                 so.currency_id, soid.amount,
                 so.expect_del_days,
@@ -71,14 +71,14 @@ class SoDao extends BaseDao
             FROM so
             INNER JOIN so_item_detail soid on soid.so_no = so.so_no
             LEFT JOIN so_payment_status sops ON sops.so_no = so.so_no
-            LEFT JOIN sku_mapping skum ON skum.sku = soid.item_sku AND skum.ext_sys = 'WMS' AND skum.`status` = 1
+            LEFT JOIN sku_mapping sm ON sm.sku = soid.item_sku AND sm.ext_sys = 'WMS' AND sm.`status` = 1
             LEFT JOIN so_priority_score soprs ON soprs.so_no = so.so_no
             INNER JOIN product p ON p.sku = soid.item_sku
             INNER JOIN category c ON c.id = p.cat_id
             LEFT JOIN (SELECT DISTINCT(sku) FROM ra_group_product) AS ragp ON ragp.sku = soid.item_sku
             LEFT JOIN supplier_prod sp ON sp.prod_sku = soid.item_sku AND sp.order_default = 1
             LEFT JOIN supplier s ON s.id = sp.supplier_id
-            LEFT JOIN wms_inventory wmsi ON wmsi.master_sku = skum.ext_sku AND wmsi.warehouse_id = 'ALN'
+            LEFT JOIN wms_inventory wmsi ON wmsi.master_sku = sm.ext_sku AND wmsi.warehouse_id = 'ALN'
             WHERE
                 so.so_no IN
                 (
@@ -1240,26 +1240,31 @@ SQL;
 
     public function getConfirmedSo($where = [], $option = [])
     {
-        $select_str = "so.platform_id, sps.payment_gateway_id, sps.pay_date, sps.payment_status, so.biz_type, ore.reason as order_reason,
-                    so.txn_id, so.so_no, so.split_so_group, sid.line_no, so.platform_order_id, soex.conv_site_id, sa.warehouse_id,
+        if($option['is_light_version']) {
+            $select_str = "so.platform_id, sps.payment_gateway_id, sps.modify_on, sps.payment_status, so.biz_type, ore.reason as order_reason, sid.line_no, so.platform_order_id, so.split_so_group, soex.conv_site_id,
                     cat.name cat_name, sc.name sub_cat_name, b.brand_name, p.name prod_name,
-                    p.sku, sm.ext_sku, sup.name, sid.qty, so.dispatch_date, so.order_create_date, so.currency_id,
-                    sid.vat_total,  sid.profit profit, sid.margin margin,
-                    sid.unit_price, sid.cost, so.delivery_country_id,
-                    so.promotion_code, so.delivery_type_id shipment_type, sosh.courier_id, sosh.tracking_no, so.delivery_charge,
-                    rf.refund_type, rf.refund_status, rf.refund_qty, rf.refund_amount, so.amount so_amount, so.rate, so.delivery_charge,
-                    sid.amount soid_amount, rf.refund_qty,sid.gst_total soid_gst_total,rf.total_refund_amount, pbz.payment_charge_percent,
-                    sp.type, sosh.create_on, sbt.payment_received_date, p.clearance,cl.email ";
-        if (!empty($option)) {
-            if ($option['is_light_version']) {
-               $select_str = "so.platform_id, sps.payment_gateway_id, sps.modify_on, sps.payment_status, so.biz_type, ore.reason as order_reason,
-                    sid.line_no, so.platform_order_id, so.split_so_group, soex.conv_site_id,cat.name cat_name, sc.name sub_cat_name,
-                    b.brand_name, p.name prod_name,p.sku, sid.qty, so.order_create_date, so.currency_id,sid.vat_total,
-                    sid.profit profit, sid.margin margin,sid.unit_price, sid.cost,so.promotion_code, rf.refund_status,
-                    rf.total_refund_amount,pbz.payment_charge_percent, sp.type,sid.gst_total soid_gst_total,
-                    sid.amount soid_amount,so.rate, so.amount so_amount ";
-            }
+                    p.sku, sid.supplier_status, sid.qty, so.order_create_date, so.currency_id, if(sid.line_no=1, soex.offline_fee, '0'),
+                    '' amount, '' fee, '' receivable, sid.vat_total,  sid.profit profit, sid.margin margin,
+                    sid.unit_price, sid.cost,
+                    so.promotion_code, if(sid.line_no=1, so.delivery_type_id, '') as shipment_type,  if(sid.line_no=1, so.delivery_charge, '') as delivery_charge, rf.refund_status,rf.total_refund_amount,pbz.payment_charge_percent, sp.type,sid.gst_total soid_gst_total,
+                    sid.amount soid_amount,so.rate, so.amount so_amount";
+        } else {
+            $select_str  ="so.platform_id, sps.payment_gateway_id, sps.pay_date, sps.payment_status, so.biz_type, ore.reason as order_reason, so.txn_id, so.so_no, so.split_so_group, sid.line_no, so.platform_order_id, soex.conv_site_id, sa.warehouse_id,
+                    cat.name cat_name, sc.name sub_cat_name, b.brand_name, p.name prod_name,
+                    p.sku, sm.ext_sku, sid.supplier_status, sup.name, sid.qty, so.dispatch_date , so.order_create_date, so.currency_id, if(sid.line_no=1, soex.offline_fee, '0'),
+                    '' amount, '' fee, '' receivable, sid.vat_total,  sid.profit profit, sid.margin margin,
+                    sid.unit_price, sid.cost, so.delivery_country_id, '' amount_usd, '' profit_usd,sid.bundle_level,
+                    so.promotion_code, if(sid.line_no=1, so.delivery_type_id, '') as shipment_type, sosh.courier_id, sosh.tracking_no, if(sid.line_no=1, so.delivery_charge, '') as delivery_charge,
+                    rf.refund_type, rf.refund_status, rf.refund_qty, rf.refund_amount,
+                    so.amount so_amount, so.rate,
+                    sid.amount soid_amount,
+                    sid.gst_total soid_gst_total,
+                    pbz.payment_charge_percent,
+                    sp.type, sosh.create_on,
+                    sbt.payment_received_date,
+                    p.clearance,cl.email";
         }
+
         $this->db->from('so AS so');
         $this->db->join('so_extend AS soex', 'so.so_no = soex.so_no', 'LEFT');
         $this->db->join('client AS cl', 'so.client_id = cl.id', 'LEFT');
@@ -1305,7 +1310,7 @@ SQL;
     {
         $where["sops.pay_date >="] = $from_date;
         $where["sops.pay_date <="] = $to_date;
-        $where["so.split_so_group IS NOT NULL"] = null;
+        $where["so.split_so_group != ''"] = null;
         $where["so.hold_status != 15"] = null;
 
         foreach ($where as $key => $value) {
@@ -1322,10 +1327,10 @@ SQL;
 
         $sql = <<<SQL
             SELECT so.so_no, so.split_so_group, so.platform_id, so.status AS order_status, so.refund_status, so.hold_status, so.dispatch_date, so.biz_type, so.order_create_date,
-                sops.pay_date, soprs.score AS priority_score, soid.line_no, skum.ext_sku AS master_sku, soid.item_sku, p.name, soid.qty, so.currency_id, soid.amount, (soid.profit*soid.qty) as item_total_profit, so.expect_del_days
+                sops.pay_date, soprs.score AS priority_score, soid.line_no, sm.ext_sku AS master_sku, soid.item_sku, p.name, soid.qty, so.currency_id, soid.amount, (soid.profit*soid.qty) as item_total_profit, so.expect_del_days
             FROM so
             INNER JOIN so_item_detail soid ON soid.so_no = so.so_no
-            LEFT JOIN sku_mapping skum ON (skum.sku = soid.item_sku and skum.status=1 and skum.ext_sys='WMS')
+            LEFT JOIN sku_mapping sm ON (sm.sku = soid.item_sku and sm.status=1 and sm.ext_sys='WMS')
             INNER JOIN product p ON (soid.item_sku = p.sku)
             LEFT JOIN so_priority_score soprs ON soprs.so_no = so.so_no AND soprs.status = 1
             LEFT JOIN so_payment_status sops ON sops.so_no = so.so_no

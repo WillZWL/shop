@@ -22,9 +22,9 @@ $today = getdate();
                     style="font-size: 16px; color: rgb(0, 0, 0);"><?= $lang["title_split_orders"] ?></b></td>
             <td align="right" class="title">
                 <input type="button" value="<?= $lang["title"] ?>" class="button"
-                       onclick="Redirect('<?= base_url() . "report/sales_report/index" ?>')">&nbsp;
+                       onclick="Redirect('<?= base_url() . "report/salesReport/index" ?>')">&nbsp;
                 <input type="button" value="<?= $lang["title_split_orders"] ?>" class="button"
-                       onclick="Redirect('<?= base_url() . "report/sales_report/split_orders_report" ?>')">&nbsp;
+                       onclick="Redirect('<?= base_url() . "report/salesReport/splitOrdersReport" ?>')">&nbsp;
             </td>
         </tr>
         <tr>
@@ -32,7 +32,7 @@ $today = getdate();
 
         </tr>
     </table>
-    <form name="fm" action="<?= base_url() ?>report/sales_report/split_orders_report" method="post" target="report">
+    <form name="fm" action="<?= base_url() ?>report/salesReport/splitOrdersReport" method="post" target="report">
         <input type="hidden" name="is_query" value="1">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">
             <tr height="70">
