@@ -791,7 +791,7 @@ function validateCheckout()
         .fail(function(data) {
             displayCheckoutNowButton(1);
             standardWaitingScreen.hidePleaseWait();
-            alert("<?=_("Unknow error: Please contact our CS!")?>");
+            alert("<?=_("Unknown error: Please contact our CS!")?>");
         });
     });
 }
