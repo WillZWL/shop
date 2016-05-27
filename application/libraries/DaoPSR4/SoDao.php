@@ -1248,6 +1248,11 @@ SQL;
                     sid.unit_price, sid.cost,
                     so.promotion_code, if(sid.line_no=1, so.delivery_type_id, '') as shipment_type,  if(sid.line_no=1, so.delivery_charge, '') as delivery_charge, rf.refund_status,rf.total_refund_amount,pbz.payment_charge_percent, sp.type,sid.gst_total soid_gst_total,
                     sid.amount soid_amount,so.rate, so.amount so_amount";
+        } else if ($option['dispatch_report']) {
+            $select_str = "so.platform_id, sps.payment_gateway_id, so.biz_type, ore.reason as order_reason, so.txn_id, so.so_no, so.platform_order_id, soex.conv_site_id, sa.warehouse_id,
+                    cat.name cat_name, sc.name sub_cat_name, b.brand_name, p.name prod_name,
+                    sm.ext_sku, p.sku, sid.qty, so.dispatch_date, so.order_create_date, so.currency_id,  '' amount, '' fee, '' receivable, sid.vat_total,  sid.profit profit, sid.margin margin, sid.unit_price, sid.cost, so.delivery_country_id, '' amount_usd, '' profit_usd, so.promotion_code, if(sid.line_no=1, so.delivery_type_id, '') as shipment_type, sosh.courier_id, sosh.tracking_no, if(sid.line_no=1, so.delivery_charge, '') as delivery_charge, so.amount so_amount, so.rate,
+                    sid.amount soid_amount, pbz.payment_charge_percent, cl.email,  sosh.create_on";
         } else {
             $select_str  ="so.platform_id, sps.payment_gateway_id, sps.pay_date, sps.payment_status, so.biz_type, ore.reason as order_reason, so.txn_id, so.so_no, so.split_so_group, sid.line_no, so.platform_order_id, soex.conv_site_id, sa.warehouse_id,
                     cat.name cat_name, sc.name sub_cat_name, b.brand_name, p.name prod_name,
@@ -1281,7 +1286,8 @@ SQL;
         $this->db->join('brand as b', 'b.id = p.brand_id', 'INNER');
         $this->db->join('platform_biz_var AS pbz', 'pbz.selling_platform_id = so.platform_id', 'INNER');
         $this->db->join('selling_platform AS sp', 'pbz.selling_platform_id = sp.selling_platform_id', 'INNER');
-        $this->db->join("(SELECT r.so_no, r.reason, r.total_refund_amount,
+        if (!($option['dispatch_report'])) {
+            $this->db->join("(SELECT r.so_no, r.reason, r.total_refund_amount,
                     GROUP_CONCAT(r.status SEPARATOR ',') as refund_status,
                     (ri.refund_amount * ri.qty) as refund_amount , ri.item_sku, ri.qty as refund_qty, ri.refund_type
                     FROM refund_item as ri
@@ -1289,6 +1295,7 @@ SQL;
                         ON r.id = ri.refund_id
                     WHERE ri.status <> 'D'
                     GROUP BY r.so_no, r.reason, r.status, r.total_refund_amount, ri.item_sku, ri.refund_type) AS rf", 'rf.item_sku = sid.item_sku and rf.so_no = so.so_no', 'LEFT');
+        }
         $this->db->join('so_shipment AS sosh', 'sosh.sh_no = sa.sh_no', 'LEFT');
         $this->db->join("(SELECT sobt.*, MAX(sobt.received_date_localtime) AS payment_received_date
                     FROM so_bank_transfer sobt

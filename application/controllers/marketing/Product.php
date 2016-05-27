@@ -1128,28 +1128,7 @@ html;
         $lang_id_list = explode(',', $lang_id);
         foreach ($lang_id_list as $lang_id) {
             $this->product_model->product_service->translate_product_enhance_content($sku, $lang_id, $translated_product_name);
-            #SBF2701 get back the translation, then next update the googlebase product name
-            // if($translated_product_name)
-            // {
-            //  foreach($this->google_feed_arr as $cid)
-            //  {
-            //      $this->update_google_product_title($sku, $lang_id, $cid, $google_cat_id = null, $translated_product_name);
-            //  }
-            // }
         }
-
-        //copy the English product name to google product title.
-        // if($pc_obj = $this->product_model->product_service->get_pc_dao()->get(array("prod_sku"=>$sku, "lang_id"=>"en")))
-        // {
-        //  $google_product_name = $pc_obj->get_prod_name();
-        //  if($google_product_name)
-        //  {
-        //      foreach($this->google_feed_arr as $cid)
-        //      {
-        //          $this->update_google_product_title($sku, 'en', $cid, $google_cat_id = null, $google_product_name);
-        //      }
-        //  }
-        // }
 
         Redirect(base_url() . "marketing/product/view/" . $sku . "/" . $lang_id);
     }
@@ -1161,26 +1140,11 @@ html;
             show_404();
         }
 
-        switch ($sku) {
-            case "14162-AU-NA":
-            case "14161-AU-NA":
-            case "12024-AU-WH":
-            case "12024-AU-SL":
-            case "12024-AU-BK":
-                echo "This SKU has been locked by SBF#3353";
-                die();
-        }
-        // 14162-AU-NA GoPro HERO3+ Silver Edition Camera
-        // 14161-AU-NA GoPro HERO3+ Black Edition Camera
-        // 12024-AU-WH GoPro HERO3 Camera White Edition
-        // 12024-AU-SL GoPro HERO3 Camera Silver Edition
-        // 12024-AU-BK GoPro HERO3 Camera Black Edition
 
         $sub_app_id = $this->getAppId() . "02";
 
         $ar_feed = array("FROOGLE", "KELKOO", "PRICERUNNER", "PRICEGRABBER", "PRICEMINISTER");
-        // googlebase feed category, add a new country id to create a new tag
-        //$google_feed_arr = array("AU", "BE", "GB", "ES", "FR", "IT", "CH","FI", "IE", "MT", "PT");
+
 
         $data["google_feed_arr"] = $this->google_feed_arr;
 
@@ -1432,68 +1396,6 @@ html;
                                     $error_message = __LINE__ . "category.php " . $action . " Error. " . $pcc_dao->db->_error_message();
                                     $_SESSION["NOTICE"] = $error_message;
                                 }
-
-                                // $cc_dao = $this->custom_class_model->custom_class_service->get_dao();
-                                // $cc_vo = $cc_dao->get();
-                                // $action = "update_cc";
-                                //  //echo "<pre>"; var_dump($cc_vo); die();
-                                //  // $cc_obj = clone($cc_vo);
-                                //  // $cc_obj->set_country_id($ccmap[$i]['country']);
-                                //  // $cc_obj->set_code($ccmap[$i]['code']);
-                                //  // $cc_obj->set_description($this->input->post('name'));
-                                //  $cc_obj->set_duty_pcent($ccmap[$i]['duty']);
-                                //  // $ccm_obj->set_custom_class_id($cc_obj->get_id());
-
-                                // if($this->custom_class_model->$action($cc_obj) === FALSE)
-                                // {
-                                //  $error_message = __LINE__ . "category.php ".$action." Error. ".$ccm_dao->db->_error_message();
-                                //  $_SESSION["NOTICE"] = $error_message;
-                                // }
-
-                            } else {
-                                // $cc_dao = $this->custom_class_model->custom_class_service->get_dao();
-                                // $cc_vo = $cc_dao->get();
-                                // $action = "add_cc";
-                                //  //echo "<pre>"; var_dump($cc_vo); die();
-                                //  $cc_obj = clone($cc_vo);
-                                //  $cc_obj->set_country_id($ccmap[$i]['country']);
-                                //  $cc_obj->set_code($ccmap[$i]['code']);
-                                //  $cc_obj->set_description($this->input->post('name'));
-                                //  $cc_obj->set_duty_pcent($ccmap[$i]['duty']);
-                                //  // $ccm_obj->set_custom_class_id($cc_obj->get_id());
-
-                                // if($this->custom_class_model->$action($cc_obj) === FALSE)
-                                // {
-                                //  $error_message = __LINE__ . "category.php ".$action." Error. ".$cc_dao->db->_error_message();
-                                //  $_SESSION["NOTICE"] = $error_message;
-                                // }
-
-                                // $ccm_obj = $this->custom_class_model->get_ccm(array('sub_cat_id'=>$value, 'country_id'=>$ccmap[$i]['country']));
-                                // $ccm_dao = $this->custom_class_model->custom_classification_mapping_service->get_dao();
-                                // $ccm_vo = $ccm_dao->get();
-                                // //if no record we add new record
-                                // if(!$ccm_obj)
-                                // {
-                                //  $action = "insert_ccm";
-                                //  //echo "<pre>"; var_dump($ccm_vo); die();
-                                //  $ccm_obj = clone($ccm_vo);
-                                //  $ccm_obj->set_sub_cat_id($value);
-                                //  $ccm_obj->set_country_id($ccmap[$i]['country']);
-                                //  $ccm_obj->set_custom_class_id($cc_obj->get_id());
-                                // }
-                                // else
-                                // {
-                                //  // if record found then we update
-                                //  $action = "update_ccm";
-                                //  $ccm_obj->set_custom_class_id($cc_obj->get_id());
-                                // }
-
-                                // if($this->custom_class_model->$action($ccm_obj) === FALSE)
-                                // {
-                                //  $error_message = __LINE__ . "category.php ".$action." Error. ".$ccm_dao->db->_error_message();
-                                //  $_SESSION["NOTICE"] = $error_message;
-                                // }
-
                             }
                         }
 
@@ -1519,18 +1421,6 @@ html;
                                         $v = trim(preg_replace('/^-{1,}/', "\\1", trim($v)));
                                     }
 
-                                    #SBF#3041 don't replace square brackets
-                                    // if(preg_match("/\[.*\]/", $v))
-                                    // {
-                                    //  $v = trim(preg_replace('/(.*?)\[(.*)\](.*)/', "\\2", trim($v)));
-                                    // }
-
-                                    #SBF#3041 don't replace double quotes
-                                    // if(preg_match('/\".*\"/', $v))
-                                    // {
-                                    //  $v = trim(preg_replace('/(.*?)\"(.*)\"(.*)/', "\\2", trim($v)));
-                                    // }
-
                                     if ($v != "") {
                                         $prod_key_obj = $this->product_model->get_product_keyword();
                                         $prod_key_obj->set_sku($sku);
@@ -1545,7 +1435,6 @@ html;
                                 }
                             }
 
-                            #SBF #3427 update google keywords only if campaign & adgroup have been created.
                             $add_ret = $this->add_adgroup_keywords($sku, $this->input->post("cat_id"), $_POST['lang_id'], $str);
 
                             if ($add_ret["status"] === FALSE) {
@@ -1779,16 +1668,6 @@ html;
                                     $s_stop_sync = $this->input->post("im_stop_sync");
                                     $image_stop_sync = $s_stop_sync[$i] ? '1' : '0';
                                     $prod_image[$i]->set_stop_sync_image($image_stop_sync);
-                                    /* remove file if set inactive
-                                    if($prod_image[$i]->get_status() == "0")
-                                    {
-                                        @unlink(IMG_PH.$prod_image[$i]->get_sku()."_".$prod_image[$i]->get_id().".".$prod_image[$i]->get_image());
-                                        foreach ($img_size as $size)
-                                        {
-                                            @unlink(IMG_PH.$prod_image[$i]->get_sku()."_".$prod_image[$i]->get_id()."_".$size.".".$prod_image[$i]->get_image());
-                                        }
-                                    }
-                                    */
                                     $a_list = $this->input->post("image_alt_text");
                                     $alt_txt = trim($a_list[$i]);
                                     $prod_image[$i]->set_alt_text($alt_txt);
@@ -1958,14 +1837,11 @@ html;
                 foreach ($this->google_feed_arr as $cid) {
                     {
                         $google_cat_id = null;
-                        //$ext_cat_obj = $this->product_model->get_googlebase_cat(array("ext_party"=>"GOOGLEBASE", "id"=>$google_cat_id));
                         $platform_biz_var_obj = $this->sc['PlatformBizVar']->getDao('PlatformBizVar')->get(array("platform_country_id" => $cid));
                         if ($platform_biz_var_obj)
                         {
                             $lang_id_temp = $platform_biz_var_obj->getLanguageId();
                             $google_product_name = $this->input->post("google_product_name_{$cid}");
-                            #SBF2701
-                            //$this->product_model->category_mapping_service->update_or_insert_mapping($sku, $lang_id_temp, $cid, $google_cat_id, $google_product_name);
                         }
                     }
                 }
@@ -2181,21 +2057,8 @@ html;
             $uarr .= ', ';
         }
         $data['psarr'] = $uarr;
-        //var_dump($data['psarr']); die();
 
-        //$data["googlebase_cat_select_list"] = $this->product_model->get_googlebase_cat_list_by_country();
-
-
-        //$cat_mapping_list = $this->product_model->category_mapping_service->get_dao()->get_list(array("ext_party"=>"GOOGLEBASE", "level"=>"0", "id"=>$sku, "status"=>1));
         $data["google_cat_w_produc_name"] = $this->product_model->get_googlebase_cat_list_w_country($sku);
-
-        //foreach($google_cat_w_produc_name as $v)
-        //{
-        //  $data["googlebase_product_name"][$v->get_country_id()] = $v->get_product_name();
-        //  $data["googlebase_product_cat"][$v->get_country_id()] = $v->get_ext_name();
-        //}
-
-        // added by jerry SBF #3679
 
         $data["edit_enhance_js"] = <<<start
             jQuery(document).on('focusin', function(e) {
@@ -2382,19 +2245,6 @@ html;
                     tinyMCE.get(erow).setContent(complex1);
                 }
             }
-
-            // function compile_enhance(){
-            //  var i = jQuery('#enhance_layout p').size();
-            //  var compile ='';
-            //  for (i=0; i < tinyMCE.editors.length; i++){
-            //      var content = '<div id="erow">' + tinyMCE.editors[i].getContent() + '</div>';
-            //      compile = compile + content;
-            //  }
-
-            //  jQuery('#enhanced_listing_modal').val(compile);
-            //  jQuery('#edit_enhance_modal').dialog("close");
-
-            // }
 
             function compile_enhance(){
                 //var i = jQuery('#enhance_layout p').size();
@@ -2670,16 +2520,6 @@ start;
                                     $this->adwords_service->mail_adcontent($ad_content, $subject);
                                     continue;
                                 } elseif (array_key_exists('empty', $result)) {
-                                    // adGroup is empty
-                                    // most likely because it's new sku adgroup not created in pricing tool yet
-
-                                    // $subject = 'Empty Error: adGroup does not exist';
-                                    // $ad_content['File'] = __FILE__;
-                                    // $ad_content['Line'] = __LINE__;
-                                    // $ad_content['Duplicate_error'] = $result['empty'].
-                                    //              "\nad_accountId: $id / platform_id $platform_id".
-                                    //              "\nUnable to update Google keywords from product management - ". base_url()."/marketing/product/view/$sku/$lang_id";
-
                                     if ($debug) {
                                         echo "<pre>";
                                         var_dump($ad_content);
@@ -2717,15 +2557,6 @@ start;
                                                 if ((in_array($keyword, $result)) === FALSE) {
                                                     $ad_content["keyword"][] = $keyword;
                                                 }
-
-                                                // foreach ($result as $adkey_id => $adkeyword)
-                                                // {
-                                                //  var_dump("adkeyword = $adkeyword");
-                                                //  if($keyword !== $adkeyword)
-                                                //  {
-                                                //      $ad_content["keyword"][] = $keyword;
-                                                //  }
-                                                // }
                                             } else {
                                                 /* if no existing keywords in adgroup */
                                                 $ad_content["keyword"][] = $keyword;
