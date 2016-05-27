@@ -35,23 +35,12 @@
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/Przelewy24.png">
                                                         </li>
+                                                    <?php } else if ($countryid == 'NL') { ?>
+                                                        <li class="footer-fieldsetitem">
+                                                            <img width='45px' src="/themes/default/asset/image/ideal_logo.png">
+                                                        </li>
                                                     <?php } ?>
-                                                    <!-- only uncomment to check all the icons-->
-                                                        <!--<li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/postepay.png">
-                                                        </li>
-                                                        <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/cartasi.png">
-                                                        </li>
-                                                        <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/carte-bleue.png">
-                                                        </li>
-                                                        <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/maestro.png">
-                                                        </li>
-                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/Przelewy24.png">
-                                                        </li>-->
+
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/visa.png">
                                                         </li>
@@ -88,7 +77,7 @@
                                                         $siteobj = \PUB_Controller::$siteInfo;
                                                         $countryid = $siteobj->getPlatformCountryId();
 
-                                                        if ($countryid == "FR" || $countryid == "BE") {  ?>
+                                                if ($countryid == "FR" || $countryid == "BE") { ?>
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/ssl_fr.jpg">
                                                     </li>
@@ -97,6 +86,16 @@
                                                     </li>
                                                     <li class="footer-fieldsetitem">
                                                         <img src="/themes/default/asset/image/data_fr.jpg">
+                                                    </li>
+                                                <?php } elseif ($countryid == 'NL') { ?>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/ssl_nl.jpg">
+                                                    </li>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/chat_nl.jpg">
+                                                    </li>
+                                                    <li class="footer-fieldsetitem">
+                                                        <img src="/themes/default/asset/image/data_nl.jpg">
                                                     </li>
                                                 <?php } elseif ($countryid == "GB") { ?>
                                                     <li class="footer-fieldsetitem">
