@@ -35,7 +35,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                                             , "AUD" => 500
                                             , "NZD" => 500
                                             , "EUR" => 500
-                                            , "PNL" => 2000);
+                                            , "PLN" => 2000);
     private $_mbRequest = null;
     public $mbAccount = null;
 
@@ -255,9 +255,9 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
 ************************************************/
     public function processPaymentStatus($generalData = [], $getData = [], &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData)
     {
-        if (isset($getData["soNo"]) && isset($generalData["transaction_id"])) {
+        if (isset($getData["soNo"]) && isset($getData["transaction_id"])) {
             $soNumber = $getData["soNo"];
-            $transactionId = $generalData["transaction_id"];
+            $transactionId = $getData["transaction_id"];
             $input = ["soNo" => $soNumber, "transactionId" => $transactionId];
             $queryData = $this->_internalQueryTransaction($input, $queryFromData, $queryToData, $soData, $soccData, $sopsData);
             if ($queryToData)
@@ -269,7 +269,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                 $this->getService("SoPaymentQueryLog")->addLog($soNumber, "I", $data);
             }
             if ($queryData !== false) {
-                $dataFromPmgw = @http_build_query($generalData);
+                $dataFromPmgw = @http_build_query($getData);
                 return $this->_commonProcessStatus($queryData, $soNumber, $soData, $sopsData, $soccData, $sorData, $dataToPmgw, $noUseData);
             }
         }
