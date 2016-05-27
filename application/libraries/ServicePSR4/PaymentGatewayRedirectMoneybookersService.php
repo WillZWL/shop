@@ -255,9 +255,9 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
 ************************************************/
     public function processPaymentStatus($generalData = [], $getData = [], &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData)
     {
-        if (isset($getData["soNo"]) && isset($getData["transaction_id"])) {
+        if (isset($getData["soNo"]) && isset($generalData["transaction_id"])) {
             $soNumber = $getData["soNo"];
-            $transactionId = $getData["transaction_id"];
+            $transactionId = $generalData["transaction_id"];
             $input = ["soNo" => $soNumber, "transactionId" => $transactionId];
             $queryData = $this->_internalQueryTransaction($input, $queryFromData, $queryToData, $soData, $soccData, $sopsData);
             if ($queryToData)
@@ -269,7 +269,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                 $this->getService("SoPaymentQueryLog")->addLog($soNumber, "I", $data);
             }
             if ($queryData !== false) {
-                $dataFromPmgw = @http_build_query($getData);
+                $dataFromPmgw = @http_build_query($generalData);
                 return $this->_commonProcessStatus($queryData, $soNumber, $soData, $sopsData, $soccData, $sorData, $dataToPmgw, $noUseData);
             }
         }
