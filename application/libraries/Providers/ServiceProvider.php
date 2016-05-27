@@ -553,5 +553,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['SiteConfig'] = function () {
             return new S\SiteConfigService();
         };
+
+        $serviceContainer['RptDispatch'] = function () {
+            return new S\RptDispatchService();
+        };
     }
 }
