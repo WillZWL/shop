@@ -10,7 +10,7 @@ class PriceUpdateTriggerService extends BaseService
 
     public function triggerGoogleApi($sku = [], $platformId = "") {
         if ($sku) {
-            if ($platformID == "") {
+            if ($platformId == "") {
                 $this->getService("PendingGoogleApiRequest")->insertGoogleShoppingDataForProductUpdateInAllPlatform($sku);
             } else {
                 $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForProductUpdate($platformId, $sku);
