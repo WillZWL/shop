@@ -64,7 +64,6 @@ class RptSalesService extends BaseService
     {
         $option['is_light_version'] = $is_light_version;
         $arr = $this->getDao('So')->getConfirmedSo($where, $option);
-        // echo $this->getDao('So')->db->last_query();die();
         $data = $this->processDataRow($arr, $is_light_version);
         return $data;
     }

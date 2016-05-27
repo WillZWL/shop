@@ -38,7 +38,7 @@ class BrandService extends BaseService
     {
         $option["result_type"] = "array";
         $rslist = [];
-        if ($ar_list = $this->getDao('Brnad')->getList($where, $option)) {
+        if ($ar_list = $this->getDao('Brand')->getList($where, $option)) {
             foreach ($ar_list as $rsdata) {
                 $rslist[$rsdata["id"]] = $rsdata["brand_name"];
             }
