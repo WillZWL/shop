@@ -280,7 +280,7 @@ end;
         set_time_limit(3000);
         $siteObj = $this->sc["SiteConfig"]->getDao("SiteConfig")->getList(["(api_implemented > 0)" => null], ["limit" => -1]);
         foreach ($siteObj as $site) {
-            if ((($site->getApiImplemented() >> 1) & 1) == 1)
+            if ((($site->getApiImplemented() >> 0) & 1) == 1)
                 $this->sc["GoogleShopping"]->updateGoogleShoppingItemByPlatform($site->getPlatform());
         }
     }
