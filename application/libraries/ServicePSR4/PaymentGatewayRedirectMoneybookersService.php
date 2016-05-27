@@ -6,6 +6,7 @@ use ESG\Panther\Service\Moneybookers\MoneybookersAccount;
 class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectService
 {
     const DEBUG_PAY_TO_ACCT = "russel@chatandvision.com";
+    const STATUS_EMAIL = "mbpayments@chatandvision.com";
     const DEBUG_MERCHANT_ID = "66380912";
     const MD5_SECRET = "FB6D0FD4B1A599DB89E2B099150E9BEC";
     const DEBUG_MD5_SECRET = "91B8159EB716E4A493EFD46272DBAD32";
@@ -62,6 +63,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
             $this->mbAccount->swMd5 = self::DEBUG_MD5_SECRET;
         } else {
             $this->mbAccount->swMd5 = self::MD5_SECRET;
+            $this->mbAccount->status2Email = self::STATUS_EMAIL;
             $this->mbAccount->queryPassword = self::MQI_API_PASSWORD;
             $this->mbAccount->payToEmail = $this->_acct[$currency]["payToEmail"];
             $this->mbAccount->merchantId = $this->_acct[$currency]["merchantId"];
