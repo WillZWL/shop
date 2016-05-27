@@ -44,18 +44,6 @@ class VbDataTransferCategoryMappingService extends VbDataTransferService
                     $xml[] = '<is_error>'.$cat_map->is_error.'</is_error>';
                     $xml[] = '<reason>'.$reason.'</reason>';
                     $xml[] = '</category_mapping>';
-                } else {
-                    $reason = 'Can not find this Sku in panther sku mapping';
-                    $xml[] = '<category_mapping>';
-                    $xml[] = '<ext_party>'.$cat_map->ext_party.'</ext_party>';
-                    $xml[] = '<level>'.$cat_map->level.'</level>';
-                    $xml[] = '<id>'.$vb_id.'</id>';
-                    $xml[] = '<lang_id>'.$cat_map->lang_id.'</lang_id>';
-                    $xml[] = '<country_id>'.$cat_map->country_id.'</country_id>';
-                    $xml[] = '<status>4</status>'; //error
-                    $xml[] = '<is_error>'.$cat_map->is_error.'</is_error>';
-                    $xml[] = '<reason>'.$reason.'</reason>';
-                    $xml[] = '</category_mapping>';
                 }
             } catch (Exception $e) {
                 $xml[] = '<category_mapping>';
