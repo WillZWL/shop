@@ -7,7 +7,9 @@ class GoogleShoppingService extends BaseService
     private $_reportEmail = ["WEBFR" => "bd@numeristock.fr"
                             , "WEBGB" => "bd@digitaldiscount.co.uk"
                             , "WEBIT" => "bd@nuovadigitale.it"
-                            , "WEBES" => "bd@buholoco.es"];
+                            , "WEBES" => "bd@buholoco.es"
+                            , "WEBAU" => "bd@aheaddigital.com.au"
+                            , "WEBNL" => "bd@bd@9digital.nl"];
     private $_technicalEmail = "oswald-alert@eservicesgroup.com";
 
     public function __construct()
