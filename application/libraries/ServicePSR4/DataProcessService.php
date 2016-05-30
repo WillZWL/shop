@@ -101,7 +101,6 @@ class DataProcessService extends BaseService
             $i++;
         }
         $sql .= $sql_line;
-        var_dump($sql);
         return $sql;
     }
 
