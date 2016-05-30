@@ -2649,7 +2649,6 @@ SQL;
         $this->db->join("flex_gateway_mapping gm", "gm.gateway_id = fr.gateway_id AND gm.currency_id = so.currency_id", "LEFT");
         $this->db->join("sku_mapping map", "map.sku = soid.item_sku AND map.ext_sys = 'WMS' AND map.status = 1", "LEFT");
         $this->db->group_by("so.so_no");
-        $this->db->order_by("gm.gateway_code desc, fr.txn_time DESC, sops.payment_gateway_id, so.currency_id, soid.item_sku");
         $select_str = "fr.txn_id, so.biz_type, soex.order_reason, so.parent_so_no, so.split_so_group, RIGHT(so.platform_id,2) as sm_code,
                     SUBSTR(so.platform_id, 1, CHAR_LENGTH(so.platform_id) - 2) as contain_size, so.client_promotion_code as promotion_code,
                     CONCAT(gm.gateway_code, 'I') tran_type,date_format(so.dispatch_date, '%Y-%m-%d') dispatch_date,
