@@ -6,6 +6,7 @@ use ESG\Panther\Service\Moneybookers\MoneybookersAccount;
 class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectService
 {
     const DEBUG_PAY_TO_ACCT = "russel@chatandvision.com";
+    const STATUS_EMAIL = "mbpayments@chatandvision.com";
     const DEBUG_MERCHANT_ID = "66380912";
     const MD5_SECRET = "FB6D0FD4B1A599DB89E2B099150E9BEC";
     const DEBUG_MD5_SECRET = "91B8159EB716E4A493EFD46272DBAD32";
@@ -35,7 +36,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                                             , "AUD" => 500
                                             , "NZD" => 500
                                             , "EUR" => 500
-                                            , "PNL" => 2000);
+                                            , "PLN" => 2000);
     private $_mbRequest = null;
     public $mbAccount = null;
 
@@ -62,6 +63,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
             $this->mbAccount->swMd5 = self::DEBUG_MD5_SECRET;
         } else {
             $this->mbAccount->swMd5 = self::MD5_SECRET;
+            $this->mbAccount->status2Email = self::STATUS_EMAIL;
             $this->mbAccount->queryPassword = self::MQI_API_PASSWORD;
             $this->mbAccount->payToEmail = $this->_acct[$currency]["payToEmail"];
             $this->mbAccount->merchantId = $this->_acct[$currency]["merchantId"];
@@ -163,6 +165,8 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                 $soNumber = $data["transaction_id"];
                 $this->so = $this->getSo($soNumber);
                 if ($this->so) {
+                    if (isset($data["mb_transaction_id"]))
+                        $this->so->setTxnId($data["mb_transaction_id"]);
                     if (($data["mb_amount"] == 0)
                         || ($this->so->getAmount() != $data["mb_amount"])) {
                         $sopsPara[$remark] = "status:invalid amount" . $data["mb_amount"];
@@ -234,6 +238,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                 $siteDown = true;
             } else {
                 $redirectUrl = MoneybookersRequest::MONEYBOOKERS_SERVER_PAYMENT . "?sid=" . $session;
+                $responseData = $redirectUrl;
                 $callResult = true;
             }
         } else {
@@ -252,9 +257,9 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
 ************************************************/
     public function processPaymentStatus($generalData = [], $getData = [], &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData)
     {
-        if (isset($getData["soNo"]) && isset($getData["transaction_id"])) {
+        if (isset($getData["soNo"])/* && isset($getData["transaction_id"])*/) {
             $soNumber = $getData["soNo"];
-            $transactionId = $getData["transaction_id"];
+            $transactionId = $getData["soNo"];
             $input = ["soNo" => $soNumber, "transactionId" => $transactionId];
             $queryData = $this->_internalQueryTransaction($input, $queryFromData, $queryToData, $soData, $soccData, $sopsData);
             if ($queryToData)

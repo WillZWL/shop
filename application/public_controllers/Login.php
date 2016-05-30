@@ -15,6 +15,7 @@ class Login extends PUB_Controller
         parent::__construct();
         $this->load->helper(array('url', 'object', 'lang','notice'));
         $this->load->library('encryption');
+        $this->load->library('encrypt');
         if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
             $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             if ($_SERVER['QUERY_STRING'] != "") {
@@ -130,8 +131,14 @@ class Login extends PUB_Controller
         if (empty($data["subscriber"])) {
             $data["subscriber"] = 0;
         }
+
         $client_vo->setEmail($data['email']);
         $client_vo->setPassword($data['password']);
+
+        $depassword = $this->encryption->decrypt($client_vo->getPassword());
+        $encryptCode = $this->encrypt->encode($depassword);
+        $client_vo->setVerifyCode($encryptCode);
+
         $client_vo->setTitle($data['title']);
         $client_vo->setForename($data['forename']);
         $client_vo->setSurname($data['surname']);

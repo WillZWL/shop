@@ -66,7 +66,7 @@ class DataProcessService extends BaseService
                 $value = array_values($value);
                 if (!empty($value[0])) {
                     $set_fct_name = $this->underscore2camelcase('set_' . $value[0]);
-                    $vo->$set_fct_name($line[$key]);
+                    $vo->$set_fct_name(str_replace('"', '', $line[$key]));
                 }
             }
             $rs[] = $vo;
@@ -101,7 +101,6 @@ class DataProcessService extends BaseService
             $i++;
         }
         $sql .= $sql_line;
-        var_dump($sql);
         return $sql;
     }
 

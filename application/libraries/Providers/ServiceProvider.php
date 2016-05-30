@@ -545,5 +545,17 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['RptAftership'] = function () {
             return new S\RptAftershipService();
         };
+
+        $serviceContainer['ProductAutomation'] = function () {
+            return new S\ProductAutomationService();
+        };
+
+        $serviceContainer['SiteConfig'] = function () {
+            return new S\SiteConfigService();
+        };
+
+        $serviceContainer['RptDispatch'] = function () {
+            return new S\RptDispatchService();
+        };
     }
 }

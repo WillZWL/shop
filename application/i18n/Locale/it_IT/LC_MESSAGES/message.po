@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 11:28+0800\n"
-"PO-Revision-Date: 2016-05-04 11:28+0800\n"
+"POT-Creation-Date: 2016-05-18 14:25+0800\n"
+"PO-Revision-Date: 2016-05-20 18:18+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Basepath: atomv2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -34,7 +34,7 @@ msgstr "Vedi Carrello"
 
 #: cart/info.php:41 checkout/index.php:7 review.php:65
 msgid "Checkout"
-msgstr "Checkout"
+msgstr "Cassa"
 
 #: cart/info.php:48
 msgid "Your shopping cart is empty!"
@@ -75,11 +75,11 @@ msgstr "Ordina"
 
 #: cat.php:161 search.php:146
 msgid "Default"
-msgstr "Default"
+msgstr "Predefinito"
 
 #: cat.php:164 search.php:148
 msgid "Name (A - Z)"
-msgstr "Nome (Z - A)"
+msgstr "Nome (A - Z)"
 
 #: cat.php:167 search.php:150
 msgid "Name (Z - A)"
@@ -87,11 +87,11 @@ msgstr "Nome (Z - A)"
 
 #: cat.php:170 search.php:152
 msgid "Price (Low to High)"
-msgstr "Prezzi (Dal più basso)"
+msgstr "Prezzo (Dal più basso)"
 
 #: cat.php:173 search.php:154
 msgid "Price (High to Low)"
-msgstr "Prezzi (Dal più alto)"
+msgstr "Prezzo (Dal più alto)"
 
 #: cat.php:176 search.php:156
 msgid "New Arrivals"
@@ -110,31 +110,31 @@ msgstr "Mostra:"
 msgid "Quick View"
 msgstr "Vista Veloce"
 
-#: cat.php:222 search.php:207
+#: cat.php:219 search.php:207
 msgid "List Price"
-msgstr "Prezzo retail"
+msgstr "Elenca Prezzo"
 
-#: cat.php:223 search.php:208
+#: cat.php:220 search.php:208
 msgid "You Pay"
 msgstr "Tu Paghi"
 
-#: cat.php:230 search.php:211
+#: cat.php:227 search.php:211
 msgid "Save"
-msgstr "Salva"
+msgstr "Risparmia"
 
-#: cat.php:238 cat.php:244 product/accessories.php:119
-#: product/accessories.php:125 product/detail.php:130 product/grid.php:68
+#: cat.php:235 cat.php:241 product/accessories.php:119
+#: product/accessories.php:125 product/detail.php:121 product/grid.php:68
 #: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Aggiungi al carrello"
 
-#: cat.php:250 search.php:223 search.php:225
+#: cat.php:247 search.php:223 search.php:225
 msgid "More Info"
 msgstr "Maggiori informazioni"
 
 #: category.php:24 search.php:15
 msgid "SmartPhones"
-msgstr "SmartPhone"
+msgstr "Smartphones"
 
 #: category.php:27 search.php:18
 msgid "Webcams"
@@ -162,7 +162,7 @@ msgstr "Menù"
 
 #: checkout/index.php:13
 msgid "Step 1: Checkout Options"
-msgstr "1: Opzioni di pagamento"
+msgstr "Step 1: Opzioni di pagamento"
 
 #: checkout/index.php:22 myaccount/login.php:36
 msgid "New Customer"
@@ -170,7 +170,7 @@ msgstr "Nuovo Cliente"
 
 #: checkout/index.php:23
 msgid "Guest Checkout"
-msgstr "Paga come ospite"
+msgstr "Pagamento come ospite"
 
 #: checkout/index.php:26 checkout/index.php:40 checkout/index.php:41
 #: checkout/index.php:146 checkout/index.php:237 checkout/index.php:284
@@ -202,7 +202,7 @@ msgstr "Password"
 
 #: checkout/index.php:39 myaccount/login.php:23
 msgid "Forgotten Password"
-msgstr "Password dimenticata"
+msgstr "Password Dimenticata"
 
 #: checkout/index.php:40
 msgid "Login"
@@ -214,11 +214,11 @@ msgstr "Hai eseguito l' accesso, clicca qui per proseguire"
 
 #: checkout/index.php:53
 msgid "Step 2: Account &amp; Billing Details"
-msgstr "2: Account &amp; Dettagli di fatturazione"
+msgstr "Step 2: Account &amp; Dettagli di fatturazione"
 
 #: checkout/index.php:63
 msgid "Your Personal Details"
-msgstr "Le Tue Informazioni"
+msgstr "Dettagli Personali"
 
 #: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:130
 #: myaccount/index.php:131 myaccount/index.php:316 myaccount/index.php:317
@@ -246,7 +246,7 @@ msgstr "Prefisso"
 
 #: checkout/index.php:85
 msgid "Your Password"
-msgstr "Password"
+msgstr "La Tua Password"
 
 #: checkout/index.php:90 checkout/index.php:91
 msgid "Password Confirm"
@@ -254,7 +254,7 @@ msgstr "Conferma Password"
 
 #: checkout/index.php:97
 msgid "Your Address"
-msgstr "Il tuo Indirizzo"
+msgstr "Il Tuo Indirizzo"
 
 #: checkout/index.php:99 checkout/index.php:100
 msgid "Company"
@@ -262,11 +262,11 @@ msgstr "Azienda"
 
 #: checkout/index.php:103 checkout/index.php:104
 msgid "Address 1"
-msgstr "Indirizzo 1"
+msgstr "Indirizzo - prima linea"
 
 #: checkout/index.php:107 checkout/index.php:108
 msgid "Address 2"
-msgstr "Indirizzo 2"
+msgstr "Indirizzo - seconda linea"
 
 #: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:147
 #: myaccount/index.php:148 myaccount/index.php:341 myaccount/index.php:342
@@ -293,7 +293,7 @@ msgstr "Seleziona la Provincia"
 
 #: checkout/index.php:156
 msgid "Step 3: Delivery Details"
-msgstr "3: Dettagli di consegna"
+msgstr "Step 3: Dettagli di consegna"
 
 #: checkout/index.php:165
 msgid "We could only ship to the billing address!"
@@ -301,7 +301,7 @@ msgstr "Possiamo spedire unicamente all' indirizzo di fatturazione!"
 
 #: checkout/index.php:262
 msgid "Step 4: Payment Method"
-msgstr "4: Metodi di pagamento"
+msgstr "Step 4: Metodo di pagamento"
 
 #: checkout/index.php:277
 msgid "Please contact our CS!"
@@ -314,7 +314,7 @@ msgstr ""
 
 #: checkout/index.php:502 checkout/index.php:713
 msgid "The email is required"
-msgstr "L' Email è obbligatoria"
+msgstr "L' email è obbligatoria"
 
 #: checkout/index.php:505 checkout/index.php:721
 msgid "The value is not a valid email address"
@@ -326,55 +326,66 @@ msgstr "Per favore, inserisci la password"
 
 #: checkout/index.php:582
 msgid "The billing first name is required"
-msgstr "Il nome di fatturazione è obbligatorio"
+msgstr "Il nome nell'indirizzo di fatturazione è obbligatorio"
 
 #: checkout/index.php:587
 msgid ""
 "The billing first name must be more than 1 and less than 50 characters long"
-msgstr "Il nome di fatturazione dev'essere compreso tra 1 e 50 caratteri"
+msgstr ""
+"Il nome nell'indirizzo di fatturazione dev'essere compreso tra 1 e 50 "
+"caratteri"
 
 #: checkout/index.php:591
 msgid "The billing first name can only consist of alphabetical, number"
-msgstr "Il nome di fatturazione può essere composto solo da lettere e numeri"
+msgstr ""
+"Il nome dell'indirizzo di fatturazione può essere composto solo da lettere e "
+"numeri"
 
 #: checkout/index.php:599
 msgid "The billing last name is required"
-msgstr "Il cognome di fatturazione è obbligatorio"
+msgstr "Il cognome nell'indirizzo di fatturazione è obbligatorio"
 
 #: checkout/index.php:604
 msgid ""
 "The billing last name must be more than 1 and less than 50 characters long"
-msgstr "Il cognome di fatturazione dev'essere compreso tra 1 e 50 caratteri"
+msgstr ""
+"Il cognome nell'indirizzo di fatturazione dev'essere compreso tra 1 e 50 "
+"caratteri"
 
 #: checkout/index.php:608
 msgid "The billing last name can only consist of alphabetical, number"
 msgstr ""
-"Il cognome di fatturazione può essere composto solo da lettere e numeri"
+"Il cognome nell'indirizzo di fatturazione può essere composto solo da "
+"lettere e numeri"
 
 #: checkout/index.php:617
 msgid "The billing company name cannot be longer than 50 characters"
-msgstr "Il nome dell' azienda di fatturazione non può eccedere i 50 caratteri"
+msgstr ""
+"Il nome dell' azienda nell'indirizzo di fatturazione non può eccedere i 50 "
+"caratteri"
 
 #: checkout/index.php:621
 msgid "The billing company name can only consist of alphabetical, number"
 msgstr ""
-"Il nome dell' azienda di fatturazione può essere composto solo da lettere e "
-"numeri"
+"Il nome dell' azienda nell'indirizzo di fatturazione può essere composto "
+"solo da lettere e numeri"
 
 #: checkout/index.php:629
 msgid "The billing address 1 is required"
-msgstr "L' indirizzo 1 di fatturazione è obbligatorio"
+msgstr "La prima linea dell'indirizzo di fatturazione è obbligatoria"
 
 #: checkout/index.php:633
 msgid "The billing address1 name can only consist of alphabetical, number"
 msgstr ""
-"L' indirizzo 1 di fatturazione può essere composto solo da lettere e numeri"
+"La prima linea dell'indirizzo di fatturazione può essere composta solo da "
+"lettere e numeri"
 
 #: checkout/index.php:638 checkout/index.php:658
 msgid ""
 "The billing address must be more than 1 and less than 1024 characters long"
 msgstr ""
-"L' indirizzo 1 di fatturazione dev'essere compreso tra 1 e 1024 caratteri"
+"La prima linea dell'indirizzo di fatturazione dev'essere compresa tra 1 e "
+"1024 caratteri"
 
 #: checkout/index.php:641 checkout/index.php:661
 msgid "POBox Address is not allowed"
@@ -383,19 +394,24 @@ msgstr "Casella postale non accettata"
 #: checkout/index.php:653
 msgid "The billing address2 name can only consist of alphabetical, number"
 msgstr ""
-"L' indirizzo 2 di fatturazione può essere composto solo da lettere e numeri"
+"La seconda linea dell'indirizzo di fatturazione può essere composta solo da "
+"lettere e numeri"
 
 #: checkout/index.php:672
 msgid "The billing city is required"
-msgstr "Il comune di fatturazione è obbligatorio"
+msgstr "Il comune nell'indirizzo di fatturazione è obbligatorio"
 
 #: checkout/index.php:677
 msgid "The billing city must be more than 1 and less than 128 characters long"
-msgstr "Il comune di fatturazione dev'essere compreso tra 1 e 128 caratteri"
+msgstr ""
+"Il comune nell'indirizzo di fatturazione dev'essere compreso tra 1 e 128 "
+"caratteri"
 
 #: checkout/index.php:681
 msgid "The billing city can only consist of alphabetical, number"
-msgstr "Il comune di fatturazione può essere composto solo da lettere e numeri"
+msgstr ""
+"Il comune nell'indirizzo di fatturazione può essere composto solo da lettere "
+"e numeri"
 
 #: checkout/index.php:689
 msgid "The Zip/Postal Code is required"
@@ -408,15 +424,15 @@ msgstr "Dato non valido %s CAP"
 
 #: checkout/index.php:701
 msgid "The billing telephone number is required"
-msgstr "Il telefono di fatturazione è obbligatorio"
+msgstr "Il numero di telefono nell'indirizzo di fatturazione è obbligatorio"
 
 #: checkout/index.php:705
 msgid "The billing telephone is not valid"
-msgstr "Il telefono di fatturazione non è valido"
+msgstr "Il numero di telefono nell'indirizzo di fatturazione non è valido"
 
 #: checkout/index.php:718
 msgid "Email must be more than 3 and less than 256 characters long"
-msgstr "Là email dev'essere compresa tra 3 e 256 caratteri"
+msgstr "Là email deve comprendere tra 3 e 256 caratteri"
 
 #: checkout/index.php:730
 msgid "The password and its confirm are not the same"
@@ -424,7 +440,7 @@ msgstr "Password e Conferma Password non corrispondono"
 
 #: checkout/index.php:739
 msgid "Please Select a state"
-msgstr "Per favore, seleziona una provincia"
+msgstr "Per favore, seleziona uno stato"
 
 #: checkout/index.php:748
 msgid "Please select a card"
@@ -447,8 +463,8 @@ msgstr ""
 #: checkout/paymentFail.php:9
 msgid "1 - make sure that the billing address entered matches your bank record"
 msgstr ""
-"1 - assicurati che l'indirizzo fornito corrisponda all'indirizzo fornito "
-"alla banca"
+"1 - assicurati che l'indirizzo di fatturazione fornito corrisponda "
+"all'indirizzo fornito alla banca"
 
 #: checkout/paymentFail.php:10
 msgid ""
@@ -463,16 +479,16 @@ msgid ""
 "3 - check with your bank before re-attempting to order if payment was "
 "blocked for any particular reason and ask them to unblock your card if so"
 msgstr ""
-"3 - Se il pagamento è stato bloccato per qualsiasi ragione, contatta la tua "
+"3 - se il pagamento è stato bloccato per qualsiasi ragione, contatta la tua "
 "banca proma di riprovare, ed eventualmente chiedi di sbloccare la tua carta"
 
 #: checkout/paymentFail.php:12
 msgid "4 - try again with the same, or a different card"
-msgstr "4 - Riprova con la stessa carta o con un' altra carta"
+msgstr "4 - riprova con la stessa carta o con un' altra carta"
 
 #: checkout/paymentFail.php:13
 msgid "5 - still having trouble? "
-msgstr "5 - Ci sono altri problemi?"
+msgstr "5 - ancora problemi?"
 
 #: checkout/paymentFail.php:13
 msgid "Contact us"
@@ -480,7 +496,7 @@ msgstr "Contattaci"
 
 #: checkout/paymentFail.php:13
 msgid " via email"
-msgstr "via email"
+msgstr "tramite email"
 
 #: checkout/paymentReview.php:4
 msgid "Payment Review"
@@ -499,7 +515,7 @@ msgid ""
 msgstr ""
 "Il tuo pagamento è in attesa di essere controllato ed approvato dal provider "
 "della transazione [%s] , il che può richiedere alcune ore o un paio di "
-"giorni. La tua carta non è ancora stata addebitata."
+"giorni. Il denaro non è stato ancora preso dalla tua carta di credito."
 
 #: checkout/paymentReview.php:9
 msgid "We'll send you an email as soon as the payment has been verified!"
@@ -507,7 +523,7 @@ msgstr "Ti invieremo un' email non appena il pagamento sarà verificato!"
 
 #: checkout/paymentSuccess.php:4
 msgid "Payment Successful"
-msgstr "Pagamento effettuato"
+msgstr "Pagamento Riuscito"
 
 #: checkout/paymentSuccess.php:8
 #, php-format
@@ -519,7 +535,7 @@ msgid ""
 "You will receive an order confirmation email with details of your order and "
 "a link to track its progress."
 msgstr ""
-"Riceverai un' email a conferma del tuo ordine con i dettagli, ed un link per "
+"Riceverai un' email a conferma del tuo ordine con i dettagli ed un link per "
 "gli aggiornamenti."
 
 #: checkout/paymentSuccess.php:12
@@ -547,8 +563,8 @@ msgid ""
 "and services in order to serve our customers better."
 msgstr ""
 "Tutte le richieste sono gestite dal nostro Servizio Vendite e Supporto al "
-"Cliente, che ha acquisito esperienza sui servizi e prodotti, per rispondere "
-"al meglio alle necessità dei clienti. "
+"Cliente, che ha acquisito esperienza sui nostri servizi e prodotti, per "
+"rispondere al meglio alle necessità dei clienti. "
 
 #: contact.php:7
 msgid ""
@@ -599,7 +615,7 @@ msgstr "Messaggio"
 
 #: contact.php:31
 msgid "Your Name"
-msgstr "Il tuo nome"
+msgstr "Il Tuo Nome"
 
 #: contact.php:35 display/contact.php:59 myaccount/forget_password.php:41
 #: myaccount/login.php:14 myaccount/login.php:15
@@ -617,7 +633,7 @@ msgstr "Invia"
 
 #: display/about_us.php:2
 msgid "About ChatandVision"
-msgstr "Chi è ChatandVision"
+msgstr "Informazione sull'azienda ChatandVision"
 
 #: display/about_us.php:3
 msgid "Who are we? "
@@ -632,23 +648,23 @@ msgid ""
 "all of Skype’s stringent specifications for quality ensuring that you will "
 "have a wonderful Skype experience."
 msgstr ""
-"Chatandvision è un Partner Comerciale Globale di Skype, che fornisce %s "
-"prodotti per la comunicazione di alta qualità %s ai clienti.\n"
-"Partner di Skype, ChatandVisionha un' ampia gamma di prodotti certificati da "
-"Skype, che soddisfano tutti i severi requisiti di qualità per assicurare una "
-"magnifica esperienza di comunicazione su Skype."
+"Chatandvision è un Partner Commerciale Globale di Skype, che fornisce %s "
+"prodotti per la comunicazione di alta qualità %s ai clienti. Come partner di "
+"Skype, ChatandVision ha un' ampia gamma di prodotti certificati da Skype che "
+"soddisfano tutti i severi requisiti di qualità per assicurare una magnifica "
+"esperienza su Skype."
 
 #: display/about_us.php:8
 msgid ""
 "We are driven by the strong desire to bring people closer together and offer "
 "the products to help people all over the world communicate with each other. "
 msgstr ""
-"Siamo guidati dal desiderio di avvcinare le persone, ed offrire prodotti che "
-"aiutino il mondo a comunicare. "
+"Siamo guidati dal desiderio di avvicinare le persone e di offrire prodotti "
+"che aiutino persone in tutto il mondo a comunicare tra di loro."
 
 #: display/about_us.php:9
 msgid "Whether it’s for use at home or in the office, we’re here to help."
-msgstr "Sia per uso casalingo che per l' ufficio, siamo qui per aiutarti."
+msgstr "Sia per uso personale che per l'azienda, siamo qui per aiutarti."
 
 #: display/about_us.php:22
 msgid "Buying Experience"
@@ -667,14 +683,14 @@ msgid ""
 "customers total peace of mind and provide them with not only flexibility but "
 "the highest level of security when paying on our site."
 msgstr ""
-"Facciamo del nostro meglio per rendere gli acquisti il più semplici "
-"possibile e per essere come un negozio online locale. Consegnando prodotti "
-"in oltre %s 70 paesi %s, ci occupiamo di operazioni doganali, tasse d' "
+"Facciamo del nostro meglio per rendere gli acquisti il più semplice "
+"possibile e per essere il tuo negozio online locale. Consegnando prodotti in "
+"oltre %s 70 paesi %s, ci occupiamo di operazioni doganali, tasse d' "
 "importazione e di vendita - il che significa che il prezzo che vedi sul sito "
-"è il prezzo finale che pagherai. Offriamo opzioni di pagamento e valuta "
-"locale, per evitarti qualsiasi scocciatura. Servendoci di vari servizi di "
+"è il prezzo finale che pagherai. Offriamo opzioni di pagamento in valuta "
+"locale per evitarti qualsiasi scocciatura. Servendoci di vari servizi di "
 "pagamento, diamo ai nostri clienti non solo flessibilità, ma anche un "
-"altissimo livello di sicurezza, quando acquistano da noi. "
+"altissimo livello di sicurezza, quando acquistano con noi. "
 
 #: display/about_us.php:27
 msgid ""
@@ -688,7 +704,7 @@ msgstr ""
 
 #: display/about_us.php:33
 msgid "We're always here for you!"
-msgstr "Siamo sempre con te!"
+msgstr "Siamo sempre qui per te!"
 
 #: display/about_us.php:36
 #, php-format
@@ -702,20 +718,626 @@ msgid ""
 "product or have any enquiries about the ordering process."
 msgstr ""
 "La nostra priorità è fornire un servizio costruito attorno alle necessità "
-"dei clienti, e in ogni caso mettiamo sempre il cliente al primo posto, in "
-"ogni aspetto. Comunichiamo con te ad ogni fase del tuo ordine - acquisto, "
-"presa in carico dellà ordine, evasione. Il nostro amichevole %s team di "
-"supporto al cliente %s ti aiuterà volentieri a superare eventuali difficoltà "
-"nello scegliere il prodotto giusto o per qualsiasi domanda riguardo alla "
-"procedura d' acquisto. "
+"dei clienti, e in ogni caso mettiamo sempre il cliente al primo posto in "
+"ogni aspetto. Per garantirti la migliore esperienza, comunichiamo con te ad "
+"ogni fase del tuo ordine - acquisto, presa in carico dell' ordine, evasione. "
+"Il nostro amichevole %s team di supporto al cliente %s ti aiuterà volentieri "
+"a superare eventuali difficoltà nello scegliere il prodotto giusto o per "
+"qualsiasi domanda riguardo alla procedura d' acquisto. "
+
+#: display/conditions_of_use.php:2
+msgid "Term and Conditions"
+msgstr "Termini e Condizioni"
+
+#: display/conditions_of_use.php:3
+msgid "DigitalDiscount.co.uk Conditions of Use and Sale"
+msgstr "NuovaDigitale.it Condizioni di Uso e Vendita"
+
+#: display/conditions_of_use.php:6 display/privacy_policy.php:6
+msgid "CONTENTS"
+msgstr "CONTENUTI"
+
+#: display/conditions_of_use.php:8 display/conditions_of_use.php:22
+msgid "CONDITIONS OF USE"
+msgstr "CONDIZIONI D'USO"
+
+#: display/conditions_of_use.php:9 display/conditions_of_use.php:31
+msgid "SITE CONTENTS, OWNERSHIP, AND USE RESTRICTIONS"
+msgstr "CONTENUTO DEL SITO, TITOLARITÀ, RESTRIZIONI D’USO"
+
+#: display/conditions_of_use.php:10 display/conditions_of_use.php:48
+msgid "PLACING AN ORDER"
+msgstr "EFFETTUARE UN ORDINE"
+
+#: display/conditions_of_use.php:11 display/conditions_of_use.php:66
+msgid "TAX AND DUTIES"
+msgstr "TASSE E SPESE"
+
+#: display/conditions_of_use.php:12 display/conditions_of_use.php:76
+msgid "DELIVERY"
+msgstr "CONSEGNA"
+
+#: display/conditions_of_use.php:13 display/conditions_of_use.php:84
+msgid "CANCELLING YOUR ORDER"
+msgstr "CANCELLAZIONE ORDINI"
+
+#: display/conditions_of_use.php:14 display/conditions_of_use.php:90
+msgid "DEFECTIVE ITEM"
+msgstr "ARTICOLI DIFETTOSI"
+
+#: display/conditions_of_use.php:15 display/conditions_of_use.php:99
+msgid "PRODUCT WARRANTIES"
+msgstr "GARANZIA PRODOTTO"
+
+#: display/conditions_of_use.php:16 display/conditions_of_use.php:134
+msgid "DISCLAIMER OF LIABILITY"
+msgstr "DICHIARAZIONE DI LIMITAZIONE DI RESPONSABILITÀ"
+
+#: display/conditions_of_use.php:17 display/conditions_of_use.php:142
+#: display/privacy_policy.php:12 display/privacy_policy.php:54
+msgid "SECURITY"
+msgstr "SICUREZZA"
+
+#: display/conditions_of_use.php:18 display/conditions_of_use.php:158
+msgid "CONDITIONS OF USE REVISIONS"
+msgstr "SUCCESSIVE MODIFICHE DELLE CONDIZIONI "
+
+#: display/conditions_of_use.php:19 display/conditions_of_use.php:164
+msgid "BILLING TERMS AND CONDITIONS"
+msgstr "TERMINI E CONDIZIONI DI FATTURAZIONE"
+
+#: display/conditions_of_use.php:24
+msgid ""
+"DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
+"ChatandVision (HK) Limited. By visiting or shopping at the DigitalDiscount "
+"website, you agree to accept and be bound by these conditions of use, as "
+"well as any other policies posted on the website, as modified from time to "
+"time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE "
+"SITE."
+msgstr ""
+"NuovaDigitale.it (NuovaDigitale) è interamente di proprietà e gestito da "
+"ChatandVision (HK) Limited. Visitando o acquistando dal sito NuovaDigitale, "
+"l'utente accetta ed è vincolato da queste condizioni di utilizzo, nonché "
+"eventuali altre politiche pubblicate sul sito web, come modificate di volta "
+"in volta. SE NON SI ACCETTANO LE PRESENTI CONDIZIONI ALLORA SI PREGA DI NON "
+"UTILIZZARE IL SITO."
+
+#: display/conditions_of_use.php:26
+#, php-format
+msgid ""
+"DigitalDiscount is a trading name with registered offices in: <br><br> Hong "
+"Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office "
+"Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+"<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+"SW19 2R. <br><br>Through its websites, ChatandVision (HK) Limited offers "
+"consumer electronics hardware, and services."
+msgstr ""
+"NuovaDigitale è un nome commerciale con sede legale in: <br> Hong Kong:<br> "
+"ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower, 8 "
+"Argyle Street, Kowloon, Hong Kong. <br><br> Regno Unito:<br> Chatandvision "
+"(UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2R. <br><br> "
+"Attraverso i suoi siti web, ChatandVision (HK) Limited offre hardware "
+"elettronica di consumo e servizi."
+
+#: display/conditions_of_use.php:28
+msgid ""
+"If you have any queries relating to our terms and conditions, please contact "
+"the Customer Support team or read our FAQ."
+msgstr ""
+"Per qualsiasi domanda riguardo termini e condizioni, contatta il nostro "
+"servizio clienti oppure consulta la sezione FAQ."
+
+#: display/conditions_of_use.php:33
+msgid ""
+"The information contained in this Site including all images, illustrations, "
+"designs, photographs, video clips, writings and other materials that appear "
+"herein are copyrights, trademarks, trade dress or other intellectual "
+"property owned, controlled, or licensed (all of which, collectively, are "
+"herein referred to as the \"Contents\") by ChatandVision (HK) Limited or its "
+"subsidiaries and affiliates (\"ChatandVision\") or are the property of their "
+"respective owners. The name ChatandVision and the ChatandVision logo are "
+"registered marks of ChatandVision. "
+msgstr ""
+"Le informazioni contenute in questo sito, incluse le immagini, le "
+"illustrazioni, disegni, fotografie, filmati, scritte e altri materiali che "
+"appaiono nello stesso sono diritti d'autore, marchi di fabbrica, veste "
+"commerciale o altra proprietà intellettuale posseduta, controllata, o "
+"concessa in licenza (i quali, insieme, vengono qui indicati come \"Contenuti"
+"\") da ChatandVision (HK) Limited o sue consociate e affiliate "
+"(\"ChatandVision\") o appartengono ai rispettivi proprietari. Il nome ed il "
+"logo ChatandVision sono marchi registrati di ChatandVision."
+
+#: display/conditions_of_use.php:35
+msgid ""
+"Permission is granted to display, copy, distribute, download, and print in "
+"hard copy portions of this Site for the purposes of: "
+msgstr ""
+"Si garantisce il permesso di esporre, copiare, distribuire, scaricare, "
+"stampare parti del sito per i seguenti propositi: "
+
+#: display/conditions_of_use.php:37
+msgid "placing an order with DigitalDiscount.co.uk or"
+msgstr "Eseguire un ordine su NuovaDigitale o"
+
+#: display/conditions_of_use.php:38
+msgid ""
+"using this Site as a shopping resource, provided you do not modify the Site "
+"and that you retain all copyright and other proprietary notices contained in "
+"the Contents."
+msgstr ""
+"Utilizzare il sito come risorsa di shopping, senza apportare modifiche ai "
+"contenuti e mantenendo tutti gli avvisi riguardanti diritti d’autore e "
+"titolarità presenti nei contenuti. "
+
+#: display/conditions_of_use.php:40
+msgid ""
+"Except in connection with shopping or placing an order, none of the Contents "
+"may be copied, reproduced, distributed, re-published, downloaded, displayed, "
+"posted electronically or mechanically, transmitted, recorded, in any manner "
+"mirrored, photocopied, or reproduced without the prior written permission of "
+"ChatandVision or the applicable copyright owner. "
+msgstr ""
+"Escluso in connessione con l'acquisto e l'ordine, nessuno dei contenuti può "
+"essere copiato, riprodotto, distribuito, ripubblicato, scaricato, esposto, "
+"mostrato elettronicamente o meccanicamente, trasmesso, registrato, "
+"rispecchiato in alcun modo, fotocopiato senza previa autorizzazione scritta "
+"di ChatandVision o il delegato titolare dei diritti d’autore. "
+
+#: display/conditions_of_use.php:42
+msgid ""
+"Please note that the permission granted herein terminates automatically if "
+"you breach any of these Site terms or conditions. Any other use of the "
+"Contents on this Site including reproduction for purposes other than as "
+"noted above, and including any reproduction, modification, distribution, or "
+"republication may violate copyright or trademark laws, and, without the "
+"prior written permission of ChatandVision, is strictly prohibited."
+msgstr ""
+"Si prega di notare che il permesso qui garantito termina automaticamente in "
+"caso si contravvenga a questi termini e condizioni.  Qualsiasi altro "
+"utilizzo del contenuto di questo sito inclusa riproduzione per propositi non "
+"corrispondenti a quanto specificato qui sopra, modifiche, distribuzione o "
+"diffusione che violano le leggi a tutela della proprietà intellettuale e "
+"senza previo permesso scritto di ChatandVision, sono strettamente proibite. "
+
+#: display/conditions_of_use.php:44
+msgid ""
+"If you choose to leave this Site via links to other non-ChatandVision "
+"operated sites, ChatandVision is not responsible for the privacy policies of "
+"those sites or the cookies those sites use."
+msgstr ""
+"Se scegli di lasciare il sito tramite link a siti non gestiti da "
+"ChatandVision, ChatandVision non sarà responsabile per le politiche di "
+"privacy ed i cookies utilizzati da questi ultimi."
+
+#: display/conditions_of_use.php:50
+msgid ""
+"The prices advertised on this Site are for Internet orders. Prices and the "
+"availability of items are subject to change without notice. Any recommended "
+"retail prices used on this Site are based on manufacturers’ suggested retail "
+"prices and may not be indicative of the actual selling prices in your area."
+msgstr ""
+"I prezzi esposti su questo sito sono per ordini online. Prezzi e "
+"disponibilità degli articoli sono soggetti a variazioni senza preavviso. "
+"Ogni  “prezzo consigliato” esposto sul sito si basa sul prezzo di vendita "
+"consigliato dal produttore e potrebbe non corrispondere al prezzo di vendita "
+"finale nella tua zona."
+
+#: display/conditions_of_use.php:52
+msgid ""
+"Any reference to savings used on this Site indicates the promotional savings "
+"off the recommended retail price and the actual savings will vary depending "
+"upon the goods purchased and the date of the transaction."
+msgstr ""
+"Ogni riferimento al risparmio sul sito indica lo sconto promozionale "
+"rispetto al prezzo consigliato per la vendita al dettaglio ed il risparmio "
+"reale cambierà dipendentemente dagli articoli e dalla data di acquisto. "
+
+#: display/conditions_of_use.php:54
+msgid ""
+"Please check carefully that all information given is accurate and complete "
+"when placing an order."
+msgstr ""
+"Per favore, controlla attentamente che tutte le informazioni fornite siano "
+"accurate prima di eseguire un ordine. "
+
+#: display/conditions_of_use.php:56
+msgid ""
+"Payment for all orders must be made in advance by credit or debit card. We "
+"accept payment from most major credit and debit cards as well as PayPal and "
+"Skrill (formerly known as MoneyBookers). "
+msgstr ""
+"Il pagamento per tutti gli ordini deve essere effettuato in anticipo tramite "
+"carta di credito o debito. Accettiamo pagamenti da tutte le maggiori carte "
+"di credito e debito, inoltre accettiamo pagamenti tramite PayPal e  Skrill "
+"(anche conosciuto come MoneyBookers). "
+
+#: display/conditions_of_use.php:58
+msgid ""
+"While we make every effort to provide accurate information, technical "
+"inaccuracies or typographic or photographic errors may occur. We reserve the "
+"right to make changes, corrections, and/or improvements to the information "
+"contained on this Site at any time without notice."
+msgstr ""
+"Nonostante il tentativo di fornire informazioni accurate, potrebbero "
+"persistere errori tecnici, tipografici o fotografici. Ci riserviamo il "
+"diritto di cambiare, correggere e migliorare le informazioni del sito in "
+"ogni momento e senza preavviso. "
+
+#: display/conditions_of_use.php:60
+msgid ""
+"There may be certain orders that we are either unable to accept or must "
+"cancel. We reserve the right, at our sole discretion, to refuse or cancel "
+"any order for any reason. Possible circumstances involving cancellation of "
+"orders may be limitations on quantities available for purchases or "
+"inaccuracies or errors in product or pricing information."
+msgstr ""
+"Potrebbe verificarsi l’ eventualità nella quale non possiamo accettare o "
+"dobbiamo rimborsare un ordine. Ci riserviamo il diritto, a nostra esclusiva "
+"discrezione, di rifiutare o cancellare qualsiasi ordine per qualsiasi "
+"motivo. Possibili circostanze che richiedano la cancellazione di un ordine "
+"includono possibili limitazioni nella quantità disponibile per la vendita o "
+"inesattezze o errori nelle informazioni riguardanti l’ articolo o il prezzo."
+
+#: display/conditions_of_use.php:62
+msgid ""
+"When you place an order to purchase a product from DigitalDiscount.co.uk, we "
+"will send you an e-mail confirming receipt of your order and containing the "
+"details of your order. Your order represents an offer to us to purchase a "
+"product which is accepted by us when we send e-mail confirmation to you that "
+"we've dispatched that product to you (the \"Dispatch Confirmation E-mail\"). "
+"That acceptance will be complete at the time we send the Dispatch "
+"Confirmation E-mail to you. Any products on the same order which we have not "
+"confirmed in a Dispatch Confirmation E-mail to have been dispatched do not "
+"form part of that contract."
+msgstr ""
+"Quando effettui un ordine per acquistare un prodotto da NuovaDigitale.it, ti "
+"invieremo un’ e-mail che conferma la ricezione del tuo ordine ed i dettagli. "
+"Il tuo ordine rappresenta un’ offerta  verso di noi per acquistare un "
+"prodotto la quale è accettata da noi quando inviamo una conferma via e-mail "
+"riguardante la spedizione dell’ ordine  (l’ email \"Conferma di Spedizione"
+"\"). L’ accettazione dell’ ordine è da ritenersi completa quando ti inviamo "
+"l’ email \"Conferma di Spedizione\". Ogni articolo compreso nel medesimo "
+"ordine che non sia riportato sul l’ email \"Conferma di Spedizione\", non è "
+"da considerarsi incluso nel contratto. "
+
+#: display/conditions_of_use.php:68
+msgid ""
+"In using our services, you authorize ChatandVision to make arrangements for "
+"customs clearance for the products ordered. The responsibility for ensuring "
+"that your ordered product can be lawfully imported outside of Hong Kong to "
+"your destination country remains with our customers, and any applicable "
+"import duties and taxes will be subjected to the recipient. We do not have "
+"control over these import duties and taxes. Customs policies vary widely "
+"from country to country, hence if you should have any queries regarding your "
+"local Customs policies, contact your local Customs office for further "
+"information. "
+msgstr ""
+"Utilizzando i nostri servizi, autorizzi ChatandVision ad organizzare la "
+"gestione delle operazioni doganali per gli articoli ordinati. La "
+"responsabilità di garantire che il prodotto ordinato può essere "
+"legittimamente importato al di fuori di Hong Kong al paese di destinazione "
+"rimane con i nostri clienti, e tutti i dazi doganali applicabili e le tasse "
+"saranno sottoposte al destinatario. Non abbiamo controllo verso tasse e "
+"spese doganali di importazione. Il regolamento doganale varia molto da paese "
+"a paese,  se hai dubbi riguardo il regolamento in vigore nel tuo stato, "
+"contatta gli uffici doganali. "
+
+#: display/conditions_of_use.php:70
+msgid ""
+"Where the price of the goods allows, certain shipments to some countries may "
+"include a fee which is borne by ChatandVision, for import of the goods. This "
+"will be noted on your shipment invoice."
+msgstr ""
+"Dipendentemente dal prezzo degli articoli, spedizioni verso un dato paese "
+"potrebbero includere una spesa extra decisa da ChatandVision, per "
+"l’importazione degli articoli. Questa sarà inclusa sulla tua fattura di "
+"spedizione. "
+
+#: display/conditions_of_use.php:72
+msgid ""
+"In the event where customs clearance is required, this will cause delays to "
+"the original delivery estimate."
+msgstr ""
+"Nel caso siano necessarie operazioni doganali, la data prevista di consegna "
+"potrebbe subire ritardi."
+
+#: display/conditions_of_use.php:78
+msgid ""
+"Goods will be sent to the address given by you in your order. If you are "
+"ordering more than one item, your goods may be sent to you in separate "
+"shipments. There will not be extra delivery charges for these delivery cases."
+msgstr ""
+"I prodotti sono spediti all’ indirizzo da te fornito nel momento dell’ "
+"ordine. Se esso include più di un articolo, diversi articoli potrebbero "
+"esserti spediti separatamente. Per questi casi, non ci sono spese di "
+"spedizione aggiuntive."
+
+#: display/conditions_of_use.php:80
+msgid ""
+"Your order should not take any more than 7 to 14 working days to arrive, "
+"however, this is not guaranteed and we cannot be held responsible for events "
+"outside of our control. If you have not received your order within 20 "
+"working days you should contact our Customer Support team."
+msgstr ""
+"Il tuo ordine non dovrebbe impiegare più di  7-14 giorni lavorativi per "
+"essere consegnato, in ogni caso, questo non è garantito e non saremo "
+"responsabili per eventualità al di fuori del nostro controllo. Se non hai "
+"ricevuto il tuo ordine entro 20 giorni lavorativi, per favore contatta il "
+"nostro servizio clienti."
+
+#: display/conditions_of_use.php:86
+msgid ""
+"The period in which you can exercise the right to cancel an order is 30 days "
+"beginning the day after your goods are received. The cancellation request "
+"has to be received by us in writing - by email, or letter. The unused goods "
+"(including any accessories which were included in the price of the goods) "
+"must be returned at the customer's expense within 30 days after receipt of "
+"parcel and customer is responsible for any damage during the transit of the "
+"returned goods, (it also applies to products purchased as Christmas "
+"presents). We reserve the right to have the goods inspected by a technician "
+"prior to replacement or refund. Please note that software packages may only "
+"be returned unopened. Should you cancel your order within the cooling off "
+"period we will issue you a full refund for the price you paid for the "
+"item(s). Any cancellation made outside the 30 day \"cooling-off\" period may "
+"not be accepted."
+msgstr ""
+"Il periodo in cui puoi esercitare il diritto di recesso è entro 14 giorni "
+"dalla ricezione dell’ ordine. La richiesta ci deve pervenire per iscritto – "
+"email o lettera. I beni inutilizzati (inclusi accessori inclusi nel prezzo "
+"del prodotto) devono essere restituiti a tue spese entro 30 giorni dalla "
+"ricezione del tuo acquisto ed il cliente è responsabile per qualsiasi danno "
+"riconducibile al transito dei prodotti restituiti (regolamento applicato "
+"anche a regali di Natale). Ci riserviamo il diritto di far ispezionare il "
+"prodotto da un tecnico prima del rimborso o sostituzione. Per favore, "
+"considera che pacchetti software possono essere restituiti solo non aperti. "
+"Se cancelli il tuo ordine arbitrariamente entro il periodo di 14 giorni, "
+"rispettando tutte le condizioni qui sopra, hai diritto ad un rimborso* per "
+"gli articoli acquistati.  Ogni cancellazione successiva ai 14 giorni  non "
+"sarà accettata.\n"
+"\n"
+"*si applicano condizioni."
+
+#: display/conditions_of_use.php:92
+msgid ""
+"In the unlikely event your order is damaged in transit please contact us "
+"immediately. Please send the product back to us in the original packaging "
+"and a valid RMA (Return Merchandise Authorization) form. We will arrange for "
+"a prompt replacement or refund, whichever is your preference. Please note "
+"that we are unable to offer a refund if you notify us about the damaged "
+"goods after more than 30 days starting the day after receipt of goods."
+msgstr ""
+"Nell’ improbabile eventualità in cui il tuo acquisto sia danneggiato durante "
+"il transito, contattaci immediatamente. Inviaci il prodotto nell’ "
+"imballaggio originale e con un modulo RMA allegato (Return Merchandise "
+"Authorization). Organizzeremo una sostituzione o un rimborso, a tua scelta. "
+"Considera che non potremo offrire un rimborso se la tua segnalazione avviene "
+"dopo i 6 giorni dalla data di consegna del prodotto."
+
+#: display/conditions_of_use.php:95
+msgid ""
+"During the RMA process, ChatandVision (HK) Limited will follow up with you "
+"via email on issues requiring your clarification and agreement, using the "
+"trading name DigitalDiscount. If no response is received from you within 7 "
+"days from the date of emailing, ChatandVision will follow up with a kind "
+"reminder in the form of a 1st and 2nd email at 7 day intervals. In the event "
+"no response is received within 7 days of the 2nd email being sent, "
+"ChatandVision will send a 3rd and final reminder email together with a "
+"recorded letter. Should no response be received within 2 weeks from date of "
+"final reminders, ChatandVision reserves the right to dispose of the RMA "
+"item(s) at its discretion in any way seen fit."
+msgstr ""
+"Durante il processo di restituzione RMA, ChatandVision (HK) Limited darà "
+"seguito via e-mail a questioni che richiedono il vostro chiarimento ed "
+"accordo, utilizzando il nome commerciale NuovaDigitale. Se non riceve "
+"risposta da voi entro 7 giorni dalla data dell'email, ChatandVision darà "
+"seguito con un promemoria sotto forma di due e-mail a intervalli di 7 giorni "
+"tra ciascuna. Nel caso in cui non c'è risposta entro 7 giorni dall'invio "
+"della terza email, ChatandVision invierà una terza ed ultima email insieme "
+"ad una lettera registrata. In caso di mancata risposta entro 2 settimane "
+"dalla data dei promemoria finali, ChatandVision si riserva il diritto di "
+"disporre del prodotto(i) RMA a sua discrezione in qualsiasi modo ritenuto "
+"opportuno."
+
+#: display/conditions_of_use.php:101
+msgid ""
+"All products, unless otherwise stated in the product listing, are supplied "
+"with an in-house warranty where our facilities are able to process all "
+"returns for a quick and efficient all-round service. The warranty period may "
+"vary for different product categories. The table below sets out the "
+"applicable warranty period commencing from the date of receipt for the "
+"Product."
+msgstr ""
+"Tutti i prodotti, se non diversamente specificato nella pagina prodotto, "
+"sono forniti con una garanzia interna gestita interamente dalle nostre "
+"strutture. Il periodo di garanzia varia a seconda delle categorie di "
+"prodotto. Il seguente grafico indica il periodo di garanzia applicabile a "
+"partire dalla data di ricezione del prodotto."
+
+#: display/conditions_of_use.php:125
+msgid ""
+"This warranty does not cover:\n"
+"                                - Damage, fault or failure due to alteration "
+"or repairs made by anyone other than us\n"
+"                                - Dents, scratches, and other conditions to "
+"the product that occur over time considered as normal wear and tear\n"
+"                                - Accidental damage (including but not "
+"limited to shock, impact, dropping, water damage or sand damage)\n"
+"                                - Not satisfied with the product\n"
+"                            "
+msgstr ""
+"Questa garanzia non copre:\n"
+"                                - Danni, disfunzioni o guasti dovuti a "
+"alterazioni o riparazioni non eseguite da noi\n"
+"                                - Ammaccature, graffi ed altre condizioni "
+"considerate come normali eventi durante l'uso del prodotto\n"
+"                                - Danni accidentali (inclusi ma non "
+"limitatamente a shock, impatto, caduta, danni da acqua o sabbia)\n"
+"                                - Insoddisfazione verso il prodotto\n"
+"    \n"
+"                            "
+
+#: display/conditions_of_use.php:136
+msgid ""
+"IN NO EVENT SHALL CHATANDVISION BE LIABLE FOR SPECIAL, INDIRECT, EXEMPLARY, "
+"OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER, INCLUDING BUT NOT "
+"LIMITED TO, LOSS OF USE, DATA, OR PROFITS, WITHOUT REGARD TO THE FORM OF ANY "
+"ACTION, INCLUDING BUT NOT LIMITED TO CONTRACT, NEGLIGENCE, OR OTHER TORTIOUS "
+"ACTIONS, ALL ARISING OUT OF OR IN CONNECTION WITH THE USE, COPYING, OR "
+"DISPLAY OF THE CONTENTS OF THIS SITE. In an effort to provide our customers "
+"with the most current information, ChatandVision will, from time to time, "
+"make changes in the Contents and in the products or services described on "
+"this Site. "
+msgstr ""
+"CHATANDVISION NON È RESPONSABILE IN ALCUN CASO PER DANNI PARTICOLARI, "
+"INDIRETTI, ESEMPLARI, O CONSEQUENZIALI O ALTRI TIPI DI DANNI, INCLUDENDO MA "
+"NON LIMITATAMENTE A PERDITA DELL’ UTILIZZO, DATI, O PROFITTI, SENZA "
+"DISTINZIONE DI AZIONI, INCLUDENDO MA NON LIMITATAMENTE A CONTRATTI, "
+"NEGLIGENZA, O ALTRI TORTI, DERIVANTI DA O CONNESSI CON USO, COPIA O "
+"ESPOSIZIONE DEL CONTENUTO DI QUESTO SITO. Nel tentativo di fornire ai nostri "
+"clienti informazioni sempre aggiornate, ChatandVision effettuerà dei "
+"cambiamenti ai contenuti del sito. "
+
+#: display/conditions_of_use.php:138
+msgid ""
+"ChatandVision (HK) Limited does not accept liability for any loss caused by "
+"delay in the delivery of products ordered."
+msgstr ""
+"ChatandVision (HK) Limited non accetta responsabilità per qualsiasi perdita "
+"causata da un ritardo nella consegna dei prodotti ordinati."
+
+#: display/conditions_of_use.php:144
+msgid "In using this Site you agree to the following:"
+msgstr "Utilizzando il sito, accetti i seguenti punti:"
+
+#: display/conditions_of_use.php:147
+msgid ""
+"You will not use any device, software, or other instrumentality to disrupt, "
+"damage or interfere with or attempt to disrupt, damage or interfere with the "
+"proper functioning of this site;"
+msgstr ""
+"Non utilizzerai alcuno strumento, software, o altro per danneggiare, "
+"interrompere o limitare le normali funzioni di questo sito; "
+
+#: display/conditions_of_use.php:148
+msgid ""
+"You will not to violate or attempt to violate the security of this Site, "
+"including, without limitation,"
+msgstr ""
+"Non violerai o cercherai di violare la sicurezza del sito , includendo, "
+"senza limitazioni,"
+
+#: display/conditions_of_use.php:150
+msgid "logging onto an account which you are not authorized to access;"
+msgstr "accesso non autorizzato ad un account altrui;"
+
+#: display/conditions_of_use.php:151
+msgid ""
+"attempting to interfere with service to any user, host or network, "
+"including, without limitation, via means of submitting a virus to the Site, "
+"overloading, flooding, spamming, mail bombing or crashing; or"
+msgstr ""
+"tentativo di interferire con il servizio fornito agli utenti, rete o server, "
+"includendo, senza limitazioni, trasmissione virus al sito, sovraccarico, "
+"spamming, mail bombing o crashing; "
+
+#: display/conditions_of_use.php:152
+msgid ""
+"attempt to transmit any virus, Trojan horse or other software destruction or "
+"disruption device; and"
+msgstr ""
+"tentativo di trasmissione di un virus, Trojan o altri strumenti di danno o "
+"atti all’ interruzione del sito; "
+
+#: display/conditions_of_use.php:155
+msgid ""
+"You will not intentionally or unintentionally violate any applicable "
+"international, federal, state or local law, including but not limited to any "
+"regulations applicable to your use of this Site. "
+msgstr ""
+"Non violerai intenzionalmente o inavvertitamente alcuna legge, federale, "
+"statale o locale, includendo senza limitazioni ogni regolamento applicabile "
+"al tuo uso di questo sito."
+
+#: display/conditions_of_use.php:160
+msgid ""
+"ChatandVision (HK) Limited may revise these conditions of use by updating "
+"this posting. You agree that in the event any portion of these Site "
+"conditions of use is found to be unenforceable, the remainder of these Site "
+"conditions shall remain in full force and effect. By using this Site you "
+"agree to be bound by any such revisions and should therefore periodically "
+"visit this page to determine the current conditions of use to which you are "
+"bound."
+msgstr ""
+"ChatandVision (HK) Limited può rivedere queste condizioni d'uso aggiornando "
+"la presente pubblicazione. L'utente accetta che in caso qualsiasi parte di "
+"queste condizioni d'uso del sito si trovi ad essere inapplicabile, il resto "
+"di queste condizioni del sito rimarrà in vigore a tutti gli effetti. "
+"Utilizzando il sito l'utente accetta di essere vincolato da tali revisioni e "
+"deve pertanto visitare periodicamente questa pagina per determinare le "
+"condizioni di utilizzo a cui è legato."
+
+#: display/conditions_of_use.php:165
+msgid "Methods of Payment"
+msgstr "Metodi di Pagamento"
+
+#: display/conditions_of_use.php:167
+msgid ""
+"A variety of payment methods are offered on the Site for the convenience of "
+"customers. You agree to pay all fees incurred in connection with your "
+"purchases at the rates in effect when the charges were incurred. If you pay "
+"by credit card, your card issuer agreement governs your use of your card, "
+"and you must refer to that agreement and not these Terms of Use to determine "
+"your rights and liabilities as a cardholder. YOU, AND NOT DigitalDiscount.co."
+"uk (DigitalDiscount), ARE RESPONSIBLE FOR PAYING ANY UNAUTHORIZED AMOUNTS "
+"BILLED TO YOUR CREDIT CARD BY A THIRD PARTY."
+msgstr ""
+"Una varietà di metodi di pagamento sono offerti sul sito per la comodità dei "
+"clienti. Il cliente accetta di pagare tutte le spese sostenute in relazione "
+"con i suoi acquisti alle tariffe in vigore al momento in cui le spese sono "
+"state sostenute. Se si paga con carta di credito, il contratto con "
+"l'emittente della carta disciplina l'uso della stessa, ed il cliente deve "
+"fare riferimento a tale accordo e non le Condizioni di utilizzo di questo "
+"sito per determinare i diritti e le responsabilità come titolare della "
+"carta. IL CLIENTE, E NON NuovaDigitale.it (NuovaDigitale), è responsabile "
+"del pagamento di EVENTUALI IMPORTI NON AUTORIZZATI ADDEBITATO SULLA SUA "
+"CARTA DI CREDITO DA TERZI."
+
+#: display/conditions_of_use.php:170
+msgid "Payment Fees and Charges"
+msgstr "Pagamento di Tasse"
+
+#: display/conditions_of_use.php:172
+msgid ""
+"You agree to pay all fees and charges incurred in connection with your "
+"purchases at the rates in effect when the charges were incurred. Unless you "
+"notify DigitalDiscount of any discrepancies within sixty (60) days after "
+"they first appear on your credit card statement, you agree that they will be "
+"deemed accepted by you in all respects and for all purposes. If "
+"DigitalDiscount does not receive payment from your credit card issuer or its "
+"agent, you agree to pay all amounts due upon demand by DigitalDiscount or "
+"its agents."
+msgstr ""
+"Il cliente accetta di pagare tutte le tasse e le spese sostenute in "
+"relazione con i propri acquisti alle tariffe in vigore al momento in cui il "
+"pagamento è stato effettuato. A meno che il cliente non comunichi a "
+"NuovaDigitale di eventuali discrepanze entro sessanta (60) giorni dopo la "
+"loro prima apparizione sull'estratto conto della carta di credito, l'utente "
+"accetta che saranno considerate accettate in tutto e per tutto e per tutti "
+"gli scopi. Se NuovaDigitale non riceve il pagamento dall'emittente della "
+"carta di credito o il suo agente, l'utente accetta di pagare tutti gli "
+"importi dovuti su richiesta di NuovaDigitale o dai suoi agenti."
+
+#: display/conditions_of_use.php:175
+msgid "Updated: July 09, 2015 "
+msgstr "Aggiornato al 9 Luglio 2015"
 
 #: display/contact.php:8
 msgid ""
 "Having an issue? There are a number of ways you can get in touch with our "
 "experienced Sales and Customer Service teams. "
 msgstr ""
-"Hai un problema? Ci sono diverse opzioni per contattare il nostro team "
-"esperto Vendite e Servizio Clienti."
+"Hai un problema? Ci sono diverse opzioni per contattare il nostro esperto "
+"Team Vendite e Servizio Clienti."
 
 #: display/contact.php:9
 msgid ""
@@ -767,10 +1389,6 @@ msgstr "Politiche di Privacy"
 msgid "%s Privacy Policy"
 msgstr "%s Politiche di Privacy"
 
-#: display/privacy_policy.php:6
-msgid "CONTENTS"
-msgstr "CONTENUTI"
-
 #: display/privacy_policy.php:9 display/privacy_policy.php:24
 msgid "WHY WE COLLECT"
 msgstr "PERCHE CHIEDIAMO INFORMAZIONI"
@@ -783,13 +1401,9 @@ msgstr "CHE INFORMAZIONI CHIEDIAMO"
 msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
 msgstr "COME USIAMO LE INFORMAZIONI"
 
-#: display/privacy_policy.php:12 display/privacy_policy.php:54
-msgid "SECURITY"
-msgstr "SICUREZZA"
-
 #: display/privacy_policy.php:13 display/privacy_policy.php:67
 msgid "HOW WE USE COOKIES"
-msgstr "COME USIAMO I COOKIE"
+msgstr "COME USIAMO I COOKIES"
 
 #: display/privacy_policy.php:14 display/privacy_policy.php:80
 msgid "LINKS TO OTHER WEBSITES"
@@ -813,10 +1427,10 @@ msgid ""
 "protect it."
 msgstr ""
 "Le Politiche di Privacy di %s regolano la raccolta, uso e trasmissione di "
-"informazioni personaliche passano attraverso %s ogni volta che interagisci "
+"informazioni personali che passano attraverso %s ogni volta che interagisci "
 "con %s visitando il sito, acquistando prodotti od utilizzando il servizio "
 "alla clientela. Per favore, dedica tutto il tempo necessario per informarti "
-"sulle politiche a riguardo, inclusi i tipi di informazioni che raccogliamo, "
+"sulle politiche al riguardo, inclusi i tipi di informazioni che raccogliamo, "
 "come e per quale utilizzo, a chi trasmettiamo le informazioni, e come queste "
 "siano tenute al sicuro. La tua privacy è una priorità di %s e facciamo tutto "
 "il possibile per proteggerla."
@@ -867,7 +1481,7 @@ msgstr "informazioni statistìche quali CAP, preferenze ed interessi"
 
 #: display/privacy_policy.php:39
 msgid "other information relevant to customer surveys and/or offers"
-msgstr "altre informazioni per sondaggi e/o offerte"
+msgstr "altre informazioni per sondaggi eo offerte"
 
 #: display/privacy_policy.php:45
 msgid ""
@@ -961,11 +1575,11 @@ msgid ""
 "feedback provided to us, or have access to special offers or content from %s."
 msgstr ""
 "%s potrebbe condividere certe informazioni personali con altre aziende con "
-"le quali %s ha una relazione strategica e/o che forniscono servizi "
+"le quali %s ha una relazione strategica eo che forniscono servizi "
 "complementari a tuo vantaggio. Questi servizi consistono in elaborazione "
 "dati, evasione degli ordini, consegne, gestione e riordino dei dati del "
 "cliente, servizio clienti, statistiche sul livello di interesse nelle varie "
-"categorie di prodotti, o ricerca e sondaggi sullàopinione dei clienti. "
+"categorie di prodotti, o ricerca e sondaggi sulla opinione dei clienti. "
 "Queste aziende esterne sono tenute alla protezione delle tue informazioni "
 "personali, ad eccezione dei casi in cui la trasmissione di informazioni "
 "dovesse essere richiesta per il tuo acquisto. Per esempio, quando si "
@@ -1052,11 +1666,11 @@ msgid ""
 msgstr ""
 "Il nostro sito potrebbe contenere link ad altri siti di interesse. In ogni "
 "caso, una volta che hai lasciato il  nostro sito utilizzando questi link, "
-"considera che non abbiamo alcun controllo sul sito esterno. Per questo "
-"nonsuiamo responsabili per la protezione e la privacy di qualsiasi "
-"informazione tu fornisca mentre visiti siti esterni, i quali non sono "
-"soggetti da queste politiche di privacy. Dovresti utilizzarli con cautela e "
-"visitare le condizioni di privacy di questi siti."
+"considera che non abbiamo alcun controllo sul sito esterno. Per questo non "
+"siamo responsabili per la protezione e la privacy di qualsiasi informazione "
+"tu fornisca mentre visiti siti esterni, i quali non sono soggetti da queste "
+"politiche di privacy. Dovresti utilizzarli con cautela e visitare le "
+"condizioni di privacy di questi siti."
 
 #: display/privacy_policy.php:90
 msgid ""
@@ -1066,9 +1680,9 @@ msgstr ""
 "Se hai domande o dubbi, puoi mandarci un' email utilizzando l' apposito "
 "modulo nella pagina "
 
-#: display/privacy_policy.php:90 header.php:116
+#: display/privacy_policy.php:90 header.php:117
 msgid "Contact Us"
-msgstr "Contatti"
+msgstr "Contattaci"
 
 #: display/privacy_policy.php:90
 msgid " page"
@@ -1111,14 +1725,14 @@ msgid ""
 "the final amount you pay. Rest assured that your buying experience with us "
 "will be completely hassle free."
 msgstr ""
-"Sospetti dei costi nascosti? Niente paura! Ci prendiamo carico di ogni spesa "
-"o tassa applicabile prima della spedizione, per questo il prezzo esposto è "
-"il prezzo finale. non preoccuparti, la tua esperienza di shopping con noi "
-"non avrà ostacoli!"
+"Preoccupato di costi nascosti? Non esserlo, ci prendiamo carico di ogni "
+"spesa o tassa applicabile prima della spedizione, per questo il prezzo "
+"esposto è il prezzo finale. Ti assicuriamo che la tua esperienza di shopping "
+"con noi non avrà ostacoli!"
 
 #: display/shipping.php:15
 msgid "Tracking Your Order"
-msgstr "Tracciare il tuo ordine"
+msgstr "Tracciare Il Tuo Ordine"
 
 #: display/shipping.php:17
 msgid ""
@@ -1134,7 +1748,7 @@ msgstr ""
 
 #: display/shipping.php:20
 msgid "FREE Shipping Delivery Times"
-msgstr "Tempistiche per la consegna GRATUITA"
+msgstr "Tempi Di Consegna GRATUITA"
 
 #: display/shipping.php:22
 msgid ""
@@ -1147,13 +1761,13 @@ msgid ""
 "customers from our global fulfillment centers in the UK, US and HK, however "
 "please bear in mind some regions may experience longer shipping lead times.**"
 msgstr ""
-"Ordini consegnati con spedizione gratuita in genere arrivano tra i 5 ed i 12 "
+"Ordini consegnati con spedizione gratuita in genere arrivano tra i 9 ed i 19 "
 "giorni lavorativi; dipendentemente dalla regione di consegna, alcuni ordini "
 "potrebbero arrivare in anticipo.\n"
 "                       Per facilitare la spedizione gratuita e permettere al "
-"cliente un risparmio maggiore, utilizziamo servizi lgistici internazionali "
+"cliente un risparmio maggiore, utilizziamo servizi logistici internazionali "
 "affidabili e con un buon rapporto qualità/prezzo. Per minimizzare eventuali "
-"ritardi, spedamo direttamente ai nostri clienti dai nostri magazzini in UK, "
+"ritardi, spediamo direttamente ai nostri clienti dai nostri magazzini in UK, "
 "USA e  Hong Kong, ma considera che alcune regioni potrebbero richiedere "
 "tempi di spedizione più lunghi.**"
 
@@ -1165,7 +1779,7 @@ msgid ""
 "more accurately reflect the cost of providing service to these areas."
 msgstr ""
 "* Spedizioni verso e da aree meno popolate o meno accessibili, domestiche o "
-"internazionali, comportano costi di gestione maggiori. i costi per la "
+"internazionali, comportano costi di gestione maggiori. I costi per la "
 "consegna verso aree remote verranno aggiunti al totale finale del tuo "
 "ordine, per coprire i costi relativi al servizio verso queste aree."
 
@@ -1231,7 +1845,7 @@ msgstr "Iscriviti"
 
 #: footer.php:202
 msgid "indicates required"
-msgstr "Indica campi obbligatori"
+msgstr "Indica richiesta"
 
 #: footer.php:217
 msgid "100% Secure "
@@ -1247,7 +1861,7 @@ msgstr "Consegna Gratuita"
 
 #: footer.php:225
 msgid "For All Orders*"
-msgstr "per tutti gli ordini"
+msgstr "Per Tutti Gli Ordini*"
 
 #: footer.php:225
 msgid "Shipping:"
@@ -1257,7 +1871,7 @@ msgstr "Spedizione:"
 msgid "3-5 Working Days"
 msgstr "3-5 Giorni Lavorativi"
 
-#: footer.php:245 header.php:146
+#: footer.php:245 header.php:147
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s Giorni Garanzia Soddisfatti o Rimborsati"
@@ -1280,11 +1894,11 @@ msgstr "Condizioni d' Uso"
 
 #: footer.php:275
 msgid "Shipping Policy"
-msgstr "Criteri di spedizione"
+msgstr "Politiche di Spedizione"
 
 #: footer.php:276
 msgid "Return and Refund Policy"
-msgstr "Ritorno e politica di rimborso"
+msgstr "Restituzioni e Politica di Rimborso"
 
 #: footer.php:277
 msgid "Billing Terms and Conditions"
@@ -1312,7 +1926,7 @@ msgstr "Francia"
 
 #: footer.php:290
 msgid "Great Britain"
-msgstr "Regno Uito"
+msgstr "Gran Bretagna"
 
 #: footer.php:291
 msgid "Hong Kong"
@@ -1320,50 +1934,50 @@ msgstr "Hong Kong"
 
 #: header.php:54
 #, php-format
-msgid "%s item(s) - %s"
-msgstr "%s articolo(i) - %s"
+msgid "%s item(s) - "
+msgstr "%s prodotto(i) - "
 
-#: header.php:110
+#: header.php:111
 msgid "We won't be beaten on electronics!"
 msgstr "Non abbiamo rivali nell' elettronica!"
 
-#: header.php:115
+#: header.php:116
 msgid "Warranty"
 msgstr "Garanzia"
 
-#: header.php:117
+#: header.php:118
 msgid "Help"
 msgstr "Aiuto"
 
-#: header.php:118
+#: header.php:119
 msgid "Clearance"
 msgstr "Liquidazione"
 
-#: header.php:120 myaccount/index.php:4
+#: header.php:121 myaccount/index.php:4
 msgid "My Account"
 msgstr "Il Mio Account"
 
-#: header.php:121
+#: header.php:122
 msgid "Log Out"
 msgstr "Esci"
 
-#: header.php:124
+#: header.php:125
 msgid "Sign in"
 msgstr "Entra"
 
-#: header.php:150
+#: header.php:151
 msgid "Free Delivery For All Orders"
 msgstr "Consegna Gratuita per Tutti gli Ordini"
 
-#: header.php:154
+#: header.php:155
 msgid "Up to 2 Years Warranty"
 msgstr "Fino a 2 Anni di Garanzia"
 
-#: header.php:198
+#: header.php:199
 msgid "Find your product"
 msgstr "Trova il tuo prodotto"
 
-#: header.php:216
+#: header.php:217
 msgid "Top search"
 msgstr "I Più Cercati"
 
@@ -1381,15 +1995,15 @@ msgstr "Collezioni"
 
 #: index.php:88
 msgid "camera collection"
-msgstr "Collezioni fotocamere"
+msgstr "Collezioni Fotocamere"
 
 #: index.php:92 index.php:112
 msgid "Shop now"
-msgstr "Compra ora"
+msgstr "Compra Ora"
 
 #: index.php:108
 msgid "mobile collection"
-msgstr "Collezioni Cellulari"
+msgstr "Collezione Cellulari"
 
 #: myaccount/forget_password.php:4
 msgid "Reset your password"
@@ -1397,7 +2011,7 @@ msgstr "Cambia la password"
 
 #: myaccount/forget_password.php:34
 msgid "Please enter your registered email address!"
-msgstr "Per favore, inserisci il tuo indirizzo email registrato"
+msgstr "Per favore, inserisci il tuo indirizzo email registrato!"
 
 #: myaccount/forget_password.php:43
 msgid "Go"
@@ -1408,15 +2022,15 @@ msgid ""
 "An email containing a temporary password will be sent to your registered "
 "email shortly."
 msgstr ""
-"Un' email con una password temporanea sarà inviata al tuo indirizzo email "
-"registrato"
+"Un' email contenente una password temporanea sarà inviata al tuo indirizzo "
+"email registrato"
 
 #: myaccount/forget_password.php:51
 msgid ""
 "Kindly check your spam folder in the event our email is not received within "
 "a couple of minutes."
 msgstr ""
-"Per favora, controlla la tuia cartella spam se non ricevi la nostra email "
+"Per favore, controlla la tua cartella spam se non ricevi la nostra email "
 "entro qualche minuto."
 
 #: myaccount/index.php:23
@@ -1436,8 +2050,8 @@ msgid ""
 "Your order has been split at no extra cost to ensure all item(s) purchased "
 "are received at the soonest available opportunity."
 msgstr ""
-"Il tuo ordine è stato diviso senza costi extra per assicurare la consegna di "
-"tutti i prodotti nel minor tempo possibile. "
+"Il tuo ordine è stato diviso senza costi aggiunti per assicurare la consegna "
+"di tutti i prodotti nel minor tempo possibile. "
 
 #: myaccount/index.php:43 myaccount/index.php:76
 msgid "Order"
@@ -1473,7 +2087,7 @@ msgstr "qui"
 
 #: myaccount/index.php:94
 msgid "Pending Payment"
-msgstr "Pagamento in sospeso"
+msgstr "Pagamento in Sospeso"
 
 #: myaccount/index.php:95
 msgid "We have not received the payment for your order."
@@ -1544,7 +2158,7 @@ msgstr ""
 
 #: myaccount/index.php:127
 msgid "Personal Details"
-msgstr "Le Tue Informazioni"
+msgstr "Dettagli Personali"
 
 #: myaccount/index.php:134 myaccount/index.php:135 myaccount/index.php:320
 #: myaccount/index.php:321 myaccount/login.php:93 myaccount/login.php:94
@@ -1559,12 +2173,12 @@ msgstr "Provincia"
 #: myaccount/index.php:155 myaccount/index.php:156 myaccount/index.php:350
 #: myaccount/login.php:59
 msgid "Address Line 1"
-msgstr "Indirizzo linea 1"
+msgstr "Indirizzo Linea 1"
 
 #: myaccount/index.php:159 myaccount/index.php:160 myaccount/index.php:351
 #: myaccount/login.php:60
 msgid "Address Line 2"
-msgstr "Indirizzo linea 2"
+msgstr "Indirizzo Linea 2"
 
 #: myaccount/index.php:163 myaccount/index.php:164 myaccount/index.php:354
 #: myaccount/index.php:355
@@ -1597,7 +2211,7 @@ msgstr "Dettagli di Restituzione"
 
 #: myaccount/index.php:208 myaccount/index.php:209
 msgid "Reasons for Returns"
-msgstr "Motivazione per la restituzione"
+msgstr "Motivazione per la Restituzione"
 
 #: myaccount/index.php:222 myaccount/index.php:223
 msgid "Action Required"
@@ -1616,7 +2230,7 @@ msgid ""
 "Where the dispatch has been made, you may request for a refund up to 14 days "
 "after the goods are delivered."
 msgstr ""
-"Dopo l' evasione di un ordine, puoi richiedere un rimborso durante i 14 "
+"Quando un'ordine è stato spedito, puoi richiedere un rimborso durante i 14 "
 "giorni successivi alla consegna del prodotto."
 
 #: myaccount/index.php:248
@@ -1625,9 +2239,9 @@ msgid ""
 "you are eligible for a refund, Valuebasket.com will provide authorization "
 "and a returns address if appropriate."
 msgstr ""
-"Per inviare una richiesta di restituzione, mandaci un' email. Se sei idoneo "
-"ad un rimborso, NuovaDigitale ti informerà sull' indirizzo di restituzione, "
-"o sulle procedure seguenti."
+"Per inviare una richiesta di restituzione, semplicemente manda una email per "
+"iniziare il processo. Se sei idoneo ad un rimborso, NuovaDigitale ti fornirà "
+"l'autorizzazione ed informerà sull' indirizzo di restituzione se appropriato."
 
 #: myaccount/index.php:249
 msgid "Returning an order within the 14-day grace period from delivery date;"
@@ -1635,14 +2249,13 @@ msgstr "Restituzione di un ordine entro 14 giorni dalla data di consegna;"
 
 #: myaccount/index.php:251
 msgid "that are new unopened item, will be eligible for refund"
-msgstr "articoli nuovi ed intatti, saranno idonei al rimborso"
+msgstr "con articoli nuovi ed intatti, saranno idonei al rimborso"
 
 #: myaccount/index.php:252
 msgid ""
 "that are found to be faulty will be eligible for replacement order or refund"
 msgstr ""
-"il cui danno sia verificato e confermato sono idonei a sostituzione o "
-"rimborso"
+"con danno verificato e confermato, sono idonei a sostituzione o rimborso"
 
 #: myaccount/index.php:255
 msgid ""
@@ -1657,7 +2270,9 @@ msgstr ""
 msgid ""
 "You must take all due reasonable care of the goods and return them in its "
 "original and undamaged condition."
-msgstr "Ti impegni a restituire gli articoli intatti e senza danni."
+msgstr ""
+"Devi prenderti tutte le precauzioni per la cura della merce e restituire gli "
+"articoli intatti e senza danni."
 
 #: myaccount/index.php:257
 msgid ""
@@ -1666,30 +2281,31 @@ msgid ""
 "the item(s) are found to be defective and if proper authorization from "
 "ValueBasket.com is sought and provided prior to the return of the item(s)."
 msgstr ""
-"Accetti di farti carico dei costi di restituzione. I costi di restituzione "
-"potrebbero essere idonei ad un rimborso se il guasto del prodotto o dei "
-"prodotti ordinati viene riscontrato e verificato, e su richiesta ed "
-"autorizzazione da parte di NuovaDigitale confermata prima della restituzione "
-"dei prodotti."
+"Accetti di farti carico dei costi di restituzione del(i) prodotto(i). I "
+"costi di restituzione potrebbero essere idonei ad un rimborso se il guasto "
+"del(i) prodotto(i) ordinato(i) viene riscontrato e verificato e se "
+"autorizzato da NuovaDigitale con conferma prima della restituzione del(i) "
+"prodotto(i)."
 
 #: myaccount/index.php:258
 msgid ""
 "Where the purchases are opened and are of usable software, consumable goods, "
 "or items impacted by hygiene, such items will be ineligible for refund."
 msgstr ""
-"Se là articolo è stato aperto e software, esterni o parti non sono nelle "
-"condizioni igieniche iniziali, questi non saranno idonein a rimborsi."
+"Se l'articolo è stato aperto e sono di software utilizzabile, beni di "
+"consumo, o articoli e parti non sono nelle condizioni igieniche iniziali, "
+"questi non saranno idonei al rimborso."
 
 #: myaccount/index.php:259
 msgid "A restocking fee may be applicable at the discretion of ValueBasket.com"
 msgstr ""
-"Una spesa di restocking potrebbe essere applicabile a discrezione di "
+"Una spesa di ristoccaggio potrebbe essere applicabile a discrezione di "
 "NuovaDigitale"
 
 #: myaccount/index.php:260
 msgid "An admin fee may be incurred if no fault found or fault caused by user"
 msgstr ""
-"Una soesa amministrativa sarà applicata se il guasto dichiarato non sarà "
+"Una spesa amministrativa sarà applicata se il guasto dichiarato non sarà "
 "riscontrato o se risulterà essere causato dal cliente"
 
 #: myaccount/index.php:267 myaccount/index.php:271
@@ -1707,7 +2323,7 @@ msgstr "Profilo"
 #: myaccount/index.php:288 myaccount/login.php:105 myaccount/login.php:108
 #: myaccount/login.php:109
 msgid "Email Address"
-msgstr "Indirizzo email"
+msgstr "Indirizzo Email"
 
 #: myaccount/index.php:293 myaccount/index.php:294
 msgid "Old Password"
@@ -1721,11 +2337,11 @@ msgid ""
 msgstr ""
 "La password dev' essere tra i 6 ed i 20 caratteri. Ti raccomandiamo di "
 "scegliere una password sicura, che includa un misto di maiuscole e "
-"minuscole, numeri e simboli (e.g. #, @, !)"
+"minuscole, numeri e simboli (per esempio #, @, !)"
 
 #: myaccount/index.php:300 myaccount/index.php:301
 msgid "Choose a New Password"
-msgstr "Scegli la Nuova Password"
+msgstr "Scegli una Nuova Password"
 
 #: myaccount/index.php:300 myaccount/index.php:304
 msgid "(Optional)"
@@ -1761,7 +2377,7 @@ msgstr "Numero"
 
 #: myaccount/login.php:9
 msgid "Existing Customer"
-msgstr "Già cliente"
+msgstr "Cliente Già Esistente"
 
 #: myaccount/login.php:22
 msgid "Log In"
@@ -1785,7 +2401,7 @@ msgstr "CAP"
 
 #: myaccount/login.php:82
 msgid "Recipient Details"
-msgstr "Dettagli destinatario"
+msgstr "Dettagli del Destinatario"
 
 #: myaccount/login.php:112 myaccount/login.php:113
 msgid "Confirm Email Address"
@@ -1799,63 +2415,66 @@ msgstr "Nuova Password"
 msgid "Confirm Password"
 msgstr "Conferma Password"
 
-#: product/detail.php:23 product/detail.php:31 product/related_product.php:16
+#: product/detail.php:23 product/related_product.php:16
 msgid "Sale"
 msgstr "Vendita"
 
-#: product/detail.php:82
+#: product/detail.php:73
 #, php-format
 msgid "%s review(s)"
 msgstr "%s recensione(i)"
 
-#: product/detail.php:82
+#: product/detail.php:73
 msgid "Write a review"
 msgstr "Scrivi una recensione"
 
-#: product/detail.php:93
+#: product/detail.php:84
 msgid "Availability"
 msgstr "Disponibilità"
 
-#: product/detail.php:97 product/detail.php:103
+#: product/detail.php:88 product/detail.php:94
 msgid " In Stock"
-msgstr " In Stock"
+msgstr "Disponibile"
 
-#: product/detail.php:99
+#: product/detail.php:90
 msgid "Out of Stock"
-msgstr " Esaurito"
+msgstr "Esaurito"
 
-#: product/detail.php:101
+#: product/detail.php:92
 msgid "Pre Order"
 msgstr "Pre Ordine"
 
-#: product/detail.php:112
+#: product/detail.php:103
 msgid "Qty:"
 msgstr "Qtà:"
 
-#: product/detail.php:135
-msgid "4-7 working days delivery"
-msgstr "Consegna in 4-7 giorni lavorativi"
+#: product/detail.php:128 product/detail.php:129
+msgid "Ships in"
+msgstr "Spedito in"
 
-#: product/detail.php:169
+#: product/detail.php:128 product/detail.php:129
+msgid "working days"
+msgstr "giorni lavorativi"
+
+#: product/detail.php:128
+msgid "and"
+msgstr "e"
+
+#: product/detail.php:128
+msgid "delivered in"
+msgstr "consegnato in"
+
+#: product/detail.php:164
 msgid "Specification"
 msgstr "Specifiche"
 
-#: product/detail.php:170
+#: product/detail.php:165
 msgid "Overview"
 msgstr "Panoramica"
 
-#: product/detail.php:171
+#: product/detail.php:167
 msgid "In the box"
 msgstr "Nella Scatola"
-
-#: product/detail.php:172
-msgid "Recommended Accessories"
-msgstr "Accessori raccomandati"
-
-#: product/detail.php:173
-#, php-format
-msgid "Reviews %s"
-msgstr "Recensioni %s"
 
 #: product/related_product.php:4
 msgid "Related Products"
@@ -1871,7 +2490,7 @@ msgstr "Immagine"
 
 #: review.php:12
 msgid "Product Name"
-msgstr "Nome del prodotto"
+msgstr "Nome del Prodotto"
 
 #: review.php:13
 msgid "Quantity"
@@ -1899,7 +2518,7 @@ msgstr "Spedizione"
 
 #: review.php:64 reviewEmptyCart.php:7
 msgid "Continue Shopping"
-msgstr "Continua lo Shopping"
+msgstr "Continua A Fare Acquisti"
 
 #: reviewEmptyCart.php:6
 msgid "Empty Cart"
@@ -1919,6 +2538,18 @@ msgstr "Cerca risultati per \"%s\""
 msgid "Display"
 msgstr "Mostra"
 
+#~ msgid "%s item(s) - %s"
+#~ msgstr "%s articolo(i) - %s"
+
+#~ msgid "4-7 working days delivery"
+#~ msgstr "Consegna in 4-7 giorni lavorativi"
+
+#~ msgid "Recommended Accessories"
+#~ msgstr "Accessori raccomandati"
+
+#~ msgid "Reviews %s"
+#~ msgstr "Recensioni %s"
+
 #~ msgid "Rating (Highest)"
 #~ msgstr "Rating (Dal più alto)"
 
@@ -1936,42 +2567,6 @@ msgstr "Mostra"
 
 #~ msgid "TEST_TRANSLATION"
 #~ msgstr "Testing translation..."
-
-#~ msgid "Term and Conditions"
-#~ msgstr "Termini e Condizioni"
-
-#~ msgid "DigitalDiscount.co.uk Conditions of Use and Sale"
-#~ msgstr "NuovaDigitale.it Condizioni di Uso e Vendita"
-
-#~ msgid "CONDITIONS OF USE"
-#~ msgstr "CONDIZIONI D'USO"
-
-#~ msgid "SITE CONTENTS, OWNERSHIP, AND USE RESTRICTIONS"
-#~ msgstr "CONTENUTO DEL SITO, TITOLARITA’, RESTRIZIONI D’USO"
-
-#~ msgid "PLACING AN ORDER"
-#~ msgstr "EFFETTUARE UN ORDINE"
-
-#~ msgid "TAX AND DUTIES"
-#~ msgstr "TASSE E SPESE"
-
-#~ msgid "DELIVERY"
-#~ msgstr "CONSEGNA"
-
-#~ msgid "CANCELLING YOUR ORDER"
-#~ msgstr "CANCELLAZIONE ORDINI"
-
-#~ msgid "DEFECTIVE ITEM"
-#~ msgstr "ARTICOLI DIFETTOSI"
-
-#~ msgid "PRODUCT WARRANTIES"
-#~ msgstr "GARANZIE PRODOTTO"
-
-#~ msgid "DISCLAIMER OF LIABILITY"
-#~ msgstr "DICHIARAZIONE DI LIMITAZIONE DI RESPONSABILITA’"
-
-#~ msgid "CONDITIONS OF USE REVISIONS"
-#~ msgstr "SUCCESSIVE MODIFICHE DELLE CONDIZIONI "
 
 #~ msgid ""
 #~ "DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
@@ -2004,13 +2599,6 @@ msgstr "Mostra"
 #~ "l'elettronica di consumo di hardware, software e servizi."
 
 #~ msgid ""
-#~ "If you have any queries relating to our terms and conditions, please "
-#~ "contact the Customer Support team or read our FAQ."
-#~ msgstr ""
-#~ "Per qualsiasi domanda riguardo termini e condizioni, contatta il nostro "
-#~ "servizio clienti oppure consulta la sezione FAQ."
-
-#~ msgid ""
 #~ "The information contained in this Site including all images, "
 #~ "illustrations, designs, photographs, video clips, writings and other "
 #~ "materials that appear herein are copyrights, trademarks, trade dress or "
@@ -2028,257 +2616,6 @@ msgstr "Mostra"
 #~ "sussidiarie ed affiliate (\"ChatandVision\") o sono riconducibili ai "
 #~ "rispettivi proprietari. Il nome ChatandVision ed il logo ChatandVision "
 #~ "sono marchi registrati ChatandVision. "
-
-#~ msgid ""
-#~ "Permission is granted to display, copy, distribute, download, and print "
-#~ "in hard copy portions of this Site for the purposes of: "
-#~ msgstr ""
-#~ "Si garantisce il permesso di esporre, copiare, distribuire, scaricare, "
-#~ "stampare parti del sito per i seguenti propositi: "
-
-#~ msgid "placing an order with DigitalDiscount.co.uk or"
-#~ msgstr "Eseguire un ordine su NuovaDigitale o"
-
-#~ msgid ""
-#~ "using this Site as a shopping resource, provided you do not modify the "
-#~ "Site and that you retain all copyright and other proprietary notices "
-#~ "contained in the Contents."
-#~ msgstr ""
-#~ "Utilizzare il sito come risorsa di shopping, senza apportare modifiche ai "
-#~ "contenuti e mantenendo tutti gli avvisi riguardanti diritti d’autore e "
-#~ "titolarità presenti nei contenuti. "
-
-#~ msgid ""
-#~ "Except in connection with shopping or placing an order, none of the "
-#~ "Contents may be copied, reproduced, distributed, re-published, "
-#~ "downloaded, displayed, posted electronically or mechanically, "
-#~ "transmitted, recorded, in any manner mirrored, photocopied, or reproduced "
-#~ "without the prior written permission of ChatandVision or the applicable "
-#~ "copyright owner. "
-#~ msgstr ""
-#~ "Esclusiti i propositi di acquisto ed ordine, nessuno dei contenuti può "
-#~ "essere copiato, riprodotto, distribuito, ripubblicato, scaricato, "
-#~ "esposto, mostrato elettronicamente o meccanicamente, trasmesso, "
-#~ "registrato, rispecchiato in alcun modo, fotocopiato senza previa "
-#~ "autorizzazione scritta di ChatandVision o il delegato titolare dei "
-#~ "diritti d’autore. "
-
-#~ msgid ""
-#~ "Please note that the permission granted herein terminates automatically "
-#~ "if you breach any of these Site terms or conditions. Any other use of the "
-#~ "Contents on this Site including reproduction for purposes other than as "
-#~ "noted above, and including any reproduction, modification, distribution, "
-#~ "or republication may violate copyright or trademark laws, and, without "
-#~ "the prior written permission of ChatandVision, is strictly prohibited."
-#~ msgstr ""
-#~ "Si prega di notare che il permesso qui garantito termina automaticamente "
-#~ "in caso si contravvenga a termini e condizioni del sito.  Qualsiasi altro "
-#~ "utilizzo del contenuto  inclusa riproduzione per propositi non "
-#~ "corrispondenti a quanto specificato qui sopra, modifiche, distribuzione o "
-#~ "diffusione, violano le leggi a tutela della proprietà intellettuale e , "
-#~ "senza previo permesso scritto di ChatandVision, sono strettamente "
-#~ "proibite. "
-
-#~ msgid ""
-#~ "If you choose to leave this Site via links to other non-ChatandVision "
-#~ "operated sites, ChatandVision is not responsible for the privacy policies "
-#~ "of those sites or the cookies those sites use."
-#~ msgstr ""
-#~ "Se scegli di lasciare il sito tramite link a siti non gestiti da "
-#~ "ChatandVision, ChatandVision non sarà responsabile per le politiche di "
-#~ "privacy ed i cookies utilizzati da questi ultimi."
-
-#~ msgid ""
-#~ "The prices advertised on this Site are for Internet orders. Prices and "
-#~ "the availability of items are subject to change without notice. Any "
-#~ "recommended retail prices used on this Site are based on manufacturers’ "
-#~ "suggested retail prices and may not be indicative of the actual selling "
-#~ "prices in your area."
-#~ msgstr ""
-#~ "I prezzi esposti su questo sito sono per ordini online. Prezzi e "
-#~ "disponibilità degli articoli sono soggetti a variazioni senza preavviso. "
-#~ "Ogni  “prezzo consigliato” esposto sul sito si basa sul prezzo "
-#~ "consigliato dal produttore e potrebbe non corrispondere al reale prezzo "
-#~ "di vendita nella tua zona presso altri rivenditori. "
-
-#~ msgid ""
-#~ "Any reference to savings used on this Site indicates the promotional "
-#~ "savings off the recommended retail price and the actual savings will vary "
-#~ "depending upon the goods purchased and the date of the transaction."
-#~ msgstr ""
-#~ "Ogni riferimento sul sito riguardante risparmio e sconti indica lo sconto "
-#~ "promozionale rispetto al prezzo consigliato per la vendita al dettaglio, "
-#~ "ed il risparmio reale cambierà dipendentemente dagli articoli e dalla "
-#~ "data di acquisto. "
-
-#~ msgid ""
-#~ "Please check carefully that all information given is accurate and "
-#~ "complete when placing an order."
-#~ msgstr ""
-#~ "Per favore, controlla attentamente che tutte le informazioni fornite "
-#~ "siano accurate prima di eseguire un ordine. "
-
-#~ msgid ""
-#~ "Payment for all orders must be made in advance by credit or debit card. "
-#~ "We accept payment from most major credit and debit cards as well as "
-#~ "PayPal and Skrill (formerly known as MoneyBookers). "
-#~ msgstr ""
-#~ "Il pagamento per tutti gli ordini deve essere effettuato in anticipo "
-#~ "tramite carta di credito o debito. Accettiamo pagamenti da tutte le "
-#~ "maggiori carte di credito e debito, inoltre accettiamo pagamenti tramite "
-#~ "PayPal e  Skrill (anche conosciuto come MoneyBookers). "
-
-#~ msgid ""
-#~ "While we make every effort to provide accurate information, technical "
-#~ "inaccuracies or typographic or photographic errors may occur. We reserve "
-#~ "the right to make changes, corrections, and/or improvements to the "
-#~ "information contained on this Site at any time without notice."
-#~ msgstr ""
-#~ "Nonostante il tentativo di fornire informazioni accurate, potrebbero "
-#~ "persistere errori tecnici, tipografici o fotografici. Ci riserviamo il "
-#~ "diritto di cambiare, correggere e migliorare le informazioni del sito in "
-#~ "ogni momento e senza preavviso. "
-
-#~ msgid ""
-#~ "There may be certain orders that we are either unable to accept or must "
-#~ "cancel. We reserve the right, at our sole discretion, to refuse or cancel "
-#~ "any order for any reason. Possible circumstances involving cancellation "
-#~ "of orders may be limitations on quantities available for purchases or "
-#~ "inaccuracies or errors in product or pricing information."
-#~ msgstr ""
-#~ "Potrebbe verificarsi l’ eventualità nella quale non possiamo accettare o "
-#~ "dobbiamo rimborsare un ordine. Ci riserviamo il diritto, a nostra "
-#~ "esclusiva discrezione, di rifiutare o cancellare qualsiasi ordine per "
-#~ "qualsiasi motivo. Possibili circostanze che richiedano la cancellazione "
-#~ "di un ordine includono. Possibili limitazioni nella quantità disponibile "
-#~ "per la vendita o inesattezze o errori nelle informazioni riguardanti l’ "
-#~ "articolo o il prezzo."
-
-#~ msgid ""
-#~ "When you place an order to purchase a product from DigitalDiscount.co.uk, "
-#~ "we will send you an e-mail confirming receipt of your order and "
-#~ "containing the details of your order. Your order represents an offer to "
-#~ "us to purchase a product which is accepted by us when we send e-mail "
-#~ "confirmation to you that we've dispatched that product to you (the "
-#~ "\"Dispatch Confirmation E-mail\"). That acceptance will be complete at "
-#~ "the time we send the Dispatch Confirmation E-mail to you. Any products on "
-#~ "the same order which we have not confirmed in a Dispatch Confirmation E-"
-#~ "mail to have been dispatched do not form part of that contract."
-#~ msgstr ""
-#~ "Quando effettui un ordine per acquistare un prodotto da NuovaDigitale.it, "
-#~ "ti invieremo un’ e-mail che conferma la ricezione del tuo ordine ed i "
-#~ "dettagli. Il tuo ordine rappresenta un’ offerta  verso di noi per "
-#~ "acquistare un prodotto, la quale è accettata da noi quando inviamo una "
-#~ "conferma via e-mail riguardante la spedizione dell’ ordine  (l’ email "
-#~ "\"Conferma di Spedizione\"). L’ accettazione dell’ ordine è da ritenersi "
-#~ "completa quando ti inviamo l’ email \"Conferma di Spedizione\". Ogni "
-#~ "articolo compreso nel medesimo ordine che non sia riportato sul l’ email "
-#~ "\"Conferma di Spedizione\", non è da considerarsi incluso nel contratto. "
-
-#~ msgid ""
-#~ "In using our services, you authorize ChatandVision to make arrangements "
-#~ "for customs clearance for the products ordered. The responsibility for "
-#~ "ensuring that your ordered product can be lawfully imported outside of "
-#~ "Hong Kong to your destination country remains with our customers, and any "
-#~ "applicable import duties and taxes will be subjected to the recipient. We "
-#~ "do not have control over these import duties and taxes. Customs policies "
-#~ "vary widely from country to country, hence if you should have any queries "
-#~ "regarding your local Customs policies, contact your local Customs office "
-#~ "for further information. "
-#~ msgstr ""
-#~ "Utilizzando i nostri servizi, autorizzi ChatandVision ad organizzare la "
-#~ "gestione delle operazioni doganali per gli articoli ordinati. La "
-#~ "responsabilità di un’importazione legale dei prodotti da Hong Kong verso "
-#~ "il tuo paese di destinazione è dell’ utente, e qualsiasi tassa e spesa "
-#~ "doganale sarà a carico del destinatario. Non abbiamo controllo verso "
-#~ "tasse e spese doganali di importazione. Il regolamento doganale varia "
-#~ "molto da paese a paese,  se hai dubbi riguardo il regolamento in vigore "
-#~ "nel tuo stato, contatta gli uffici doganali. "
-
-#~ msgid ""
-#~ "Where the price of the goods allows, certain shipments to some countries "
-#~ "may include a fee which is borne by ChatandVision, for import of the "
-#~ "goods. This will be noted on your shipment invoice."
-#~ msgstr ""
-#~ "Dipendentemente dal prezzo degli articoli, spedizioni verso un dato paese "
-#~ "potrebbero includere una spesa extra decisa da ChatandVision, per "
-#~ "l’importazione degli articoli. Questa sarà inclusa sulla tua fattura di "
-#~ "spedizione. "
-
-#~ msgid ""
-#~ "In the event where customs clearance is required, this will cause delays "
-#~ "to the original delivery estimate."
-#~ msgstr ""
-#~ "Nel caso siano necessarie operazioni doganali, la data prevista di "
-#~ "consegna potrebbe subire ritardi."
-
-#~ msgid ""
-#~ "Goods will be sent to the address given by you in your order. If you are "
-#~ "ordering more than one item, your goods may be sent to you in separate "
-#~ "shipments. There will not be extra delivery charges for these delivery "
-#~ "cases."
-#~ msgstr ""
-#~ "I prodotti sono spediti all’ indirizzo da te fornito nel corso dell’ "
-#~ "ordine. Se questo include più di un articolo, diversi articoli potrebbero "
-#~ "essere spediti separatamente. Per questi casi, non ci sono spese di "
-#~ "spedizione aggiuntive."
-
-#~ msgid ""
-#~ "Your order should not take any more than 7 to 14 working days to arrive, "
-#~ "however, this is not guaranteed and we cannot be held responsible for "
-#~ "events outside of our control. If you have not received your order within "
-#~ "20 working days you should contact our Customer Support team."
-#~ msgstr ""
-#~ "Il tuo ordine non dovrebbe impiegare più di  7-14 giorni lavorativi per "
-#~ "essere consegnato, in ogni caso, questo non è garantito e non saremo "
-#~ "responsabili per eventualità al di fuori del nostro controllo. Se non hai "
-#~ "ricevuto il tuo ordine entro 20 giorni lavorativi, per favore contatta il "
-#~ "nostro servizio clienti."
-
-#~ msgid ""
-#~ "The period in which you can exercise the right to cancel an order is 30 "
-#~ "days beginning the day after your goods are received. The cancellation "
-#~ "request has to be received by us in writing - by email, or letter. The "
-#~ "unused goods (including any accessories which were included in the price "
-#~ "of the goods) must be returned at the customer's expense within 30 days "
-#~ "after receipt of parcel and customer is responsible for any damage during "
-#~ "the transit of the returned goods, (it also applies to products purchased "
-#~ "as Christmas presents). We reserve the right to have the goods inspected "
-#~ "by a technician prior to replacement or refund. Please note that software "
-#~ "packages may only be returned unopened. Should you cancel your order "
-#~ "within the cooling off period we will issue you a full refund for the "
-#~ "price you paid for the item(s). Any cancellation made outside the 30 day "
-#~ "\"cooling-off\" period may not be accepted."
-#~ msgstr ""
-#~ "Il periodo in cui puoi esercitare il diritto di recesso è 30 giorni dopo "
-#~ "la ricezione dell’ ordine. La richiesta ci deve pervenire per iscritto – "
-#~ "email o lettera. I beni inutilizzati (inclusi accessori inclusi nel "
-#~ "prezzo del prodotto) devono essere restituiti a tue spese entro 30 giorni "
-#~ "dalla ricezione del tuo acquisto ed il cliente è responsabile per "
-#~ "qualsiasi danno riconducibile al transito (regolamento applicato anche a "
-#~ "regali di Natale). Ci riserviamo il diritto di far ispezionare il "
-#~ "prodotto da un tecnico prima del rimborso o restituzione. Per favore, "
-#~ "considera che pacchetti software possono essere restituiti solo non "
-#~ "aperti. Se cancelli il tuo ordine entro il periodo di 30 giorni, "
-#~ "rispettando tutte le condizioni qui sopra, hai diritto ad un rimborso "
-#~ "completo per gli articoli acquistati.  Ogni cancellazione successiva ai "
-#~ "30 giorni  non sarà accettata."
-
-#~ msgid ""
-#~ "In the unlikely event your order is damaged in transit please contact us "
-#~ "immediately. Please send the product back to us in the original packaging "
-#~ "and a valid RMA (Return Merchandise Authorization) form. We will arrange "
-#~ "for a prompt replacement or refund, whichever is your preference. Please "
-#~ "note that we are unable to offer a refund if you notify us about the "
-#~ "damaged goods after more than 30 days starting the day after receipt of "
-#~ "goods."
-#~ msgstr ""
-#~ "Nell’ improbabile eventualità in cui il tuo acquisto sia danneggiato "
-#~ "durante il transito, contattaci immediatamente. Inviaci il prodotto nell’ "
-#~ "imballaggio originale e con un modulo RMA allegato (Return Merchandise "
-#~ "Authorization). Organizzeremo una sostituzione o un rimborso  immediati, "
-#~ "a tua scelta. Considera che non potremo offrire un rimborso se la tua "
-#~ "segnalazione avviene dopo i 30 giorni dalla data di consegna del prodotto."
 
 #~ msgid ""
 #~ "During the RMA process, ChatandVision Ltd will follow up with you via "
@@ -2301,113 +2638,11 @@ msgstr "Mostra"
 #~ "ChatandVision si riserva il diritto di trattenere i prodotti."
 
 #~ msgid ""
-#~ "All products, unless otherwise stated in the product listing, are "
-#~ "supplied with an in-house warranty where our facilities are able to "
-#~ "process all returns for a quick and efficient all-round service. The "
-#~ "warranty period may vary for different product categories. The table "
-#~ "below sets out the applicable warranty period commencing from the date of "
-#~ "receipt for the Product."
-#~ msgstr ""
-#~ "Tutti i prodotti, se non diversamente specificato nella pagina prodotto , "
-#~ "sono forniti con un programma di garanzia interno gestito interamente "
-#~ "dalle nostre strutture. Il periodo di garanzia varia a seconda delle "
-#~ "categorie di prodotto. Il seguente grafico indica il periodo di garanzia "
-#~ "applicabile a partire dalla data di ricezione del prodotto."
-
-#~ msgid ""
-#~ "This warranty does not cover:\n"
-#~ "                                - Damage, fault or failure due to "
-#~ "alteration or repairs made by anyone other than us\n"
-#~ "                                - Dents, scratches, and other conditions "
-#~ "to the product that occur over time considered as normal wear and tear\n"
-#~ "                                - Accidental damage (including but not "
-#~ "limited to shock, impact, dropping, water damage or sand damage)\n"
-#~ "                                - Not satisfied with the product\n"
-#~ "                            "
-#~ msgstr ""
-#~ "Questa garanzia non copre:\n"
-#~ "                                - Danni, disfunzioni o guasti dovuti a "
-#~ "alterazioni o riparazioni non eseguite da noi\n"
-#~ "                                - Ammaccature, graffi ed altre condizioni "
-#~ "considerate come normali eventi durante l'uso del prodotto\n"
-#~ "                                - Danni accidentali (inclusi ma non "
-#~ "limitatamente a shock, impatto, caduta, danni da acqua o sabbia)\n"
-#~ "                                - Insoddisfazione verso il prodotto\n"
-#~ "    \n"
-#~ "                            "
-
-#~ msgid ""
-#~ "IN NO EVENT SHALL CHATANDVISION BE LIABLE FOR SPECIAL, INDIRECT, "
-#~ "EXEMPLARY, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER, INCLUDING "
-#~ "BUT NOT LIMITED TO, LOSS OF USE, DATA, OR PROFITS, WITHOUT REGARD TO THE "
-#~ "FORM OF ANY ACTION, INCLUDING BUT NOT LIMITED TO CONTRACT, NEGLIGENCE, OR "
-#~ "OTHER TORTIOUS ACTIONS, ALL ARISING OUT OF OR IN CONNECTION WITH THE USE, "
-#~ "COPYING, OR DISPLAY OF THE CONTENTS OF THIS SITE. In an effort to provide "
-#~ "our customers with the most current information, ChatandVision will, from "
-#~ "time to time, make changes in the Contents and in the products or "
-#~ "services described on this Site. "
-#~ msgstr ""
-#~ "CHATANDVISION NON E’ RESPONSABILE IN ALCUN CASO PER DANNI PARTICOLARI, "
-#~ "INDIRETTI, ESEMPLARI, O CONSEQUENZIALI O ALTRI TIPI DI DANNI, INCLUDENDO "
-#~ "MA NON LIMITATAMENTE A PERDITA DELL’ UTILIZZO, DATI, O PROFITTI, SENZA "
-#~ "DISTINZIONE DI AZIONI, INCLUDENDO MA NON LIMITATAMENTE A CONTRATTI, "
-#~ "NEGLIGENZA, O ALTRI TORTI, DERIVANTI DA O CONNESSI CON USO, COPIA O "
-#~ "ESPOSIZIONE DEL CONTENUTO DI QUESTO SITO. Nel tentativo di fornire ai "
-#~ "nostri clienti informazioni sempre aggiornate, ChatandVision effettuerà "
-#~ "dei cambiamenti ai contenuti del sito. "
-
-#~ msgid ""
 #~ "ChatandVision Ltd does not accept liability for any loss caused by delay "
 #~ "in the delivery of products ordered."
 #~ msgstr ""
 #~ "ChatandVision Ltd non accetta responsabilità per alcun danno causato da "
 #~ "un eventuale ritardo nella consegna dei prodotti ordinati."
-
-#~ msgid "In using this Site you agree to the following:"
-#~ msgstr "Utilizzando il sito, accetti i seguenti punti:"
-
-#~ msgid ""
-#~ "You will not use any device, software, or other instrumentality to "
-#~ "disrupt, damage or interfere with or attempt to disrupt, damage or "
-#~ "interfere with the proper functioning of this site;"
-#~ msgstr ""
-#~ "Non utilizzerai alcuno strumento, software, o altro per danneggiare, "
-#~ "interrompere o limitare le normali funzioni del sito; "
-
-#~ msgid ""
-#~ "You will not to violate or attempt to violate the security of this Site, "
-#~ "including, without limitation,"
-#~ msgstr ""
-#~ "Non violerai o cercherai di violare la sicurezza del sito , includendo, "
-#~ "senza limitazioni"
-
-#~ msgid "logging onto an account which you are not authorized to access;"
-#~ msgstr "Accesso non autorizzato ad un account altrui;"
-
-#~ msgid ""
-#~ "attempting to interfere with service to any user, host or network, "
-#~ "including, without limitation, via means of submitting a virus to the "
-#~ "Site, overloading, flooding, spamming, mail bombing or crashing; or"
-#~ msgstr ""
-#~ "Tentativo di interferire con il servizio fornito agli utenti, rete o "
-#~ "server, includendo, senza limitazioni, trasmettendo un virus al sito, "
-#~ "overload, flooding, spam, mail bombing o crashing; "
-
-#~ msgid ""
-#~ "attempt to transmit any virus, Trojan horse or other software destruction "
-#~ "or disruption device; and"
-#~ msgstr ""
-#~ "Tentativo di trasmissione di un virus, Trojan o altri strumenti di danno "
-#~ "o atti all’ interruzione del sito; "
-
-#~ msgid ""
-#~ "You will not intentionally or unintentionally violate any applicable "
-#~ "international, federal, state or local law, including but not limited to "
-#~ "any regulations applicable to your use of this Site. "
-#~ msgstr ""
-#~ "Non violerai intenzionalmente o inavvertitamente alcuna legge, federale, "
-#~ "statale o locale, includendo senza limitazioni ogni regolamento "
-#~ "applicabile al tuo uso di questo sito."
 
 #~ msgid ""
 #~ "ChatandVision Ltd may revise these conditions of use by updating this "
@@ -2425,9 +2660,6 @@ msgstr "Mostra"
 #~ "aggiornamento delle condizioni d’ uso,  è consigliata quindi una visita "
 #~ "periodica a questa pagina per determinare le corrette condizioni d’ uso "
 #~ "in vigore."
-
-#~ msgid "Updated: July 09, 2015 "
-#~ msgstr "Aggiornato al 9 Luglio 2015"
 
 #~ msgid "%s item(s) - %s%s"
 #~ msgstr "%s articolo(i) - %s%s"

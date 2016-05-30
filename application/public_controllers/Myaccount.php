@@ -17,7 +17,7 @@ class Myaccount extends PUB_Controller
     {
         parent::__construct(array('require_login' => 1, 'load_header' => 1));
         $this->load->helper(array('url', 'object', 'notice', 'lang', 'price'));
-        $this->load->library('encrypt');
+        $this->load->library(array('encryption', 'encrypt'));
         if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
             $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             if ($_SERVER['QUERY_STRING'] != "") {
@@ -39,18 +39,18 @@ class Myaccount extends PUB_Controller
             if (isset($_SESSION["client_obj"])) {
                 $data["client_obj"] = unserialize($_SESSION["client_obj"]);
                 if (!empty($_POST["password"])) {
-                    $old_password = $this->input->post("old_password");
-                    $new_password = $this->input->post("password");
-                    $reconfirm_password = $this->input->post("confirm_password");
+                    $old_password = trim($this->input->post("old_password"));
+                    $new_password = trim($this->input->post("password"));
+                    $reconfirm_password = trim($this->input->post("confirm_password"));
                     $data['email'] = $_SESSION['client']['email'];
-                    if (!password_verify(strtolower($this->input->post("old_password")), $data["client_obj"]->getPassword())) {
+                    if ($old_password != $this->encryption->decrypt($data["client_obj"]->getPassword())) {
                         $_SESSION['NOTICE'] = 'Please Enter Correct Old Password.';
                     } elseif ($new_password != $reconfirm_password) {
                         $_SESSION['NOTICE'] = 'Confirm Password mismatch.';
                     } elseif ($old_password == $new_password) {
                         $_SESSION['NOTICE'] = 'New Password is same as Old Password.';
                     } else {
-                        $update_password = password_hash($new_password, PASSWORD_DEFAULT);
+                        $update_password = $this->encryption->encrypt($new_password);
                     }
                 }
                 if (!$_SESSION['NOTICE']) {
@@ -75,6 +75,11 @@ class Myaccount extends PUB_Controller
                     $data["client_obj"]->setStatus(1);
                     if ($update_password) {
                         $data["client_obj"]->setPassword($update_password);
+
+                        $depassword = $this->encryption->decrypt($data["client_obj"]->getPassword());
+                        $encryptCode = $this->encrypt->encode($depassword);
+
+                        $data["client_obj"]->setVerifyCode($encryptCode);
                     }
                     $email = $data["client_obj"]->getEmail();
                     $proc = $this->sc['Client']->getDao('Client')->get(array("email" => $email));

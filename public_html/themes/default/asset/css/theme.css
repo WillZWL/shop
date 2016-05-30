@@ -152,6 +152,55 @@
     border-radius: 10px;
 }
 
+/* INDEX BANNER START */
+.carousel-banner {
+    position:relative;
+    z-index: 0;
+}
+.carousel-banner:hover .glyphicon-chevron-left,
+.carousel-banner:hover .glyphicon-chevron-right
+{
+    opacity:1;
+    visibility: visible;
+}
+.carousel-banner .carousel-control {
+
+    position: static;
+
+}
+
+.carousel-banner .glyphicon-chevron-left,
+.carousel-banner .glyphicon-chevron-right {
+    top: 50%;
+    margin-top: -42px;
+    position: absolute;
+    text-indent: -99999px;
+    width:50px;
+    height: 50px;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease-in-out, background-color 300ms ease-in-out, background-position 300ms ease-in-out;
+    -moz-transition: opacity 300ms ease-in-out, background-color 300ms ease-in-out, background-position 300ms ease-in-out;
+    -webkit-transition: opacity 300ms ease-in-out, background-color 300ms ease-in-out, background-position 300ms ease-in-out;
+    -o-transition: opacity 300ms ease-in-out, background-color 300ms ease-in-out, background-position 300ms ease-in-out;
+}
+.carousel-banner .glyphicon-chevron-left{
+    left: 10px;
+    background: url("../image/arrow_large_left.png") no-repeat 0 0;
+}
+.carousel-banner .glyphicon-chevron-left:hover,.carousel-banner .glyphicon-chevron-right:hover{
+    background-position: 0 100%;
+}
+.carousel-banner .glyphicon-chevron-right {
+    right: 10px;
+    background: url("../image/arrow_large_right.png") no-repeat 0 0;
+}
+.carousel-indicators {
+    bottom: 40px;
+}
+/* INDEX BANNER END */
+
 /*start category page*/
 #sidebar-right .sidebar-right {
     box-shadow:none;
@@ -188,6 +237,13 @@
 .products-block .product-grid .product-meta .price .price-new
 {
     white-space:nowrap;
+}
+
+.product-grid .product-block .image,
+.product-grid .product-block .product-img,
+.product-grid .product-block .img
+{
+    height: 198px;
 }
 
 .product-block .product-meta .action .cart{

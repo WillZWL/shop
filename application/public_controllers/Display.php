@@ -109,7 +109,7 @@ class Display extends PUB_Controller
             ],
             'WEBES' => [
                 'email' => 'soporte@buholoco.es',
-                'tel' => '9123115550',
+                'tel' => '02071934191',
                 'hotline' =>'(Télefono de Atención al Cliente disponible pronto)',
             ],
             'WEBPL' => [
@@ -120,6 +120,10 @@ class Display extends PUB_Controller
                 'email' => 'assistenza@nuovadigitale.it',
                 'tel' => '0294755798',
                 'hotline' => '(Supporto telefonico prossimamente)',
+            ],
+             'WEBNL' => [
+                'email' => 'support@9digital.nl',
+                'tel' => '02071934191',
             ],
         ];
         return $contact[$platform_id];

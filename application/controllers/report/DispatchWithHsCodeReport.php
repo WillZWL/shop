@@ -21,7 +21,7 @@ class DispatchWithHsCodeReport extends MY_Controller
         $data['countrys'] = $this->sc['Country']->getDao()->getList(array("allow_sell" => "1"), array("orderby" => "name", "limit" => -1));
         $data['currencys'] = $this->sc['Country']->getSellCurrencyList();
         $data['start_date'] = $data['end_date'] = date('Y-m-d');
-        $this->load->view('report/dispatch_report', $data);
+        $this->load->view('report/dispatch_report_with_hs_code', $data);
     }
 
     public function getAppId()

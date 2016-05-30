@@ -278,9 +278,10 @@ end;
     public function updateGoogleShoppingItemAllPlatform()
     {
         set_time_limit(3000);
-        $sellingPlatObj = $this->sc["SellingPlatform"]->getDao("SellingPlatform")->getList(["status" => 1], ["limit" => -1]);
-        foreach ($sellingPlatObj as $selling) {
-            $this->sc["GoogleShopping"]->updateGoogleShoppingItemByPlatform($selling->getSellingPlatformId());
+        $siteObj = $this->sc["SiteConfig"]->getDao("SiteConfig")->getList(["(api_implemented > 0)" => null], ["limit" => -1]);
+        foreach ($siteObj as $site) {
+            if ((($site->getApiImplemented() >> 0) & 1) == 1)
+                $this->sc["GoogleShopping"]->updateGoogleShoppingItemByPlatform($site->getPlatform());
         }
     }
 

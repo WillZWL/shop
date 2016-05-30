@@ -673,5 +673,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\InterfaceTrackingInfoDao();
         };
 
+        $daoContainer['AutoRestockLog'] = function () {
+            return new D\AutoRestockLogDao();
+        };
+
     }
 }

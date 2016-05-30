@@ -1824,8 +1824,8 @@ html;
                             }
                         }
                         $replace["barcode"] = "<img src='" . base_url() . "order/integrated_order_fulfillment/get_barcode/$so_no' style='float:right'>";
-                        if ($tpl_obj = $this->templateService->getMsgTplWithAtt(array("id" => $tpl_id, "lang_id" => $cur_lang_id), $replace)) {
-                            $content .= $tpl_obj->template->getMessage();
+                        if ($html = $this->getService('Template')->getFileTempalte(array("tpl_id" => $tpl_id, "platform_id" => $cur_platform_id), $replace)) {
+                            $content .= $html;
                         }
                     }
                 }

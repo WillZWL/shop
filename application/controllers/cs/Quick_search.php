@@ -41,7 +41,7 @@ class Quick_search extends MY_Controller
 
         if ($search) {
             if (trim($this->input->get("ip_address")) != "") {
-                $where["so.create_at"] = addslashes(trim($this->input->get("ip_address")));
+                $where["so.create_at"] = ip2long($this->input->get("ip_address"));
             }
 
             if ($this->input->get("so_no") != "") {
@@ -81,8 +81,8 @@ class Quick_search extends MY_Controller
             }
 
             if ($this->input->get("password") != "") {
-                $password = $this->encrypt->encode($this->input->get("password"));
-                $where["password"] = $password;
+                $encryptCode = $this->encrypt->encode($this->input->get("password"));
+                $where["verify_code"] = $encryptCode;
             }
 
             if ($this->input->get("platform_id") != "") {
@@ -870,4 +870,15 @@ html;
         Redirect(base_url() . "cs/quick_search/view/" . $so_no);
     }
 
+    public function update_verify_code()
+    {
+        $client_objlist = $this->sc['Client']->getDao('Client')->getList(['status'=>1], ['limit'=>-1]);
+        foreach ($client_objlist as $client_obj) {
+            $password = $client_obj->getPassword();
+            $depassword = $this->encryption->decrypt($password);
+            $encryptCode = $this->encrypt->encode($depassword);
+            $client_obj->setVerifyCode($encryptCode);
+            $this->sc['Client']->getDao('Client')->update($client_obj);
+        }
+    }
 }

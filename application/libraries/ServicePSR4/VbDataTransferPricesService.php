@@ -79,7 +79,12 @@ class VbDataTransferPricesService extends VbDataTransferService
 
                     if ($pricing_rule_obj) {
                         $min_margin = $pricing_rule_obj->getMinMargin();
-
+                        //Strat Round Nearest Price
+                        if($pricing_rule_obj->getNeedRoundNearest() == "Y"){
+                           //$required_selling_price=round($required_selling_price)-0.01;
+                           $required_selling_price=ceil($required_selling_price)-0.01;
+                        }
+                        //End Round Nearest Price
                         if ($new_margin < $min_margin) {
                             $reason = "Error in margin. New: " . $new_margin . " New Price: " . $price_obj->getPrice();
                             $result_status = 6;
@@ -144,17 +149,24 @@ class VbDataTransferPricesService extends VbDataTransferService
     public function applyPriceRule(&$vb_price_obj)
     {
         $required_selling_price = (string) $vb_price_obj->prod_price;
-        $pricing_rule_obj = $this->getPriceRule($vb_price_obj);
-        if ($pricing_rule_obj) {
-            $rule_type = $pricing_rule_obj->getMarkUpType();
-            $rule_markup = $pricing_rule_obj->getMarkUpValue();
+        if ($pricing_rule_obj = $this->getPriceRule($vb_price_obj)) {
+            if ($pricing_rule_obj) {
+                $rule_type = $pricing_rule_obj->getMarkUpType();
+                $rule_markup = $pricing_rule_obj->getMarkUpValue();
 
-            if ($rule_type == 'A') {
-                $required_selling_price = (float)$required_selling_price + (float)$rule_markup;
-            } elseif ($rule_type == 'P') {
-                $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup / 100);
+                if ($rule_type == 'A') {
+                    $required_selling_price = (float)$required_selling_price + (float)$rule_markup;
+                } elseif ($rule_type == 'P') {
+                    $required_selling_price = $required_selling_price + ($required_selling_price * $rule_markup / 100);
+                }
+            }
+            //Strat Round Nearest Price
+            if($pricing_rule_obj->getNeedRoundNearest() == "Y"){
+               //$required_selling_price=round($required_selling_price)-0.01;
+               $required_selling_price=ceil($required_selling_price)-0.01;
             }
         }
+        //End Round Nearest Price
 
         $vb_price_obj->required_selling_price = $required_selling_price;
     }

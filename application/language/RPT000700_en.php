@@ -6,6 +6,7 @@
 			"end_date"=>"Dispatch End Date",
 			"country"=>"Country:",
 			"currency"=>"Currency:",
+			"brand"=>"Brand:",
 			"payment_gateway"=>"Payment Gateway:",
 			""=>""
 			);

@@ -47,6 +47,7 @@ class Profit_var extends ProfitVarHelper
             $obj->setDestCountry($this->input->post('platform_country_id'));
             $obj->setFreeDeliveryLimit($this->input->post('free_dlvry_limit'));
             $obj->setTaxTheresholds($this->input->post('tax_theresholds'));
+            $obj->setNeedRoundNearest($this->input->post('need_round_nearest'));
 
             if ($this->input->post("type") == "update") {
                 $ret = $this->sc['profitVarModel']->update($obj);

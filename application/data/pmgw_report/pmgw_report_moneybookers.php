@@ -17,7 +17,8 @@ $mapping_file =
         9 => ['Amount Sent' => 'order_amount_ref'],
         10 => ['Currency Sent' => 'currency_id'],
         11 => ['More Information' => 'so_no'],
-        12 => ['ID of the coresponding Skrill transaction' => 'original_order_txn_id']
+        12 => ['ID of the coresponding Skrill transaction' => 'original_order_txn_id'],
+        13 => ['Payment Instrument' => '']
     ]
 ]
 

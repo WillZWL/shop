@@ -9,7 +9,11 @@ class SiteConfigVo extends \BaseVo
     private $email = '';
     private $platform;
     private $domain_type = '1';
+    private $api_implemented = '0';
     private $status = '1';
+
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
     public function setId($id)
     {
@@ -107,6 +111,18 @@ class SiteConfigVo extends \BaseVo
         return $this->domain_type;
     }
 
+    public function setApiImplemented($api_implemented)
+    {
+        if ($api_implemented !== null) {
+            $this->api_implemented = $api_implemented;
+        }
+    }
+
+    public function getApiImplemented()
+    {
+        return $this->api_implemented;
+    }
+
     public function setStatus($status)
     {
         if ($status !== null) {
@@ -118,5 +134,4 @@ class SiteConfigVo extends \BaseVo
     {
         return $this->status;
     }
-
 }
