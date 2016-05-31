@@ -230,13 +230,13 @@
                                 <div class="right">
                                     <div class="action">
                                         <div class="cart  hidden-md hidden-sm">
-                                            <button data-loading-text="Loading..." class="btn btn-primary" type="button" onclick="cart.addcart('<?= $sku ?>');">
+                                            <button data-loading-text="Loading..." class="btn btn-primary" type="button" <?=$prod_obj->getStatus()=="I"? "" :'style="cursor:not-allowed;"'; ?> onclick="cart.addcart('<?= $sku ?>');">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 <span class="add-to-cart "><?= _("Add to Cart") ?></span>
                                             </button>
                                         </div>
                                         <div class="cart  hidden-lg hidden-xs">
-                                            <button data-loading-text="Loading..." class="btn btn-primary btn-cart-md" type="button" onclick="cart.addcart('<?= $sku ?>');">
+                                            <button data-loading-text="Loading..." class="btn btn-primary btn-cart-md" type="button" <?=$prod_obj->getStatus()=="I"? "" :'style="cursor:not-allowed;"'; ?> onclick="cart.addcart('<?= $sku ?>');">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 <span class="add-to-cart "><?= _("Add to Cart") ?></span>
                                             </button>
