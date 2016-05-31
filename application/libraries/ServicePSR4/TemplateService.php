@@ -22,12 +22,11 @@ class TemplateService extends BaseService
         }
 
         //add email logo
-        $siteConfigObj=$this->getService("LoadSiteParameter")->loadSiteByPlatform($_POST["platform"]);
-           
-        $replace["logo"]="http://".$siteConfigObj->getDomain()."/images/logo/" . $siteConfigObj->getLogo();
-        $replace["site_name"]=$siteConfigObj->getSiteName();
-        $replace["site_url"]="http://".$siteConfigObj->getDomain();
-       
+        $siteConfigObj = $this->getService("LoadSiteParameter")->loadSiteByPlatform($where["platform_id"]);
+        $replace["logo"] = "http://" . $siteConfigObj->getDomain() . "/images/logo/" . $siteConfigObj->getLogo();
+        $replace["site_name"] = $siteConfigObj->getSiteName();
+        $replace["site_url"] = "http://" . $siteConfigObj->getDomain();
+
         if (!empty($replace)) {
             foreach ($replace as $key => $value) {
                 $search[] = '[:' . $key . ':]';

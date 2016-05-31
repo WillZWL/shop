@@ -98,7 +98,7 @@ $today = getdate();
 
                                     break;
                                 case "waiting_confirm":
-                                    $script = "<a href='" . site_url('account/flex/download_file/' . $date . '/' . $status . '/' . $arr['filename']) . "'>" . $arr['filename'] . "</a>";
+                                    $script = "<a href='" . site_url('account/flex/downloadFile/' . $date . '/' . $status . '/' . $arr['filename']) . "'>" . $arr['filename'] . "</a>";
                                     $script .= "<input type='button' value='Confirm Process' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/genSalesInvoice/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
                                     $script .= "<input type='button' value='Regenerate Exception' class='button' onclick=\"Redirect(" . "'" . site_url('account/flex/regenerate_exception/' . $date . '/' . $start_date . '/' . $end_date) . "'" . ")\">";
                                     break;
@@ -111,9 +111,7 @@ $today = getdate();
                             if (array_key_exists("zip", $arr)) {
                                 $download_zip_link = "";
                                 foreach ($arr["zip"] as $zip_file_name) {
-                                    //$script = "<a href='".site_url('account/flex/download_file/'.$date.'/'.$status.'/'.$arr['filename'])."'>".$arr['filename']."</a>";
-
-                                    $download_zip_link .= "<a href='" . site_url('account/flex/download_file/' . $date . '/' . $status . '/' . $zip_file_name) . "'>" . $zip_file_name . "</a> | ";
+                                    $download_zip_link .= "<a href='" . site_url('account/flex/downloadFile/' . $date . '/' . $status . '/' . $zip_file_name) . "'>" . $zip_file_name . "</a> | ";
                                 }
                                 $script = $download_zip_link . $script;
                             }

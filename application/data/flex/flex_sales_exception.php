@@ -1,0 +1,27 @@
+<?php
+$mapping = [
+    'index_no' => 'IndexNum',
+    'product_line' => 'Line',
+    'row_no' => 'Row',
+    'master_sku' => 'ProductCodeCopy',
+    'tran_type' => 'Header_TranType',
+    'dispatch_date' => 'Header_Date',
+    'currency_id' => 'Header_CurrCode',
+    'report_pmgw' => 'Header_CustCode',
+    '' => 'CIVNum',
+    'product_code' => 'ProductCode',
+    'qty' => 'BaseQty',
+    'unit_price' => 'BGUnitPrice',
+    'txn_time' => 'InnType',
+    'so_no' => 'CustRefNo',
+    '' => 'ShipLocCode HK',
+    'txn_id' => 'ContainNo',
+    'customer_email' => 'OutType',
+    'gateway_id' => 'Gateway_ID',
+    'flex_batch_id' => 'CartonNo',
+    'contain_size' => 'ContainSize',
+    'sm_code' => 'SMCode',
+    'remark' => 'Remark',
+    'parent_so_no' => 'APS',
+    'reason' => 'Reason'
+];

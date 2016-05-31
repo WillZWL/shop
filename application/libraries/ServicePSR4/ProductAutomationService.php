@@ -11,7 +11,7 @@ class ProductAutomationService extends BaseService
 
     public function updateProductQty()
     {
-        $where['p.website_quantity'] = 0;
+        $where['(p.website_quantity = 0 or p.display_quantity = 0)'] = NULL;
         $where['p.clearance'] = 0;
         $where['p.auto_restock'] = 1;
         $where['p.sourcing_status'] = A;
@@ -25,10 +25,18 @@ class ProductAutomationService extends BaseService
             foreach ($list as $key => $value) {
                 $prod_obj = $this->getDao('Product')->get(array('sku' => $value->getSku()));
                 $item_cost = $value->getItemCost();
-                $website_qty = $this->_getAutoWebsiteQtyByItemCost($item_cost);
-                $display_qty = $this->_getAutoDisplayQtyByItemCost($item_cost);
-                $prod_obj->setWebsiteQuantity($website_qty);
-                $prod_obj->setDisplayQuantity($display_qty);
+                if ($value->getWebsiteQuantity() == 0) {
+                    $website_qty = $this->_getAutoWebsiteQtyByItemCost($item_cost);
+                    $prod_obj->setWebsiteQuantity($website_qty);
+                } else {
+                    $website_qty = $value->getWebsiteQuantity();
+                }
+                if ($value->getDisplayQuantity() == 0) {
+                    $display_qty = $this->_getAutoDisplayQtyByItemCost($item_cost);
+                    $prod_obj->setDisplayQuantity($display_qty);
+                } else {
+                    $display_qty = $value->getDisplayQuantity();
+                }
                 $result = $this->getDao('Product')->update($prod_obj);
                 if ($result) {
                     $logObj = $this->getDao('AutoRestockLog')->get();

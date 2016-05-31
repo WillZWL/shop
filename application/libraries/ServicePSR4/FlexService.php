@@ -4,7 +4,7 @@ class FlexService extends BaseService
 {
     const ROLLING_RESERVE_REPORT_FILE_NAME = "rolling_reserve.csv";
 
-    public $contact_email = 'itsupport@eservicesgroup';
+    public $contact_email = 'will.zhang@eservicesgroup.com';
     public $platform_arr = array('QOO10SG', 'RAKUES', 'FNACES', 'LAMY', 'LAZTH', 'LAZPH', 'NEUS');
     public $order_reason_category = array(
                 '1' => array('6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'),
@@ -201,6 +201,7 @@ class FlexService extends BaseService
     {
         $gen_exception_only = FALSE;
         $where = [];
+        $date = date("Y-m-d", strtotime($date));
         $where["so.dispatch_date >= "] = $date. ' 00:00:00';
         $where["so.dispatch_date <= "] = $date. ' 23:59:59';
         $si_list = $this->getDao('So')->getFlexSalesInvoice($where);
@@ -209,7 +210,6 @@ class FlexService extends BaseService
             $data = $flex_sales_invoice_data['data'];
             $exception = $flex_sales_invoice_data['exception'];
             $special_order = $flex_sales_invoice_data['special_order'];
-
             $flex_invoice_list = [];
             if ($data) {
                 $group_content = [];
@@ -347,7 +347,7 @@ class FlexService extends BaseService
         return false;
     }
 
-    public function getFlexSalesInvoiceData()
+    public function getFlexSalesInvoiceData($si_list)
     {
         $platform_arr = $this->platform_arr;
         $order_reason_category = $this->order_reason_category;
@@ -538,14 +538,14 @@ class FlexService extends BaseService
         return $re_arrange_container;
     }
 
-    public function convert($list = [], $first_line_headling = TRUE, $is_exception = FALSE)
+    public function convert($obj_list = [], $is_exception = FALSE)
     {
         if ($is_exception) {
-            $out_csv = new XmlToCsv("", APPPATH . 'data/flex/flex_sales_exception_xml2csv.txt', $first_line_headling, ',');
+            $mapping_file = APPPATH . 'data/flex/flex_sales_exception.php';
         } else {
-            $out_csv = new XmlToCsv("", APPPATH . 'data/flex/flex_sales_invoice_xml2csv.txt', $first_line_headling, ',');
+            $mapping_file = APPPATH . 'data/flex/flex_sales_invoice.php';
         }
-        return $this->dataExchangeService->convert($out_xml, $out_csv);
+        return $this->dataProcessService->ObjlistToCsv($obj_list, $mapping_file);
     }
 
     private function assembleSaleReport($file_name, $csv_file, $format = 1)
@@ -587,7 +587,7 @@ class FlexService extends BaseService
                     if (!$ret = $this->getDao('SupplierProd')->getSupplierCostBySkuDate($sku, $dispatch_date)) {
                         $ret = $this->getDao('SupplierProd')->getCurrentSupplierCost($sku);
                     }
-                    $siv_dto = clone $this->supplierInvoiceDto();
+                    $siv_dto = clone $this->supplierInvoiceDto;
                     $siv_dto->setIndexNo($index_no);
                     $siv_dto->setProductLine($product_line);
                     $siv_dto->setRowNo(($product_line - 1) == 0 ? "" : $product_line - 1);
@@ -611,12 +611,12 @@ class FlexService extends BaseService
     {
         DEFINE('REPORT_PATH', $this->contextConfigService->valueOf("flex_report_path"));
         $file_path = REPORT_PATH . $folder_name;
-        $out_xml = new VoToXml($report_list, APPPATH . 'data/flex/flex_supplier_invoice_vo2xml.txt');
-        $out_csv = new XmlToCsv("", APPPATH . 'data/flex/flex_supplier_invoice_xml2csv.txt', FALSE, ',');
         $csv_file = "-\r\n";
         $csv_file .= "IndexNum,Line,Row,ProductCodeCopy,Header_TranType,Header_Date,Header_CurrCode,Header_SupCode,SivNum,ProductCode,BaseQty,BGUnitPrice,ShipLocCode\r\n";
         $csv_file .= "-\r\n";
-        $csv_file .= $this->dataExchangeService->convert($out_xml, $out_csv);
+        foreach ($report_list as $row) {
+            $csv_file .=  $row->getIndexNo() .','. $row->getProductLine() .','. $row->getRowNo() .','. $row->getMasterSku() .','. 'SIV' .','. $row->getDispatchDate() .','. $row->getCurrencyId() .','. 'E0100' .','. $row->getSiv() .','. $row->getProductCode() .','. $row->getQty() .','. $row->getUnitPrice() .','. "HK\r\n";
+        }
         if ($csv_file) {
             if (!is_dir($file_path . "/sales")) {
                 if (!is_dir($file_path)) {

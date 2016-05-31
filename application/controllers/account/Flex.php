@@ -308,7 +308,7 @@ class Flex extends MY_Controller
         $flag_file = "processing.txt";
         if (!$this->isGenSalesInvoiceRunning($file_path, $flag_file)) {
             $this->sc['Flex']->reverseSalesInvoiceStatus($date);
-            $this->sc['Flex']->getSalesInvoice($date, $date, $folder_name, TRUE, FALSE);
+            $this->sc['Flex']->getSalesInvoice($date, $date, $folder_name);
             if (!file_exists($file_path . "Exception.csv")) {
                 $this->genSalesInvoice($date, $start_date, $end_date, $folder_name);
             }
