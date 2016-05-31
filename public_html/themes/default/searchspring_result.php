@@ -53,6 +53,7 @@
         <div class="searchspring-results_container"></div>
     </div>
     </div>
+
 <script type="text/javascript" src="//cdn.searchspring.net/ajax_search/js/searchspring-catalog.min.js"></script>
 <script type="text/javascript" src="//cdn.searchspring.net/ajax_search/sites/<?=$searchSpringSiteId?>/js/<?=$searchSpringSiteId?>.js"></script>
 <script type='text/javascript'>SearchSpring.Catalog.init({
@@ -67,6 +68,7 @@
     showSearchHistory: true,
     showSummary: true,
     result_layout:'grid',
+    leaveInitialResults: true,
     forwardSingle: false,
     filterText: 'Refine Search',
     summaryText: 'Summary',
@@ -107,7 +109,7 @@
                 SearchSpring.jQuery('#stock_'+sku).text(price[3]);
 
                 if (price[4] == 'O' || price[4] == 'A') {
-                  SearchSpring.jQuery('.add_'+sku).css("cursor:not-allowed");
+                  SearchSpring.jQuery('#add_'+sku).hide();
                 }
               }
             }
