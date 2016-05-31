@@ -1,0 +1,336 @@
+body .searchspring-overlay {
+    background-color: rgba(51, 51, 51, 0.72);
+  }
+  
+body #searchspring-slideout_container {
+    background: #323232;
+    box-shadow: -1px 0px 5px #000;
+  }
+  #searchspring .container{width: 100%}
+  #searchspring div.col-lg-3{padding:0 9px;}
+  #searchspring a{
+    font-weight: bold;
+    font-family: "Open Sans Semibold", sans-serif;
+    text-transform: uppercase;}
+#searchspring{line-height: 1.875;}
+#searchspring-search_results.list .price-old {
+    display:block;
+}
+#searchspring .product-block .zoom a, #searchspring .product-block .quickview a {
+  color: #FFFFFF;
+  line-height: 40px;
+}
+#searchspring-search_results.list .price-new {
+    display:block;
+}
+#searchspring-search_results.list .fa-shopping-cart {
+    display:none;
+}
+#searchspring-search_results.list .fa-heart {
+    display:none;
+}
+#searchspring-search_results.grid .pay_price {
+    display:none;
+}
+#searchspring-search_results.grid .list_price {
+    display:none;
+}
+#searchspring-facets li a{cursor:pointer;}
+h3.filter,.facet_container{color:#549B17;padding: 10px 30px;font-size:16px;border-bottom: 2px solid #474747;}
+#searchspring-summary_header{color:#549B17;font-size:16px;padding: 10px 30px 0px 30px}
+.sidebar .panel .facet_container li a{color:#fff;}
+.facet_container .facet_title{color:#549B17;}
+.sidebar #searchspring-facets .list{padding: 10px 30px;}
+#searchspring-summary{ padding: 0 30px 10px 30px;border-bottom: 2px solid #747474;}
+#searchspring-summary li{cursor: pointer;}
+#searchspring-bottom_container{clear:both;height:60px;padding:10px 0; overflow:hidden;}
+#searchspring-bottom_container .pagination{float: right;}
+.pagination td{color:#000;font-size:16px;padding-left:20px;cursor: pointer;}
+.searchspring-pageSelect:hover{color:#549B17}
+.pagination td.highlight{color:#549B17;}
+.searchspring-previous{display: none}
+.searchspring-next{display: none}
+#searchspring-grid_result_layout,#searchspring-list_result_layout{font-size: 16px;color:#549B17;cursor: pointer;}
+.per-page,.sort-by{float:right;}
+.view-type{float:left;}
+#searchspring-merch_header{clear: both;}
+#searchspring .breadcrumbs,#searchspring .pagination.top{display: none}
+
+/* line 97, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-col {
+  width: 100% !important;
+  clear: both;
+}
+
+#searchspring-search_results.list.product-meta .action .cart{
+    margin-right:20px;
+}
+#searchspring-search_results.list .product-meta .action .add-to-cart{
+    color:#fff;
+}
+#searchspring-search_results.list .product-block .product-meta .action .more-info{
+    color:#fff;
+    background-color: #757575;
+}
+#searchspring-search_results.list .product-block .product-meta .action .wishlist .btn-primary{
+    background-color: #757575;
+}
+#searchspring-search_results.list .product-block .product-meta .action {
+    border-style:none;
+    width:220px;
+    background-color: #f6f6f6;
+    font-family: "Open Sans Extrabold", sans-serif
+}
+#searchspring-search_results.list .product-block .product-meta .btn {
+   padding: 4px 10px;
+   font-family: sans-serif;
+   text-transform: none;
+}
+#searchspring-search_results.list .product-block .description {
+    height:0;
+}
+#searchspring-search_results.list .product-block .name {
+    height:45px;
+}
+/* line 101, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block {
+  overflow: hidden;
+}
+/* line 103, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .action {
+  position: absolute;
+  display: flex;
+  width: auto;
+}
+/* line 107, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .action > div {
+  margin: 0;
+  display: table-cell;
+  position: relative;
+}
+/* line 111, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .action > div:after {
+      border: none;
+}
+/* line 119, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .action > div:last-child::after {
+  border: none;
+}
+#searchspring-search_results.list .product-block .description {
+  display: block;
+  overflow: hidden;
+  height: 50px;
+}
+/* line 129, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .name {
+  padding: 0;
+}
+/* line 132, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .image {
+  width: 30%;
+  float: left;
+}
+/* line 305, ../development/scss/mixins/_app.scss */
+.rtl #searchspring-search_results.list .product-block .image {
+  float: right;
+}
+/* line 136, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .product-meta {
+  width: 70%;
+  float: right;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+/* line 305, ../development/scss/mixins/_app.scss */
+.rtl #searchspring-search_results.list .product-block .product-meta {
+  float: left;
+}
+/* line 141, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .product-meta .left {
+  min-height: 220px;
+  text-align: left;
+}
+/* line 305, ../development/scss/mixins/_app.scss */
+.rtl #searchspring-search_results.list .product-block .product-meta .left {
+  text-align: right;
+}
+/* line 145, ../development/scss/opencart/_opencart-pages.scss */
+#searchspring-search_results.list .product-block .product-meta .right {
+  bottom: 70px;
+  margin: 0;
+  opacity: 1;
+  padding: 0 20px;
+  width: 31.8%;
+}
+
+/* line 157, ../development/scss/opencart/_opencart-pages.scss */
+.hightlighted #searchspring-search_results.list .action, .hightlighted #searchspring-search_results.list .quickview, .hightlighted #searchspring-search_results.list .zoom {
+  display: none;
+}
+/* line 160, ../development/scss/opencart/_opencart-pages.scss */
+.hightlighted #searchspring-search_results.list .rating {
+  position: absolute;
+  left: -35%;
+}
+/* line 405, ../development/scss/mixins/_app.scss */
+.rtl .hightlighted #searchspring-search_results.list .rating {
+  right: -35%;
+  left: auto;
+}
+.hightlighted #searchspring-search_results.list .product-block .name {
+  margin-bottom: 10px;
+}
+.hightlighted #searchspring-search_results.list .product-block .product-meta .left {
+  min-height: 160px;
+}
+.hightlighted #searchspring-search_results.list .product-block .description {
+  color: #999999;
+}
+.hightlighted #searchspring-search_results.list .product-block:hover {
+  border: 2px solid #e5e5e5;
+}
+  body #searchspring-slideout_container .searchspring-slideout_button, body .searchspring-slideout_button {
+    background-color: #323232;
+    color: #fff;
+    -webkit-transition: all 250ms ease-in-out 0s;
+    -moz-transition: all 250ms ease-in-out 0s;
+    -ms-transition: all 250ms ease-in-out 0s;
+    -o-transition: all 250ms ease-in-out 0s;
+    transition: all 250ms ease-in-out 0s;
+  }
+  body #searchspring-slideout_container .searchspring-slideout_button:hover, body .searchspring-slideout_button:hover {
+    background-color: #417F0B;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  body #searchspring-slideout_container .searchspring-slideout_button {
+    background-image: url("//cdn.searchspring.net/ajax_search/sites/a4dseg/img/back_white.png");
+    background-size: 90% 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    height: 42px;
+    width: 42px;
+    margin: 10px;
+    float: right;
+  }
+#searchspring-main .product-meta .price{ min-height:33px; }
+#searchspring-main .product-block {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 2px solid #e5e5e5;
+}
+#searchspring-main .product-block:hover{border:2px solid #000;}
+  body #searchspring-slideout_container #searchspring-slideout_facets {
+    clear: both;
+    padding: 10px;
+  }
+  body .searchspring-slideout_button {
+    display: none;
+    text-align: center;
+    height: 40px;
+    width: 100%;
+    margin: 0 0 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  @media only screen and (max-width: 991px) {
+    body #sidebar-right {
+      display: none;
+    }
+    body .searchspring-slideout_button {
+      display: block;
+    }
+    .col-sm-9 {
+      width: 100%;
+    }
+  }
+  body .searchspring-slideout_button .searchspring-slideout_button_icon {
+    width: 30px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: url("//cdn.searchspring.net/ajax_search/img/sidebar-menuicon.png") no-repeat 0px 0px;
+  }
+  body .searchspring-slideout_button .searchspring-slideout_button_text {
+    line-height: 40px;
+  }
+
+  .ss-filtered_current ~ li:not(.show-more) {
+    margin: 0 0 0 20px;
+  }
+
+  .ss-filtered_current {
+    font-family: "Open Sans Semibold", sans-serif;
+    line-height: 140%;
+    color: #fff;
+  }
+
+  .ss-filtered_link a {
+    color: #999 !important;
+  }
+
+  .accordion-body.ss-hierarchy {
+    max-height: initial;
+  }
+
+  .accordion-body:not(.ss-hierarchy) a:before {
+    content: " ";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 0 3px 0 0;
+    vertical-align: middle;
+    background: url('//cdn.searchspring.net/ajax_search/img/nocheck.png') no-repeat center center;
+  }
+
+  .accordion-body:not(.ss-hierarchy) a:hover:before, .accordion-body:not(.ss-hierarchy) a.active:before {
+    background: url('//cdn.searchspring.net/ajax_search/img/check.png') no-repeat center center;
+  }
+
+  .ss-filtered_link > a:before {
+    content: "<";
+  }
+
+  .ss-did-you-mean {
+    display: block;
+    text-align: left;
+  }
+
+  .no-results {
+    text-align: left;
+  }
+
+  .show-more:hover {
+    cursor: pointer;
+  }
+
+  #column-right {
+    min-height: 1080px;
+    height: initial;
+  }
+
+  .accordion-body {
+    max-height: 350px;
+    overflow-y: auto;
+  }
+.sidebar .panel .list-group {
+  padding: 0;
+}
+#searchspring-sidebar.left ul li {
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  background: none;
+}
+
+/* line 46, ../development/scss/app/_block.scss */
+.sidebar .panel #searchspring-facets li:first-child {
+  border-top: none;
+}
