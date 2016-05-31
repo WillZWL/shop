@@ -25,13 +25,17 @@ class ProductAutomationService extends BaseService
             foreach ($list as $key => $value) {
                 $prod_obj = $this->getDao('Product')->get(array('sku' => $value->getSku()));
                 $item_cost = $value->getItemCost();
-                if ($value->getWebsiteQuantity() === 0) {
+                if ($value->getWebsiteQuantity() == 0) {
                     $website_qty = $this->_getAutoWebsiteQtyByItemCost($item_cost);
                     $prod_obj->setWebsiteQuantity($website_qty);
+                } else {
+                    $website_qty = $value->getWebsiteQuantity();
                 }
-                if ($value->getDisplayQuantity() === 0) {
+                if ($value->getDisplayQuantity() == 0) {
                     $display_qty = $this->_getAutoDisplayQtyByItemCost($item_cost);
                     $prod_obj->setDisplayQuantity($display_qty);
+                } else {
+                    $display_qty = $value->getDisplayQuantity();
                 }
                 $result = $this->getDao('Product')->update($prod_obj);
                 if ($result) {
