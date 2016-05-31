@@ -50,7 +50,8 @@ h3.filter,.facet_container{color:#549B17;padding: 10px 30px;font-size:16px;borde
 .pagination td.highlight{color:#549B17;}
 .searchspring-previous{display: none}
 .searchspring-next{display: none}
-#searchspring-grid_result_layout,#searchspring-list_result_layout{font-size: 16px;color:#549B17;cursor: pointer;}
+#searchspring-grid_result_layout,#searchspring-list_result_layout{font-size: 16px;color:#999;cursor: pointer;}
+.view-type a:hover,.highlight{color:#549B17;}
 .per-page,.sort-by{float:right;}
 .view-type{float:left;}
 #searchspring-merch_header{clear: both;}
@@ -329,8 +330,7 @@ h3.filter,.facet_container{color:#549B17;padding: 10px 30px;font-size:16px;borde
   border-top: 0;
   background: none;
 }
-
-/* line 46, ../development/scss/app/_block.scss */
+#searchspring-powered_by{display: none}
 .sidebar .panel #searchspring-facets li:first-child {
   border-top: none;
 }
