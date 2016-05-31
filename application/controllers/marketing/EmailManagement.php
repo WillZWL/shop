@@ -8,6 +8,20 @@ class EmailManagement extends MY_Controller
         parent::__construct();
     }
 
+    public function resendOrderConfirmation($soNo = null)
+    {
+        if ($soNo) {
+            if ($soObj = $this->sc["SoFactory"]->getDao("So")->get(["so_no" => $soNo])) {
+                $this->sc["PaymentGatewayRedirectCybersource"]->sendConfirmationEmail($soObj);
+                print "Order confirmation for order:" . $soNo . " has been sent successfully!";
+            } else {
+                print "Not a valid order number.";
+            }
+        } else {
+            print "Please input a valid order number.";
+        }
+    }
+
     public function index()
     {
         $sub_app_id = $this->getAppId() . "00";
