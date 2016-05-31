@@ -3,6 +3,8 @@ class ProductWebsiteQtyDto
 {
     private $sku;
     private $prod_name;
+    private $website_quantity;
+    private $display_quantity;
     private $item_cost;
     private $vb_sku;
     private $master_sku;
@@ -26,6 +28,26 @@ class ProductWebsiteQtyDto
     public function setProdName($value)
     {
         $this->prod_name = $value;
+    }
+
+    public function getWebsiteQuantity()
+    {
+        return $this->website_quantity;
+    }
+
+    public function setWebsiteQuantity($value)
+    {
+        $this->website_quantity = $value;
+    }
+
+    public function getDisplayQuantity()
+    {
+        return $this->display_quantity;
+    }
+
+    public function setDisplayQuantity($value)
+    {
+        $this->display_quantity = $value;
     }
 
     public function getItemCost()
