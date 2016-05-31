@@ -109,7 +109,7 @@
                 SearchSpring.jQuery('#stock_'+sku).text(price[3]);
 
                 if (price[4] == 'O' || price[4] == 'A') {
-                  SearchSpring.jQuery('.add_'+sku).css("cursor:not-allowed;");
+                  SearchSpring.jQuery('#add_'+sku).hide();
                 }
               }
             }
