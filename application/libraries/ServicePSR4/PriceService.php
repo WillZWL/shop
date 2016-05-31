@@ -54,6 +54,18 @@ class PriceService extends BaseService
         return 0;
     }
 
+    public function getListingInfo($sku = "", $platformId = "", $langId = 'en', $option = array())
+    {
+        $option['limit'] = 1;
+        $obj=$this->getDao('Price')->getListingInfo($sku, $platformId, $langId, $option);
+        if ($obj) {
+            $obj->setPrice(random_markup($obj->getPrice()));
+            $obj->setRrpPrice(random_markup($this->calcWebsiteProductRrp($obj->getPrice(), $obj->getFixedRrp(), $obj->getRrpFactor())));
+            return $obj;
+        }
+        return FALSE;
+    }
+
     public function getListingInfoList($sku_arr = [], $platform_id = '', $lang_id = 'en', $option = [])
     {
         set_time_limit(600);
