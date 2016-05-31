@@ -8,7 +8,6 @@ class PriceVo extends \BaseVo
     private $sales_qty = '0';
     private $price = '0.00';
     private $vb_price;
-    private $status = 'I';
     private $allow_express = 'N';
     private $is_advertised = 'N';
     private $google_promo_id = '';
@@ -108,18 +107,6 @@ class PriceVo extends \BaseVo
     public function getVbPrice()
     {
         return $this->vb_price;
-    }
-
-    public function setStatus($status)
-    {
-        if ($status !== null) {
-            $this->status = $status;
-        }
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     public function setAllowExpress($allow_express)
