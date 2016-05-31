@@ -1,7 +1,6 @@
 CREATE TABLE `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sku` bigint(20) unsigned NOT NULL,
-  `sku_vb` varchar(15) NOT NULL DEFAULT '',
   `prod_grp_cd` int(11) NOT NULL,
   `colour_id` char(2) NOT NULL,
   `version_id` char(2) NOT NULL,
@@ -43,6 +42,5 @@ CREATE TABLE `product` (
   `modify_at` int(10) unsigned NOT NULL DEFAULT '2130706433' COMMENT 'IP address',
   `modify_by` varchar(32) NOT NULL DEFAULT 'system',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_sku` (`sku`),
-  KEY `idx_sku_vb` (`sku_vb`)
+  UNIQUE KEY `idx_sku` (`sku`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
