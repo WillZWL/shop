@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 <link href="/themes/default/asset/css/new-searchspring.css" rel="stylesheet" />
-
+<style type="text/css">#searchspring-powered_by{display: none}</style>
   <div id="content" style="margin: 20px auto">
     <aside id="sidebar-right" class="col-md-3">
        <div id="column-right" class="hidden-xs sidebar">
@@ -54,7 +54,6 @@
     </div>
     </div>
 
-<?php $searchSpringSiteId="izisa8";?>
 <script type="text/javascript" src="//cdn.searchspring.net/ajax_search/js/searchspring-catalog.min.js"></script>
 <script type="text/javascript" src="//cdn.searchspring.net/ajax_search/sites/<?=$searchSpringSiteId?>/js/<?=$searchSpringSiteId?>.js"></script>
 <script type='text/javascript'>SearchSpring.Catalog.init({
