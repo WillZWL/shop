@@ -3933,12 +3933,8 @@ html;
             }
             $result["order_margin"] = null;
         }
-        $score_christmas = $this->getPriorityScoreChristmas($so_no, $result);
-
-        if ($score_christmas > 0)
-            return $score_christmas;
-        else
-            return $this->getPriorityScoreBase($so_no, $result);
+        return 2800;
+//        return $this->getPriorityScoreBase($so_no, $result);
     }
 
     public function getPriorityScoreChristmas($so_no, $result = null)
