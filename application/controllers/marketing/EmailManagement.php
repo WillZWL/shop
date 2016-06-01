@@ -28,7 +28,7 @@ class EmailManagement extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data['lang'] = $lang;
 
-        $where = ['status' => 1];
+        $where = ['status' => 1, 'type' => 1];
         $option = ['limit' => -1, 'groupby' => 'tpl_id'];
 
         $data['tpl_list'] = $this->sc['Email']->getDao('Template')->getList($where, $option);
@@ -42,11 +42,12 @@ class EmailManagement extends MY_Controller
         if (isset($_GET['platform'])) {
             $where['platform_id'] = $_GET['platform'];
         }
-       
-        if ($tpl_obj = $this->sc['Email']->getDao('Template')->get($where)) {
-            $data['tpl_edit']['subject'] = $tpl_obj->getSubject();
-            $data['tpl_edit']['message_html'] = $tpl_obj->getMessageHtml();
-            $data['tpl_edit']['message_alt'] = $tpl_obj->getMessageAlt();
+        if (isset($_GET['tpl_id']) && isset($_GET['platform'])) {
+            if ($tpl_obj = $this->sc['Email']->getDao('Template')->get($where)) {
+                $data['tpl_edit']['subject'] = $tpl_obj->getSubject();
+                $data['tpl_edit']['message_html'] = $tpl_obj->getMessageHtml();
+                $data['tpl_edit']['message_alt'] = $tpl_obj->getMessageAlt();
+            }
 
             $subject_vars = $this->sc['Template']->getVariablesInTemplate($data["tpl_edit"]["subject"], "[:", ":]");
             $html_vars = $this->sc['Template']->getVariablesInTemplate($data["tpl_edit"]["message_html"], "[:", ":]");
@@ -57,6 +58,7 @@ class EmailManagement extends MY_Controller
         }
 
         $data["notice"] = notice($lang);
+
         $this->load->view('marketing/email_management/email_management_index_v', $data);
     }
 
@@ -73,11 +75,11 @@ class EmailManagement extends MY_Controller
 
             //$siteConfigObj=$this->sc["LoadSiteParameter"]->initSite();
             $siteConfigObj=$this->sc["LoadSiteParameter"]->loadSiteByPlatform($_POST["platform"]);
-           
+
             $replace["logo"]="http://".$siteConfigObj->getDomain()."/images/logo/" . $siteConfigObj->getLogo();
             $replace["site_name"]=$siteConfigObj->getSiteName();
             $replace["site_url"]="http://".$siteConfigObj->getDomain();
-        
+
             if (!empty($replace)) {
                 foreach ($replace as $key => $value) {
                     $search[] = '[:' . $key . ':]';
@@ -88,7 +90,7 @@ class EmailManagement extends MY_Controller
             }
             echo $results;
         }
-        
+
     }
 
     public function saveTemplate()
@@ -98,7 +100,8 @@ class EmailManagement extends MY_Controller
         if ($_POST) {
             $where = [
                 'tpl_id' => $_POST['tpl_id'],
-                'platform_id' => $_POST['platform']
+                'platform_id' => $_POST['platform'],
+                'type' => 1
             ];
 
             $tpl_obj = $this->sc['Email']->getDao('Template')->get($where);
@@ -108,6 +111,24 @@ class EmailManagement extends MY_Controller
                 $tpl_obj->setMessageAlt($_POST['message_alt']);
 
                 $this->sc['Email']->getDao('Template')->update($tpl_obj);
+            }else{
+
+                $tpl_obj_by_tpl = $this->sc['Email']->getDao('Template')->get(['tpl_id' => $_POST['tpl_id'],'type' => 1]);
+                $insert_obj = $this->sc['Email']->getDao('Template')->get(['platform_id' => $_POST['platform'],'type' => 1]);
+                $insert_obj->setTplId($tpl_obj_by_tpl->getTplId());
+                $insert_obj->setTplName($tpl_obj_by_tpl->getTplName());
+                $insert_obj->setDescription($tpl_obj_by_tpl->getDescription());
+                $insert_obj->setSubject($_POST['subject']);
+                $insert_obj->setMessageHtml($_POST['message_html']);
+                $insert_obj->setMessageAlt($_POST['message_alt']);
+                $insert_obj->setCreateOn(date('Y-m-d H:i:s'));
+                $insert_obj->setCreateAt(time());
+                $insert_obj->setCreateBy($_SESSION['user']['id']);
+                $insert_obj->setModifyOn(date('Y-m-d H:i:s'));
+                $insert_obj->setModifyAt(time());
+                $insert_obj->setModifyBy($_SESSION['user']['id']);
+
+                $this->sc['Email']->getDao('Template')->insert($insert_obj);
             }
         }
 
@@ -116,10 +137,6 @@ class EmailManagement extends MY_Controller
 
     private function construct_textarea($type = "", $template_string = "", $variable_arr = array(), $enable_preview = false)
     {
-        if (!$type || !$template_string) {
-            return false;
-        }
-
         $title = ucfirst($type);
         $var_to_display = $var_with_count = "";
 
