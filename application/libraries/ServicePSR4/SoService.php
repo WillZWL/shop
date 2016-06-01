@@ -3532,7 +3532,7 @@ html;
                 $prodObj->setWebsiteQuantity($websiteQty);
                 if ($websiteQty === 0)
                     $stockAlert[$soidObj->getItemSku()] = $prodObj->getName();
-                if ($websiteQty <= 5)
+                if (($websiteQty <= 5) && ($websiteQty !== 0))
                     $fiveAlert[$soidObj->getItemSku()] = $prodObj->getName();
                 $this->getDao("Product")->update($prodObj);
             }
