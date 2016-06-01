@@ -3518,7 +3518,69 @@ html;
             return false;
         }
     }
+    public function updateWebsiteDisplayQty($soObj)
+    {
+        if ($soObj) {
+            $stockAlert = [];
+            $fiveAlert = [];
+            $soidObjs = $this->getService("SoFactory")->getDao("SoItemDetail")->getList(["so_no" => $soObj->getSoNo()], ["limit" => -1]);
+            foreach ($soidObjs as $soidObj) {
+                $prodObj = $this->getDao("Product")->get(["sku" => $soidObj->getItemSku()]);
+                $displayQty = max(0, $prodObj->getDisplayQuantity() - $soidObj->getQty());
+                $websiteQty = max(0, $prodObj->getWebsiteQuantity() - $soidObj->getQty());
+                $prodObj->setDisplayQuantity($displayQty);
+                $prodObj->setWebsiteQuantity($websiteQty);
+                if ($websiteQty === 0)
+                    $stockAlert[$soidObj->getItemSku()] = $prodObj->getName();
+                if ($websiteQty <= 5)
+                    $fiveAlert[$soidObj->getItemSku()] = $prodObj->getName();
+                $this->getDao("Product")->update($prodObj);
+            }
+            if (count($stockAlert)) {
+                $this->_sendStockAlertEmail($stockAlert, $soObj);
+            }
+            if (count($fiveAlert)) {
+                $this->_sendFiveAlertEmail($fiveAlert, $soObj);
+            }
+        }
+    }
+    
+    private function _sendFiveAlertEmail($fiveAlert, $soObj)
+    {
+        $message .= "Please be advised that order number " . $soObj->getClientId() . "-" . $so->getSoNo() . " platform " . $soObj->getPlatformId() . " has triggered the following product to control quantity <= 5:\n\n";
+        foreach ($fiveAlert as $key => $value) {
+            $message .= $key . " - " . $value . "\n";
+        }
 
+        $message = preg_replace("{\n$}", "", $message);
+        $title = "[Panther] Website Order Quantity Warning, QTY = 5";
+        $dto = new EventEmailDto();
+        $dto->setEventId("notification");
+        $dto->setMailTo(["bd@eservicesgroup.net"]);
+        $dto->setMailFrom("do_not_reply@digitaldiscount.co.uk");
+        $dto->setTplId("general_alert");
+        $dto->setReplace(["title" => $title, "message" => $message]);
+        $this->eventService->fireEvent($dto);
+    }
+
+    private function _sendStockAlertEmail($stockAlert, $soObj)
+    {
+        $message .= "Please be advised that order number " . $soObj->getClientId() . "-" . $soObj->getSoNo() . " platform " . $soObj->getPlatformId() . " has triggered the following product(s) to possibly be out of stock:\n\n";
+        foreach ($stockAlert as $key => $value) {
+            $message .= $key . " - " . $value . "\n";
+        }
+
+        $message = preg_replace("{\n$}", "", $message);
+        $title = "[Panther] Website Order Quantity Warning, QTY = 5";
+        $dto = new EventEmailDto();
+        $dto->setEventId("notification");
+        $dto->setMailTo(["bd@eservicesgroup.net"]);
+        $dto->setMailFrom("do_not_reply@digitaldiscount.co.uk");
+        $dto->setTplId("general_alert");
+        $dto->setReplace(["title" => $title, "message" => $message]);
+        $this->eventService->fireEvent($dto);
+    }
+/*
     public function update_website_display_qty(So_vo $so)
     {
         if ($so) {
@@ -3591,7 +3653,7 @@ html;
             }
         }
     }
-
+*/
     public function orderQuickSearch($where = [], $option = [])
     {
         if ($option["num_rows"] == 1) {

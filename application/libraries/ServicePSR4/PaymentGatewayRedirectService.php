@@ -325,6 +325,7 @@ implements PaymentGatewayRedirectServiceInterface
                 if ($soPara)
                     set_value($this->so, $soPara);
                 $this->getService("SoFactory")->getDao("So")->update($this->so);
+                $this->getService("So")->updateWebsiteDisplayQty($this->so);
 //                $this->get_so_srv()->update_website_display_qty($this->so);
 //CYBS decision manager
                 if ($this->isNeedDmService($isFraud)) {
