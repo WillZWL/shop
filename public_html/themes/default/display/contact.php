@@ -51,6 +51,8 @@
                                 ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office Tower 8 Argyle Street, Kowloon, Hong Kong
                                 <br/>
                                 Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, SW19 2RR
+                                <br/>
+                                ChatandVision Limited (BVI), Portcullis TrustNet Chambers, P.O.Box 3444, Road Town, Tortola, British Virgin Islands
                                 </p>
                             </p>
                         </div>
