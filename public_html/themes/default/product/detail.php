@@ -81,11 +81,11 @@
                                 <ul class="list-unstyled">
                                     <li>
                                         <span class="check-box text-success"><i class="fa fa-check"></i></span>
-                                        <b><?= _('Availability').':' ?></b>
+                                        <b><?= _('Availability').' :' ?></b>
                                         <?php
                                             if ($listing_status == 'I') {
                                         ?>
-                                            <?= _(' In Stock') ?>
+                                            <?=$display_qty?>&nbsp;<?= _(' In Stock') ?>
                                         <?php }elseif ($listing_status == 'O') { ?>
                                             <?= _('Out of Stock') ?>
                                         <?php }elseif ($listing_status == 'P') { ?>
