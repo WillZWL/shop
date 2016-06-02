@@ -339,7 +339,7 @@ class FlexService extends BaseService
                             $this->writeFile($result, 'sales', $folder_name, $gen_exception_only = FALSE);
                         }
                     }
-                    $this->getInventoryReport($inventory, $end_date, $folder_name);
+                    $this->getInventoryReport($inventory, $date, $folder_name);
                     return true;
                 }
             }
