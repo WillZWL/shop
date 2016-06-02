@@ -33,6 +33,7 @@ class WebsiteProductInfoDto
     private $enhanced_listing;
     private $lang_restricted;
     private $image;
+    private $display_quantity;
 
     public function getSku()
     {
@@ -342,5 +343,15 @@ class WebsiteProductInfoDto
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    public function getDisplayQuantity()
+    {
+        return $this->display_quantity;
+    }
+
+    public function setDisplayQuantity($display_quantity)
+    {
+        $this->display_quantity = $display_quantity;
     }
 }

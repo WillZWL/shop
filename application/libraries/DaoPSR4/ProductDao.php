@@ -1023,7 +1023,7 @@ class ProductDao extends BaseDao
         $this->db->join("category AS sc", "sc.id = p.sub_cat_id", "INNER");
         $this->db->join("category AS ssc", "ssc.id = p.sub_sub_cat_id", "LEFT");
         $this->db->join("brand AS b", "b.id = p.brand_id", "INNER");
-        return $this->commonGetList($className, $where, $option, 'p.expected_delivery_date, p.image, p.sku, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name, pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing, pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
+        return $this->commonGetList($className, $where, $option, 'p.expected_delivery_date, p.image, p.sku, p.display_quantity, cat.id cat_id, cat.name cat_name, sc.id sub_cat_id, sc.name sub_cat_name, ssc.id sub_sub_cat_id, ssc.name sub_sub_cat_name, b.id brand_id, b.brand_name, pc.lang_id, IFNULL(pc.prod_name,p.name) prod_name, p.youtube_id, pc.short_desc, pc.detail_desc, pc.extra_info, pc.contents, pcex.feature, pcex.specification, pcex.requirement, pcex.instruction, pcex.apply_enhanced_listing, pcex.enhanced_listing, pc.contents_original, pc.keywords_original, pc.detail_desc_original, pcex.feature_original, pcex.spec_original, p.lang_restricted');
     }
 
     public function getListedProductSupplierInfo($where = [], $option = [], $classname = 'ProdSupplierInfoDto')
