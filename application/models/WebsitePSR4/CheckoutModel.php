@@ -162,7 +162,7 @@ class CheckoutModel extends \CI_Model
         if (intval($soNo) == $soNo) {
             $soObj = $this->_soFactoryService->getDao("So")->get(["so_no" => $soNo]);
 
-            if ($soObj->getStatus() >= $option["status"]) {
+            //if ($soObj->getStatus() >= $option["status"]) {
 
                 if (($soObj->getCreateAt() == ip2long($_SERVER["REMOTE_ADDR"])) || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
                     
@@ -177,7 +177,8 @@ class CheckoutModel extends \CI_Model
 
                     $valid = true;
                 }
-            }
+                error_log(__METHOD__ . __LINE__ . " " . $soNo);
+            //}
         }
 
         return ["valid" => $valid
