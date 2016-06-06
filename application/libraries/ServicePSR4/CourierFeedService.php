@@ -80,6 +80,8 @@ class CourierFeedService extends BaseService
 					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
+				case "A2B":
+				case "RPX":
 				case "singapore-post":
 					$data_out[] = $this->getSgpCourierFeed($value);
 
