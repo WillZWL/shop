@@ -1344,7 +1344,7 @@ class Product_dao extends Base_dao
                         pbv.free_delivery_limit, pbv.payment_charge_percent, pbv.platform_country_id, pbv.platform_currency_id,  pbv.language_id ";
 
         $this->db->join("price AS pr", "p.sku = pr.sku AND pr.platform_id = pbv.selling_platform_id", "LEFT");
-        $select_str .= ",pbv.selling_platform_id AS platform_id, pr.sales_qty, pr.status, pr.allow_express, pr.is_advertised,
+        $select_str .= ",pbv.selling_platform_id AS platform_id, pr.sales_qty, pr.allow_express, pr.is_advertised,
                         pr.ext_mapping_code, pr.latency, pr.oos_latency, pr.listing_status, pr.platform_code, pr.max_order_qty, pr.auto_price, pr.fixed_rrp, pr.rrp_factor,
                         pr.delivery_scenarioid";
 
