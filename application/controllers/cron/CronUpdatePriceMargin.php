@@ -3,11 +3,13 @@
 class CronUpdatePriceMargin extends MY_Controller
 {
     private $appId = 'CRN0030';
-
+    const SCHEDULE_ID= "REFRESH_MARGIN";
     public function updateMargin($platform_id = '', $sku = '')
     {
         set_time_limit(1200);
         ini_set('memory_limit', '1024M');
+        $id = self::SCHEDULE_ID;
+        $current_time = date("Y-m-d H:i:s");
         if ($platform_id === '') {
             $this->sc['PriceMargin']->getDao('PriceMargin')->db->save_queries = false;
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
@@ -21,6 +23,7 @@ class CronUpdatePriceMargin extends MY_Controller
                 $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id, $sku);
             }
         }
+        $this->sc['PriceMargin']->updatLastTime($id, $current_time);
     }
 
     public function getAppId()
