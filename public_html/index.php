@@ -330,7 +330,10 @@ switch (ENVIRONMENT)
 		case 'www.elektroraj.pl':
 			define('SITEVIEW', 'elektroraj.pl');
 			break;
-
+		case 'dev.9digital.nl':
+		case 'www.9digital.nl':
+			define('SITEVIEW', '9digital.nl');
+			break;
 		default:
 			define('SITEVIEW', 'default');
 			break;
