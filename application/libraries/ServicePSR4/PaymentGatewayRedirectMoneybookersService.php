@@ -32,11 +32,12 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
                         , "CHF" => ["payToEmail" => "chf-pay@chatandvision.com"
                                 , "merchantId" => "18103606"]];
 
-    public $creditCheckAmountByCurrency = array("GBP" => 500
+    private $_creditCheckAmountByCountry = ["NL" => 350];
+    private $_creditCheckAmountByCurrency = ["GBP" => 500
                                             , "AUD" => 500
                                             , "NZD" => 500
                                             , "EUR" => 500
-                                            , "PLN" => 2000);
+                                            , "PLN" => 2000];
     private $_mbRequest = null;
     public $mbAccount = null;
 
@@ -316,8 +317,11 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
     }
 
     public function isPaymentNeedCreditCheck($isFraud = false) {
-        if (in_array($this->so->getCurrencyId(), $this->creditCheckAmountByCurrency)) {
-            if ($this->so->getAmount() < $this->creditCheckAmountByCurrency[$this->so->getCurrencyId()])
+        if (array_key_exists($this->so->getDeliveryCountryId(), $this->_creditCheckAmountByCountry)) {
+            if ($this->so->getAmount() < $this->_creditCheckAmountByCountry[$this->so->getDeliveryCountryId()])
+                return FALSE;
+        } elseif (array_key_exists($this->so->getCurrencyId(), $this->_creditCheckAmountByCurrency)) {
+            if ($this->so->getAmount() < $this->_creditCheckAmountByCurrency[$this->so->getCurrencyId()])
                 return FALSE;
         }
         return true;
