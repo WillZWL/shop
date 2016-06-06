@@ -418,7 +418,7 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
         if ($this->sops->getRiskRef1() == "Eligible") {
             return FALSE;
         } else {
-            if (in_array($this->so->getCurrencyId(), $this->creditCheckAmountByCurrency)) {
+            if (array_key_exists($this->so->getCurrencyId(), $this->creditCheckAmountByCurrency)) {
                 if ($this->so->getAmount() < $this->creditCheckAmountByCurrency[$this->so->getCurrencyId()])
                     return FALSE;
             } else

@@ -317,10 +317,10 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
     }
 
     public function isPaymentNeedCreditCheck($isFraud = false) {
-        if (in_array($this->so->getDeliveryCountryId(), $this->_creditCheckAmountByCountry)) {
+        if (array_key_exists($this->so->getDeliveryCountryId(), $this->_creditCheckAmountByCountry)) {
             if ($this->so->getAmount() < $this->_creditCheckAmountByCountry[$this->so->getDeliveryCountryId()])
                 return FALSE;
-        } elseif (in_array($this->so->getCurrencyId(), $this->_creditCheckAmountByCurrency)) {
+        } elseif (array_key_exists($this->so->getCurrencyId(), $this->_creditCheckAmountByCurrency)) {
             if ($this->so->getAmount() < $this->_creditCheckAmountByCurrency[$this->so->getCurrencyId()])
                 return FALSE;
         }
