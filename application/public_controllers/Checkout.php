@@ -151,7 +151,8 @@ class Checkout extends PUB_Controller
             || ($result == 0)) {
 //Success
             if ($soNo == "") {
-                $this->load->view("checkout/" . $pagePar[$result]["view"], $data);
+                show_404();
+//                $this->load->view("checkout/" . $pagePar[$result]["view"], $data);
             } elseif ($soNo) {
 
                 $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo, [$pagePar[$result]["option1"] => true, "status" => $pagePar[$result]["status"]]);
