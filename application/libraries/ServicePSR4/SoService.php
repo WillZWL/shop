@@ -2929,7 +2929,7 @@ html;
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
         $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
-        $replace["att_file"] = $att_file;
+        $dto->setAttFile($att_file);
         $dto->setReplace($replace);
 
         if ($get_email_html === FALSE) {
@@ -3497,7 +3497,7 @@ html;
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
         $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
-        $replace["att_file"] = $att_file;
+        $dto->setAttFile($att_file);
         $dto->setReplace($replace);
         $this->eventService->fireEvent($dto);
 
