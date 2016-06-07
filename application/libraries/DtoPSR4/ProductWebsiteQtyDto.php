@@ -9,6 +9,7 @@ class ProductWebsiteQtyDto
     private $vb_sku;
     private $master_sku;
     private $supply_status;
+    private $auto_restock;
 
     public function getSku()
     {
@@ -88,5 +89,15 @@ class ProductWebsiteQtyDto
     public function setSupplyStatus($value)
     {
         $this->supply_status = $value;
+    }
+
+    public function getAutoRestock()
+    {
+        return $this->auto_restock;
+    }
+
+    public function setAutoRestock($value)
+    {
+        $this->auto_restock = $value;
     }
 }

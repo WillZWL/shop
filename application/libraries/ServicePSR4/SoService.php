@@ -2929,7 +2929,7 @@ html;
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
         $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
-        $replace["att_file"] = $att_file;
+        $dto->setAttFile($att_file);
         $dto->setReplace($replace);
 
         if ($get_email_html === FALSE) {
@@ -3497,7 +3497,7 @@ html;
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
         $so_no = $so_obj->getSoNo();
         $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
-        $replace["att_file"] = $att_file;
+        $dto->setAttFile($att_file);
         $dto->setReplace($replace);
         $this->eventService->fireEvent($dto);
 
@@ -3544,10 +3544,10 @@ html;
             }
         }
     }
-    
+
     private function _sendFiveAlertEmail($fiveAlert, $soObj)
     {
-        $message .= "Please be advised that order number " . $soObj->getClientId() . "-" . $so->getSoNo() . " platform " . $soObj->getPlatformId() . " has triggered the following product to control quantity <= 5:\n\n";
+        $message .= "Please be advised that order number " . $soObj->getClientId() . "-" . $soObj->getSoNo() . " platform " . $soObj->getPlatformId() . " has triggered the following product to control quantity <= 5:\n\n";
         foreach ($fiveAlert as $key => $value) {
             $message .= $key . " - " . $value . "\n";
         }
@@ -4826,18 +4826,23 @@ html;
                     $content = $this->getDao('So')->getApsDirectOrderCsv($where);
 
                     $phpmail = new PHPMailer;
-
+                    $phpmail->CharSet = "UTF-8";
                     $phpmail->IsSMTP();
-                    $phpmail->From = "Panther APS ORDER ALERT <do_not_reply@valuebasket.com>";
+                    if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
+                        $phpmail->Host = $smtphost;
+                        $phpmail->SMTPAuth = $this->getDao('Config')->valueOf("smtp_auth");
+                        $phpmail->Username = $this->getDao('Config')->valueOf("smtp_user");
+                        $phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
+                    }
+                    $phpmail->From = "do_not_reply@digitaldiscount.co.uk";
+                    $phpmail->FromName = "Panther APS ORDER ALERT";
                     $phpmail->AddAddress("bd.platformteam@eservicesgroup.net");
-                    $phpmail->Bcc("brave.liu@eservicesgroup.com");
-
-                    $phpmail->Subject = " DIRECT APS ORDERS";
+                    $phpmail->AddAddress('brave.liu@eservicesgroup.com');
                     $phpmail->IsHTML(false);
+                    $phpmail->Subject = "DIRECT APS ORDERS";
                     $phpmail->Body = "Attached: DIRECT APS ORDERS.";
-                    $phpmail->AddStringAttachment($content, "direct_aps_info.csv");
-                    $result = $phpmail->Send();
-
+                    $phpmail->addStringAttachment($content, 'direct_aps_info.csv');    // Optional name
+                    $phpmail->Send();
                 }
             }
         }

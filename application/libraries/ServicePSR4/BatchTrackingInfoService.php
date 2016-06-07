@@ -293,20 +293,24 @@ class BatchTrackingInfoService extends BaseBatchService
 							$where = "where so.so_no in (".$apsDirectOrders.")";
 							$content = $this->getDao('So')->getApsDirectOrderCsv($where);
 
-							file_put_contents('/tmp/debug_email', $content);
-
 							$phpmail = new PHPMailer;
-
+							$phpmail->CharSet = "UTF-8";
 							$phpmail->IsSMTP();
-							$phpmail->From = "Panther APS ORDER ALERT <do_not_reply@eservicesgroup.com>";
+							if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
+								$phpmail->Host = $smtphost;
+								$phpmail->SMTPAuth = $this->getDao('Config')->valueOf("smtp_auth");
+								$phpmail->Username = $this->getDao('Config')->valueOf("smtp_user");
+								$phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
+							}
+							$phpmail->From = "do_not_reply@digitaldiscount.co.uk";
+							$phpmail->FromName = "Panther APS ORDER ALERT";
 							$phpmail->AddAddress("bd.platformteam@eservicesgroup.net");
-							$phpmail->Bcc("brave.liu@eservicesgroup.com");
-
-							$phpmail->Subject = " DIRECT APS ORDERS";
+							$phpmail->AddBCC("brave.liu@eservicesgroup.com");
 							$phpmail->IsHTML(false);
+							$phpmail->Subject = "DIRECT APS ORDERS";
 							$phpmail->Body = "Attached: DIRECT APS ORDERS.";
-							$phpmail->AddStringAttachment($content, "direct_aps_info.csv");
-							$result = $phpmail->Send();
+							$phpmail->addStringAttachment($content, 'direct_aps_info.csv');    // Optional name
+							$phpmail->Send();
 						}
 
 						if (copy($localPath.$obj->getRemark(), $localPath."success/".$obj->getRemark()))
