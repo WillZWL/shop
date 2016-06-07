@@ -336,6 +336,7 @@ class ClwmsTrackingFeedService extends BaseService
                 $phpmail->From = "do_not_reply@digitaldiscount.co.uk";
                 $phpmail->FromName = "Panther APS ORDER ALERT";
                 $phpmail->AddAddress("bd.platformteam@eservicesgroup.net");
+                $phpmail->AddBCC("brave.liu@eservicesgroup.com");
                 $phpmail->IsHTML(false);
                 $phpmail->Subject = "DIRECT APS ORDERS";
                 $phpmail->Body = "Attached: DIRECT APS ORDERS.";
