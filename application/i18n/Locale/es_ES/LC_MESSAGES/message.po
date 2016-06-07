@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 11:23+0800\n"
-"PO-Revision-Date: 2016-05-04 11:24+0800\n"
+"POT-Creation-Date: 2016-06-07 11:33+0800\n"
+"PO-Revision-Date: 2016-06-07 11:35+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -103,25 +103,25 @@ msgstr "Mostrar:"
 msgid "Quick View"
 msgstr "Vista previa"
 
-#: cat.php:222 search.php:207
+#: cat.php:219 search.php:207
 msgid "List Price"
 msgstr "Precio"
 
-#: cat.php:223 search.php:208
+#: cat.php:220 search.php:208
 msgid "You Pay"
 msgstr "Tú pagas"
 
-#: cat.php:230 search.php:211
+#: cat.php:227 search.php:211
 msgid "Save"
 msgstr "Ahorro"
 
-#: cat.php:238 cat.php:244 product/accessories.php:119
-#: product/accessories.php:125 product/detail.php:130 product/grid.php:68
+#: cat.php:235 cat.php:241 product/accessories.php:119
+#: product/accessories.php:125 product/detail.php:121 product/grid.php:68
 #: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Añadir a la cesta"
 
-#: cat.php:250 search.php:223 search.php:225
+#: cat.php:247 search.php:223 search.php:225
 msgid "More Info"
 msgstr "Más información"
 
@@ -423,8 +423,8 @@ msgid "Please select a card"
 msgstr "Por favor selecciona una Tarjeta"
 
 #: checkout/index.php:794
-msgid "Unknow error: Please contact our CS!"
-msgstr "Error desconocido: Por favor contacta con nuestra Atención al Cliente!"
+msgid "Unknown error: Please contact our CS!"
+msgstr "Error desconocido. ¡Contacte con nuestro Servicio al Cliente!"
 
 #: checkout/paymentFail.php:4
 msgid "Payment Fail"
@@ -557,7 +557,7 @@ msgstr ""
 "Buholoco.es Piso/RM 12, Tower 8, 25/F Langham Place Office Argyle Street, "
 "Kowloon, Hong Kong"
 
-#: contact.php:13 display/contact.php:64
+#: contact.php:13 display/contact.php:66
 msgid "Tel"
 msgstr "Tel."
 
@@ -593,7 +593,7 @@ msgstr "Mensaje"
 msgid "Your Name"
 msgstr "Tu Nombre"
 
-#: contact.php:35 display/contact.php:59 myaccount/forget_password.php:41
+#: contact.php:35 display/contact.php:61 myaccount/forget_password.php:41
 #: myaccount/login.php:14 myaccount/login.php:15
 msgid "Email"
 msgstr "Email"
@@ -754,7 +754,7 @@ msgstr ""
 "Si no obtiene la respuesta que necesita, póngase en %s contacto %s con "
 "nosotros a través nuestra página de Contacto. Gracias."
 
-#: display/privacy_policy.php:2 footer.php:278
+#: display/privacy_policy.php:2 footer.php:277
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
@@ -1064,7 +1064,7 @@ msgstr ""
 "Si usted tiene alguna duda o preocupación, puedes mandarnos un email  a "
 "través de nuestro formulario online que puedes encontrar en nuestra página"
 
-#: display/privacy_policy.php:90 header.php:116
+#: display/privacy_policy.php:90 header.php:117
 msgid "Contact Us"
 msgstr "Contáctanos"
 
@@ -1196,177 +1196,177 @@ msgstr ""
 msgid " PAY WITH CONFIDENCE "
 msgstr "PAGA CON CONFIANZA"
 
-#: footer.php:83
+#: footer.php:72
 msgid " SHOP WITH CONFIDENCE "
 msgstr "COMPRA CON CONFIANZA"
 
-#: footer.php:161
+#: footer.php:160
 msgid "About Us"
 msgstr "Acerca de nosotros"
 
-#: footer.php:164
+#: footer.php:163
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr ""
 "¡%s se enorgullece de ofrecer ofertas excepcionales sin comprometer el "
 "servicio!"
 
-#: footer.php:164
+#: footer.php:163
 msgid "Feel free to contact us anytime for more information"
 msgstr ""
 "Siéntete libre de contactarnos en cualquier momento para más información"
 
-#: footer.php:172 footer.php:184
+#: footer.php:171 footer.php:183
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr "Suscríbete para saber nuestras últimas noticias y promociones."
 
-#: footer.php:183
+#: footer.php:182
 msgid "Sign up for Newsletter"
 msgstr "Suscríbete a nuestra Newsletter"
 
-#: footer.php:188
+#: footer.php:187
 msgid "Enter you email address"
 msgstr "Introduce tu correo electrónico"
 
-#: footer.php:198
+#: footer.php:197
 msgid "Subscribe"
 msgstr "Suscríbite"
 
-#: footer.php:202
+#: footer.php:201
 msgid "indicates required"
 msgstr "indica requerido"
 
-#: footer.php:217
+#: footer.php:216
 msgid "100% Secure "
 msgstr "100% Seguro"
 
-#: footer.php:217
+#: footer.php:216
 msgid "with SSL encryption"
 msgstr "con encriptación SSL"
 
-#: footer.php:225
+#: footer.php:224
 msgid "Free Delivery"
 msgstr "Envío Gratuito"
 
-#: footer.php:225
+#: footer.php:224
 msgid "For All Orders*"
 msgstr "Para Todas las Compras*"
 
-#: footer.php:225
+#: footer.php:224
 msgid "Shipping:"
 msgstr "Envío:"
 
-#: footer.php:225
+#: footer.php:224
 msgid "3-5 Working Days"
 msgstr "3-5 Días Laborables"
 
-#: footer.php:245 header.php:146
+#: footer.php:244 header.php:147
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s días Reembolso Garantizado"
 
-#: footer.php:261
+#: footer.php:260
 msgid "Warranty "
 msgstr "Garantía"
 
-#: footer.php:261
+#: footer.php:260
 msgid "Up to 2 Years"
 msgstr "Hasta 2 años"
 
-#: footer.php:273
+#: footer.php:272
 msgid "2015 All Right reserved"
 msgstr "2015 Todos los Derechos Reservados"
 
-#: footer.php:274
+#: footer.php:273
 msgid "Conditions of Use"
 msgstr "Condiciones de Uso"
 
-#: footer.php:275
+#: footer.php:274
 msgid "Shipping Policy"
 msgstr "Política de Envio"
 
-#: footer.php:276
+#: footer.php:275
 msgid "Return and Refund Policy"
 msgstr "Política de Devolución y Reembolso"
 
-#: footer.php:277
+#: footer.php:276
 msgid "Billing Terms and Conditions"
 msgstr "Términos y Condiciones de Facturación"
 
-#: footer.php:283
+#: footer.php:282
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "SELECCIONA PAIS DE ENVIO"
 
-#: footer.php:286
+#: footer.php:285
 msgid "Australia"
 msgstr "Australia"
 
-#: footer.php:287
+#: footer.php:286
 msgid "Belgium"
 msgstr "Bélgica"
 
-#: footer.php:288
+#: footer.php:287
 msgid "Finland"
 msgstr "Finlandia"
 
-#: footer.php:289
+#: footer.php:288
 msgid "France"
 msgstr "Francia"
 
-#: footer.php:290
+#: footer.php:289
 msgid "Great Britain"
 msgstr "Gran Bretaña"
 
-#: footer.php:291
+#: footer.php:290
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
 #: header.php:54
 #, php-format
-msgid "%s item(s) - %s"
-msgstr "%s producto(s) - %s"
+msgid "%s item(s) - "
+msgstr "%s producto(s) - "
 
-#: header.php:110
+#: header.php:111
 msgid "We won't be beaten on electronics!"
 msgstr "¡No nos ganarán en electrónica!"
 
-#: header.php:115
+#: header.php:116
 msgid "Warranty"
 msgstr "Garantía"
 
-#: header.php:117
+#: header.php:118
 msgid "Help"
 msgstr "Ayuda"
 
-#: header.php:118
+#: header.php:119
 msgid "Clearance"
 msgstr "Liquidación"
 
-#: header.php:120 myaccount/index.php:4
+#: header.php:121 myaccount/index.php:4
 msgid "My Account"
 msgstr "Mi Cuenta"
 
-#: header.php:121
+#: header.php:122
 msgid "Log Out"
 msgstr "Cerrar Sesión"
 
-#: header.php:124
+#: header.php:125
 msgid "Sign in"
 msgstr "Identifícate"
 
-#: header.php:150
+#: header.php:151
 msgid "Free Delivery For All Orders"
 msgstr "Envío Gratuíto para todas las Compras*"
 
-#: header.php:154
+#: header.php:155
 msgid "Up to 2 Years Warranty"
 msgstr "Hasta 2 años de Garantía"
 
-#: header.php:198
+#: header.php:199
 msgid "Find your product"
 msgstr "Encuentra tu producto"
 
-#: header.php:216
+#: header.php:217
 msgid "Top search"
 msgstr "Populares"
 
@@ -1378,19 +1378,19 @@ msgstr "Mejor vendido"
 msgid "latest arrival"
 msgstr "novedades"
 
-#: index.php:67
+#: index.php:81
 msgid "Collections"
 msgstr "Catálogo"
 
-#: index.php:88
+#: index.php:102
 msgid "camera collection"
 msgstr "catálogo de cámaras"
 
-#: index.php:92 index.php:112
+#: index.php:106 index.php:126
 msgid "Shop now"
 msgstr "Compra ahora"
 
-#: index.php:108
+#: index.php:122
 msgid "mobile collection"
 msgstr "catálogo de móviles"
 
@@ -1803,63 +1803,66 @@ msgstr "Nueva Contraseña"
 msgid "Confirm Password"
 msgstr "Confirma Constraseña"
 
-#: product/detail.php:23 product/detail.php:31 product/related_product.php:16
+#: product/detail.php:23 product/related_product.php:16
 msgid "Sale"
 msgstr "Venta"
 
-#: product/detail.php:82
+#: product/detail.php:73
 #, php-format
 msgid "%s review(s)"
 msgstr "%s opinión(es)"
 
-#: product/detail.php:82
+#: product/detail.php:73
 msgid "Write a review"
 msgstr "Escribe una opinión"
 
-#: product/detail.php:93
+#: product/detail.php:84
 msgid "Availability"
 msgstr "Disponibilidad"
 
-#: product/detail.php:97 product/detail.php:103
+#: product/detail.php:88 product/detail.php:94
 msgid " In Stock"
 msgstr "En Stock"
 
-#: product/detail.php:99
+#: product/detail.php:90
 msgid "Out of Stock"
 msgstr "Fuera de stock"
 
-#: product/detail.php:101
+#: product/detail.php:92
 msgid "Pre Order"
 msgstr "Reserva"
 
-#: product/detail.php:112
+#: product/detail.php:103
 msgid "Qty:"
 msgstr "Cantidad:"
 
-#: product/detail.php:135
-msgid "4-7 working days delivery"
-msgstr "Expedición en 4-7 días laborables"
+#: product/detail.php:128 product/detail.php:129
+msgid "Ships in"
+msgstr "Envío en"
 
-#: product/detail.php:169
+#: product/detail.php:128 product/detail.php:129
+msgid "working days"
+msgstr "días laborables"
+
+#: product/detail.php:128
+msgid "and"
+msgstr "y"
+
+#: product/detail.php:128
+msgid "delivered in"
+msgstr "entrega en"
+
+#: product/detail.php:164
 msgid "Specification"
 msgstr "Especificaciones"
 
-#: product/detail.php:170
+#: product/detail.php:165
 msgid "Overview"
 msgstr "Descripción"
 
-#: product/detail.php:171
+#: product/detail.php:167
 msgid "In the box"
 msgstr "En la caja"
-
-#: product/detail.php:172
-msgid "Recommended Accessories"
-msgstr "Accesorios Recomendados"
-
-#: product/detail.php:173
-#, php-format
-msgid "Reviews %s"
-msgstr "Opiniones %s"
 
 #: product/related_product.php:4
 msgid "Related Products"
@@ -1922,6 +1925,22 @@ msgstr "Resultados de búsqueda para \"%s\""
 #: search.php:162
 msgid "Display"
 msgstr "Precio"
+
+#~ msgid "Unknow error: Please contact our CS!"
+#~ msgstr ""
+#~ "Error desconocido: Por favor contacta con nuestra Atención al Cliente!"
+
+#~ msgid "%s item(s) - %s"
+#~ msgstr "%s producto(s) - %s"
+
+#~ msgid "4-7 working days delivery"
+#~ msgstr "Expedición en 4-7 días laborables"
+
+#~ msgid "Recommended Accessories"
+#~ msgstr "Accesorios Recomendados"
+
+#~ msgid "Reviews %s"
+#~ msgstr "Opiniones %s"
 
 #~ msgid "Rating (Highest)"
 #~ msgstr "Valoración (más alta primero)"
