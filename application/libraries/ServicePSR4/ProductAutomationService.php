@@ -13,7 +13,7 @@ class ProductAutomationService extends BaseService
     {
         $where['(p.website_quantity = 0 or p.display_quantity = 0)'] = NULL;
         $where['p.clearance'] = 0;
-        $where['p.auto_restock'] = 1;
+        // $where['p.auto_restock'] = 1;
         $where['p.sourcing_status'] = A;
         $option['limit'] = -1;
         $list = $this->getDao('Product')->getUpdateProductQtyList($where, $option);
@@ -25,7 +25,7 @@ class ProductAutomationService extends BaseService
             foreach ($list as $key => $value) {
                 $prod_obj = $this->getDao('Product')->get(array('sku' => $value->getSku()));
                 $item_cost = $value->getItemCost();
-                if ($value->getWebsiteQuantity() == 0) {
+                if (($value->getWebsiteQuantity() == 0) && ($value->getAutoRestock() == 1)) {
                     $website_qty = $this->_getAutoWebsiteQtyByItemCost($item_cost);
                     $prod_obj->setWebsiteQuantity($website_qty);
                 } else {
