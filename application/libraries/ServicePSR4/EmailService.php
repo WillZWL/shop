@@ -52,6 +52,7 @@ class EmailService extends BaseService
             $result['body'] = $email->getMessageHtml();
             $result['alt_body'] = $email->getMessageAlt();
             $result['to'] = $obj->getMailTo();
+            $result['att_file'] = $obj->getAttFile();
         }
 
         return $result;
@@ -102,6 +103,10 @@ class EmailService extends BaseService
 
         if ($email['alt_body']) {
             $phpmail->AltBody = $email['alt_body'];
+        }
+
+        if ($email['att_file']) {
+            $phpmail->addAttachment($email['att_file']);
         }
 
         $phpmail->Subject = $email['subject'];

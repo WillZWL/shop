@@ -9,6 +9,7 @@ class EventEmailDto
     private $tpl_id;
     private $lang_id = 'en';
     private $platform_id;
+    private $att_file;
     private $replace;
 
     public function getEventId()
@@ -90,6 +91,17 @@ class EventEmailDto
     public function setPlatformId($value)
     {
         $this->platform_id = $value;
+        return $this;
+    }
+
+    public function getAttFile()
+    {
+        return $this->att_file;
+    }
+
+    public function setAttFile($value)
+    {
+        $this->att_file = $value;
         return $this;
     }
 
