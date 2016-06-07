@@ -95,22 +95,28 @@ class DeliveryTimeService extends BaseService
     public function sendNotificationEmail($type, $msg = "")
     {
         $phpmail = new PHPMailer;
-
+        $phpmail->CharSet = "UTF-8";
         $phpmail->IsSMTP();
-        $phpmail->From = "Admin <admin@valuebasket.net>";
-
+        if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
+            $phpmail->Host = $smtphost;
+            $phpmail->SMTPAuth = $this->getDao('Config')->valueOf("smtp_auth");
+            $phpmail->Username = $this->getDao('Config')->valueOf("smtp_user");
+            $phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
+        }
+        $phpmail->From = "admin@digitaldiscount.co.uk";
+        $phpmail->FromName = "Admin";
+        $phpmail->AddAddress("csmanager@eservicesgroup.net");
+        $phpmail->AddAddress("itsupport@eservicesgroup.net");
+        $phpmail->IsHTML(false);
         switch ($type) {
             case "CHG":
                 $message = $msg;
                 $title = "NOTICE - Delivery time frames have been changed.";
                 break;
         }
-
-        $phpmail->AddAddress("csmanager@eservicesgroup.net");
-        $phpmail->AddAddress("itsupport@eservicesgroup.net");
-        $phpmail->Subject = "$title";
-        $phpmail->IsHTML(false);
+        $phpmail->Subject = $title;
         $phpmail->Body = $message;
+
         if (strpos($_SERVER['HTTP_HOST'], 'dev') === FALSE) {
             $result = $phpmail->Send();
         }
