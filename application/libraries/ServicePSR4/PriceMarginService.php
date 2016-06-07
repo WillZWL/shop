@@ -16,7 +16,6 @@ class PriceMarginService extends BaseService
         }
 
         $id = self::SCHEDULE_ID;
-        $current_time = date("Y-m-d H:i:s");
 
         $last_time = $this->getLastTime($id);
         $where["(
@@ -69,7 +68,6 @@ class PriceMarginService extends BaseService
                 $this->getDao('PriceMargin')->$action($price_margin_obj);
             }
         }
-        $this->updatLastTime($id, $current_time);
     }
 
     private function getLastTime($id)
@@ -79,7 +77,7 @@ class PriceMarginService extends BaseService
         }
     }
 
-    private function updatLastTime($id, $current_time)
+    public function updatLastTime($id, $current_time)
     {
         if ($obj = $this->getDao('ScheduleJob')->get(["schedule_job_id" => $id, "status" => 1])) {
             $obj->setLastAccessTime($current_time);
