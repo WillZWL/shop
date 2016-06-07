@@ -570,13 +570,15 @@ implements PaymentGatewayRedirectServiceInterface
 */
         $replace["so_items_text"] = '<table>';
         $isPreorder = false;
+        $priceObj = "";
         foreach($this->soids as $item) {
             $websiteStatus = $item->getWebsiteStatus();
             if (($websiteStatus == "P") || ($websiteStatus == "A")) {
                 $isPreorder = true;
             }
+            if ($priceObj == "")
+                $priceObj = $this->getService("Price")->getDao()->get(["platform_id" => $soObj->getPlatformId(), "sku" => $item->getItemSku()]);
             $total += $item->getAmount();
-
             $replace["so_items_text"] .=
                 "<tr>
                     <td style='padding:4px 20px; color:#444; font-family:Arial; font-size: 12px;'>" . $item->getProdName() . "</td>
@@ -586,10 +588,14 @@ implements PaymentGatewayRedirectServiceInterface
                 </tr>\n";
         }
         $replace["so_items_text"] .= '</table>';
-
-        #SBF #2789 user input fixed delivery days
-        // $replace["delivery_days"] = $this->get_del_srv()->get_working_days($soObj->get_delivery_type_id(), $soObj->get_delivery_country_id());
-        $replace["delivery_days"] = "";
+        
+        if ($priceObj) {
+            $deliveryScenerioObj = $this->getService("DeliveryTime")->getDeliverytimeObj($soObj->getDeliveryCountryId(), $priceObj->getDeliveryScenarioid());
+            if ($deliveryScenerioObj->getShipMinDay())
+                $replace["expect_ship_days"] = $deliveryScenerioObj->getShipMinDay() . " - " . $deliveryScenerioObj->getShipMaxDay();
+            if ($deliveryScenerioObj->getDelMinDay())
+                $replace["expect_del_days"] = $deliveryScenerioObj->getDelMinDay() . " - " . $deliveryScenerioObj->getDelMaxDay();
+        }
         $replace["total"] = platform_curr_format($total, 0);
 
         $replace["delivery_charge"] = platform_curr_format($soObj->getDeliveryCharge(), 0);
