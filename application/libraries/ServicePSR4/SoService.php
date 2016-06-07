@@ -3547,7 +3547,7 @@ html;
 
     private function _sendFiveAlertEmail($fiveAlert, $soObj)
     {
-        $message .= "Please be advised that order number " . $soObj->getClientId() . "-" . $so->getSoNo() . " platform " . $soObj->getPlatformId() . " has triggered the following product to control quantity <= 5:\n\n";
+        $message .= "Please be advised that order number " . $soObj->getClientId() . "-" . $soObj->getSoNo() . " platform " . $soObj->getPlatformId() . " has triggered the following product to control quantity <= 5:\n\n";
         foreach ($fiveAlert as $key => $value) {
             $message .= $key . " - " . $value . "\n";
         }
