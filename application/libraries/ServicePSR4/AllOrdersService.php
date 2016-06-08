@@ -66,6 +66,7 @@ class AllOrdersService extends BaseService
             $report[$i]->setPaymentStatus($report[$i]->getPaymentStatus());
             $report[$i]->setOrderCreateDateTime($report[$i]->getOrderCreateDateTime());
             $report[$i]->setHoldDateTime($report[$i]->getHoldDateTime());
+            $report[$i]->setIpAddress(long2ip($report[$i]->getIpAddress()));
         }
         return $report;
     }
