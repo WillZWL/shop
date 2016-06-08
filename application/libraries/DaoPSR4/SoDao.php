@@ -407,7 +407,7 @@ SQL;
         return $this->commonGetList($classname, $where, $option, "so.biz_type, so.platform_id, pmgw.name pmgw_name, so.bill_country_id, so.txn_id, so.client_id, so.so_no, p.name prod_name, cat.name cat_name, soid.item_sku, so.dispatch_date, so.order_create_date, so.amount, so.delivery_type_id, so.currency_id, so.create_by as request_by, osh.create_on as approval_date, osh.create_by as approved_by, ore.reason_display_name as reason");
     }
 
-    public function get_all_orders_report($start_date, $end_date, $so_number = "", $order_type = "", $psp_gateway = "", $hold_reason = "", $currency = "", $classname = "SoScreeningDto")
+    public function getAllOrdersReport($start_date, $end_date, $so_number = "", $order_type = "", $psp_gateway = "", $hold_reason = "", $currency = "", $classname = "SoScreeningDto")
     {
         $current_so_number = "";
         $trace_back = 0;
