@@ -44,18 +44,25 @@ class CourierFeedService extends BaseService
 			}
 
 			$phpmail = new PHPMailer;
+			$phpmail->CharSet = "UTF-8";
 			$phpmail->IsSMTP();
+			if ($smtphost = $this->getDao('Config')->valueOf("smtp_host")) {
+				$phpmail->Host = $smtphost;
+				$phpmail->SMTPAuth = $this->getDao('Config')->valueOf("smtp_auth");
+				$phpmail->Username = $this->getDao('Config')->valueOf("smtp_user");
+				$phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
+			}
 			$phpmail->From = "courier_feed@eservicesgroup.com";
-			$phpmail->Subject = "courier feed: $ret";
+			$phpmail->AddBCC("brave.liu@eservicesgroup.com");
+			$phpmail->FromName = "Panther Courier Feed";
 			$phpmail->AddAddress($email_addr);
 			$phpmail->IsHTML(true);
-
+			$phpmail->Subject = "Courier feed: $ret";
 			if (file_exists($file_path)) {
 				$phpmail->AddAttachment($file_path);
 			} else {
 				$bodytext = "courier file can not be found<br />" . $bodytext;
 			}
-
 			$phpmail->Body = $bodytext;
 
 			$phpmail->Send();
