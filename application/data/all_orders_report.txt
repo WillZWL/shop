@@ -31,18 +31,18 @@ email	Email Address
 bill_forename	Billing Forename
 bill_surname	Billing Surname
 bill_company	Billing Company Name
-bill_address1	BillingAddressLine1
-bill_address2	BillingAddressLine2
-bill_address3	BillingAddressLine3
+bill_address_1	BillingAddressLine1
+bill_address_2	BillingAddressLine2
+bill_address_3	BillingAddressLine3
 bill_city	BillingCity
 bill_state	BillingState
 bill_postcode	BillingPostalCode
 bill_country_id	BillingCountry
 delivery_name	DeliveryClientName
 delivery_company	DeliveryCompanyName
-delivery_address1	DeliveryAddressLine1
-delivery_address2	DeliveryAddressLine2
-delivery_address3	DeliveryAddressLine3
+delivery_address_1	DeliveryAddressLine1
+delivery_address_2	DeliveryAddressLine2
+delivery_address_3	DeliveryAddressLine3
 delivery_city	DeliveryCity
 delivery_state	DeliveryState
 delivery_postcode	DeliveryPostalCode
@@ -56,16 +56,16 @@ delivery_cost	DeliveryCost
 promotion_code	PromotionCode
 payment_type	PaymentType
 card_type	CardType
-risk_var1	Risk1
-risk_var2	Risk2
-risk_var3	Risk3
-risk_var4	Risk4
-risk_var5	Risk5
-risk_var6	Risk6
-risk_var7	Risk7
-risk_var8	Risk8
-risk_var9	Risk9
-risk_var10	Risk10
+risk_var_1	Risk1
+risk_var_2	Risk2
+risk_var_3	Risk3
+risk_var_4	Risk4
+risk_var_5	Risk5
+risk_var_6	Risk6
+risk_var_7	Risk7
+risk_var_8	Risk8
+risk_var_9	Risk9
+risk_var_10	Risk10
 card_bin	BIN
 verification_level	VerificationLevel
 fraud_result	FraudResult
