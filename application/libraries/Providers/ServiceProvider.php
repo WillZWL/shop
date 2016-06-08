@@ -557,5 +557,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['RptDispatch'] = function () {
             return new S\RptDispatchService();
         };
+
+        $serviceContainer['AllOrders'] = function () {
+            return new S\AllOrdersService();
+        };
     }
 }

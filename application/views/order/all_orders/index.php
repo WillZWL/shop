@@ -85,7 +85,7 @@
                                     <?php
                                     if ($order_type_list) {
                                         foreach ($order_type_list as $order_type_obj) {
-                                            $order_type = $order_type_obj->get_id();
+                                            $order_type = $order_type_obj->getSellingPlatformId();
                                             ?>
                                             <option name="order_type" id="order_type"
                                                     value="<?= htmlspecialchars($order_type) ?>" <?= $select_order_type == $order_type ? " selected='selected'" : '' ?>><?= $order_type ?></option>
@@ -116,7 +116,7 @@
                                     <?php
                                     if ($pmgw_list) {
                                         foreach ($pmgw_list as $pmgw_obj) {
-                                            $pmgw_id = $pmgw_obj->get_id();
+                                            $pmgw_id = $pmgw_obj->getPaymentGatewayId();
                                             ?>
                                             <option name="pmgw_id" id="pmgw_id"
                                                     value="<?= htmlspecialchars($pmgw_id) ?>" <?= $select_psp_gateway == $pmgw_id ? " selected='selected'" : '' ?>><?= $pmgw_id ?></option>
@@ -163,10 +163,11 @@
                                     <option></option>
                                     <?php
                                     if ($currency_list) {
-                                        foreach ($currency_list as $currency_id => $currency_name) {
+                                        foreach ($currency_list as $curr) {
+                                            $currId = $curr->getCurrencyId();
                                             ?>
                                             <option name="currency_id" id="currency_id"
-                                                    value="<?= htmlspecialchars($currency_id) ?>" <?= "$select_currency" == "$currency_id" ? " selected='selected'" : '' ?>><?= $currency_id ?></option>
+                                                    value="<?= htmlspecialchars($currId) ?>" <?= "$select_currency" == "$currId" ? " selected='selected'" : '' ?>><?= $currId ?></option>
 
                                         <?php
                                         }
@@ -211,92 +212,92 @@
         $current_so = "";
         for ($i = 0; $i < sizeof($orders); $i++) {
             print "<tr class='contentRow'>";
-            if ($current_so != $orders[$i]->get_so_no()) {
+            if ($current_so != $orders[$i]->getSoNo()) {
                 print "<td>" . $order_number . ".</td>";
                 $order_number++;
             } else
                 print "<td>&nbsp;</td>";
 
-            print "<td>" . $orders[$i]->get_so_no() . "</td>";
-            print "<td>" . $orders[$i]->get_hold_reason() . "</td>";
-            print "<td>" . $orders[$i]->get_hold_date() . "</td>";
-            print "<td>" . $orders[$i]->get_hold_time() . "</td>";
-            print "<td>" . $orders[$i]->get_hold_staff() . "</td>";
-            print "<td>" . $orders[$i]->get_empty_field() . "</td>";
-            print "<td>" . $orders[$i]->get_empty_field() . "</td>";
-            print "<td>" . $orders[$i]->get_empty_field() . "</td>";
-            print "<td>" . $orders[$i]->get_order_create_date() . "</td>";
-            print "<td>" . $orders[$i]->get_order_create_time() . "</td>";
-            print "<td>" . $orders[$i]->get_payment_transaction_id() . "</td>";
-            print "<td>" . $orders[$i]->get_empty_field() . "</td>";
-            print "<td>" . $orders[$i]->get_payment_gateway_id() . "</td>";
-            print "<td>" . $orders[$i]->get_product_name() . "</td>";
-            print "<td>" . $orders[$i]->get_category_name() . "</td>";
-            print "<td>" . $orders[$i]->get_currency() . "</td>";
-            print "<td>" . $orders[$i]->get_item_value() . "</td>";
-            print "<td>" . $orders[$i]->get_item_quantity() . "</td>";
-            print "<td>" . $orders[$i]->get_order_quantity() . "</td>";
-            print "<td>" . $orders[$i]->get_order_value() . "</td>";
-            print "<td>" . $orders[$i]->get_paid() . "</td>";
-            print "<td>" . $orders[$i]->get_mb_status() . "</td>";
-            print "<td>" . $orders[$i]->get_client_forename() . "</td>";
-            print "<td>" . $orders[$i]->get_client_surname() . "</td>";
-            print "<td>" . $orders[$i]->get_client_id() . "</td>";
-            print "<td>" . $orders[$i]->get_email() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_forename() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_surname() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_company() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_address1() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_address2() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_address3() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_city() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_state() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_postcode() . "</td>";
-            print "<td>" . $orders[$i]->get_bill_country_id() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_name() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_company() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_address1() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_address2() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_address3() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_city() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_state() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_postcode() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_country_id() . "</td>";
-            print "<td>" . $orders[$i]->get_password() . "</td>";
-            print "<td>" . $orders[$i]->get_tel() . "</td>";
-            print "<td>" . $orders[$i]->get_mobile() . "</td>";
-            print "<td>" . $orders[$i]->get_order_type() . "</td>";
-            print "<td>" . $orders[$i]->get_ship_service_level() . "</td>";
-            print "<td>" . $orders[$i]->get_delivery_cost() . "</td>";
-            print "<td>" . $orders[$i]->get_promotion_code() . "</td>";
-            print "<td>" . $orders[$i]->get_payment_type() . "</td>";
-            print "<td>" . $orders[$i]->get_card_type() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var1() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var2() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var3() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var4() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var5() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var6() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var7() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var8() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var9() . "</td>";
-            print "<td>" . $orders[$i]->get_risk_var10() . "</td>";
-            print "<td>" . $orders[$i]->get_card_bin() . "</td>";
-            print "<td>" . $orders[$i]->get_verification_level() . "</td>";
-            print "<td>" . $orders[$i]->get_fraud_result() . "</td>";
-            print "<td>" . $orders[$i]->get_avs_result() . "</td>";
-            print "<td>" . $orders[$i]->get_protection_eligibility() . "</td>";
-            print "<td>" . $orders[$i]->get_protection_eligibilityType() . "</td>";
-            print "<td>" . $orders[$i]->get_address_status() . "</td>";
-            print "<td>" . $orders[$i]->get_payer_status() . "</td>";
-            print "<td>" . $orders[$i]->get_ip_address() . "</td>";
-            print "<td>" . $orders[$i]->get_order_status() . "</td>";
-            print "<td>" . $orders[$i]->get_dispatch_date() . "</td>";
-            print "<td>" . $orders[$i]->get_refund_status() . "</td>";
-            print "<td>" . $orders[$i]->get_refund_date() . "</td>";
-            print "<td>" . $orders[$i]->get_refund_reason() . "</td>";
+            print "<td>" . $orders[$i]->getSoNo() . "</td>";
+            print "<td>" . $orders[$i]->getHoldReason() . "</td>";
+            print "<td>" . $orders[$i]->getHoldDate() . "</td>";
+            print "<td>" . $orders[$i]->getHoldTime() . "</td>";
+            print "<td>" . $orders[$i]->getHoldStaff() . "</td>";
+            print "<td>" . $orders[$i]->getEmptyField() . "</td>";
+            print "<td>" . $orders[$i]->getEmptyField() . "</td>";
+            print "<td>" . $orders[$i]->getEmptyField() . "</td>";
+            print "<td>" . $orders[$i]->getOrderCreateDate() . "</td>";
+            print "<td>" . $orders[$i]->getOrderCreateTime() . "</td>";
+            print "<td>" . $orders[$i]->getPaymentTransactionId() . "</td>";
+            print "<td>" . $orders[$i]->getEmptyField() . "</td>";
+            print "<td>" . $orders[$i]->getPaymentGatewayId() . "</td>";
+            print "<td>" . $orders[$i]->getProductName() . "</td>";
+            print "<td>" . $orders[$i]->getCategoryName() . "</td>";
+            print "<td>" . $orders[$i]->getCurrency() . "</td>";
+            print "<td>" . $orders[$i]->getItemValue() . "</td>";
+            print "<td>" . $orders[$i]->getItemQuantity() . "</td>";
+            print "<td>" . $orders[$i]->getOrderQuantity() . "</td>";
+            print "<td>" . $orders[$i]->getOrderValue() . "</td>";
+            print "<td>" . $orders[$i]->getPaid() . "</td>";
+            print "<td>" . $orders[$i]->getMbStatus() . "</td>";
+            print "<td>" . $orders[$i]->getClientForename() . "</td>";
+            print "<td>" . $orders[$i]->getClientSurname() . "</td>";
+            print "<td>" . $orders[$i]->getClientId() . "</td>";
+            print "<td>" . $orders[$i]->getEmail() . "</td>";
+            print "<td>" . $orders[$i]->getBillForename() . "</td>";
+            print "<td>" . $orders[$i]->getBillSurname() . "</td>";
+            print "<td>" . $orders[$i]->getBillCompany() . "</td>";
+            print "<td>" . $orders[$i]->getBillAddress1() . "</td>";
+            print "<td>" . $orders[$i]->getBillAddress2() . "</td>";
+            print "<td>" . $orders[$i]->getBillAddress3() . "</td>";
+            print "<td>" . $orders[$i]->getBillCity() . "</td>";
+            print "<td>" . $orders[$i]->getBillState() . "</td>";
+            print "<td>" . $orders[$i]->getBillPostcode() . "</td>";
+            print "<td>" . $orders[$i]->getBillCountryId() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryName() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryCompany() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryAddress1() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryAddress2() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryAddress3() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryCity() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryState() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryPostcode() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryCountryId() . "</td>";
+            print "<td>" . $orders[$i]->getPassword() . "</td>";
+            print "<td>" . $orders[$i]->getTel() . "</td>";
+            print "<td>" . $orders[$i]->getMobile() . "</td>";
+            print "<td>" . $orders[$i]->getOrderType() . "</td>";
+            print "<td>" . $orders[$i]->getShipServiceLevel() . "</td>";
+            print "<td>" . $orders[$i]->getDeliveryCost() . "</td>";
+            print "<td>" . $orders[$i]->getPromotionCode() . "</td>";
+            print "<td>" . $orders[$i]->getPaymentType() . "</td>";
+            print "<td>" . $orders[$i]->getCardType() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar1() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar2() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar3() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar4() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar5() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar6() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar7() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar8() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar9() . "</td>";
+            print "<td>" . $orders[$i]->getRiskVar10() . "</td>";
+            print "<td>" . $orders[$i]->getCardBin() . "</td>";
+            print "<td>" . $orders[$i]->getVerificationLevel() . "</td>";
+            print "<td>" . $orders[$i]->getFraudResult() . "</td>";
+            print "<td>" . $orders[$i]->getAvsResult() . "</td>";
+            print "<td>" . $orders[$i]->getProtectionEligibility() . "</td>";
+            print "<td>" . $orders[$i]->getProtectionEligibilityType() . "</td>";
+            print "<td>" . $orders[$i]->getAddressStatus() . "</td>";
+            print "<td>" . $orders[$i]->getPayerStatus() . "</td>";
+            print "<td>" . $orders[$i]->getIpAddress() . "</td>";
+            print "<td>" . $orders[$i]->getOrderStatus() . "</td>";
+            print "<td>" . $orders[$i]->getDispatchDate() . "</td>";
+            print "<td>" . $orders[$i]->getRefundStatus() . "</td>";
+            print "<td>" . $orders[$i]->getRefundDate() . "</td>";
+            print "<td>" . $orders[$i]->getRefundReason() . "</td>";
             print "</tr>";
-            $current_so = $orders[$i]->get_so_no();
+            $current_so = $orders[$i]->getSoNo();
             $total_number_of_records = $order_number;
         }
         //print heading
