@@ -117,6 +117,12 @@ class SoScreeningDto
     public function setHoldDateTime($hold_date_time)
     {
         $this->hold_date_time = $hold_date_time;
+        if ($hold_date_time != "")
+        {
+            $date = explode(" ", $hold_date_time);
+            $this->hold_date = $date[0];
+            $this->hold_time = $date[1];
+        }
     }
 
     public function getHoldDateTime()
@@ -157,6 +163,12 @@ class SoScreeningDto
     public function setOrderCreateDateTime($order_create_date_time)
     {
         $this->order_create_date_time = $order_create_date_time;
+        if ($order_create_date_time != "")
+        {
+            $date = explode(" ", $order_create_date_time);
+            $this->order_create_date = $date[0];
+            $this->order_create_time = $date[1];
+        }
     }
 
     public function getOrderCreateDateTime()
@@ -277,6 +289,10 @@ class SoScreeningDto
     public function setPaymentStatus($payment_status)
     {
         $this->payment_status = $payment_status;
+        if ($this->payment_gateway_id == 'moneybookers')
+            $this->mb_status = $this->payment_status;
+        else
+            $this->mb_status = "";
     }
 
     public function getPaymentStatus()
@@ -337,6 +353,13 @@ class SoScreeningDto
     public function setBillAddress($bill_address)
     {
         $this->bill_address = $bill_address;
+
+        $address = explode("|", $bill_address);
+        $this->bill_address1 = $address[0];
+        if (sizeof($address) > 1)
+            $this->bill_address2 = $address[1];
+        if (sizeof($address) > 2)
+            $this->bill_address3 = $address[2];
     }
 
     public function getBillAddress()
@@ -387,6 +410,13 @@ class SoScreeningDto
     public function setDeliveryAddress($delivery_address)
     {
         $this->delivery_address = $delivery_address;
+
+        $address = explode("|", $delivery_address);
+        $this->delivery_address1 = $address[0];
+        if (sizeof($address) > 1)
+            $this->delivery_address2 = $address[1];
+        if (sizeof($address) > 2)
+            $this->delivery_address3 = $address[2];
     }
 
     public function getDeliveryAddress()
@@ -431,7 +461,8 @@ class SoScreeningDto
 
     public function getBillName()
     {
-        return $this->bill_name;
+        $name_length = strlen($this->getBillForename());
+        return substr($this->bill_name, $name_length, (strlen($this->bill_name) - $name_length));
     }
 
     public function setBillSurname($bill_surname)
@@ -451,7 +482,11 @@ class SoScreeningDto
 
     public function getBillForename()
     {
-        return $this->bill_forename;
+        $name = explode(" ", $this->bill_name);
+        if (sizeof($name) > 0)
+            return $name[0];
+        else
+            return "";
     }
 
     public function setBillCompany($bill_company)
@@ -504,19 +539,29 @@ class SoScreeningDto
         return $this->bill_country_id;
     }
 
-    public function setPaid($paid)
-    {
-        $this->paid = $paid;
-    }
+    // public function setPaid($paid)
+    // {
+    //     $this->paid = $paid;
+    // }
 
     public function getPaid()
     {
-        return $this->paid;
+        if (($this->order_status == 5)
+            || ($this->order_status == 2)
+            || ($this->order_status == 3)
+            || ($this->order_status == 6))
+            return "1";
+        else
+            return 0;
     }
 
     public function setDeliveryName($delivery_name)
     {
         $this->delivery_name = $delivery_name;
+        $name = explode(" ", $this->delivery_name);
+        $this->delivery_forename = $name[0];
+        if (sizeof($name) > 0)
+            $this->delivery_surname = $name[1];
     }
 
     public function getDeliveryName()
@@ -601,7 +646,7 @@ class SoScreeningDto
 
     public function getTel()
     {
-        return $this->tel;
+        return $this->tel_1 .  " " . $this->tel_2 . " " . $this->tel_3;
     }
 
     public function setTel1($tel_1)
@@ -934,84 +979,100 @@ class SoScreeningDto
         return $this->refund_reason;
     }
 
-    public function setEmptyField($empty_field)
-    {
-        $this->empty_field = $empty_field;
-    }
+    // public function setEmptyField($empty_field)
+    // {
+    //     $this->empty_field = $empty_field;
+    // }
 
     public function getEmptyField()
     {
+        $this->empty_field = "";
         return $this->empty_field;
     }
 
-    public function setVerificationLevel($verification_level)
-    {
-        $this->verification_level = $verification_level;
-    }
+    // public function setVerificationLevel($verification_level)
+    // {
+    //     $this->verification_level = $verification_level;
+    // }
 
     public function getVerificationLevel()
     {
-        return $this->verification_level;
+        if ($this->payment_gateway_id == 'moneybookers')
+            return $this->risk_ref_1;
+        else
+            return "";
     }
 
-    public function setFraudResult($fraud_result)
-    {
-        $this->fraud_result = $fraud_result;
-    }
+    // public function setFraudResult($fraud_result)
+    // {
+    //     $this->fraud_result = $fraud_result;
+    // }
 
     public function getFraudResult()
     {
-        return $this->fraud_result;
+        if ($this->payment_gateway_id != 'paypal')
+            return $this->risk_ref_2;
+        else
+            return "";
     }
 
-    public function setAvsResult($avs_result)
-    {
-        $this->avs_result = $avs_result;
-    }
+    // public function setAvsResult($avs_result)
+    // {
+    //     $this->avs_result = $avs_result;
+    // }
 
     public function getAvsResult()
     {
-        return $this->avs_result;
+        if ($this->payment_gateway_id != 'paypal')
+            return $this->risk_ref_1;
+        else
+            return "";
     }
 
-    public function setProtectionEligibility($protection_eligibility)
-    {
-        $this->protection_eligibility = $protection_eligibility;
-    }
+    // public function setProtectionEligibility($protection_eligibility)
+    // {
+    //     $this->protection_eligibility = $protection_eligibility;
+    // }
 
     public function getProtectionEligibility()
     {
-        return $this->protection_eligibility;
+        if ($this->payment_gateway_id == 'paypal')
+            return $this->risk_ref_1;
+        else
+            return "";
     }
 
-    public function setProtectionEligibilityType($protection_eligibility_type)
-    {
-        $this->protection_eligibility_type = $protection_eligibility_type;
-    }
+    // public function setProtectionEligibilityType($protection_eligibility_type)
+    // {
+    //     $this->protection_eligibility_type = $protection_eligibility_type;
+    // }
 
     public function getProtectionEligibilityType()
     {
-        return $this->protection_eligibility_type;
+        if ($this->payment_gateway_id == 'paypal')
+            return $this->risk_ref_2;
+        else
+            return "";
     }
 
-    public function setAddressStatus($address_status)
-    {
-        $this->address_status = $address_status;
-    }
+    // public function setAddressStatus($address_status)
+    // {
+    //     $this->address_status = $address_status;
+    // }
 
     public function getAddressStatus()
     {
-        return $this->address_status;
+        return $this->risk_ref_3;
     }
 
-    public function setPayerStatus($payer_status)
-    {
-        $this->payer_status = $payer_status;
-    }
+    // public function setPayerStatus($payer_status)
+    // {
+    //     $this->payer_status = $payer_status;
+    // }
 
     public function getPayerStatus()
     {
-        return $this->payer_status;
+        return $this->risk_ref_4;
     }
 
 }
