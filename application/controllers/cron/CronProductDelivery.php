@@ -99,7 +99,7 @@ class CronProductDelivery extends MY_Controller
         }
     }
 
-    private function getScenarioidDataByProdInfo($sku, $prod_info)
+    private function getScenarioidDataByProdInfo($sku, $prod_info, $prod_margin)
     {
         $sku = $prod_info->getSku();
         $price = $prod_info->getPrice();
