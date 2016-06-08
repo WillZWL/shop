@@ -34,7 +34,7 @@ class ProductImageService extends BaseService
         $image_list = $this->getDao('ProductImage')->getPendingImages();
 
         //var_dump($image_list);exit;
-        if ($image_list !== false) {
+        if ($image_list) {
             foreach ($image_list as $img) {
                 $min_priority = $img->min_priority;
                 $img_priority = $img->priority;
