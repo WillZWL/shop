@@ -1,13 +1,15 @@
+
 <html>
 <head>
     <title> <?= $lang["title"] ?> </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all" />
     <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
     <script type="text/javascript" src="<?= base_url() ?>js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>css/colorbox.css" />
     <script type="text/javascript" src="<?= base_url() ?>js/jquery-colorbox.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
@@ -654,10 +656,10 @@
                             <td><?= $product->getPlatformCurrencyId() . ' ' . $product->getVbPrice() ?></td>
                             <td>
                                 <?= $product->getPlatformCurrencyId() . ' ' . $product->getPrice() ?>
-                                <input type="text" name='<?= "price[{$sku}][{$platform_id}][price]" ?>'>
+                                <input type="text" name='<?= "price[{$sku}][{$platform_id}][price]" ?>' onkeyup="value=value.replace(/[^\d.]/g,'');rePrice(this.value, '<?= $platform_id ?>', <?= $sku ?>);">
                             </td>
-                            <td><span class="<?= ($product->getProfit() < 0) ? 'negative_margin' : '' ?>"><?= $product->getProfit() ?></span></td>
-                            <td><span class="<?= ($product->getMargin() < 0) ? 'negative_margin' : '' ?>"><?= $product->getMargin() ?>%</span></td>
+                            <td><span id='<?= "{$platform_id}_{$sku}_profit" ?>' class="<?= ($product->getProfit() < 0) ? 'negative_margin' : '' ?>"><?= $product->getProfit() ?></span></td>
+                            <td><span id='<?= "{$platform_id}_{$sku}_margin" ?>' class="<?= ($product->getMargin() < 0) ? 'negative_margin' : '' ?>"><?= $product->getMargin() ?>%</span></td>
                             <td><input type="checkbox" name='<?= "check[] ?>" ?>' value="<?= $sku.'||'.$platform_id ?>" onclick="Marked(this);"></td>
                         </tr>
                 <?php endforeach ?>
@@ -698,6 +700,38 @@
                  }
              }
          }
+
+        function rePrice(sp, platform, sku) {
+            if (isNaN(sp)) {
+                return false;
+            }
+
+            remote_url = window.location.protocol + '//' + window.location.hostname + '/marketing/pricing_tools/get_profit_margin_json/' + platform + '/' + sku +'/' + sp;
+            $.ajax({
+                type: 'POST',
+                url: remote_url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(msg)
+                {
+                    profit = msg.get_profit;
+                    margin = msg.get_margin;
+
+                    $("span[id="+platform+"_"+sku+"_profit]").text(profit);
+                    $("span[id="+platform+"_"+sku+"_margin]").text(margin+'%');
+
+                    if (margin < 0) {
+                        $("span[id="+platform+"_"+sku+"_profit]").addClass("negative_margin");
+                        $("span[id="+platform+"_"+sku+"_margin]").addClass("negative_margin");
+                    } else {
+                        $("span[id="+platform+"_"+sku+"_profit]").removeClass("negative_margin");
+                        $("span[id="+platform+"_"+sku+"_margin]").removeClass("negative_margin");
+                    }
+                },
+                error: function(err) {
+                }
+            });
+        }
     </script>
 </body>
 </html>
