@@ -312,7 +312,7 @@ class ExchangeRateService extends BaseService
 
             $this->batchExchangeRate($batch_id, $rs);
 
-            $result = $this->priceMarginService->refreshAllPlatformMargin();
+            $result = $this->priceMarginService->refreshProfitAndMargin();
 
             if (isset($result["error_message"])) {
                 mail($this->notificationEmail, "VB Error updating Price Margin", $result["error_message"]);

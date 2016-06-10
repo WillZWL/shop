@@ -61,7 +61,7 @@ class CronProductDelivery extends MY_Controller
                             $json_arr = json_decode($json, TRUE);
                             $prod_margin = $json_arr["get_margin"];
                             $json = null;
-                            $scenarioi_data = $this->getScenarioidDataByProdInfo($sku, $prod_info, $prod_margin);
+                            $scenarioi_data = $this->getScenarioidDataByProdInfo($sku, $prod_info, $prod_margin, $dt_highmargin);
                             $scenarioid = $scenarioi_data['id'];
                             $scenarioname = $scenarioi_data['name'];
                             // store each SKU info for update later
@@ -99,7 +99,7 @@ class CronProductDelivery extends MY_Controller
         }
     }
 
-    private function getScenarioidDataByProdInfo($sku, $prod_info)
+    private function getScenarioidDataByProdInfo($sku, $prod_info, $prod_margin = '0', $dt_highmargin = '0')
     {
         $sku = $prod_info->getSku();
         $price = $prod_info->getPrice();

@@ -5,7 +5,7 @@ class Product extends MY_Controller
 
     private $app_id = "MKT0003";
     private $lang_id = "en";
-    private $google_feed_arr = array("AU", "BE", "GB", "ES", "FR", "IT", "CH", "FI", "IE", "MT", "PT", "PL", "US");
+    private $google_feed_arr = array("AU", "BE", "GB", "ES", "FR", "IT", "PL", "NL");
 
     public function __construct()
     {
