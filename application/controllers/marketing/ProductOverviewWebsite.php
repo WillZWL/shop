@@ -73,7 +73,6 @@ class ProductOverviewWebsite extends MY_Controller
 
         if ($this->input->get('filtertype') == 2) {
             $where = [];
-            $option = [];
             $ext_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('mskulist'), -1, PREG_SPLIT_NO_EMPTY));
             $prod_sku = array_map('trim', preg_split('/\r\n|\r|\n/', $this->input->get('skulist'), -1, PREG_SPLIT_NO_EMPTY));
 
