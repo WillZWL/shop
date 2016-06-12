@@ -504,6 +504,14 @@ class SoAllocateDao extends BaseDao
         }
         return FALSE;
     }
+
+    public function getShipmentList($where = [], $option = [], $classname = 'ShipmentListDto')
+    {
+        $this->db->from('so_allocate AS sa');
+        $this->db->join("so as so","sa.so_no = so.so_no","LEFT");
+        $select_str = "so.so_no, sa.warehouse_id";
+        return $this->commonGetList($classname, $where, $option,$select_str);
+    }
 }
 
 
