@@ -3333,7 +3333,7 @@ SQL;
         return $result->result_array();
     }
 
-    public function get_chargeback_info($so_no)
+    public function getChargebackInfo($so_no)
     {
         $sql = <<<SQL
             select
@@ -3355,11 +3355,10 @@ SQL;
             from so
             left join refund r          on r.so_no                      = so.so_no
             left join so_shipment ss    on SUBSTRING_INDEX(sh_no,'-',1) = so.so_no
-            left join courier c         on c.id                         = ss.courier_id
+            left join courier c         on c.courier_id                         = ss.courier_id
             where so.so_no = {$so_no}
 
             group by so.so_no
-            #order by so.so_no desc limit 10
 SQL;
 
         $result = $this->db->query($sql);
@@ -3516,7 +3515,7 @@ SQL;
                 INNER JOIN so_item_detail soid on so.so_no = soid.so_no
                 INNER JOIN so_allocate as sa ON sa.so_no = so.so_no and soid.item_sku = sa.item_sku
                 INNER JOIN so_shipment ssh ON ssh.sh_no = sa.sh_no
-                #INNER JOIN courier_info ci ON ci.courier_id = ssh.courier_id
+                #INNER JOIN courier ci ON ci.courier_id = ssh.courier_id
                 $where";
 
         $result = $this->db->query($sql);

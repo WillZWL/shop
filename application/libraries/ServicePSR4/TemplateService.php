@@ -76,7 +76,7 @@ class TemplateService extends BaseService
     }
 
 
-    public function get_tpl_list($where = null)
+    public function getTplList($where = null)
     {
         return $this->getDao('Template')->getList($where);;
     }
