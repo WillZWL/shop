@@ -269,7 +269,7 @@ class gridbase
     {
         $objGrid = new datagrid($gridfilename, $gridid);
 
-        $str = realpath("../application/config/development/database.php");
+        $str = realpath("../application/config/database.php");
         include $str;
 
         // var_dump($db['default']['hostname']); die();
