@@ -1,4 +1,4 @@
-/*    
+/*
 Copyright (c) 2005-20011, Guru Sistemas and/or Gustavo Adolfo Arcila Trujillo
 All rights reserved.
 www.gurusistemas.com
@@ -10,23 +10,23 @@ If you want to use phpMyDataGrid Professional or evolution on any of your projec
 You can buy the full source code or encoded version at http://www.gurusistemas.com/
 also can try the free version, which can be downloaded from http://www.gurusistemas.com/indexdatagrid.php
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  "AS IS"  AND ANY EXPRESS  OR  IMPLIED WARRANTIES, INCLUDING, 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  "AS IS"  AND ANY EXPRESS  OR  IMPLIED WARRANTIES, INCLUDING,
 BUT NOT LIMITED TO,  THE IMPLIED WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
-SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY,  OR CONSEQUENTIAL 
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  USE, DATA, OR PROFITS;  OR BUSINESS 
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY,  OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  USE, DATA, OR PROFITS;  OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-For more info, samples, tips, screenshots, help, contact, support, please visit phpMyDataGrid site  
+For more info, samples, tips, screenshots, help, contact, support, please visit phpMyDataGrid site
 http://www.gurusistemas.com/
 */
-																																 /* 
+																																 /*
 --------------------------------------------------------------------------------------------------------------------------------
-	es: Todas las propiedades para el manejo de fondos, colores y bordes. 
-	en: All the properties for background, color and borders 
+	es: Todas las propiedades para el manejo de fondos, colores y bordes.
+	en: All the properties for background, color and borders
 -------------------------------------------------------------------------------------------------------------------------------- */
 
-/* 
+/*
 	es: Tabla del grid
 	en: DataGrid Table
 */
@@ -35,14 +35,14 @@ http://www.gurusistemas.com/
 	overflow:hidden;
 }
 
-.dgTable 
-	{ 
+.dgTable
+	{
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 11px;
 	}
 
 .dgHeader, .dg_dataTable .editTitle	/* Titulo del grid *//* DataGrid Title */
-	{ 
+	{
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 11px;
 		background: url(../images/bck_title.gif) repeat-x 0 -1px;
@@ -72,7 +72,7 @@ http://www.gurusistemas.com/
 		border-bottom: 1px solid #ccc;
 		border-top:0px;
 		/* added by teik to align header checkbox*/
-		padding-left: 4px;	
+		padding-left: 4px;
 		padding-right: 4px;
 	}
 
@@ -83,13 +83,13 @@ http://www.gurusistemas.com/
 
 .dgTable .SelectLines
 	{
-		border:1px solid #ccc; 
+		border:1px solid #ccc;
 		font-size:12px;
 	}
 
-.dgTable .dgSelectpages, .dgTable .dgSelectnormal 
+.dgTable .dgSelectpages, .dgTable .dgSelectnormal
 	{
-		border:1px solid #ccc; 
+		border:1px solid #ccc;
 		font-size:10px;
 	}
 
@@ -102,7 +102,7 @@ http://www.gurusistemas.com/
 
 .dgRowsnormTR /* Color de las filas *//* Rows Color */
 	{
-		background:#fff; 
+		background:#fff;
 	}
 
 .dgRowsaltTR /* Color alterno de las filas *//* Alternate Rows Color */
@@ -158,9 +158,9 @@ http://www.gurusistemas.com/
 		font-family:Verdana, Arial, Helvetica, sans-serif;
 		font-size:12px;
 		font-weight:bold;
-		background-color:#FFFFE1; 
-		border-style: dotted; 
-		border-width: 2px; 
+		background-color:#FFFFE1;
+		border-style: dotted;
+		border-width: 2px;
 		padding: 4px;
 	}
 
@@ -175,20 +175,20 @@ http://www.gurusistemas.com/
 
 /* Ventanas flotantes de búsqueda y exportación */
 /* Floating search and export windows */
-.dgSearchDiv 
+.dgSearchDiv
 	{
 		background:#666 url(../images/bck-windows.gif) repeat-x;
 		border:1px solid #000;
 	}
 
-.dgInnerDiv 
+.dgInnerDiv
 	{
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 11px;
 		background:#F5F5F5;
 	}
-	
-.dgSearchTit 
+
+.dgSearchTit
 	{
 		font-family:Arial, Helvetica, sans-serif;
 		color:#FFF;
@@ -213,17 +213,17 @@ http://www.gurusistemas.com/
 	{
 		border: 1px solid #ccc;
 	}
-								
+
 /* Mensajes de ayuda al usuario *//* Input help Message */
 .dgMsgInput{color:#00F;}
 
 /* Error al validar un campo *//* A field do not pass the validation */
 .dgErrorInput{color:#F00;}
-								
-																																 /* 
+
+																																 /*
 --------------------------------------------------------------------------------------------------------------------------------
-	es: Por favor no modifique características importantes a partir de este punto a no ser que usted sepa lo que esté haciendo 
-	en: Please do not modify the definitions below unless you know what you are doing 
+	es: Por favor no modifique características importantes a partir de este punto a no ser que usted sepa lo que esté haciendo
+	en: Please do not modify the definitions below unless you know what you are doing
 -------------------------------------------------------------------------------------------------------------------------------- */
 
 .dgTable img
@@ -231,17 +231,17 @@ http://www.gurusistemas.com/
 		border:0;
 	}
 
-/* 
-	es: Titulo del Grid 
+/*
+	es: Titulo del Grid
 	en: DataGrid title
 */
 .dgHeader, .dg_dataTable .editTitle
-	{ 
+	{
 		border-top: 0px;
 		overflow: hidden;
 		white-space: nowrap;
-		line-height:28px; 
-		text-align:left; 
+		line-height:28px;
+		text-align:left;
 		padding-left:5px;
 	}
 
@@ -278,16 +278,16 @@ http://www.gurusistemas.com/
 	{
 		float:left;
 	}
-	
+
 .dgTable .dgInputPage
 	{
 		height:18px;
 		padding:1px;
 		margin: 1px 5px 1px 5px;
 		width:30px;
-		border:1px solid #ccc; 
+		border:1px solid #ccc;
 	}
-	
+
 .dgTable .dgToolbar div a.fbutton
 	{
 		line-height:25px;
@@ -315,12 +315,12 @@ http://www.gurusistemas.com/
 	{
 		padding-top:3px;
 	}
-	
+
 .dgTable .dgToolbar div a.fbutton div
 	{
 		padding: 0px 1px;
 	}
-	
+
 .dgTable .dgToolbar div a.fbutton span
 	{
 		/*fixes the 1 pixel shifting problem when hovering over buttons */
@@ -344,8 +344,8 @@ http://www.gurusistemas.com/
 		border-top: 1px solid #fff;
 		border-right: 1px solid #eee;
 		border-bottom: 1px solid #eee;
-	}		
-	
+	}
+
 /* Ttulo de cada columna *//* Column Titles */
 .dgTable .dgTitles
 	{
@@ -354,32 +354,32 @@ http://www.gurusistemas.com/
 	}
 
 .dgTable .dgTitles:hover
-	{ 
-		border-bottom:1px solid #ffc83c; 
+	{
+		border-bottom:1px solid #ffc83c;
 	}
 
 .dgTable .dgTitles .titleContainer
 	{
 		width:100%;
 		min-height:25px;
-		height:25px; 
+		height:25px;
 		border-collapse:collapse;
 	}
 
 .dgTable .dgTitles .titleContainer .dgArrows
 	{
-		width:10px; 
+		width:10px;
 	}
 
-.dgTable .dgTitles .titleContainer .up 
+.dgTable .dgTitles .titleContainer .up
 	{
-		vertical-align:bottom; 
+		vertical-align:bottom;
 		padding-bottom:1px;
 	}
-	
-.dgTable .dgTitles .titleContainer .dn 
+
+.dgTable .dgTitles .titleContainer .dn
 	{
-		vertical-align:top; 
+		vertical-align:top;
 		padding-top:1px;
 	}
 
@@ -400,16 +400,16 @@ http://www.gurusistemas.com/
 	}
 
 .dgRownorm, .dgRowalt
-	{ 
+	{
 		padding:5px;
 	}
-	
+
 /* estilo para cada uno de los div's que se encuentran en las celdas de la tabla */
 /* Style for each div inside table cells */
 .dgRownorm div, .dgRowalt div
-	{ 
+	{
 		display:block;
-		height:100%; 
+		height:100%;
 		width:100%;
 		overflow:hidden;
 	}
@@ -419,7 +419,7 @@ http://www.gurusistemas.com/
 		width:100%;
 		padding:3px;
 	}
-	
+
 .pointer
 	{
 		cursor:pointer;
@@ -450,7 +450,7 @@ td.dgError
 		font-weight:bold;
 		font-style:italic;
 	}
-	
+
 /* Estilo para tabla de adicion/edicion/visualizacion de datos */
 /* Styling for add/edit/view */
 .dgInnerDiv
@@ -482,7 +482,7 @@ td.dgError
 		text-align:center;
 		width:100%;
 	}
-	
+
 .dgInnerDiv .dg_dataTable tbody tr td.dgAddNames
 	{
 		text-align:right;
@@ -517,27 +517,27 @@ td.dgError
 
 /* Ventanas flotantes de búsqueda y exportación */
 /* Floating search and export windows */
-.dgSearchDiv 
+.dgSearchDiv
 	{
 		position:fixed;
 		top: 0; left:0;
-		width:300px; 
+		width:300px;
 		height:150px;
-		z-index: 10000; 
-		display: none; 
+		z-index: 10000;
+		display: none;
 		opacity: 0; -moz-opacity: 0; -khtml-opacity: 0;
 	}
 
-.dgInnerDiv 
+.dgInnerDiv
 	{
 		margin:28px 3px 0 3px;
 		height:118px;
 		width:98%;
 	}
-	
-.dgSearchTit 
+
+.dgSearchTit
 	{
-		width:250px; 
+		width:250px;
 		font-weight:bold;
 		cursor:move;
 		float:left;
@@ -554,7 +554,7 @@ td.dgError
 	{
 		height:247px;
 	}
-	
+
 .DG_subdivxport
 	{
 		height:215px;
@@ -563,13 +563,13 @@ td.dgError
 /* Botones de exportación en ventana flotante */
 /* Buttons in the export floating window */
 .dgRadioBg
-	{	
-		padding:15px; 
+	{
+		padding:15px;
 	}
-	
+
 .dgRadioBg img
-	{ 
-		margin-left:4px; 
+	{
+		margin-left:4px;
 	}
 
 
@@ -593,7 +593,7 @@ td.dgError
 	{
 		height: auto;
 		width : 600px;
-		display: block; 
+		display: block;
 		opacity: 100;
 		-moz-opacity: 100;
 		-khtml-opacity: 100;
@@ -607,11 +607,11 @@ td.dgError
 		z-index:101;
 		background-color: #03153B;
 		opacity:.5;
-		-moz-opacity: 0.5; 
+		-moz-opacity: 0.5;
 		-khtml-opacity: 0.5;
 	}
 
-.opaque .dgSearchTit 
+.opaque .dgSearchTit
 	{
 		width:560px;
 	}

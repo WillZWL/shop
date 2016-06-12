@@ -1,24 +1,24 @@
 /*
-	Copyright (c) 2005-2012, Guru Sistemas and/or Gustavo Adolfo Arcila Trujillo
-	All rights reserved.
-	www.gurusistemas.com
-	
-	phpMyDataGrid Professional IS NOT FREE, may not be re-sold or redistributed as a single library.
-	
-	If you want to use phpMyDataGrid Professional on any of your projects, you Must purchase a license.
-	
-	You can buy the full source code or encoded version at http://www.gurusistemas.com/
-	also can try the donationware version, which can be downloaded from http://www.gurusistemas.com/
-	
-	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  "AS IS"  AND ANY EXPRESS  OR  IMPLIED WARRANTIES, INCLUDING, 
-	BUT NOT LIMITED TO,  THE IMPLIED WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
-	SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY,  OR CONSEQUENTIAL 
-	DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  USE, DATA, OR PROFITS;  OR BUSINESS 
-	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-	OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
-	
-	For more info, samples, tips, screenshots, help, contact, support, please visit phpMyDataGrid site  
-	http://www.gurusistemas.com/
+    Copyright (c) 2005-2012, Guru Sistemas and/or Gustavo Adolfo Arcila Trujillo
+    All rights reserved.
+    www.gurusistemas.com
+
+    phpMyDataGrid Professional IS NOT FREE, may not be re-sold or redistributed as a single library.
+
+    If you want to use phpMyDataGrid Professional on any of your projects, you Must purchase a license.
+
+    You can buy the full source code or encoded version at http://www.gurusistemas.com/
+    also can try the donationware version, which can be downloaded from http://www.gurusistemas.com/
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS  "AS IS"  AND ANY EXPRESS  OR  IMPLIED WARRANTIES, INCLUDING,
+    BUT NOT LIMITED TO,  THE IMPLIED WARRANTIES  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
+    SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY,  OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF  USE, DATA, OR PROFITS;  OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+    OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    For more info, samples, tips, screenshots, help, contact, support, please visit phpMyDataGrid site
+    http://www.gurusistemas.com/
 */
 var wae = "";
 var DG_capa = null;
@@ -1194,7 +1194,7 @@ function DG_D_edit(objField, dgvcode)
             DG_svv(new_id, unescape(inputtext));
             if (aColumn["datatype"] != "check" && aColumn["datatype"] != "select") DG_goo(new_id).select();
             objField.oldclick = objField.onclick;
-            objField.onclick = null            
+            objField.onclick = null
         }
     }
 };
@@ -1591,8 +1591,8 @@ var difY = 0;
 var afterAction = '';
 var debug = false;
 
-//ID 11, 		"11", "111", ""
-//ID 1,			"1", "11", ""
+//ID 11,        "11", "111", ""
+//ID 1,         "1", "11", ""
 function DG_viewdetails(id, node, parameters)
 {
     program = DG_gvv('DGdetails' + ac()).split(",");
@@ -1623,23 +1623,23 @@ function DG_viewdetails(id, node, parameters)
         document.getElementById('DG_det_' + node).innerHTML = "<div id=\"DG_det_" + node + "-1\" class=\"dgTabsContent\">WE SHOULD INSERT HERE</div>"
         //document.getElementById('DG_det_' + node).innerHTML = "<div id=\"DG_det_" + node + "1\" class=\"dgTabsContent\"></div>"
     };
-    DG_hss("openNode_" + node, "none");		// hide the + icon
-    DG_hss("closeNode_" + node, "block");	// enable the - icon
-    
+    DG_hss("openNode_" + node, "none");     // hide the + icon
+    DG_hss("closeNode_" + node, "block");   // enable the - icon
+
     // calculate what needs to be shown
     wae = ((amount > 1) ? "DG_processNextGrid(" + id + ", " + node + ", '" + parameters + "', '" + program.slice(1).join(",") + "',1);" : "") + "addLineNode(" + node + ")";
     //alert(node);
-    //DG_ajaxLoader(program[0], "DG_det_" + node + "1", "&dg_det_id=" + id + "&" + parameters + "&tAjax=" + Math.random(), "DG_det_" + node + "1", DG_gvv('DGtxtLoading' + ac()), wae)    
+    //DG_ajaxLoader(program[0], "DG_det_" + node + "1", "&dg_det_id=" + id + "&" + parameters + "&tAjax=" + Math.random(), "DG_det_" + node + "1", DG_gvv('DGtxtLoading' + ac()), wae)
     //function DG_ajaxLoader(programa, id, parametros, displayid, text, whenAjaxEnd, o)
     DG_ajaxLoader
     (
-	    program[0], 								// program
-	    "DG_det_" + node,// + "1", 							// id		, BUG in original script
-	    "&dg_det_id=" + id + "&" + parameters + "&tAjax=" + Math.random(), 		// parameter
-	    "DG_det_" + node,// + "1", 							// displayid	, BUG in original script
-	    DG_gvv('DGtxtLoading' + ac()), 						// text
-	    wae										// whenAjaxEnd
-    )    
+        program[0],                                 // program
+        "DG_det_" + node,// + "1",                          // id       , BUG in original script
+        "&dg_det_id=" + id + "&" + parameters + "&tAjax=" + Math.random(),      // parameter
+        "DG_det_" + node,// + "1",                          // displayid    , BUG in original script
+        DG_gvv('DGtxtLoading' + ac()),                      // text
+        wae                                     // whenAjaxEnd
+    )
 }
 
 function DM_viewdetails(id)
