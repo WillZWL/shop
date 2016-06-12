@@ -9,11 +9,12 @@ class CronShipmentEmailService extends BaseService
         parent::__construct();
     }
 
-    public function sendEmail()
+    public function sendEmail($date = '')
     {
-        $option = array();
+        $option = $where = array();
+        $where["so.dispatch_date >="] = $date." 00:00:00";
+        $where["so.dispatch_date <="] = $date." 23:59:59";
         $option['limit'] = -1;
-        $option["orderby"] = "sa.warehouse_id asc";
         $option["groupby"] = "sa.so_no";
         $list = $this->getDao('SoAllocate')->getShipmentList($where, $option);
         $data = $this->genMsg($list);
@@ -22,7 +23,7 @@ class CronShipmentEmailService extends BaseService
         $msg = "Summarize that the same days total shipment as warehouse dispatched<br />";
         $msg = $msg.$data['msg']."<br /><br />You can view shipment as warehouse dispatched detail info by attachment";
         $filename = 'Shipment' . $date . '.csv';
-        $email = 'will.zhang@eservicesgroup.com';
+        $email = 'finance@valuebasket.com';
         $this->_sendEmail($email, $title, $msg, $csv, $filename);
     }
 
@@ -36,7 +37,7 @@ class CronShipmentEmailService extends BaseService
         $phpmail->AddAddress($email);
         $phpmail->AddAddress('will.zhang@eservicesgroup.com');
         $phpmail->Subject = $title;
-        $phpmail->IsHTML(false);
+        $phpmail->IsHTML(true);
         $phpmail->Body = $msg;
         $phpmail->AddStringAttachment($csv_content, $filename);
         $result = $phpmail->Send();
