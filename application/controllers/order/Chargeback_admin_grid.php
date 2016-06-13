@@ -205,7 +205,7 @@ class Chargeback_admin_grid extends gridbase
                 break;
             case "MarkRefund":
                 echo "<script>alert('Refund emailed to finance');</script>";
-                $this->send_markrefund($userid, "refund-finance@valuebasket.com", $param[2]);
+                $this->send_markrefund($userid, "finance@chatandvision.com", $param[2]);
 
                 $strSQL = sprintf("update $table set `chargeback_status_id` = 2 where id = '{$param[1]}', `modify_on` = '$date', `modify_by`= '{$_SESSION["user"]["id"]}'");
                 $arrData = $objGrid->SQL_query($strSQL);
