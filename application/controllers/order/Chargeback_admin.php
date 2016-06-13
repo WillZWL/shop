@@ -1,73 +1,76 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-load_class('MY_Datagrid', FALSE);
-require_once("chargeback_admin_grid.php");
+require_once(BASEPATH . 'plugins/Datagrid.php');
 
-// ALTER TABLE `template`
-// ADD COLUMN `message_html`  text NOT NULL AFTER `subject`,
-// ADD COLUMN `message_alt`  text NOT NULL AFTER `message_html`;
+require_once("Chargeback_admin_grid.php");
 
 class Chargeback_admin extends MY_Controller
 {
-    protected $app_id = "ORD0028";
-    private $lang_id = "en";
+    protected $appId="ORD0028";
+    private $lang_id="en";
     private $model;
     private $export_filename;
 
     private $gridcontent = "";
     private $s;
 
-    public function __construct()
-    {
-        parent::__construct();
-        // $this->load->model('report/sales_report_model');
-        $this->load->helper(array('html_dom'));
-        $this->load->library('service/so_service');
-        $this->load->library('service/template_service');
-        // $this->load->library('service/country_service');
-        // $this->load->library('service/payment_gateway_service');
-        // $this->load->library('service/so_shipment_service');
-        // $this->_set_model($this->sales_report_model);
-        // $this->_set_export_filename('sales_report.csv');
-    }
-
     public function getAppId()
     {
         return $this->appId;
     }
 
-    public function _set_app_id($value)
-    {
-        $this->app_id = $value;
-    }
-
-    public function _get_lang_id()
+    public function getLangId()
     {
         return $this->lang_id;
     }
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     function index()
     {
-        // if (!empty($_POST))
-        {
-            $s = new Chargeback_admin_grid();
-            // $where = $this->create_criteria_from_post();
-            if ($where != "") {
-                $s->set_where($where);
-                // var_dump("Setting {$_SESSION['where']}");
-            }
+        $s = new Chargeback_admin_grid();
 
-            $this->gridheader = $s->get_DG_Header();
-            $this->gridcontent = $s->index();
-        }
-        // elseump
-        // {
-        //  $_SESSION["where"] = "";
-        // }
+        $this->gridheader = $s->get_DG_Header();
+        $this->gridcontent = $s->index();
 
-        // echo "<pre>"; var_dump($_POST); echo "</pre>";
         echo $this->get_index_html();   // must be last
         die();
+    }
+
+    function create_criteria_from_post()
+    {
+        $query = "";
+        foreach ($_POST as $k=>$v)
+        {
+            if (!empty($v))
+            {
+                $kk = substr($k, 4);
+                switch ($kk)
+                {
+                    case 6:     $query .= " and si.prod_sku = '$v' ";               break;
+
+                    case 8:     $v = str_replace(" ", "%", $v);
+                                $query .= " and si.prod_name like '%$v%' ";         break;
+                    case 9:     $query .= " and pp.clearance = '$v' ";              break;
+
+                    // master sku
+                    case 39:    $query .= " and sm.ext_sku = '$v' ";                break;
+                    case 51:
+                                $d = date_parse($v);
+                                $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
+                                $query .= " and so.create_on >= '$dd' ";                break;
+                    case 52:
+                                $d = date_parse($v);
+                                $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
+                                $query .= " and so.create_on <= '$dd' ";                break;
+                }
+            }
+        }
+
+        return $query;
     }
 
     function get_index_html()
@@ -78,18 +81,13 @@ class Chargeback_admin extends MY_Controller
 
     private function get_unprocessed_index_html()
     {
-        return <<<HTML
+return <<<HTML
 
     <!DOCTYPE HTML>
     <html lang="en-US">
     <head>
-
         <title></title>
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
-
-
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="http://www.tfaforms.com/form-builder/4.1.0/css/wforms-layout.css" rel="stylesheet" type="text/css" />
         <!--[if IE 8]>
@@ -101,7 +99,6 @@ class Chargeback_admin extends MY_Controller
         <!--[if IE 6]>
         <link href="http://www.tfaforms.com/form-builder/4.1.0/css/wforms-layout-ie6.css" rel="stylesheet" type="text/css" />
         <![endif]-->
-
         <link href="http://www.tfaforms.com/themes/get/17252" rel="stylesheet" type="text/css" />
         <link href="http://www.tfaforms.com/form-builder/4.1.0/css/wforms-jsonly.css" rel="alternate stylesheet" title="This stylesheet activated by javascript" type="text/css" />
         <script type="text/javascript" src="http://www.tfaforms.com/wForms/3.7/js/wforms.js"></script>
@@ -112,7 +109,6 @@ class Chargeback_admin extends MY_Controller
         <script type="text/javascript" src="http://www.tfaforms.com/js/yui/yui-min.js" ></script>
         <script type="text/javascript" src="http://www.tfaforms.com/wForms/3.7/js/wforms_calendar.js"></script>
         <script type="text/javascript" src="http://www.tfaforms.com/wForms/3.7/js/localization-en_US.js"></script>
-
         <!-- for grid -->
         <script src='/js/dgscripts.js' type="text/javascript" language='javascript'></script>
 
@@ -134,132 +130,68 @@ class Chargeback_admin extends MY_Controller
     </html>
 HTML;
 
-        // <table width=100%>
-        //     <tr>
-        //         <td>Platform</td>
-        //         <td>Competitor</td>
-        //         <td>Shipping Cost</td>
-        //         <td>Currency</td>
-        //         <td>Competitor Price</td>
-        //         <td>Our Price</td>
-        //         <td>Difference</td>
-        //         <td>Margin</td>
-        //         <td>Listing Status</td>
-        //         <td>Online Orders</td>
-        //         <td>Offline Orders</td>
-        //     </tr>
-        // </table>
-
-    }
-
-    function create_criteria_from_post()
-    {
-        $query = "";
-        foreach ($_POST as $k => $v) {
-            if (!empty($v)) {
-                $kk = substr($k, 4);
-                switch ($kk) {
-                    case 6:
-                        $query .= " and si.prod_sku = '$v' ";
-                        break;
-
-                    case 8:
-                        $v = str_replace(" ", "%", $v);
-                        $query .= " and si.prod_name like '%$v%' ";
-                        break;
-                    case 9:
-                        $query .= " and pp.clearance = '$v' ";
-                        break;
-
-                    // master sku
-                    case 39:
-                        $query .= " and sm.ext_sku = '$v' ";
-                        break;
-                    case 51:
-                        $d = date_parse($v);
-                        $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
-                        $query .= " and so.create_on >= '$dd' ";
-                        break;
-                    case 52:
-                        $d = date_parse($v);
-                        $dd = "{$d["year"]}-{$d["month"]}-{$d["day"]}";
-                        $query .= " and so.create_on <= '$dd' ";
-                        break;
-                }
-            }
-        }
-
-        return $query;
     }
 
     function update_email_template()
     {
         $query = "";
-        foreach ($_POST as $k => $v) {
-            if (!empty($v)) {
+        foreach ($_POST as $k=>$v)
+        {
+            if (!empty($v))
+            {
+                $v = mysql_escape_string($v);
                 $kk = substr($k, 4);
-                switch ($kk) {
+                switch ($kk)
+                {
                     // subject
                     case 8:
-                        // case 14:
-                        // case 20:
-                        $subject = $v;
-                        break;
+                        $subject = $v;      break;
 
                     // message
                     case 1: // es
-                        // case 15:
-                        // case 21:
-                        $message_alt = $v;
-                        break;
+                        $message_alt = $v;      break;
 
                     // local sku
                     case 2:
-                        $lang_id = $v;  // record this for use when redirecting
-                        $where["lang_id"] = $this->convert_option_to_lang($v);
-                        break;
+                        $platform_id = $this->convert_option_to_platform($v); break;
 
                     case 998:
-                        $so_no = $v;
-                        break;
+                        $so_no = $v;    break;
                     case 999:
-                        $where["id"] = $v;
-                        break;
+                        $tpl_id = $v;  break;
                 }
             }
         }
+        $where = [];
+        $where["platform_id"] = $platform_id;
+        $where["tpl_id"] = $tpl_id;
+        if ($t = $this->sc['Template']->getDao('Template')->get($where)) {
+            $t->setSubject($subject);
+            $t->setMessageAlt($message_alt);
 
-        $t = $this->template_service->get($where);
-        $t->set_subject($subject);
-        $t->set_message_alt($message_alt);
+            $ret = $this->sc['Template']->getDao('Template')->update($t, $where);
+        } else {
+            $t = $this->sc['Template']->getDao('Template')->get();
+            $t->setPlatformId($platform_id);
+            $t->setTplId($tpl_id);
+            $t->setTplName($tpl_id);
+            $t->setSubject($subject);
+            $t->setMessageAlt($message_alt);
 
-        $ret = $this->template_service->get_dao()->update($t, $where);
-        redirect(base_url() . "order/chargeback_admin/record_email_template_click/{$t->get_id()}/{$so_no}?tfa_2=$lang_id");
+            $ret = $this->sc['Template']->getDao('Template')->insert($t);
+        }
+        redirect(base_url()."order/chargeback_admin/record_email_template_click/{$t->getTplId()}/{$so_no}?tfa_2=$platform_id");
 
         if ($ret)
             echo "UPDATE OK";
         else
             echo "UPDATE FAILED";
 
-        $r = $this->template_service->get($where);
+        $r = $this->sc['Template']->getDao('Template')->get($where);
 
-        echo "<PRE>";
-        var_dump($r);
-        $set = trim($set, ",");
-        echo "<PRE>";
-        var_dump($_POST);
-    }
-
-    private function convert_option_to_lang($option)
-    {
-        $lang_option["tfa_3"] = "en";
-        $lang_option["tfa_4"] = "es";
-        $lang_option["tfa_5"] = "fr";
-
-        if (isset($lang_option["$option"])) return $lang_option["$option"];
-
-        foreach ($lang_option as $k => $v)
-            return $v;
+        echo "<PRE>";var_dump($r);
+        $set = trim($set,",");
+        echo "<PRE>";var_dump($_POST);
     }
 
     public function record_email_template_click($template_name, $so_no)
@@ -267,61 +199,86 @@ HTML;
         $s = new Chargeback_admin_grid();
         $s->record_click("$template_name clicked", $so_no);
 
-        $url = base_url() . "order/chargeback_admin/email_template/{$template_name}/{$so_no}";
+        $url = base_url()."order/chargeback_admin/email_template/{$template_name}/{$so_no}";
         redirect($url);
+    }
+
+    private function convert_platform_to_option($platform)
+    {
+        $platform_option["tfa_3"] = "WEBAU";
+        $platform_option["tfa_4"] = "WEBES";
+        $platform_option["tfa_5"] = "WEBFR";
+        $platform_option["tfa_6"] = "WEBBE";
+        $platform_option["tfa_7"] = "WEBNL";
+        $platform_option["tfa_10"] = "WEBPL";
+        $platform_option["tfa_11"] = "WEBGB";
+        $platform_option["tfa_12"] = "WEBIT";
+        $platform_option["tfa_16"] = "WEBNZ";
+        foreach ($platform_option as $k=>$v)
+            if ($platform == $v) return $k;
+
+        foreach ($platform_option as $k=>$v)
+        {
+            return $k;
+        }
+    }
+
+    private function convert_option_to_platform($option)
+    {
+        $platform_option["tfa_3"] = "WEBAU";
+        $platform_option["tfa_4"] = "WEBES";
+        $platform_option["tfa_5"] = "WEBFR";
+        $platform_option["tfa_6"] = "WEBBE";
+        $platform_option["tfa_7"] = "WEBNL";
+        $platform_option["tfa_10"] = "WEBPL";
+        $platform_option["tfa_11"] = "WEBGB";
+        $platform_option["tfa_12"] = "WEBIT";
+        $platform_option["tfa_16"] = "WEBNZ";
+        if (isset($platform_option["$option"])) return $platform_option["$option"];
+
+        foreach ($platform_option as $k=>$v)
+            return $v;
     }
 
     function email_template($template_name, $so_no = "")
     {
         // use SQL to load the email templates from db
-        $where["id"] = $template_name;
-        $templates = $this->template_service->get_tpl_list($where);
+        $where["tpl_id"] = $template_name;
+        if ($templates = $this->sc['Template']->getTplList($where)) {
+            foreach ($templates as $t)
+            {
+                $message = $t->getMessageAlt();
+                $info = $this->sc['So']->getDao('So')->getChargebackInfo($so_no);
+                $variable_list = "";
+                $info[0]["from"] = $_SESSION['user']['username'];
 
-        foreach ($templates as $t) {
-            $message = $t->get_message_alt();
-            $info = $this->so_service->get_dao()->get_chargeback_info($so_no);
-            $variable_list = "";
-            $info[0]["from"] = $_SESSION['user']['username'];
+                $message = str_ireplace('\r', "\r", $message);
+                $message = str_ireplace('\n', "\n", $message);
 
-            $message = str_ireplace('\r', "\r", $message);
-            $message = str_ireplace('\n', "\n", $message);
+                // replace all the variables
+                foreach ($info[0] as $k=>$v)
+                {
+                    $var = "[:{$k}:]";
+                    $message = str_ireplace($var, $v, $message);
+                    $variable_list .= "$var, ";
+                }
 
-            // replace all the variables
-            foreach ($info[0] as $k => $v) {
-                $var = "[:{$k}:]";
-                $message = str_ireplace($var, $v, $message);
-                $variable_list .= "$var, ";
+                $tt = str_ireplace('\r', "\r", $t->getMessageAlt());
+                $tt = str_ireplace('\n', "\n", $tt);
+
+                $template[$t->getPlatformId()]["subject"] = $t->getSubject();
+                $template[$t->getPlatformId()]["message"] = $tt;
+                $template[$t->getPlatformId()]["template"] = $message;
+                $template["variable_list"] = trim($variable_list, ", ");
             }
-
-            $tt = str_ireplace('\r', "\r", $t->get_message_alt());
-            $tt = str_ireplace('\n', "\n", $tt);
-
-            $template[$t->get_lang_id()]["subject"] = $t->get_subject();
-            $template[$t->get_lang_id()]["message"] = $tt;
-            $template[$t->get_lang_id()]["template"] = $message;
-            $template["variable_list"] = trim($variable_list, ", ");
         }
 
+
         if (!isset($_GET["tfa_2"]))
-            $_GET["tfa_2"] = $this->convert_lang_to_option($info[0]["lang_id"]);
+            $_GET["tfa_2"] = $this->convert_platform_to_option($info[0]["platform_id"]);
 
         echo $this->get_edit_template_html($template_name, $template, $so_no);
         die();
-    }
-
-    private function convert_lang_to_option($lang)
-    {
-        $lang_option["tfa_3"] = "en";
-        $lang_option["tfa_4"] = "es";
-        $lang_option["tfa_5"] = "fr";
-
-        foreach ($lang_option as $k => $v)
-            if ($lang == $v) return $k;
-
-        foreach ($lang_option as $k => $v) {
-            // var_dump($k); die();
-            return $k;
-        }
     }
 
     function get_edit_template_html($template_name, $template, $so_no = "")
@@ -329,23 +286,29 @@ HTML;
         $h = $this->get_unprocessed_edit_template_html($template_name, $template, $so_no);
         $html = str_get_html($h);
 
-        if (!empty($_GET)) {
-            foreach ($_GET as $k => $v) {
+        if (!empty($_GET))
+        {
+            foreach ($_GET as $k=>$v)
+            {
                 $kk = substr($k, 4);
-                switch ($kk) {
+                switch ($kk)
+                {
                     default:
 
                         // translate $_GET onto the dropdowns
                         $t = $html->find("option[id=$v]", 0);
-                        if ($t != null) {
+                        if ($t != null)
+                        {
                             $t->setAttribute("selected", "");
                             break;
                         }
 
                         // translate $_GET anything that starts with input
                         $t = $html->find("[id=$k]", 0);
-                        if ($t != null) {
-                            switch ($t->getAttribute("type")) {
+                        if ($t != null)
+                        {
+                            switch ($t->getAttribute("type"))
+                            {
                                 case "text":
                                     $html->find("input[id=$k]", 0)->setAttribute("value", $_GET[$k]);
                                     break;
@@ -362,7 +325,7 @@ HTML;
     private function get_unprocessed_edit_template_html($template_name, $template, $so_no = "")
     {
 
-        return <<<HTML
+return <<<HTML
 
     <!DOCTYPE HTML>
     <html lang="en-US">
@@ -390,8 +353,6 @@ HTML;
         <script type="text/javascript" src="http://www.tfaforms.com/wForms/3.7/js/localization-en_US.js"></script>
     </head>
     <body class="default wFormWebPage">
-
-
         <div id="tfaContent">
             <div class="wFormContainer"  >
 
@@ -400,59 +361,155 @@ HTML;
                     <h3 class="wFormTitle" id="tfa_0-T">Template emails for chargebacks</h3>
                     <form method="post" action="/order/chargeback_admin/update_email_template" class="hintsBelow labelsAbove" id="tfa_0">
                         <div id="tfa_2-D" class="oneField   labelsRightAligned ">
-                            <label id="tfa_2-L" for="tfa_2" class="label preField " style="width: 80px; min-width:0">Language</label>
+                            <label id="tfa_2-L" for="tfa_2" class="label preField " style="width: 80px; min-width:0">PlatformId</label>
                             <div class="inputWrapper">
                                 <select id="tfa_2" name="tfa_2" class="">
                                     <option value="">Please select...</option>
-                                    <option value="tfa_3" id="tfa_3" data-conditionals="#tfa_9" class="">English</option>
-                                    <option value="tfa_4" id="tfa_4" data-conditionals="#tfa_13" class="">Spanish</option>
-                                    <option value="tfa_5" id="tfa_5" data-conditionals="#tfa_19" class="">French</option>
+                                    <option value="tfa_3" id="tfa_3" data-conditionals="#tfa_9" class="">WEBAU</option>
+                                    <option value="tfa_4" id="tfa_4" data-conditionals="#tfa_13" class="">WEBES</option>
+                                    <option value="tfa_5" id="tfa_5" data-conditionals="#tfa_19" class="">WEBFR</option>
+                                    <option value="tfa_6" id="tfa_6" data-conditionals="#tfa_24" class="">WEBBE</option>
+                                    <option value="tfa_7" id="tfa_7" data-conditionals="#tfa_25" class="">WEBNL</option>
+                                    <option value="tfa_10" id="tfa_10" data-conditionals="#tfa_26" class="">WEBPL</option>
+                                    <option value="tfa_11" id="tfa_11" data-conditionals="#tfa_27" class="">WEBGB</option>
+                                    <option value="tfa_12" id="tfa_12" data-conditionals="#tfa_28" class="">WEBIT</option>
+                                    <option value="tfa_16" id="tfa_16" data-conditionals="#tfa_29" class="">WEBNZ</option>
                                 </select>
                             </div>
                         </div>
                         <fieldset id="tfa_9" class="section" data-condition="`#tfa_3`">
-                            <legend id="tfa_9-L">English</legend>
+                            <legend id="tfa_9-L">WEBAU</legend>
                             <div id="tfa_20-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["en"]["template"]}</textarea></div>
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBAU"]["template"]}</textarea></div>
                             </div>
                             <div id="tfa_8-D" class="oneField   labelsRightAligned ">
                                 <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
                             </div>
                             <div id="tfa_8-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["en"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBAU"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
                             </div>
                             <div id="tfa_1-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_1-L" for="tfa_1" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["en"]["message"]}</textarea></div>
+                                <label id="tfa_1-L" for="tfa_1" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBAU"]["message"]}</textarea></div>
                             </div>
                         </fieldset>
                         <fieldset id="tfa_13" class="section" data-condition="`#tfa_4`">
-                            <legend id="tfa_13-L">Spanish</legend>
+                            <legend id="tfa_13-L">WEBES</legend>
                             <div id="tfa_20-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["es"]["template"]}</textarea></div>
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBES"]["template"]}</textarea></div>
                             </div>
                             <div id="tfa_8-D" class="oneField   labelsRightAligned ">
                                 <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
                             </div>
                             <div id="tfa_14-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_14-L" for="tfa_14" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["es"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                                <label id="tfa_14-L" for="tfa_14" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBES"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
                             </div>
                             <div id="tfa_15-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_15-L" for="tfa_15" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["es"]["message"]}</textarea></div>
+                                <label id="tfa_15-L" for="tfa_15" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBES"]["message"]}</textarea></div>
                             </div>
                         </fieldset>
                         <fieldset id="tfa_19" class="section" data-condition="`#tfa_5`">
-                            <legend id="tfa_19-L">French</legend>
+                            <legend id="tfa_19-L">WEBFR</legend>
                             <div id="tfa_20-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["fr"]["template"]}</textarea></div>
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBFR"]["template"]}</textarea></div>
                             </div>
                             <div id="tfa_8-D" class="oneField   labelsRightAligned ">
                                 <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
                             </div>
                             <div id="tfa_8-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["fr"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBFR"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
                             </div>
                             <div id="tfa_21-D" class="oneField   labelsRightAligned ">
-                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["fr"]["message"]}</textarea></div>
+                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBFR"]["message"]}</textarea></div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="tfa_24" class="section" data-condition="`#tfa_6`">
+                            <legend id="tfa_24-L">WEBBE</legend>
+                            <div id="tfa_20-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBBE"]["template"]}</textarea></div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBBE"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                            </div>
+                            <div id="tfa_21-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBBE"]["message"]}</textarea></div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="tfa_25" class="section" data-condition="`#tfa_7`">
+                            <legend id="tfa_25-L">WEBNL</legend>
+                            <div id="tfa_20-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBNL"]["template"]}</textarea></div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBNL"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                            </div>
+                            <div id="tfa_21-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBNL"]["message"]}</textarea></div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="tfa_26" class="section" data-condition="`#tfa_10`">
+                            <legend id="tfa_26-L">WEBPL</legend>
+                            <div id="tfa_20-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBPL"]["template"]}</textarea></div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBPL"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                            </div>
+                            <div id="tfa_21-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBPL"]["message"]}</textarea></div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="tfa_27" class="section" data-condition="`#tfa_11`">
+                            <legend id="tfa_27-L">WEBGB</legend>
+                            <div id="tfa_20-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBGB"]["template"]}</textarea></div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBGB"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                            </div>
+                            <div id="tfa_21-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBGB"]["message"]}</textarea></div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="tfa_28" class="section" data-condition="`#tfa_12`">
+                            <legend id="tfa_28-L">WEBIT</legend>
+                            <div id="tfa_20-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBIT"]["template"]}</textarea></div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBIT"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                            </div>
+                            <div id="tfa_21-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBIT"]["message"]}</textarea></div>
+                            </div>
+                        </fieldset>
+                        <fieldset id="tfa_29" class="section" data-condition="`#tfa_16`">
+                            <legend id="tfa_29-L">WEBNZ</legend>
+                            <div id="tfa_20-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_20-L" for="tfa_20" class="label preField " style="width: 70px; min-width:0">Output</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_20" name="tfa_20" class="">{$template["WEBNZ"]["template"]}</textarea></div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Variables</label><div class="inputWrapper">{$template["variable_list"]}</div>
+                            </div>
+                            <div id="tfa_8-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_8-L" for="tfa_8" class="label preField " style="width: 70px; min-width:0">Subject</label><div class="inputWrapper"><input type="text" id="tfa_8" name="tfa_8" value="{$template["WEBNZ"]["subject"]}" style="width: 600px" placeholder="" default="" class=""></div>
+                            </div>
+                            <div id="tfa_21-D" class="oneField   labelsRightAligned ">
+                                <label id="tfa_21-L" for="tfa_21" class="label preField " style="width: 70px; min-width:0">Message</label><div class="inputWrapper"><textarea style="width: 600px; height: 250px" id="tfa_1" name="tfa_1" class="">{$template["WEBNZ"]["message"]}</textarea></div>
                             </div>
                         </fieldset>
                         <div class="actions" id="tfa_0-A"><input type="submit" class="primaryAction" value="Submit"></div>
