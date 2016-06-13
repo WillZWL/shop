@@ -76,28 +76,8 @@
                                                 <?php
                                                         $siteobj = \PUB_Controller::$siteInfo;
                                                         $countryid = $siteobj->getPlatformCountryId();
-
-                                                if ($countryid == "FR" || $countryid == "BE") { ?>
-                                                    <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/ssl_fr.jpg">
-                                                    </li>
-                                                    <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/chat_fr.jpg">
-                                                    </li>
-                                                    <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/data_fr.jpg">
-                                                    </li>
-                                                <?php } elseif ($countryid == 'NL') { ?>
-                                                    <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/ssl_nl.jpg">
-                                                    </li>
-                                                    <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/chat_nl.jpg">
-                                                    </li>
-                                                    <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/data_nl.jpg">
-                                                    </li>
-                                                <?php } elseif ($countryid == "GB") { ?>
+                                                        $imgdir = '/themes/default/asset/image/';
+                                                        if ($countryid == "GB") { ?>
                                                     <li class="footer-fieldsetitem">
                                                         <link href="http://www.reviewcentre.com/css/seo_badge.v3.css" rel="stylesheet" type="text/css">
                                                         <script type="text/javascript" src="http://www.reviewcentre.com/js/RC.SeoBadge.v3.min.js"></script>
@@ -131,13 +111,31 @@
                                                     </li>
                                                 <?php } else { ?>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/ssl_en.jpg">
+                                                    <?php
+                                                        if (file_exists(FCPATH.$imgdir.'ssl_'.strtolower($countryid).'.jpg' )){
+                                                            echo '<img src="'.$imgdir.'ssl_'.strtolower($countryid).'.jpg">';
+                                                        }else{
+                                                            echo '<img src="'.$imgdir.'ssl_en.jpg">';
+                                                        }
+                                                    ?>
                                                     </li>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/chat_en.jpg">
+                                                    <?php
+                                                        if (file_exists(FCPATH.$imgdir.'chat_'.strtolower($countryid).'.jpg' )){
+                                                            echo '<img src="'.$imgdir.'chat_'.strtolower($countryid).'.jpg">';
+                                                        }else{
+                                                            echo '<img src="'.$imgdir.'chat_en.jpg">';
+                                                        }
+                                                    ?>
                                                     </li>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/data_en.jpg">
+                                                    <?php
+                                                        if (file_exists(FCPATH.$imgdir.'data_'.strtolower($countryid).'.jpg' )){
+                                                            echo '<img src="'.$imgdir.'data_'.strtolower($countryid).'.jpg">';
+                                                        }else{
+                                                            echo '<img src="'.$imgdir.'data_en.jpg">';
+                                                        }
+                                                    ?>
                                                     </li>
                                                 <?php } ?>
                                                 </ul>
@@ -233,7 +231,7 @@
                                                             $guaranteedays = "14";
                                                             if ($countryid == "GB")
                                                                 $guaranteedays = "30";
-                                                            if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) {
+                                                            if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD", "PLN"))) {
                                                         ?>
                                                             <img src=<?= '/themes/default/asset/image/moneyback_' . strtolower($currencyId) . ".jpg" ?>>
                                                         <?php } else {  ?>
@@ -250,11 +248,12 @@
                                                         $siteobj = \PUB_Controller::$siteInfo;
                                                         $countryid = $siteobj->getPlatformCountryId();
 
-                                                        if ($countryid == "FR" || $countryid == "BE") {  ?>
-                                                        <img src="/themes/default/asset/image/warranty_fr.jpg" class="img-footer">
-                                                    <?php } else { ?>
-                                                        <img src="/themes/default/asset/image/warranty.jpg" class="img-footer">
-                                                    <?php } ?>
+                                                        if (file_exists(FCPATH.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg' )){
+                                                            echo '<img src="'.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg">';
+                                                        }else{
+                                                            echo '<img src="'.$imgdir.'2year_es_v2.jpg.jpg">';
+                                                        }
+                                                    ?>
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('Warranty ') ?><br/> <?= _('Up to 2 Years') ?>
