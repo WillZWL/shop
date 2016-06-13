@@ -30,6 +30,7 @@ class ProductOverviewWebsite extends MY_Controller
         ($this->input->get('plaapi') != '') ? $where['pr.google_status'] = $this->input->get('plaapi') : '';
         ($this->input->get('auto_price') != '') ? $where['pr.auto_price'] = $this->input->get('auto_price') : '';
         ($this->input->get('msku') != '') ? $where["sm.ext_sku like '".$this->input->get('msku')."%'"] = null : '';
+        ($this->input->get('sku') != '') ? $where["p.sku"] = $this->input->get('sku') : '';
         ($this->input->get('liststatus') != '') ? $where['pr.listing_status'] = $this->input->get('liststatus') : '';
         ($this->input->get('clear') != '') ? $where['p.clearance'] = $this->input->get('clear') : '';
         ($this->input->get('wsqty') != '') ? $where['p.website_quantity'] = $this->input->get('wsqty') : '';
