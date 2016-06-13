@@ -53,7 +53,7 @@ function updateBasketIcon(totalAmount)
 {
     var text = "<?= sprintf(_('%s item(s) - '), $_SESSION["CART_QUICK_INFO"]["TOTAL_NUMBER_OF_ITEMS"]); ?>";
     text = text + totalAmount;
-   
+
     $(".cart-total").html(text);
 }
 
@@ -68,7 +68,7 @@ $(document).ready(function() {
         $('.dropdown-menu').css("min-height", p.height());
 
         $(".button-search").click(function(){
-             $( "form#search" ).submit(); 
+             $( "form#search" ).submit();
         });
     });
 </script>
