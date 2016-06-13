@@ -532,7 +532,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input name="wsqty" style="width:70px" value="<?= htmlspecialchars($this->input->get("wsqty")) ?>">
+                                <input name="wsqty" style="width:30px" value="<?= htmlspecialchars($this->input->get("wsqty")) ?>">
                             </td>
                             <td>
                                 <select name="wsstatus" class="input">
