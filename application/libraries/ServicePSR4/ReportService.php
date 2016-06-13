@@ -14,6 +14,7 @@ abstract class ReportService extends BaseService
         $CI =& get_instance();
         $this->load = $CI->load;
 
+        $this->dataExchangeService = new DataExchangeService;
         $this->voToXml = new VoToXml;
         $this->xmlToCsv = new XmlToCsv;
 

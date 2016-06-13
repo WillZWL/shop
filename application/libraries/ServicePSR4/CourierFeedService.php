@@ -10,6 +10,7 @@ class CourierFeedService extends BaseService
 	{
 		parent::__construct();
 		$this->soService = new SoService;
+		$this->dataExchangeService = new DataExchangeService;
 		$this->exchangeRateService = new ExchangeRateService;
 		$this->voToXml = new VoToXml;
 		$this->xmlToCsv = new XmlToCsv;
