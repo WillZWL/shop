@@ -70,14 +70,18 @@ class EmailReferralWithClientDto
         return $this->surname;
     }
 
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-
     public function getAddress()
     {
-        return $this->address;
+        $temp[] = $this->address_1;
+        $temp[] = $this->address_2;
+        $temp[] = $this->address_3;
+        $temp = array_filter($temp);
+        $addr_str = '';
+        foreach ($temp as $addr) {
+            $addr_str .= $addr . ',';
+        }
+
+        return rtrim($addr_str, ',');
     }
 
     public function setAddress1($address_1)

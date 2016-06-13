@@ -10,7 +10,6 @@ class CourierFeedService extends BaseService
 	{
 		parent::__construct();
 		$this->soService = new SoService;
-		$this->dataExchangeService = new DataExchangeService;
 		$this->exchangeRateService = new ExchangeRateService;
 		$this->voToXml = new VoToXml;
 		$this->xmlToCsv = new XmlToCsv;
@@ -84,7 +83,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhl_xml2csv.txt', FALSE, '|');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "A2B":
@@ -94,7 +93,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_sgp_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "chronopost-france":
@@ -102,7 +101,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_chronopost_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case 'B2C':
@@ -110,7 +109,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_b2c_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "DPD_NL":
@@ -118,7 +117,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_DPD_NL_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "DPD_UK":
@@ -127,7 +126,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dpd_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 
@@ -136,7 +135,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_toll_xml2csv.txt', TRUE, '	');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "dhl-global-mail":
@@ -156,7 +155,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhl_global_mail_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "FEDEX":
@@ -171,7 +170,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_fedex_xml2csv.txt', TRUE, '|');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "DHLBBX":
@@ -210,7 +209,7 @@ class CourierFeedService extends BaseService
 					}
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlbbx_xml2csv.txt', FALSE, '|');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "FEDEX2":
@@ -361,7 +360,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_tnt_xml2csv.txt', TRUE, '|');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "NEW_QUANTIUM":
@@ -406,7 +405,7 @@ class CourierFeedService extends BaseService
 					}
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_new_quantium_xml2csv.txt', FALSE, '|');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "QUANTIUM":
@@ -444,7 +443,7 @@ class CourierFeedService extends BaseService
 					}
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_quantium_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "IM":
@@ -489,7 +488,7 @@ class CourierFeedService extends BaseService
 					}
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_' . strtolower($courier) . '_xml2csv.txt', TRUE, chr(9));
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 
 					// Prepare dispatch list data
 					$counter = 1;
@@ -513,7 +512,7 @@ class CourierFeedService extends BaseService
 					else
 						$data_file = 'data/dispatch_list_xml2csv.txt';
 					$this->xmlToCsv->XmlToCsv('', APPPATH . $data_file, TRUE, ',');
-					$dispatch_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$dispatch_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "ARAMEX_COD":
@@ -554,7 +553,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_cod_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 
 					break;
 
@@ -589,7 +588,7 @@ class CourierFeedService extends BaseService
 					}
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "MRW":
@@ -683,7 +682,7 @@ class CourierFeedService extends BaseService
 
 					$this->voToXml->VoToXml($data_out, '');
 					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_xml2csv.txt', TRUE, ',');
-					$file_content = $this->dataExchangeService->convert($this->voToXml, $this->xmlToCsv);
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 			}

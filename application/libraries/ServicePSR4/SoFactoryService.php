@@ -482,10 +482,9 @@ class SoFactoryService extends BaseService
             return false;
 
         $so_no = $soObj->getSoNo();
-        if ($clientObj = $this->getService("Client")->getDao()->get(array("id" => $soObj->getClientId()))) {
-            $this->emailReferralListService = new EmailReferralListService;
+        if ($clientObj = $this->getDao('Client')->get(array("id" => $soObj->getClientId()))) {
             $clientEmail = $clientObj->getEmail();
-            if ($blackListObject = $this->emailReferralListService->get(array('email' => $clientEmail, '`status`' => 1))) {
+            if ($blackListObject = $this->getDao('EmailReferralList')->get(array('email' => $clientEmail, '`status`' => 1))) {
                 return TRUE;
             } else {
                 return FALSE;
