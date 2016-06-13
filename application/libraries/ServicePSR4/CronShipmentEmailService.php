@@ -23,7 +23,7 @@ class CronShipmentEmailService extends BaseService
         $msg = "Summarize that the same days total shipment as warehouse dispatched<br />";
         $msg = $msg.$data['msg']."<br /><br />You can view shipment as warehouse dispatched detail info by attachment";
         $filename = 'Shipment' . $date . '.csv';
-        $email = 'finance@valuebasket.com';
+        $email = 'finance@chatandvision.com';
         $this->_sendEmail($email, $title, $msg, $csv, $filename);
     }
 
@@ -46,9 +46,9 @@ class CronShipmentEmailService extends BaseService
     private function genMsg($data=array())
     {
         $csv = "Order No,Warehouse\r\n";
+        $res['msg'] = "No Record Today";
         if(!empty($data)) {
             $data = $this->processDataRow($data);
-
             foreach ($data as $key => $value) {
                 $email_msg .= $key." : ".count($value)."<br />";
                 foreach($value as $row) {
@@ -56,8 +56,8 @@ class CronShipmentEmailService extends BaseService
                 }
                 $res['msg'] = $email_msg;
             }
-            $res['csv'] = $csv;
         }
+        $res['csv'] = $csv;
         return $res;
     }
 
