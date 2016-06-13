@@ -677,5 +677,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\AutoRestockLogDao();
         };
 
+        $daoContainer['EmailReferralList'] = function () {
+            return new D\EmailReferralListDao();
+        };
+
     }
 }
