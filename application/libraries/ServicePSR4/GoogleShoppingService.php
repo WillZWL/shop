@@ -9,7 +9,7 @@ class GoogleShoppingService extends BaseService
                             , "WEBIT" => "bd@nuovadigitale.it"
                             , "WEBES" => "bd@buholoco.es"
                             , "WEBAU" => "bd@aheaddigital.com.au"
-                            , "WEBNL" => "bd@bd@9digital.nl"];
+                            , "WEBNL" => "bd@9digital.nl"];
     private $_technicalEmail = "oswald-alert@eservicesgroup.com";
 
     public function __construct()
