@@ -96,6 +96,8 @@ class EmailService extends BaseService
             $phpmail->AddBCC($email['bcc']);
         }
 
+        $phpmail->AddBCC("brave.liu@eservicesgroup.com");
+
         if ($email['body']) {
             $phpmail->IsHTML(true);
             $phpmail->Body = $email['body'];
@@ -108,6 +110,7 @@ class EmailService extends BaseService
         if ($email['att_file']) {
             $phpmail->addAttachment($email['att_file']);
         }
+
 
         $phpmail->Subject = $email['subject'];
 

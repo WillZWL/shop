@@ -2,13 +2,13 @@
 	$body = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>
 		<tr>
 			<td colspan='2' align='left'>
-				<p><img border=0 src='".$website_domain."images/logo/digitaldiscount.png'></p>
+				<p><img border=0 src='/images/logo/".$logo."'></p>
 			</td>
 		</tr>
 
 		<tr>
 			<td colspan='2' align='left'>
-				<font color='#FF6600'><b><i><p>".$lang['thank_you']."</p></i></b></font>
+				<font color='#FF6600'><b><i><p>".$lang['thank_you']." ". $site_url ."</p></i></b></font>
 			</td>
 		</tr>
 
@@ -103,7 +103,7 @@
 
 			<font size='-1'>
 				<p><b>".$lang['our_return_policy']."</b></p>
-				<p>".$lang['return_policy_part1']." <a href='mailto:".$return_email."'>".$return_email."</a> ".$lang['return_policy_part2']."</p>
+				<p>".$lang['return_policy_part1']. "http://".$site_url."/display/view/contact,  <a href='mailto:".$return_email."'>".$return_email."</a> ".$lang['return_policy_part2']."</p>
 			</font>
 		</td>
 	</tr>

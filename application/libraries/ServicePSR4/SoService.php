@@ -1300,9 +1300,9 @@ html;
 
 
                     $replace["isAmazon"] = 0;
-                    $replace["sales_email"] = $this->getSalesEmail($lang_id);
-                    $replace["csemail"] = $this->getCsSupportEmail($lang_id);
-                    $replace["return_email"] = $this->getReturnEmail($lang_id);
+                    $replace["sales_email"] = $this->getSalesEmail($cur_platform_id);
+                    $replace["csemail"] = $this->getCsSupportEmail($cur_platform_id);
+                    $replace["return_email"] = $this->getReturnEmail($cur_platform_id);
 
                     $itemlist = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
                     $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $obj]);
@@ -1553,33 +1553,40 @@ html;
         }
         return false;
     }
-    public function getSalesEmail($lang_id)
+    public function getSalesEmail($platform_id)
     {
-        switch ($lang_id) {
-            default:
-                $email = "no-reply@valuebasket.com";
-                break;
+        $site = $this->getSiteConfig($platform_id);
+
+        // if ($strEmail = substr($site['email'],strpos($site['email'],"@"))) {
+        //     $email = 'no-reply' . $strEmail;
+        // }
+
+        if ($site['email']) {
+            $email = $site['email'];
         }
+
         return $email;
     }
 
-    public function getCsSupportEmail($lang_id)
+    public function getCsSupportEmail($platform_id)
     {
-        switch ($lang_id) {
-            default:
-                $email = "no-reply@valuebasket.com";
-                break;
+        $site = $this->getSiteConfig($platform_id);
+
+        if ($site['email']) {
+            $email = $site['email'];
         }
+
         return $email;
     }
 
-    public function getReturnEmail($lang_id)
+    public function getReturnEmail($platform_id)
     {
-        switch ($lang_id) {
-            default:
-                $email = "no-reply@valuebasket.com";
-                break;
+        $site = $this->getSiteConfig($platform_id);
+
+        if ($site['email']) {
+            $email = $site['email'];
         }
+
         return $email;
     }
 
@@ -1719,8 +1726,8 @@ html;
                         $replace["lang_our_return_policy"] = $ar_lang[$cur_lang_id]["our_return_policy"];
                         $replace["lang_return_policy_part1"] = $ar_lang[$cur_lang_id]["return_policy_part1"];
                         $replace["lang_return_policy_part2"] = $ar_lang[$cur_lang_id]["return_policy_part2"];
-                        $replace["return_email"] = $this->getReturnEmail($cur_lang_id);
-                        $replace["cs_support_email"] = $this->getCsSupportEmail($cur_lang_id);
+                        $replace["return_email"] = $this->getReturnEmail($cur_platform_id);
+                        $replace["cs_support_email"] = $this->getCsSupportEmail($cur_platform_id);
 
                         # sbf #3746 don't include complementary accessory on front end
                         $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
@@ -1800,8 +1807,8 @@ html;
                         $replace["lang_our_return_policy"] = $ar_lang[$cur_lang_id]["our_return_policy"];
                         $replace["lang_return_policy_part1"] = $ar_lang[$cur_lang_id]["return_policy_part1"];
                         $replace["lang_return_policy_part2"] = $ar_lang[$cur_lang_id]["return_policy_part2"];
-                        $replace["return_email"] = $this->getReturnEmail($cur_lang_id);
-                        $replace["cs_support_email"] = $this->getCsSupportEmail($cur_lang_id);
+                        $replace["return_email"] = $this->getReturnEmail($cur_platform_id);
+                        $replace["cs_support_email"] = $this->getCsSupportEmail($cur_platform_id);
 
                         # also include complementary accessory
                         if ($itemlist = $this->getDao('SoItemDetail')->getListWithProdname(array("so_no" => $so_no))) {
@@ -2193,7 +2200,7 @@ html;
 
                     $dto->setEventId("notification");
                     $dto->setMailTo($client_obj->getEmail());
-                    $support_email = $this->getCsSupportEmail($lang);
+                    $support_email = $this->getCsSupportEmail($cur_platform_id);
 
                     $dto->setMailFrom($email_sender);
                     $dto->setTplId($reason . "_request");
@@ -2585,103 +2592,86 @@ html;
 
         switch ($lang_id) {
             case 'de':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Versandnummer:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurier:"; //Courier ID
                 break;
 
             case 'fr':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : "<b>Numero de Suivi:</b>"); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courrier:"; //Courier ID
                 break;
 
             case 'en':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Tracking ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
 
             case 'es':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de Seguimiento de Envio:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Correo:"; //Courier ID
                 break;
 
             case 'pt':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de Rastreamento:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Correio:"; //Courier ID
                 break;
 
             case 'nl':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Traceernummer:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Koerier:"; //Courier ID
                 break;
 
             case 'ja':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>>追跡番号:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "宅配便"; //Courier ID
                 break;
 
             case 'it':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero di Spedizione:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Corriere:"; //Courier ID
                 break;
 
             case 'pl':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numerze przesyłki:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurier:"; //Courier ID
                 break;
 
             case 'da':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sporings-ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
 
             case 'ko':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : ":"; //Courier ID
                 break;
 
             case 'tr':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Takip No:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurye:"; //Courier ID
                 break;
 
             case 'sv':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sparnings ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurir:"; //Courier ID
                 break;
 
             case 'no':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sporings-ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurer:"; //Courier ID
                 break;
 
             case 'pt-br':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de rastreamento:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Entregador:"; //Courier ID
                 break;
 
             case 'ru':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>?оме? дл? о??леживани? г??за:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Сл?жба до??авки:"; //Courier ID
                 break;
 
             default:
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Tracking ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
@@ -2775,6 +2765,8 @@ html;
         $replace["total_total_vat"] = platform_curr_format($total_vat + $dc_vat, 0);
 
         $dto = new EventEmailDto;
+
+        $dto->setPlatformId($platform_id);
 
         if ($delay_order = $this->delayedOrderService->isDelayOrder($so_obj->getSoNo())) {
             $delay_type = $delay_order->getStatus();
@@ -2912,14 +2904,14 @@ html;
                 // bcc send to eKomi
                 $dto->setMailBcc(array("valuebasketbccemail@gmail.com"));
 
-                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
-                    $dto->setMailFrom($email_sender);
-                    $dto->setTplId("confirm_dispatch_gb");
-                    $dto->setLangId("en");
-                } else {
+                // if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
+                //     $dto->setMailFrom($email_sender);
+                //     $dto->setTplId("confirm_dispatch_gb");
+                //     $dto->setLangId("en");
+                // } else {
                     $dto->setTplId("confirm_dispatch");
                     $dto->setLangId($lang_id);
-                }
+                // }
                 $dto->setReplace($replace);
             }
 
@@ -2927,8 +2919,10 @@ html;
         // attach invoice to dispatch email
         $data_path = $this->getDao('Config')->valueOf("data_path");
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
+
         $so_no = $so_obj->getSoNo();
         $att_file = $this->pdfRenderingService->convertHtmlToPdf($html, $data_path . "/invoice/Invoice_" . $so_no . ".pdf", "F", $lang_id);
+
         $dto->setAttFile($att_file);
         $dto->setReplace($replace);
 
@@ -3000,6 +2994,10 @@ html;
                     $data = [];
                     $data["platform_id"] = $cur_platform_id;
 
+                    if ($site_config_arr = $this->getSiteConfig($cur_platform_id)) {
+                        $data = array_merge($data, $site_config_arr);
+                    }
+
                     switch ($cur_platform_id) {
                         case "AMUS":
                             $data["isAmazon"] = 1;
@@ -3017,9 +3015,9 @@ html;
                             break;
                         default:
                             $data["isAmazon"] = 0;
-                            $data["sales_email"] = $this->getSalesEmail($so_lang_id);
-                            $data["csemail"] = $this->getCsSupportEmail($so_lang_id);
-                            $data["return_email"] = $this->getReturnEmail($so_lang_id);
+                            $data["sales_email"] = $this->getSalesEmail($cur_platform_id);
+                            $data["csemail"] = $this->getCsSupportEmail($cur_platform_id);
+                            $data["return_email"] = $this->getReturnEmail($cur_platform_id);
                             break;
                     }
 
@@ -3229,103 +3227,86 @@ html;
 
         switch ($lang_id) {
             case 'de':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Versandnummer:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurier:"; //Courier ID
                 break;
 
             case 'fr':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : "<b>Numero de Suivi:</b>"); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courrier:"; //Courier ID
                 break;
 
             case 'en':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Tracking ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
 
             case 'es':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de Seguimiento de Envio:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Correo:"; //Courier ID
                 break;
 
             case 'pt':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de Rastreamento:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Correio:"; //Courier ID
                 break;
 
             case 'nl':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Traceernummer:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Koerier:"; //Courier ID
                 break;
 
             case 'ja':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>>追跡番号:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "宅配便"; //Courier ID
                 break;
 
             case 'it':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero di Spedizione:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Corriere:"; //Courier ID
                 break;
 
             case 'pl':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numerze przesyłki:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurier:"; //Courier ID
                 break;
 
             case 'da':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sporings-ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
 
             case 'ko':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : ":"; //Courier ID
                 break;
 
             case 'tr':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Takip No:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurye:"; //Courier ID
                 break;
 
             case 'sv':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sparnings ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurir:"; //Courier ID
                 break;
 
             case 'no':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sporings-ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurer:"; //Courier ID
                 break;
 
             case 'pt-br':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de rastreamento:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Entregador:"; //Courier ID
                 break;
 
             case 'ru':
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>?оме? дл? о??леживани? г??за:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Сл?жба до??авки:"; //Courier ID
                 break;
 
             default:
-//              $email_sender = 'no-reply@valuebasket.com';
                 $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Tracking ID:</b>'); // 'Tracking ID';
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
@@ -4812,6 +4793,7 @@ html;
                     $rsresult .= "{$sh_no} -> {$success} " . ($success ? "" : "(error:{$error})") . "\\n";
                     $this->getDao('So')->db->trans_complete();
                 }
+
                 if ($special_orders) {
                     foreach ($special_orders as $key => $so_no) {
                         $so_w_reason = $this->getDao('So')->getSoWithReason(['so.so_no' => $so_no], ['limit' => 1]);
@@ -4837,7 +4819,6 @@ html;
                     $phpmail->From = "do_not_reply@digitaldiscount.co.uk";
                     $phpmail->FromName = "Panther APS ORDER ALERT";
                     $phpmail->AddAddress("bd.platformteam@eservicesgroup.net");
-                    $phpmail->AddAddress('brave.liu@eservicesgroup.com');
                     $phpmail->IsHTML(false);
                     $phpmail->Subject = "DIRECT APS ORDERS";
                     $phpmail->Body = "Attached: DIRECT APS ORDERS.";
