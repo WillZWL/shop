@@ -573,5 +573,6 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['DataExchange'] = function () {
             return new S\DataExchangeService();
         };
+
     }
 }
