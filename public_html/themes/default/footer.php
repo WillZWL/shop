@@ -50,9 +50,9 @@
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/mastercard.png">
                                                         </li>
-                                                        <li class="footer-fieldsetitem">
+                                                        <!-- <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/paypal.png">
-                                                        </li>
+                                                        </li> -->
                                                 </ul>
                                            </fieldset>
                                         </div>
