@@ -76,6 +76,7 @@ class CourierFeedService extends BaseService
 		$file_content = "";
 		$output_path = $this->getDao('Config')->valueOf('courier_path');
 		$data_out = [];
+		$i = 1;
 		foreach ($checked as $key => $value) {
 			switch ($courier) {
 				case "DHLHKD":
@@ -83,17 +84,27 @@ class CourierFeedService extends BaseService
 					$data_out[] =  $this->getDhlCourierFeed($value);
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhl_xml2csv.txt', FALSE, '|');
+				$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_dhl_xml2csv.txt', FALSE, '|');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
 				case "A2B":
+					$data_out[] = $this->getA2BCourierFeed($value, $i);
+					$this->voToXml->VoToXml($data_out, '');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_a2b_xml2csv.txt', TRUE, ',');
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
+					break;
 				case "RPX":
+					$data_out[] = $this->getRPXCourierFeed($value, $i);
+					$this->voToXml->VoToXml($data_out, '');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_rpx_xml2csv.txt', TRUE, ',');
+					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
+					break;
 				case "singapore-post":
 					$data_out[] = $this->getSgpCourierFeed($value);
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_sgp_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_sgp_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -101,7 +112,7 @@ class CourierFeedService extends BaseService
 					$data_out[] = $this->getChronopostFranceCourierFeed($value);
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_chronopost_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_chronopost_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -109,7 +120,7 @@ class CourierFeedService extends BaseService
 					$data_out[] = $this->getB2cCourierFeed($value);
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_b2c_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_b2c_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -117,7 +128,7 @@ class CourierFeedService extends BaseService
 					$data_out[] =  $this->getDpdNlCourierFeed($value);
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_DPD_NL_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_DPD_NL_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -126,7 +137,7 @@ class CourierFeedService extends BaseService
 					$data_out[] =  $this->getDpdUkCourierFeed($value);
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dpd_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_dpd_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -135,7 +146,7 @@ class CourierFeedService extends BaseService
 					$data_out[] =  $this->getTollCourierFeed($value);
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_toll_xml2csv.txt', TRUE, '	');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_toll_xml2csv.txt', TRUE, '	');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -155,7 +166,7 @@ class CourierFeedService extends BaseService
 					}
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhl_global_mail_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_dhl_global_mail_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -170,7 +181,7 @@ class CourierFeedService extends BaseService
 					}
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_fedex_xml2csv.txt', TRUE, '|');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_fedex_xml2csv.txt', TRUE, '|');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -209,7 +220,7 @@ class CourierFeedService extends BaseService
 						}
 					}
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_dhlbbx_xml2csv.txt', FALSE, '|');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_dhlbbx_xml2csv.txt', FALSE, '|');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -360,7 +371,7 @@ class CourierFeedService extends BaseService
 					}
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_tnt_xml2csv.txt', TRUE, '|');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_tnt_xml2csv.txt', TRUE, '|');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -405,7 +416,7 @@ class CourierFeedService extends BaseService
 						}
 					}
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_new_quantium_xml2csv.txt', FALSE, '|');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_new_quantium_xml2csv.txt', FALSE, '|');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -443,7 +454,7 @@ class CourierFeedService extends BaseService
 						}
 					}
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_quantium_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_quantium_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -488,7 +499,7 @@ class CourierFeedService extends BaseService
 						$counter++;
 					}
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_' . strtolower($courier) . '_xml2csv.txt', TRUE, chr(9));
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_' . strtolower($courier) . '_xml2csv.txt', TRUE, chr(9));
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 
 					// Prepare dispatch list data
@@ -553,7 +564,7 @@ class CourierFeedService extends BaseService
 					}
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_cod_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_aramex_cod_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 
 					break;
@@ -588,7 +599,7 @@ class CourierFeedService extends BaseService
 						}
 					}
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_aramex_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_aramex_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
@@ -682,10 +693,11 @@ class CourierFeedService extends BaseService
 					}
 
 					$this->voToXml->VoToXml($data_out, '');
-					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/shipment_info_to_courier_xml2csv.txt', TRUE, ',');
+					$this->xmlToCsv->XmlToCsv('', APPPATH . 'data/courier_feed/courier_xml2csv.txt', TRUE, ',');
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
+				$i++;
 			}
 		}
 
@@ -967,6 +979,47 @@ class CourierFeedService extends BaseService
 		}
 	}
 
+	public function getA2BCourierFeed($value, $i = 1)
+	{
+		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
+			foreach ($arr as $row) {
+				$row->setItemNo($i);
+				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$row->setDeliveryAddress1($ar_address[0]);
+				$row->setDeliveryAddress2($ar_address[1]);
+				$barcode = 'PT'.$row->getSoNo();
+				$row->setBarcode($barcode);
+				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+				$declared_value = $this->soService->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
+				$row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
+				$data_out = $row;
+				$counter++;
+			}
+			return $data_out;
+		}
+	}
+
+	public function getRPXCourierFeed($value, $i = 1)
+	{
+		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
+			foreach ($arr as $row) {
+				$row->setItemNo($i);
+				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$row->setDeliveryAddress1($ar_address[0]);
+				$row->setDeliveryAddress2($ar_address[1]);
+				$barcode = 'ABESGPT'.$row->getSoNo();
+				$row->setBarcode($barcode);
+				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+				$declared_value = $this->soService->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
+				$row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
+				$data_out = $row;
+				$counter++;
+			}
+
+			return $data_out;
+		}
+	}
+
 	public function setFedexCourierFeed($row)
 	{
 		$ar_address = @explode("|", $row->getDeliveryAddress());
@@ -1024,7 +1077,7 @@ class CourierFeedService extends BaseService
 				$filename .= date('YmdHis');
 				$filename .= ".csv";
 			}
-			elseif ( in_array($courier, array("dhl-global-mail", "chronopost-france")) )
+			elseif ( in_array($courier, array("dhl-global-mail", "chronopost-france", 'RPX', 'A2B')) )
 			{
 				$filename .= ".csv";
 			}
