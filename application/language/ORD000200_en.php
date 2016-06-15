@@ -23,7 +23,7 @@
 			"change_of_address"=> "Change Of Address",
 			"confirmation_required"=>"Confirmation Required",
 			"customer_request"=>"Customer Request",
-			"confirmed_fraud" => "Confirmed Fraud",
+			"oc_fraud" => "Confirmed Fraud",
 			"csvv"=>"CS-Voice Verification",
 			"cscc"=>"CS-Credit Check",
 			"inactive" => "Inactive",
@@ -57,6 +57,9 @@
 			"failcc_refund"=>"Fail CC and Refund",
 			"high_risk_cc"=>"High Risk CC",
 			"low_risk_cc"=>"Low Risk CC",
+
+			"hrcategory"=>["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs"],
+
 			"currency_id" => "CURRENCY"
 			);
 ?>

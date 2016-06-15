@@ -158,27 +158,20 @@
                 <td class="bvalue<?= $i % 2 ?>"><?= $bill_addr ?></td>
                 <td class="bvalue<?= $i % 2 ?>"><?= $del_addr ?></td>
                 <td align="center">
-                    <form action="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>" method="post">
-                        <select name="reason" class="input">
+                    <!--form action="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>" method="post"-->
+                        <select name="reason" id="reason_<?= $obj->getSoNo() ?>" class="input">
                             <?php
                                 if ($reason_list) :
                                     foreach ($reason_list as $robj) :
                             ?>
-                                <option value="<?= $robj->getId() ?>"><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
+                                <option value="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>/<?= $robj->getId() ?>"><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
                             <?php
                                     endforeach;
                                 endif;
                             ?>
-                            <!-- <option value="change_of_address"><?= $lang["change_of_address"] ?></option>
-                            <option value="confirmation_required"><?= $lang["confirmation_required"] ?></option>
-                            <option value="customer_request"><?= $lang["customer_request"] ?></option>
-                            <option value="confirmed_fraud"><?= $lang["confirmed_fraud"] ?></option>
-                            <option value="csvv"><?= $lang["csvv"] ?></option>
-                            <option value="cscc"><?= $lang["cscc"] ?></option>
-                            <option value="oos"><?= $lang["oos"] ?></option> -->
                         </select><br>
-                        <input type="submit" value="<?= $lang["on_hold"] ?>">
-                    </form>
+                        <input type="button" onclick="submit_reason(<?= $obj->getSoNo() ?>)" value="<?= $lang["on_hold"] ?>">
+                    <!--/form-->
                 </td>
                 <td></td>
             </tr>
@@ -196,6 +189,17 @@
     <script>
         InitPMGW(document.fm.payment_gateway_id);
         document.fm.payment_gateway_id.value = '<?=$this->input->get("payment_gateway_id")?>';
+
+        function submit_reason(obj)
+        {
+            var reason = document.getElementById("reason_"+obj).value;
+            if (reason != "") {
+                var url = reason;
+                window.location.href = url;
+            } else {
+                alert("Please Select Hold Reason");
+            }
+        }
     </script>
     <?= $links ?>
     <?= $notice["js"] ?>
