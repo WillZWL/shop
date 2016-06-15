@@ -607,7 +607,6 @@ class On_hold_admin extends MY_Controller
 
     public function oc_request($so_no = "", $reason_id = "", $reason_note = "")
     {
-        // echo "$so_no, $reason_id, $reason_note";die;
         $this->oc_contacted($so_no, $reason_id, $reason_note);
     }
 
@@ -779,10 +778,11 @@ class On_hold_admin extends MY_Controller
         }
     }
 
-    public function hold($so_no = "")
+    public function hold($so_no = "", $reason_id = "")
     {
-        #SBF #4646 using $_GET['cf'] to get the varible value that is pass thorugh the url from credit_check_index_v.php
-        $reason = $_GET["cf"];
+        $reasonObj = $this->sc['So']->getDao('HoldReason')->get(['id'=>$reason_id]);
+        $reason_type = $reasonObj->getReasonType();
+
         if (($so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no])) === FALSE) {
             $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
         } else {
@@ -806,24 +806,21 @@ class On_hold_admin extends MY_Controller
 
                     if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
                         $sohr_vo->setSoNo($so_no);
-                        if (count((array)$packed_item)) {
-                            if ($reason == '') {
-                                $this->sc['So']->fireCs2logEmail($so_no, $this->input->post("reason"), $_SESSION["user"]);
-                                $sohr_vo->setReason($this->input->post("reason"));
-                            } else {
-                                $sohr_vo->setReason($reason);
-                            }
 
+                        $sohr_vo->setReason($reason_id);
+
+                        if (count((array)$packed_item)) {
+                            if ($reason_type == '') {
+                                $this->sc['So']->fireCs2logEmail($so_no, $reason_type, $_SESSION["user"]);
+                            }
                         } else {
-                            if ($reason == '') {
-                                $sohr_vo->setReason($this->input->post("reason"));
-                            } else {
-                                $sohr_vo->setReason($reason);
+                            if ($reason_type) {
                                 $this->sc['So']->addOrderNote($so_no, 'Saved from CC, held wait for customer\'s decision');
 
-                                $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $so_no]);
-                                $socc_obj->setCcAction(2);
-                                $this->sc['So']->getDao('SoCreditChk')->update($socc_obj, ['so_no' => $so_no]);
+                                if ($socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(["so_no" => $so_no])) {
+                                    $socc_obj->setCcAction(2);
+                                    $this->sc['So']->getDao('SoCreditChk')->update($socc_obj, ['so_no' => $so_no]);
+                                }
                             }
                         }
 
