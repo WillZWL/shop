@@ -574,5 +574,8 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\DataExchangeService();
         };
 
+        $serviceContainer['RmaExtract'] = function () {
+            return new S\RmaExtractService();
+        };
     }
 }
