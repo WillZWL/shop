@@ -618,12 +618,11 @@ class PriceWebsiteService extends PriceService
     }
 
     public function isDisplaySavingMessage($country_id = NULL)
-    {   
-
+    {
         if (is_null($country_id)) {
             $country_id = PLATFORMCOUNTRYID;
         }
-        
+
         switch (strtolower($country_id)) {
             case 'au' :
             case 'hk' :
