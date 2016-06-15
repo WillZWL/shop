@@ -79,18 +79,19 @@ class ProductSearchService extends BaseService
             if ($listing_info = $priceSrv->getListingInfo($sku, $platformId, $langId)) {
                 if ($with_rrp) {
                    
-                    $rrp = $listing_info->getRrpFactor();
+                    $rrp = $listing_info->getRrpPrice();
                     $price = $listing_info->getPrice();
 
                     $live_price_data = array();
                     $live_price_data[] = platform_curr_format($rrp);
                     $live_price_data[] = platform_curr_format($price);
 
-                    if ($priceSrv->isDisplaySavingMessage() == 'T') {
+                    /*if ($priceSrv->isDisplaySavingMessage() == 'T') {
                         $live_price_data[] = $lang['save'] . number_format(($rrp == 0 ? 0 : ($rrp - $price) / $rrp * 100), 0) . '%';
                     } else {
                         $live_price_data[] = '';
-                    }
+                    }*/
+                    $live_price_data[] = $lang['save'] . number_format(($rrp == 0 ? 0 : ($rrp - $price) / $rrp * 100), 0) . '%';
 
                     $status = '';
                     switch ($listing_info->getStatus()) {

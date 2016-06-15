@@ -95,9 +95,8 @@
 
       skus = skus.join(',');
 
-      SearchSpring.jQuery.ajax(
-          ('https:' == document.location.protocol ? 'https://' : 'http://') + 'digitaldiscount.co.uk/search/ssLivePrice/<?=PLATFORM?>?sku=' + skus,
-          {
+      SearchSpring.jQuery.ajax({
+            url:'/search/ssLivePrice/<?=PLATFORM?>?sku=' + skus,
             dataType : 'json',
             success : function(data) {
               for(var sku in data) {
