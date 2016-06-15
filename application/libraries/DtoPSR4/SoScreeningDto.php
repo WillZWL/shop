@@ -140,11 +140,6 @@ class SoScreeningDto
         return $this->hold_date;
     }
 
-    public function setHoldTime($hold_time)
-    {
-        $this->hold_time = $hold_time;
-    }
-
     public function getHoldTime()
     {
         return $this->hold_time;
@@ -176,19 +171,9 @@ class SoScreeningDto
         return $this->order_create_date_time;
     }
 
-    public function setOrderCreateDate($order_create_date)
-    {
-        $this->order_create_date = $order_create_date;
-    }
-
     public function getOrderCreateDate()
     {
         return $this->order_create_date;
-    }
-
-    public function setOrderCreateTime($order_create_time)
-    {
-        $this->order_create_time = $order_create_time;
     }
 
     public function getOrderCreateTime()
@@ -300,11 +285,6 @@ class SoScreeningDto
         return $this->payment_status;
     }
 
-    public function setMbStatus($mb_status)
-    {
-        $this->mb_status = $mb_status;
-    }
-
     public function getMbStatus()
     {
         return $this->mb_status;
@@ -367,29 +347,14 @@ class SoScreeningDto
         return $this->bill_address;
     }
 
-    public function setBillAddress1($bill_address_1)
-    {
-        $this->bill_address_1 = $bill_address_1;
-    }
-
     public function getBillAddress1()
     {
         return $this->bill_address_1;
     }
 
-    public function setBillAddress2($bill_address_2)
-    {
-        $this->bill_address_2 = $bill_address_2;
-    }
-
     public function getBillAddress2()
     {
         return $this->bill_address_2;
-    }
-
-    public function setBillAddress3($bill_address_3)
-    {
-        $this->bill_address_3 = $bill_address_3;
     }
 
     public function getBillAddress3()
@@ -424,29 +389,14 @@ class SoScreeningDto
         return $this->delivery_address;
     }
 
-    public function setDeliveryAddress1($delivery_address_1)
-    {
-        $this->delivery_address_1 = $delivery_address_1;
-    }
-
     public function getDeliveryAddress1()
     {
         return $this->delivery_address_1;
     }
 
-    public function setDeliveryAddress2($delivery_address_2)
-    {
-        $this->delivery_address_2 = $delivery_address_2;
-    }
-
     public function getDeliveryAddress2()
     {
         return $this->delivery_address_2;
-    }
-
-    public function setDeliveryAddress3($delivery_address_3)
-    {
-        $this->delivery_address_3 = $delivery_address_3;
     }
 
     public function getDeliveryAddress3()
@@ -461,23 +411,7 @@ class SoScreeningDto
 
     public function getBillName()
     {
-        $name_length = strlen($this->getBillForename());
-        return substr($this->bill_name, $name_length, (strlen($this->bill_name) - $name_length));
-    }
-
-    public function setBillSurname($bill_surname)
-    {
-        $this->bill_surname = $bill_surname;
-    }
-
-    public function getBillSurname()
-    {
-        return $this->bill_surname;
-    }
-
-    public function setBillForename($bill_forename)
-    {
-        $this->bill_forename = $bill_forename;
+        return $this->bill_name;
     }
 
     public function getBillForename()
@@ -487,6 +421,12 @@ class SoScreeningDto
             return $name[0];
         else
             return "";
+    }
+
+    public function getBillSurname()
+    {
+        $name_length = strlen($this->getBillForename());
+        return substr($this->bill_name, $name_length, (strlen($this->bill_name) - $name_length));
     }
 
     public function setBillCompany($bill_company)
@@ -539,11 +479,6 @@ class SoScreeningDto
         return $this->bill_country_id;
     }
 
-    // public function setPaid($paid)
-    // {
-    //     $this->paid = $paid;
-    // }
-
     public function getPaid()
     {
         if (($this->order_status == 5)
@@ -569,19 +504,9 @@ class SoScreeningDto
         return $this->delivery_name;
     }
 
-    public function setDeliveryForename($delivery_forename)
-    {
-        $this->delivery_forename = $delivery_forename;
-    }
-
     public function getDeliveryForename()
     {
         return $this->delivery_forename;
-    }
-
-    public function setDeliverySurname($delivery_surname)
-    {
-        $this->delivery_surname = $delivery_surname;
     }
 
     public function getDeliverySurname()
@@ -979,21 +904,11 @@ class SoScreeningDto
         return $this->refund_reason;
     }
 
-    // public function setEmptyField($empty_field)
-    // {
-    //     $this->empty_field = $empty_field;
-    // }
-
     public function getEmptyField()
     {
         $this->empty_field = "";
         return $this->empty_field;
     }
-
-    // public function setVerificationLevel($verification_level)
-    // {
-    //     $this->verification_level = $verification_level;
-    // }
 
     public function getVerificationLevel()
     {
@@ -1003,11 +918,6 @@ class SoScreeningDto
             return "";
     }
 
-    // public function setFraudResult($fraud_result)
-    // {
-    //     $this->fraud_result = $fraud_result;
-    // }
-
     public function getFraudResult()
     {
         if ($this->payment_gateway_id != 'paypal')
@@ -1015,11 +925,6 @@ class SoScreeningDto
         else
             return "";
     }
-
-    // public function setAvsResult($avs_result)
-    // {
-    //     $this->avs_result = $avs_result;
-    // }
 
     public function getAvsResult()
     {
@@ -1029,11 +934,6 @@ class SoScreeningDto
             return "";
     }
 
-    // public function setProtectionEligibility($protection_eligibility)
-    // {
-    //     $this->protection_eligibility = $protection_eligibility;
-    // }
-
     public function getProtectionEligibility()
     {
         if ($this->payment_gateway_id == 'paypal')
@@ -1041,11 +941,6 @@ class SoScreeningDto
         else
             return "";
     }
-
-    // public function setProtectionEligibilityType($protection_eligibility_type)
-    // {
-    //     $this->protection_eligibility_type = $protection_eligibility_type;
-    // }
 
     public function getProtectionEligibilityType()
     {
@@ -1055,20 +950,10 @@ class SoScreeningDto
             return "";
     }
 
-    // public function setAddressStatus($address_status)
-    // {
-    //     $this->address_status = $address_status;
-    // }
-
     public function getAddressStatus()
     {
         return $this->risk_ref_3;
     }
-
-    // public function setPayerStatus($payer_status)
-    // {
-    //     $this->payer_status = $payer_status;
-    // }
 
     public function getPayerStatus()
     {
