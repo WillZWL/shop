@@ -277,13 +277,36 @@
                                    onClick="Redirect('<?= base_url() ?>order/credit_check/apr_fulfill/<?= $obj->getSoNo() ?>')"><br>
                             <input type="button" value="<?= $lang["failcc_refund"] ?>"
                                    onClick="Redirect('<?= base_url() ?>order/credit_check/failcc_refund/<?= $obj->getSoNo() ?>')"><br>
-                            <!-- SBF #4646 add save order button -->
-                            <input type="button" id="reason" name="reason" value="Save Order"
-                                   onClick="Redirect('<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>?cf=confirmation_required')"><br>
                             <input type="button" value="<?= $lang["refuse_cc_refund"] ?>"
                                    onClick="Redirect('<?= base_url() ?>order/credit_check/refuse_cc_refund/<?= $obj->getSoNo() ?>')">
-                            <input type="button" value="<?= $lang["confirmed_fraud"] ?>"
-                                   onClick="Redirect('<?= base_url() ?>order/credit_check/confirmed_fraud/<?= $obj->getSoNo() ?>')">
+                            <!-- SBF #4646 add save order button -->
+
+                            <?php
+                            if ($reason_list) :
+                                foreach ($reason_list as $robj) :
+                            ?>
+                                        <?php
+                                            if ($robj->getReasonType() == "confirmation_required") :
+                                        ?>
+                                            <input type="button" id="reason" name="reason" value="<?= $lang["hrcategory"][$robj->getReasonCat()] . " - Save Order" ?> "
+                                                onClick="Redirect('<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>/<?= $robj->getId() ?>')"><br>
+                                        <?php
+                                            endif;
+                                        ?>
+
+                                        <?php
+                                            if ($robj->getReasonType() == "oc_fraud") :
+                                        ?>
+                                            <input type="button" value="<?= $lang["hrcategory"][$robj->getReasonCat()] . " - ". $lang["oc_fraud"] ?>"
+                                                onClick="Redirect('<?= base_url() ?>order/credit_check/oc_fraud/<?= $obj->getSoNo() ?>/<?= $robj->getId() ?>')">
+                                        <?php
+                                            endif;
+                                        ?>
+                        <?php
+                                endforeach;
+                            endif;
+                        ?>
+
                         </td>
                     <?php
                     } else {
@@ -350,14 +373,16 @@
                             if ($pagetype == "") {#2309
                                 ?>
                                 <!-- <form action="<?= base_url() ?>order/credit_check/hold/<?= $obj->getSoNo() ?>" method="post"> -->
-                                <select name="reason[<?= $obj->getSoNo() ?>]" class="input"
-                                        style="width:110px; float:left;">
-                                    <option value="change_of_address"><?= $lang["change_of_address"] ?></option>
-                                    <option value="confirmation_required"><?= $lang["confirmation_required"] ?></option>
-                                    <option value="customer_request"><?= $lang["customer_request"] ?></option>
-                                    <option value="confirmed_fraud"><?= $lang["confirmed_fraud"] ?>
-                                    <option value="csvv"><?= $lang["csvv"] ?>
-                                    <option value="cscc"><?= $lang["cscc"] ?>
+                                <select  class="input" style="width:110px; float:left;" name="reason[<?= $obj->getSoNo() ?>]">
+                                    <?php
+                                        if ($reason_list) :
+                                            foreach ($reason_list as $robj) :
+                                    ?>
+                                        <option value="<?= $robj->getId() ?>"><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
+                                    <?php
+                                            endforeach;
+                                        endif;
+                                    ?>
                                 </select>
                                 <input type="radio" name="operation[<?= $obj->getSoNo() ?>]"
                                        ondblclick="cancel_check(this)" value="hold" style="float:right;">
