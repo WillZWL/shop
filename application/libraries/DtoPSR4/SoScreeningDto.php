@@ -335,11 +335,11 @@ class SoScreeningDto
         $this->bill_address = $bill_address;
 
         $address = explode("|", $bill_address);
-        $this->bill_address1 = $address[0];
+        $this->bill_address_1 = $address[0];
         if (sizeof($address) > 1)
-            $this->bill_address2 = $address[1];
+            $this->bill_address_2 = $address[1];
         if (sizeof($address) > 2)
-            $this->bill_address3 = $address[2];
+            $this->bill_address_3 = $address[2];
     }
 
     public function getBillAddress()
@@ -377,11 +377,11 @@ class SoScreeningDto
         $this->delivery_address = $delivery_address;
 
         $address = explode("|", $delivery_address);
-        $this->delivery_address1 = $address[0];
+        $this->delivery_address_1 = $address[0];
         if (sizeof($address) > 1)
-            $this->delivery_address2 = $address[1];
+            $this->delivery_address_2 = $address[1];
         if (sizeof($address) > 2)
-            $this->delivery_address3 = $address[2];
+            $this->delivery_address_3 = $address[2];
     }
 
     public function getDeliveryAddress()
