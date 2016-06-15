@@ -74,9 +74,11 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
     {
         $this->db->from("so_hold_reason sh");
 
+        $this->db->join("hold_reason hr", "hr.id = sh.reason", "INNER");
+
         $this->db->join("user u", "u.id = sh.create_by", "INNER");
 
-        $this->db->select("sh.reason, u.username, sh.create_on");
+        $this->db->select("hr.reason_type reason, u.username, sh.create_on");
 
         $this->db->order_by("sh.create_on DESC");
 
