@@ -35,6 +35,7 @@ class ProductImageService extends BaseService
 
         //var_dump($image_list);exit;
         if ($image_list) {
+            $i = 0;
             foreach ($image_list as $img) {
                 $min_priority = $img->min_priority;
                 $img_priority = $img->priority;
@@ -127,6 +128,11 @@ class ProductImageService extends BaseService
                 $pi_obj->setImageSaved(1);
                 $pi_obj->setAltText($img_local);
                 $this->getDao('ProductImage')->update($pi_obj);
+
+                $i++;
+            }
+            if ($i == 0) {
+                mail('itsupport-sz@eservicesgroup.com', 'Panther Copy Image From VB Failed', 'Panther Copy Image From VB Failed');
             }
         }
 
