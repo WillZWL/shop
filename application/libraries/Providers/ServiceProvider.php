@@ -561,5 +561,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['AllOrders'] = function () {
             return new S\AllOrdersService();
         };
+
+        $serviceContainer['RmaExtract'] = function () {
+            return new S\RmaExtractService();
+        };
     }
 }
