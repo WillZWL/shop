@@ -251,7 +251,7 @@
                                                         if (file_exists(FCPATH.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg' )){
                                                             echo '<img src="'.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg">';
                                                         }else{
-                                                            echo '<img src="'.$imgdir.'2year_es_v2.jpg.jpg">';
+                                                            echo '<img src="'.$imgdir.'2year_es_v2.jpg">';
                                                         }
                                                     ?>
                                                     </div>
