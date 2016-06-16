@@ -3697,7 +3697,7 @@ SQL;
         $this->db->where($where);
         $select_str = 'soi.so_no,
                        soi.line_no,
-                       soi.item_sku,
+                       soi.prod_sku,
                        sm.ext_sku,
                        p.sub_cat_id,
                        p.sub_sub_cat_id,
