@@ -7,18 +7,18 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
     /**********************************************************************
     *	process_vb_data, get the VB data to save it in the category table
     ***********************************************************************/
-    public function processVbData($feed)
+    public function processVbData(&$feed)
     {
         //Read the data sent from VB
         $xml_vb = simplexml_load_string($feed);
-
+        unset($feed);
         $task_id = $xml_vb->attributes()->task_id;
 
         //Create return xml string
         $xml = array();
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<categories task_id="'.$task_id.'">';
-
+        $error_message = '';
         foreach ($xml_vb->category as $category) {
             try {
                 $cat_ext_obj = $this->getDao('CategoryExtend')->get(['cat_id' => (string) $category->cat_id, 'lang_id' => (string) $category->lang_id]);
@@ -58,6 +58,7 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
                 $xml[] = '<is_error>'.$category->is_error.'</is_error>';
                 $xml[] = '<reason>'.$e->getMessage().'</reason>';
                 $xml[] = '</category>';
+                $error_message .= $category->cat_id .'-'. $category->lang_id .'-'. $category->is_error .'-'. $e->getMessage()."\r\n";
             }
         }
 
@@ -65,6 +66,11 @@ class VbDataTransferCategoryExtendService extends VbDataTransferService
 
         $return_feed = implode("", $xml);
 
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'CategoryExtend Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 }

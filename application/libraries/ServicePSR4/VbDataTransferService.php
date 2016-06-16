@@ -17,7 +17,7 @@ abstract class VbDataTransferService extends BaseService implements VbDataTransf
 	*	startProcess, the input would be the xml text from vb and the parameters
 	* 	need to send the result data to vb (task_id, task_type)
 	******************************************************************************/
-	public function startProcess($feed)
+	public function startProcess(&$feed)
 	{
 		$new_feed;
         try {
@@ -25,7 +25,7 @@ abstract class VbDataTransferService extends BaseService implements VbDataTransf
         } catch(exception $e) {
             return false;
         }
-
+        unset($feed);
         return $new_feed;
 	}
 

@@ -7,7 +7,7 @@ class VbDataTransferProductKeywordService extends VbDataTransferService
     /*******************************************************************
     *   processVbData, get the VB data to save it in the price table
     ********************************************************************/
-    public function processVbData ($feed)
+    public function processVbData (&$feed)
     {
         $xml_vb = simplexml_load_string($feed);
         unset($feed);
@@ -20,6 +20,7 @@ class VbDataTransferProductKeywordService extends VbDataTransferService
 
         $current_sku = "";
 
+        $error_message = '';
         foreach($xml_vb->product as $pc)
         {
             try {
@@ -126,13 +127,18 @@ class VbDataTransferProductKeywordService extends VbDataTransferService
                 $xml[] = '<is_error>' . $pc->is_error . '</is_error>';
                 $xml[] = '<reason>' . $e->getMessage() . '</reason>';
                 $xml[] = '</product>';
+                $error_message .= $pc->sku .'-'. $pc->lang_id .'-'. $pc->master_sku .'-'. $pc->is_error .'-'. $e->getMessage()."\r\n";
             }
          }
 
         $xml[] = '</products>';
 
         $return_feed = implode("", $xml);
-
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Product Keywords Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 }
