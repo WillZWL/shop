@@ -7,18 +7,18 @@ class VbDataTransferProductComplementaryAccService extends VbDataTransferService
     /**********************************************************************
     *	process_vb_data, get the VB data to save it in the category table
     ***********************************************************************/
-    public function processVbData($feed)
+    public function processVbData(&$feed)
     {
         //Read the data sent from VB
         $xml_vb = simplexml_load_string($feed);
-
+        unset($feed);
         $task_id = $xml_vb->attributes()->task_id;
 
         //Create return xml string
         $xml = array();
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<product_complementary_accs task_id="'.$task_id.'">';
-
+        $error_message = '';
         foreach($xml_vb->product_complementary_acc as $pca)
         {
             try
@@ -96,11 +96,16 @@ class VbDataTransferProductComplementaryAccService extends VbDataTransferService
                 $xml[] = '<is_error>' . $pca->is_error . '</is_error>';
                 $xml[] = '<reason>' . $e->getMessage() . '</reason>';
                 $xml[] = '</product_complementary_acc>';
+                $error_message .= $pca->sku .'-'. $pca->master_sku_mainprod .'-'. $pca->master_sku_acc .'-'. $pca->is_error .'-'. $e->getMessage()."\r\n";
             }
         }
         $xml[] = '</product_complementary_accs>';
         $return_feed = implode("", $xml);
-
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Product Complementary Acc Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 }

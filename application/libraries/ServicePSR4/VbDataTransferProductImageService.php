@@ -7,7 +7,7 @@ class VbDataTransferProductImageService extends VbDataTransferService
     /*******************************************************************
     *   processVbData, get the VB data to save it in the price table
     ********************************************************************/
-    public function processVbData ($feed)
+    public function processVbData (&$feed)
     {
         //Read the data sent from VB
         $xml_vb = simplexml_load_string($feed);
@@ -21,6 +21,7 @@ class VbDataTransferProductImageService extends VbDataTransferService
 
         $current_sku = "";
 
+        $error_message = '';
         foreach($xml_vb->product_image as $pc)
         {
             try
@@ -91,13 +92,18 @@ class VbDataTransferProductImageService extends VbDataTransferService
                 $xml[] = '<is_error>' . $pc->is_error . '</is_error>';
                 $xml[] = '<reason>' . $e->getMessage() . '</reason>';
                 $xml[] = '</product_image>';
+
+                $error_message .= $pc->sku .'-'. $master_sku .'-'. $pc->is_error .'-'. $e->getMessage() "\r\n";
             }
         }
 
         $xml[] = '</product_images>';
         $return_feed = implode("", $xml);
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Product Identifier Transfer Failed', "Error Message :".$error_message);
+        }
         unset($xml);
-
+        unset($xml_vb);
         return $return_feed;
     }
 }

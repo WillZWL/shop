@@ -7,11 +7,11 @@ class VbDataTransferRaGroupContentService extends VbDataTransferService
 	/**********************************************************************
 	*	processVbData, get the VB data to save it in the ra_group_content table
 	***********************************************************************/
-	public function processVbData ($feed)
+	public function processVbData (&$feed)
 	{
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-
+		unset($feed);
 		$task_id = $xml_vb->attributes()->task_id;
 
 		//Create return xml string
@@ -19,6 +19,7 @@ class VbDataTransferRaGroupContentService extends VbDataTransferService
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml[] = '<ra_groups task_id="' . $task_id . '">';
 
+		$error_message = '';
 		foreach($xml_vb->ra_group as $ra_group)
 		{
 			try
@@ -65,14 +66,18 @@ class VbDataTransferRaGroupContentService extends VbDataTransferService
 				$xml[] = '<is_error>' . $ra_group->is_error . '</is_error>';
 				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</ra_group>';
+				$error_message .= $ra_group->group_id .'-'. $ra_group->lang_id .'-'. $ra_group->is_error .'-'. $e->getMessage()."\r\n";
 			}
 		 }
 
 		$xml[] = '</ra_groups>';
-
-
 		$return_feed = implode("", $xml);
 
+		if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'RaGroupContent Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
 		return $return_feed;
 	}
 }
