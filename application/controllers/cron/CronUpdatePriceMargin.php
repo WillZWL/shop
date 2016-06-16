@@ -29,7 +29,10 @@ class CronUpdatePriceMargin extends MY_Controller
             }
         }
         error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
-        $this->sc['PriceMargin']->updatLastTime($id, $current_time);
+        //when finish the last platform, update last time
+        if ($platform_id == 'WEBNL') {
+            $this->sc['PriceMargin']->updatLastTime($id, $current_time);
+        }
     }
 
     public function getAppId()
