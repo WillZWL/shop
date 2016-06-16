@@ -6,8 +6,21 @@ class CronUpdateAutoPrice extends MY_Controller
 
     public function updateAutoPrice()
     {
-        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y'], ['limit' => -1]);
+        $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
+        foreach ($platform_list as $platform_obj) {
+            $platform_id = $platform_obj->getSellingPlatformId();
+            $command = "sh -c \"date >> /var/log/php/cron.log; echo 'php index.php cron/CronUpdateAutoPrice/updatePlatformAutoPrice/$platform_id'>>/var/log/php/cron.log;cd /var/www/html/panther/admincentre/;/usr/bin/php index.php cron/CronUpdateAutoPrice/updatePlatformAutoPrice/$platform_id>>/var/log/php/cron.log\"";
+            error_log(__METHOD__ . ": updateAutoPrice ". $platform_id);
+            sleep(300);
+            exec($command);
+        }
+    }
 
+    public function updatePlatformAutoPrice($platform_id = '')
+    {
+        set_time_limit(1200);
+        ini_set('memory_limit', '1024M');
+        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'platform_id' => $platform_id], ['limit' => -1]);
         foreach ($price_obj_list as $price_obj) {
             $resutl = json_decode($this->sc['Price']->getProfitMarginJson($price_obj->getPlatformId(), $price_obj->getSku()));
             $auto_price = $resutl->get_price;
@@ -19,6 +32,7 @@ class CronUpdateAutoPrice extends MY_Controller
             $this->sc['Price']->getDao('Price')->update($price_obj);
             $this->sc['PriceMargin']->refreshProfitAndMargin($price_obj->getPlatformId(), $price_obj->getSku());
         }
+        unset($price_obj_list);
     }
 
     public function getAppId()
