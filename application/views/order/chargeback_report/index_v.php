@@ -44,9 +44,12 @@ html;
     }
 
     if ($hold_reason_list) {
-        foreach ($hold_reason_list as $key => $reason) {
+        foreach ($hold_reason_list as $reason_obj) {
+            $reason_id = $reason_obj->getId();
+            $reason_cat = $reason_obj->getReasonCat();
+            $reason_type = $reason_obj->getReasonType();
             $reason_option_html .= <<<html
-            <option value="$reason">$reason</option>
+            <option value="$reason_id">$reason_cat - $reason_type</option>
 html;
         }
     }

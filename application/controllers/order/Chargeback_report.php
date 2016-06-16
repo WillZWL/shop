@@ -53,7 +53,7 @@ class Chargeback_report extends MY_Controller
         $data["selling_platform"] = $this->sc['PlatformBizVar']->getSellingPlatformList();
         $data["currency_list"] = $this->sc['Country']->getSellCurrencyList();
         $data["pmgw_list"] = $this->sc['PaymentGateway']->getDao('PaymentGateway')->getList([], ["orderby" => "name ASC", "limit" => -1]);
-        $data["hold_reason_list"] = $this->sc['So']->getDao('SoHoldReason')->getReasonList();
+        $data["hold_reason_list"] = $this->sc['So']->getDao('HoldReason')->getList();
         $data["chargeback_reason_list"] = $this->sc['Chargeback']->getDao('Chargeback')->getChargebackReasonList();
         $data["chargeback_status_list"] = $this->sc['Chargeback']->getDao('Chargeback')->getChargebackStatusList();
         $data["chargeback_remark_list"] = $this->sc['Chargeback']->getDao('Chargeback')->getChargebackRemarkList();
