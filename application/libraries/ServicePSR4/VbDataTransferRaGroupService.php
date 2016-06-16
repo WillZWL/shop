@@ -9,7 +9,7 @@ class VbDataTransferRaGroupService extends VbDataTransferService
 	/**********************************************************************
 	*	processVbData, get the VB data to save it in the ra_group table
 	***********************************************************************/
-	public function processVbData (&$feed)
+	public function processVbData ($feed)
 	{
 		//print $feed; exit;
 		//Read the data sent from VB
