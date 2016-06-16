@@ -4,7 +4,7 @@ namespace ESG\Panther\Service;
 
 class VbDataTransferSupplierProductService extends VbDataTransferService
 {
-    public function processVbData(&$feed)
+    public function processVbData($feed)
     {
         $xml_vb = simplexml_load_string($feed);
         unset($feed);

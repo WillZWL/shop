@@ -6,7 +6,7 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
     /*******************************************************************
     *   processVbData, get the VB data to save it in the price table
     ********************************************************************/
-    public function processVbData (&$feed)
+    public function processVbData ($feed)
     {
         $xml_vb = simplexml_load_string($feed, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
         unset($feed);

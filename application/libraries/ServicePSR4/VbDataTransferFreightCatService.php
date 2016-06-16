@@ -7,7 +7,7 @@ class VbDataTransferFreightCatService extends VbDataTransferService
 	/**********************************************************************
 	*	process_vb_data, get the VB data to save it in the freight_cat table
 	***********************************************************************/
-	public function processVbData (&$feed)
+	public function processVbData ($feed)
 	{
 		// print $feed;
 		// exit;

@@ -18,7 +18,7 @@ class VbDataTransferProductWarrantyService extends VbDataTransferService
 	/*******************************************************************
 	*	processVbData, get the VB data to save it in the price table
 	********************************************************************/
-	public function processVbData (&$feed)
+	public function processVbData ($feed)
 	{
 		// print $feed;
 		// exit;
