@@ -92,8 +92,7 @@ class VbDataTransferProductImageService extends VbDataTransferService
                 $xml[] = '<is_error>' . $pc->is_error . '</is_error>';
                 $xml[] = '<reason>' . $e->getMessage() . '</reason>';
                 $xml[] = '</product_image>';
-
-                $error_message .= $pc->sku .'-'. $master_sku .'-'. $pc->is_error .'-'. $e->getMessage() "\r\n";
+                $error_message .= $pc->sku .'-'. $master_sku .'-'. $pc->is_error .'-'. $e->getMessage() ."\r\n";
             }
         }
 
