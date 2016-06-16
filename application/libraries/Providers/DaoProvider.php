@@ -681,5 +681,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\EmailReferralListDao();
         };
 
+        $daoContainer['Chargeback'] = function () {
+            return new D\ChargebackDao();
+        };
+
     }
 }
