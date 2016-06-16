@@ -6,7 +6,6 @@ class CronUpdatePriceMargin extends MY_Controller
     const SCHEDULE_ID= "REFRESH_MARGIN";
     public function updateMargin($platform_id = '', $sku = '')
     {
-        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
         set_time_limit(1200);
         ini_set('memory_limit', '1024M');
         $id = self::SCHEDULE_ID;
@@ -28,7 +27,6 @@ class CronUpdatePriceMargin extends MY_Controller
                 $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id, $sku);
             }
         }
-        error_log(__METHOD__ . ":" . __LINE__ . ", Memory:" . memory_get_usage());
         //when finish the last platform, update last time
         if ($platform_id == 'WEBNL') {
             $this->sc['PriceMargin']->updatLastTime($id, $current_time);
