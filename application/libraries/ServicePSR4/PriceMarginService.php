@@ -68,6 +68,7 @@ class PriceMarginService extends BaseService
                 $this->getDao('PriceMargin')->$action($price_margin_obj);
             }
         }
+        unset($prod_obj_list);
     }
 
     private function getLastTime($id)
