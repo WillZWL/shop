@@ -12,7 +12,7 @@ class CronUpdateAutoPrice extends MY_Controller
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
             foreach ($platform_list as $platform_obj) {
                 $platform_id = $platform_obj->getSellingPlatformId();
-                $command = "sh -c \"date >> /var/log/php/cron.log; echo 'php index.php cron/CronUpdateAutoPrice/updatePlatformAutoPrice/$platform_id'>>/var/log/php/cron.log;cd /var/www/html/panther/admincentre/;/usr/bin/php index.php cron/CronUpdateAutoPrice/updatePlatformAutoPrice/$platform_id>>/var/log/php/cron.log\"";
+                $command = "sh -c \"date >> /var/log/php/cron.log; echo 'php index.php cron/CronUpdateAutoPrice/updateAutoPrice/$platform_id'>>/var/log/php/cron.log;cd /var/www/html/panther/admincentre/;/usr/bin/php index.php cron/CronUpdateAutoPrice/updateAutoPrice/$platform_id>>/var/log/php/cron.log\"";
                 error_log(__METHOD__ . ": updateAutoPrice ". $platform_id);
                 sleep(60);
                 exec($command);
