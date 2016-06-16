@@ -577,5 +577,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['RmaExtract'] = function () {
             return new S\RmaExtractService();
         };
+
+        $serviceContainer['Chargeback'] = function () {
+            return new S\ChargebackService();
+        };
     }
 }
