@@ -7,7 +7,7 @@ class VbDataTransferProductComplementaryAccService extends VbDataTransferService
     /**********************************************************************
     *	process_vb_data, get the VB data to save it in the category table
     ***********************************************************************/
-    public function processVbData(&$feed)
+    public function processVbData($feed)
     {
         //Read the data sent from VB
         $xml_vb = simplexml_load_string($feed);
