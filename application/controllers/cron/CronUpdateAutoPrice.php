@@ -24,7 +24,8 @@ class CronUpdateAutoPrice extends MY_Controller
 
     public function updatePlatformAutoPrice($platform_id = '')
     {
-        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'platform_id' => $platform_id], ['limit' => -1]);
+        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'platform_id' => $platform_id], ['orderby'=>'modify_on asc', 'limit' => '1000']);
+        $this->sc['Price']->getDao('Price')->db->trans_start();
         foreach ($price_obj_list as $price_obj) {
             $resutl = json_decode($this->sc['Price']->getProfitMarginJson($price_obj->getPlatformId(), $price_obj->getSku()));
             $auto_price = $resutl->get_price;
@@ -32,10 +33,11 @@ class CronUpdateAutoPrice extends MY_Controller
             $margin = $resutl->get_margin;
 
             $price_obj->setPrice($auto_price);
-
+            $_SESSION["user"]["id"] = 'auto_price';
             $this->sc['Price']->getDao('Price')->update($price_obj);
             $this->sc['PriceMargin']->refreshProfitAndMargin($price_obj->getPlatformId(), $price_obj->getSku());
         }
+        $this->sc['Price']->getDao('Price')->db->trans_complete();
         unset($price_obj_list);
     }
 
