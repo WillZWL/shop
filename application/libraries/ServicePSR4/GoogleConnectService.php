@@ -363,8 +363,10 @@ class GoogleConnectService extends BaseService
         $googleShoppingContentProduct->setBrand($productobj->getBrandName());
 
         $description = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/','', $productobj->getDescription());
+        if (strlen($description) >= 5000)
+            $description = substr($description, 0, 4999);
         $googleShoppingContentProduct->setDescription($description);
-        
+
         if($productobj->getCondition() != "" && $productobj->getCondition() != NULL)
             $condition = $productobj->getCondition();
         else
