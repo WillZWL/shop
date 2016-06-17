@@ -113,7 +113,7 @@ abstract class AtomTrackingScriptService extends MultipageTrackingScriptService
             || ($page['class'] == "checkout_onepage")
         ) {
             //payment success / failure
-            if (($page['method'] == "paymentresult")
+            if (($page['method'] == "paymentResult")
                 || ($page['method'] == "order_confirmation")
             ) {
                 return true;

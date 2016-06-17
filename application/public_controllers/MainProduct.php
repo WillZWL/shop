@@ -21,7 +21,14 @@ class MainProduct extends PUB_Controller
                 $data['sku'] = $sku;
                 $siteobj = \PUB_Controller::$siteInfo;
                 $data["countryid"] = $siteobj->getPlatformCountryId();
+                $data["tracking_data"]=array(
+                      "sku"=>$sku,
+                      "product_name"=>$data["prod_name"],
+                      "category_name"=>$data["listing_info"]->getCatId(),
+                      "price"=>$data["prod_price"],
+                    );
                 $this->load->view('product', $data);
+
             } else {
                 show_404();
             }
