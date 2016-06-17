@@ -96,8 +96,6 @@ class EmailService extends BaseService
             $phpmail->AddBCC($email['bcc']);
         }
 
-        $phpmail->AddBCC("brave.liu@eservicesgroup.com");
-
         if ($email['body']) {
             $phpmail->IsHTML(true);
             $phpmail->Body = $email['body'];
