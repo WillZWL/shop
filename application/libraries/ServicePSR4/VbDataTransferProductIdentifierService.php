@@ -18,6 +18,7 @@ class VbDataTransferProductIdentifierService extends VbDataTransferService
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<product_identifiers task_id="' . $task_id . '">';
 
+        $error_message = '';
         foreach($xml_vb->product_identifier as $pc)
         {
             try
@@ -87,11 +88,16 @@ class VbDataTransferProductIdentifierService extends VbDataTransferService
                 $xml[] = '<is_error>' . $pc->is_error . '</is_error>';
                 $xml[] = '<reason>' . $e->getMessage() . '</reason>';
                 $xml[] = '</product_identifier>';
+                $error_message .= $pc->prod_grp_cd .'-'. $pc->colour_id .'-'. $pc->country_id .'-'. $pc->is_error .'-'. $e->getMessage() ."\r\n";
             }
         }
         $xml[] = '</product_identifiers>';
         $return_feed = implode("", $xml);
-
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Product Identifier Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 }

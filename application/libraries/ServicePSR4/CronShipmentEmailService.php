@@ -15,7 +15,7 @@ class CronShipmentEmailService extends BaseService
         $where["so.dispatch_date >="] = $date." 00:00:00";
         $where["so.dispatch_date <="] = $date." 23:59:59";
         $option['limit'] = -1;
-        $option["groupby"] = "sa.so_no";
+        $option["group_by"] = "sa.so_no";
         $list = $this->getDao('SoAllocate')->getShipmentList($where, $option);
         $data = $this->genMsg($list);
         $csv = $data['csv'];

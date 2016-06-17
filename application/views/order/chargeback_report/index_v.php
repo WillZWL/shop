@@ -18,7 +18,7 @@
 
     if ($selling_platform) {
         foreach ($selling_platform as $key => $value) {
-            $platform_id = $value->get_id();
+            $platform_id = $value->getSellingPlatformId();
             $platform_option_html .= <<<html
             <option value="$platform_id">$platform_id</option>
 html;
@@ -27,7 +27,7 @@ html;
 
     if ($pmgw_list) {
         foreach ($pmgw_list as $key => $value) {
-            $pmgw_id = $value->get_id();
+            $pmgw_id = $value->getPaymentGatewayId();
             $pmgw_option_html .= <<<html
             <option value="$pmgw_id">$pmgw_id</option>
 html;
@@ -36,7 +36,7 @@ html;
 
     if ($currency_list) {
         foreach ($currency_list as $key => $value) {
-            $currency_id = $value->get_currency_id();
+            $currency_id = $value->getCurrencyId();
             $currency_option_html .= <<<html
             <option value="$currency_id">$currency_id</option>
 html;
@@ -44,9 +44,12 @@ html;
     }
 
     if ($hold_reason_list) {
-        foreach ($hold_reason_list as $key => $reason) {
+        foreach ($hold_reason_list as $reason_obj) {
+            $reason_id = $reason_obj->getId();
+            $reason_cat = $reason_obj->getReasonCat();
+            $reason_type = $reason_obj->getReasonType();
             $reason_option_html .= <<<html
-            <option value="$reason">$reason</option>
+            <option value="$reason_id">$reason_cat - $reason_type</option>
 html;
         }
     }
@@ -212,8 +215,6 @@ html;
             </tr>
         </table>
     </form>
-
-    <?= $this->pagination_service->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 </body>

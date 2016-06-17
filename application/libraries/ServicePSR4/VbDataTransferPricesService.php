@@ -11,7 +11,7 @@ class VbDataTransferPricesService extends VbDataTransferService
     {
         //Read the data sent from VB
         $xml_vb = simplexml_load_string($feed);
-
+        unset($feed);
         $task_id = $xml_vb->attributes();
 
         //Create return xml string
@@ -21,6 +21,7 @@ class VbDataTransferPricesService extends VbDataTransferService
 
         $googleSku = [];
 
+        $error_message = '';
         foreach ($xml_vb->price as $vb_price_obj) {
             //Get the master sku to search the corresponding sku in atomv2 database
             $master_sku = (string) $vb_price_obj->master_sku;
@@ -128,6 +129,7 @@ class VbDataTransferPricesService extends VbDataTransferService
                 $xml[] = '<is_error>'.$vb_price_obj->is_error.'</is_error>';
                 $xml[] = '<reason>'.$e->getMessage().'</reason>';
                 $xml[] = '</price>';
+                $error_message .= $vb_price_obj->sku .'-'. $vb_price_obj->master_sku .'-'. $vb_price_obj->platform_id .'-'.$vb_price_obj->is_error .'-'. $e->getMessage() ."\r\n";
             }
         }
 
@@ -135,7 +137,11 @@ class VbDataTransferPricesService extends VbDataTransferService
 
         $xml[] = '</prices>';
         $return_feed = implode("", $xml);
-
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Price Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 
@@ -171,7 +177,7 @@ class VbDataTransferPricesService extends VbDataTransferService
         $vb_price_obj->required_selling_price = $required_selling_price;
     }
 
-    public function getPriceRule($vb_price_obj)
+    public function getPriceRule(&$vb_price_obj)
     {
         $required_selling_price = floatval($vb_price_obj->prod_price);
         $platform_id = (string) $vb_price_obj->platform_id;

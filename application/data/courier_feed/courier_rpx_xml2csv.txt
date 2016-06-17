@@ -1,0 +1,22 @@
+#Table name
+data
+
+#Input column name  Output column name  Specify value
+item_no	S.No
+barcode	customer_hawb
+delivery_name	receiver_name
+tel	receiver_phone
+client_email	receiver_email
+delivery_address_1	receiver_address1
+delivery_address_2	receiver_address2
+delivery_city	receiver_city
+delivery_country_id	receiver_country
+delivery_postcode	receiver_Zip
+	declare_currency	USD
+declared_value	declare_value
+prod_weight	weight
+	DDP/DDU
+cc_desc	item description
+cc_code	HS code
+prod_weight	Weight of the item
+declared_value	declare_value

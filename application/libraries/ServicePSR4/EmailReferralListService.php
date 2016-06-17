@@ -1,13 +1,35 @@
 <?php
 namespace ESG\Panther\Service;
-use ESG\Panther\Dao\EmailReferralListDao;
 
-class EmailReferralListService extends BaseService
+class EmailReferralListService extends ReportService
 {
     public function __construct()
     {
         parent::__construct();
-        $this->setDao(new EmailReferralListDao);
+        $this->setOutputDelimiter(',');
+    }
+
+    public function getAllEmailReferralList($where, $option)
+    {
+        return $this->getDao('EmailReferralList')->getAllEmailReferralList($where, $option);
+    }
+
+    public function getCsv($where = [])
+    {
+        set_time_limit(300);
+        $arr = $this->getDao('EmailReferralList')->getAllEmailReferralList($where, array("limit" => -1));
+        return $this->convert($arr);
+    }
+
+
+    protected function get_default_vo2xml_mapping()
+    {
+        return '';
+    }
+
+    protected function get_default_xml2csv_mapping()
+    {
+        return '';
     }
 }
 

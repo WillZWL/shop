@@ -11,7 +11,7 @@ class VbDataTransferRaGroupProductService extends VbDataTransferService
 	{
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-
+		unset($feed);
 		$task_id = $xml_vb->attributes()->task_id;
 
 		//Create return xml string
@@ -19,6 +19,7 @@ class VbDataTransferRaGroupProductService extends VbDataTransferService
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml[] = '<ra_group_products task_id="' . $task_id . '">';
 
+		$error_message = '';
 		foreach($xml_vb->ra_group_product as $ra_group_product)
 		{
 			try
@@ -90,14 +91,17 @@ class VbDataTransferRaGroupProductService extends VbDataTransferService
 				$xml[] = '<is_error>' . $ra_group_product->is_error . '</is_error>';
 				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</ra_group_product>';
+				$error_message .= $ra_group_product->ra_group_id .'-'. $ra_group_product->sku .'-'. $ra_group_product->is_error .'-'. $e->getMessage()."\r\n";
 			}
 		 }
 
 		$xml[] = '</ra_group_products>';
-
-
 		$return_feed = implode("", $xml);
-
+		if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'RaGroupProduct Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
 		return $return_feed;
 	}
 }

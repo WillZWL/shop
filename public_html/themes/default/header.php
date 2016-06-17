@@ -196,7 +196,7 @@ $(document).ready(function() {
                                             <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
                                         </span>-->
                                         <form id="search" class="input-group pull-right" style="margin-top: 4px;height: 24px !important;" action="/search/search-by-ss" name="searchform" method="GET">
-                                            <input type="text" autocomplete="off" onfocus="this.value=''''" value="" name="w" class="searchspring-query input form-control" title="<?= _('Find your product') ?>" style="height: 24px !important;">
+                                            <input type="text" autocomplete="off" onfocus="this.value=''''" value="" name="q" class="searchspring-query input form-control" title="<?= _('Find your product') ?>" style="height: 24px !important;">
                                             <span class="input-group-btn">
                                                 <button type="button" class="button-search" style="height: 24px !important;"><i class="fa fa-search"></i></button>
                                             </span>

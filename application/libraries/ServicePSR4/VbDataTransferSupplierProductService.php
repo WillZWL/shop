@@ -16,6 +16,7 @@ class VbDataTransferSupplierProductService extends VbDataTransferService
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<products task_id="'.$task_id.'">';
 
+        $error_message = '';
         foreach ($xml_vb->product as $sp) {
             try {
                 $master_sku = (string) $sp->master_sku;
@@ -70,11 +71,16 @@ class VbDataTransferSupplierProductService extends VbDataTransferService
                 $xml[] = '<is_error>' . (string) $sp->is_error . '</is_error>';
                 $xml[] = '<reason>' . $e->getMessage() . '</reason>';
                 $xml[] = '</product>';
+                $error_message .= $sp->prod_sku .'-'. $sp->supplier_id .'-'. $sp->master_sku .'-'. $sp->is_error .'-'. $e->getMessage()."\r\n";
             }
         }
         $xml[] = '</products>';
         $return_feed = implode("", $xml);
-
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Supplier Product Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 }
