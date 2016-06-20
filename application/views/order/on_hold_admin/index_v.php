@@ -164,7 +164,7 @@
                                 if ($reason_list) :
                                     foreach ($reason_list as $robj) :
                             ?>
-                                <option value="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>/<?= $robj->getId() ?>"><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
+                                <option value="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>/<?= $robj->getId() ?>"><?= $robj->getDescription() ?></option>
                             <?php
                                     endforeach;
                                 endif;
