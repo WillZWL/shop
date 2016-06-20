@@ -845,6 +845,7 @@ html;
                                         foreach ($order_note as $obj) :
                                             ?>
                                             <div>
+                                                <b><?= $obj->getNote() ?></b><br>
                                                 <i><?= $lang["username"] . " " . $obj->getUsername() . " " . $lang["create_on"] . " " . $obj->getCreateOn() ?></i><br><br>
                                             </div>
                                         <?php
