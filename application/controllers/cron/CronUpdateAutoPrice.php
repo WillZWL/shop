@@ -6,8 +6,6 @@ class CronUpdateAutoPrice extends MY_Controller
 
     public function updateAutoPrice($platform_id = '')
     {
-        set_time_limit(1200);
-        ini_set('memory_limit', '1024M');
         if ($platform_id === '') {
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
             foreach ($platform_list as $platform_obj) {
@@ -24,21 +22,31 @@ class CronUpdateAutoPrice extends MY_Controller
 
     public function updatePlatformAutoPrice($platform_id = '')
     {
-        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'platform_id' => $platform_id], ['orderby'=>'modify_on asc', 'limit' => '1000']);
-        $this->sc['Price']->getDao('Price')->db->trans_start();
+        set_time_limit(1800);
+        ini_set('memory_limit', '1024M');
+        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'listing_status' => 'L', 'platform_id' => $platform_id], ['orderby'=>'modify_on asc', 'limit' => '1000']);
         foreach ($price_obj_list as $price_obj) {
+            // $time_start = microtime();
             $resutl = json_decode($this->sc['Price']->getProfitMarginJson($price_obj->getPlatformId(), $price_obj->getSku()));
             $auto_price = $resutl->get_price;
             $profit = $resutl->get_profit;
             $margin = $resutl->get_margin;
 
             $price_obj->setPrice($auto_price);
-            $_SESSION["user"]["id"] = 'auto_price';
             $this->sc['Price']->getDao('Price')->update($price_obj);
             $this->sc['PriceMargin']->refreshProfitAndMargin($price_obj->getPlatformId(), $price_obj->getSku());
+            // $time_end = microtime();
+            // error_log($time_end - $time_start);
         }
-        $this->sc['Price']->getDao('Price')->db->trans_complete();
         unset($price_obj_list);
+    }
+
+    public function getSpendTime($time_start, $time_end)
+    {
+        list($t1, $t2) = explode(' ', $time_start);
+        list($t3, $t4) = explode(' ', $time_end);
+        $time = (floatval($t3) + floatval($t4)) - (floatval($t1) + floatval($t2));
+        error_log("Pre SKU Spend :".$time);
     }
 
     public function getAppId()
