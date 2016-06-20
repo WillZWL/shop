@@ -841,12 +841,11 @@ html;
                             <form action="" method="POST">
                                 <div style="width:100%; height:100px; overflow-y:scroll">
                                     <?php
-
                                     if (count($order_note)) :
                                         foreach ($order_note as $obj) :
                                             ?>
                                             <div>
-                                                <b><?= $obj->getNote() ?></b><br><i><?= $lang["username"] . " " . $obj->getUsername() . " " . $lang["create_on"] . " " . $obj->getCreateOn() ?></i><br><br>
+                                                <i><?= $lang["username"] . " " . $obj->getUsername() . " " . $lang["create_on"] . " " . $obj->getCreateOn() ?></i><br><br>
                                             </div>
                                         <?php
                                         endforeach;
