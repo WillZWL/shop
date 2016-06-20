@@ -3298,7 +3298,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_duplicate_purchase()
+    public function getDuplicatePurchase()
     {
         // The cron job may not run at the scheduled time sharp, so add 20 seconds in the SQL to cover this lag
         $sqlTimeBuffer = '00:00:20';
@@ -3306,27 +3306,27 @@ SQL;
 
         $sql =
             "
-            select distinct so.client_id, soi.prod_sku, p.name, so.so_no, so.order_create_date, so.currency_id, soi.unit_price
-                from so inner join so_item soi on so.so_no = soi.so_no left join product p on soi.prod_sku = p.sku
+            select distinct so.client_id, soid.item_sku, p.name, so.so_no, so.order_create_date, so.currency_id, soid.unit_price
+                from so inner join so_item_detail soid on so.so_no = soid.so_no left join product p on soid.item_sku = p.sku
             inner join
             (
-                select so_join.client_id, soi_join.prod_sku from so so_join inner join so_item soi_join on so_join.so_no = soi_join.so_no
+                select so_join.client_id, soid_join.item_sku from so so_join inner join so_item_detail soid_join on so_join.so_no = soid_join.so_no
                 where so_join.status in (2, 3)
                 and so_join.order_create_date >= subdate(addtime(now(), '{$sqlTimeBuffer}'), {$searchFromDayBefore})
-                group by so_join.client_id, soi_join.prod_sku
+                group by so_join.client_id, soid_join.item_sku
                 having count(distinct so_join.so_no) > 1
-            ) filterDuplicate on filterDuplicate.client_id = so.client_id and filterDuplicate.prod_sku = soi.prod_sku
+            ) filterDuplicate on filterDuplicate.client_id = so.client_id and filterDuplicate.item_sku = soid.item_sku
             where 1
-            and so.status >= 2          # only paid orders
+            and so.status >= 2
             and so.order_create_date >= subdate(addtime(now(), '{$sqlTimeBuffer}'), {$searchFromDayBefore})
-            and concat(so.client_id,'|',soi.prod_sku) in
+            and concat(so.client_id,'|',soid.item_sku) in
             (
-                select concat(so_today.client_id,'|',soi_today.prod_sku) from so so_today inner join so_item soi_today on so_today.so_no = soi_today.so_no
+                select concat(so_today.client_id,'|',soid_today.item_sku) from so so_today inner join so_item_detail soid_today on so_today.so_no = soid_today.so_no
                 where so_today.status in (2, 3)
                 and so_today.order_create_date >= subdate(addtime(now(), '{$sqlTimeBuffer}'), 1)
-                group by so_today.client_id, soi_today.prod_sku
+                group by so_today.client_id, soid_today.item_sku
             )
-            order by so.client_id, soi.prod_sku, so.order_create_date desc, so.so_no
+            order by so.client_id, so.so_no, soid.item_sku, so.order_create_date desc, so.so_no
         ";
 
         $result = $this->db->query($sql);
