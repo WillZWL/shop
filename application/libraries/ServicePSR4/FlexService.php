@@ -35,6 +35,7 @@ class FlexService extends BaseService
         $this->gatewayFeeInvoiceDto = new \GatewayFeeInvoiceDto();
         $this->RollingReserveReportDto = new \RollingReserveReportDto();
         $this->contextConfigService = new ContextConfigService;
+        $this->riaControlDto = new \riaControlDto();
         $this->zipClass = new \ZipArchive();
     }
 
@@ -1357,4 +1358,98 @@ class FlexService extends BaseService
         $where = array('ifr.gateway_id' => 'rakuten','fr.so_no IS NULL' => null);
         return $this->getDao('So')->getRakutenShippedOrderFromInterface($where, ['limit' => -1]);
     }
+
+    public function getRiaControlReport($where = array(), $option = array())
+    {
+        $csv_file = "Received_Date,Dispatch_Date,Refund_Date,Order_ID,Payment_Gateway,Txn_ID,Transaction_Status,Currency,Order_Amount,RIA_Control\r\n";
+        $data = array();
+        $data[] = $this->getRiaOrderReport($where, $option);
+        $data[] = $this->getFullyRefundReport($where, $option);
+        foreach ($data as $temp) {
+            foreach ($temp as $file => $obj_list) {
+                if (!empty($obj_list)) {
+                    foreach ($obj_list as $obj) {
+                        $csv_file .= $obj->getFriTxnTime() .','. $obj->getDispatchDate() .','. $obj->getFreTxnTime() .','. $obj->getSoNo() .','. $obj->getGatewayId() .','. $obj->getFriTxnId() .','. $obj->getFriStatus() .','. $obj->getCurrencyId() .','. $obj->getFriAmount() .','. $obj->getRiaControl() ."\r\n";
+                    }
+                }
+            }
+        }
+        return $csv_file;
+    }
+
+    public function getRiaOrderReport($where = array(), $option = array())
+    {
+        $ria_order = array(
+                'shipped' => array(),
+                'nonshipped' => array()
+            );
+
+        $ria_obj_list = $this->getDao('So')->getRiaOrder($where, $option);
+        if ($ria_obj_list) {
+            foreach ($ria_obj_list as $ro_obj) {
+                if ($ro_obj->getFriAmount() - $ro_obj->getSoAmount() == 0) {
+                    if ($ro_obj->getSoStatus() == 6) {
+                        $ro_dto = clone $this->riaControlDto;
+                        $ro_dto->setDispatchDate($ro_obj->getDispatchDate());
+                        $ro_dto->setSoNo($ro_obj->getSoNo());
+                        $ro_dto->setGatewayId($ro_obj->getGatewayId());
+                        $ro_dto->setFriTxnId('');
+                        $ro_dto->setCurrencyId($ro_obj->getCurrencyId());
+                        $ro_dto->setFriAmount(-$ro_obj->getSoAmount());
+                        $ro_dto->setFriStatus('Shipped');
+                        $ro_dto->setRiaControl(0);
+                        // $ro_obj->setDispatchDate('');
+                        $ria_order['shipped'][] = $ro_obj;
+                        $ria_order['shipped'][] = $ro_dto;
+                    } else {
+                        $ria_order['nonshipped'][] = $ro_obj;
+                    }
+                }
+            }
+        }
+        return $ria_order;
+    }
+
+    public function getFullyRefundReport($where = array(), $option = array())
+    {
+        $refund_order = array(
+                'fully_refund' => array(),
+                'partial_refund' => array()
+            );
+        $refund_order_list = $this->getDao('So')->getFullyRefundReport($where, $option);
+        if ($refund_order_list) {
+            foreach ($refund_order_list as $ro_obj) {
+                if ($ro_obj->getFreAmount() + $ro_obj->getFriAmount() == 0) {
+                    $ro_dto = clone $this->riaControlDto;
+                    $ro_dto->setSoNo($ro_obj->getSoNo());
+                    $ro_dto->setFriTxnTime('');
+                    $ro_dto->setFreTxnTime($ro_obj->getFreTxnTime());
+                    $ro_dto->setGatewayId($ro_obj->getGatewayId());
+                    $ro_dto->setFriTxnId($ro_obj->getFreTxnId());
+                    $ro_dto->setCurrencyId($ro_obj->getCurrencyId());
+                    $ro_dto->setFriAmount($ro_obj->getFreAmount());
+                    $ro_dto->setFriStatus('REFUNDED');
+                    $ro_dto->setRiaControl(0);
+                    $ro_obj->setFreTxnTime('');
+                    $refund_order['fully_refund'][] = $ro_obj;
+                    $refund_order['fully_refund'][] = $ro_dto;
+                } elseif ($ro_obj->getFreAmount() + $ro_obj->getFreAmount() > 0) {
+                    // partial refund
+                    $ro_dto = clone $this->riaControlDto;
+                    $ro_dto->setSoNo($ro_obj->getSoNo());
+                    $ro_dto->setFriTxnTime('');
+                    $ro_dto->setGatewayId($ro_obj->getGatewayId());
+                    $ro_dto->setFriTxnId($ro_obj->getFreTxnId());
+                    $ro_dto->setCurrencyId($ro_obj->getCurrencyId());
+                    $ro_dto->setFriAmount($ro_obj->getFreAmount());
+                    $ro_dto->setFriStatus('REFUNDED');
+                    $ro_dto->setRiaControl($ro_dto->getFriAmount() + $ro_dto->getFreAmount());
+                    $refund_order['partial_refund'][] = $ro_obj;
+                    $refund_order['partial_refund'][] = $ro_dto;
+                }
+            }
+        }
+        return $refund_order;
+    }
+
 }

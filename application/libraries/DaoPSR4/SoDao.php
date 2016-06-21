@@ -3888,7 +3888,31 @@ SQL;
             //var_dump($this->db->last_query()); die();
             return false;
         }
+    }
 
+    public function getRiaOrder($where = array(), $option = array(), $classname = 'riaControlDto')
+    {
+        $option['limit'] = -1;
+        $this->db->from('flex_ria fri');
+        $this->db->join('so', 'so.so_no = fri.so_no', 'LEFT');
+        $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'LEFT');
+        $this->db->where('so.refund_status != 4 AND so.status != 0');
+        $this->db->order_by("so.so_no, fri.txn_time");
+        $select_str = 'so.so_no, fri.txn_time as fri_txn_time, so.dispatch_date, fri.gateway_id, fri.txn_id as fri_txn_id, fri.amount as fri_amount, so.amount as so_amount, so.currency_id, so.status as so_status, fri.status as fri_status, fri.amount as ria_control';
+        return $this->commonGetList($classname, $where, $option, $select_str);
+    }
+
+    public function getFullyRefundReport($where = array(), $option = array(), $classname = 'riaControlDto')
+    {
+        $option['limit'] = -1;
+        $this->db->from('flex_refund fre');
+        $this->db->join('flex_ria fri', 'fre.so_no = fri.so_no', 'LEFT');
+        $this->db->join('so', 'fri.so_no = so.so_no', 'LEFT');
+        $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'LEFT');
+        $this->db->where("fre.status = 'R'");
+        $this->db->order_by('so.so_no, fre.txn_time');
+        $select_str = 'so.so_no, fri.txn_time as fri_txn_time, fre.txn_time as fre_txn_time, fre.gateway_id, fri.txn_id as fri_txn_id, fre.internal_txn_id as fre_txn_id, fri.amount as fri_amount, fre.amount as fre_amount, so.currency_id, fri.status as fri_status, fre.status as fre_status, fri.amount as ria_control';
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
 }
