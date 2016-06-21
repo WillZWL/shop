@@ -287,9 +287,9 @@
                             ?>
                                         <?php
                                             if ($robj->getReasonType() == "confirmation_required") :
-                                                $is_disabled = ($save_order[$obj->getSoNo()]) ? " disabled" : '';
+                                                // $is_disabled = ($save_order[$obj->getSoNo()]) ? " disabled" : '';
                                         ?>
-                                            <input type="button"<?= $is_disabled ?> id="reason" name="reason" value="<?= $lang["hrcategory"][$robj->getReasonCat()] . " - Save Order" ?> "
+                                            <input type="button" id="reason" name="reason" value="<?= $lang["hrcategory"][$robj->getReasonCat()] . " - Save Order" ?> "
                                                 onClick="Redirect('<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>?cf=<?= $robj->getId() ?>')"><br>
                                         <?php
                                             endif;
