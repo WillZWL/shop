@@ -21,7 +21,7 @@ class Credit_check extends MY_Controller
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["CCLISTPAGE"] = base_url() . "order/credit_check/" . ($pagetype ? "index/" . $pagetype : "") . "?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = $_SESSION["CCLISTPAGE"] = base_url() . "order/credit_check/" . ($pagetype ? "index/" . $pagetype : "") . "?" . $_SERVER['QUERY_STRING'];
         $_SESSION["CC_QSTRING"] = $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -129,6 +129,8 @@ class Credit_check extends MY_Controller
             $data["pmgw_card_list"][$card_obj->getCardId()] = $card_obj->getCardName();
         }
 
+        $data['save_order'] = [];
+
         if ($data["objlist"]) {
             //include_once(APPPATH . "libraries/service/Payment_gateway_redirect_cybersource_service.php");
             $cybs = $this->sc["PaymentGatewayRedirectCybersource"];
@@ -140,6 +142,10 @@ class Credit_check extends MY_Controller
                     $note_list = $this->sc['So']->getDao('OrderNotes')->getList(array("so_no" => $obj->getSoNo(), "type" => "O"));
                     foreach ($note_list AS $note) {
                         $temp[] = $note->getNote() . ' (' . $note->getCreateOn() . ')';
+
+                        if ($note->getNote() == "Saved from CC, held wait for customer's decision") {
+                            $data['save_order'][$obj->getSoNo()] = 1;
+                        }
                     }
                 } else {
                     $note_list = $this->sc['So']->getDao('OrderNotes')->getList(array("so_no" => $obj->getSoNo(), "type" => "C"));
