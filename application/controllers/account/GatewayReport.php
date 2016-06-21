@@ -150,7 +150,7 @@ class GatewayReport extends MY_Controller
     {
         DEFINE('FLEX_PATH', $this->sc['ContextConfig']->valueOf("flex_path"));
         if ($batch_obj = $this->sc['Flex']->getDao('FlexBatch')->get(["id" => $flex_batch_id])) {
-            $this->downloadFile(FLEX_PATH . "/pmgw_report/" . $batch_obj->getGatewayId() . "/complete/", $batch_obj->getFileName());
+            $this->downloadFile(FLEX_PATH . "/ftp/pmgw_report/" . $batch_obj->getGatewayId() . "/complete/", $batch_obj->getFileName());
         }
     }
 
