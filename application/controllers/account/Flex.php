@@ -509,6 +509,24 @@ class Flex extends MY_Controller
         }
         $this->sc['Flex']->platformOrderDeleteInterfaceFlexRia($gateway_id, $so_no_list);
     }
+
+    public function riaControlReport()
+    {
+        $sub_app_id = $this->getAppId() . "07";
+        include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->lang_id . ".php");
+        $data["lang"] = $lang;
+
+        if ($this->input->post('is_query')) {
+            $where = array();
+            $where['so.order_create_date >= '] = $this->input->post('start_date') . ' 00:00:00';
+            $where['so.order_create_date <= '] = $this->input->post('end_date') . ' 23:59:59';
+            $data['output'] = $this->sc['Flex']->getRiaControlReport($where);
+            $data['filename'] = 'ria_control.csv';
+            $this->load->view('output_csv.php', $data);
+        } else {
+            $this->load->view('account/flex/ria_control_report_v', $data);
+        }
+    }
 }
 
 
