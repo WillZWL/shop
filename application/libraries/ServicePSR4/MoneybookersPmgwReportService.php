@@ -217,7 +217,7 @@ class MoneybookersPmgwReportService extends PmgwReportService
     {
         $ifr_obj = $this->getDao("InterfaceFlexRia")->get();
         if ($dto_obj->getReference()) {
-            if ($so_obj = $this->getDao('So')->(["so_no" => $dto_obj->getReference()])) {
+            if ($so_obj = $this->getDao('So')->get(array("so_no" => $dto_obj->getReference()))) {
                 $dto_obj->setSoNo($so_obj->getSoNo());
             }
         }
@@ -234,6 +234,11 @@ class MoneybookersPmgwReportService extends PmgwReportService
             $ifr_obj->setSoNo(" ");
             $ifr_obj->setBatchStatus("F");
             $ifr_obj->setFailedReason(PmgwReportService::WRONG_TRANSACTION_ID);
+        }
+        if ($this->getDao("InterfaceFlexRia")->insert($ifr_obj) && $ifr_obj->getBatchStatus() != "F") {
+            if ($include_fsf) {
+                $this->insertSoFeeFromRiaRecord($batch_id, $status, $dto_obj);
+            }
         }
         return $ifr_obj;
     }
