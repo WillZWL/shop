@@ -158,20 +158,20 @@
                 <td class="bvalue<?= $i % 2 ?>"><?= $bill_addr ?></td>
                 <td class="bvalue<?= $i % 2 ?>"><?= $del_addr ?></td>
                 <td align="center">
-                    <!--form action="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>" method="post"-->
-                        <select name="reason" id="reason_<?= $obj->getSoNo() ?>" class="input">
+                    <form action="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>" method="post">
+                        <select name="reason" id="reason" class="input">
                             <?php
                                 if ($reason_list) :
                                     foreach ($reason_list as $robj) :
                             ?>
-                                <option value="<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>/<?= $robj->getId() ?>"><?= $robj->getDescription() ?></option>
+                                <option value="<?= $robj->getId() ?>"><?= $robj->getDescription() ?></option>
                             <?php
                                     endforeach;
                                 endif;
                             ?>
                         </select><br>
-                        <input type="button" onclick="submit_reason(<?= $obj->getSoNo() ?>)" value="<?= $lang["on_hold"] ?>">
-                    <!--/form-->
+                        <input type="submit" value="<?= $lang["on_hold"] ?>">
+                    </form>
                 </td>
                 <td></td>
             </tr>
