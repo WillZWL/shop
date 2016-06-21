@@ -379,7 +379,7 @@
                                         if ($reason_list) :
                                             foreach ($reason_list as $robj) :
                                     ?>
-                                        <option value="<?= $robj->getId() ?>"><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
+                                        <option value="<?= $robj->getId() ?>"><?= $robj->getDescription() ?></option>
                                     <?php
                                             endforeach;
                                         endif;
