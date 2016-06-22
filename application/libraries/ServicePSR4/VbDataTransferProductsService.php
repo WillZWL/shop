@@ -63,6 +63,10 @@ class VbDataTransferProductsService extends VbDataTransferService
                     }
                 }
 
+                if ($product_obj) {
+                    $this->getService('ProductWarranty')->autoCreateProductWarranty($product_obj);
+                }
+
                 $xml[] = '<product>';
                 $xml[] = '<sku>'.$vb_sku.'</sku>';
                 $xml[] = '<master_sku>'.$master_sku.'</master_sku>';
