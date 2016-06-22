@@ -12,8 +12,8 @@ class CronDuplicatePurchase extends MY_Controller
     function index()
     {
         $from = "do_not_reply@eservicesgroup.com";
-        $maillist = "will.zhang@eservicesgroup.com";
-        $maillist = "compliance@eservicesgroup.com";
+        $maillist = "compliance@eservicesgroup.net";
+        $maillist .= ",will.zhang@eservicesgroup.com";
         $subject = "[PT] Duplicate Purchase Notification";
         $arrBGColor = array('#FF9966', '#FFCC66');
         $result = $this->sc['So']->getDao('So')->getDuplicatePurchase();
