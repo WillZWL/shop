@@ -685,5 +685,9 @@ class DaoProvider implements ServiceProviderInterface
             return new D\ChargebackDao();
         };
 
+        $daoContainer['PlatformWarranty'] = function () {
+            return new D\PlatformWarrantyDao();
+        };
+
     }
 }

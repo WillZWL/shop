@@ -581,5 +581,9 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['Chargeback'] = function () {
             return new S\ChargebackService();
         };
+
+        $serviceContainer['ProductWarranty'] = function () {
+            return new S\ProductWarrantyService();
+        };
     }
 }
