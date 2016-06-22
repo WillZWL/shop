@@ -1,6 +1,6 @@
 <?php
 
-class Cron_duplicate_purchase extends MY_Controller
+class CronDuplicatePurchase extends MY_Controller
 {
     private $appId = "CRN0035";
 
