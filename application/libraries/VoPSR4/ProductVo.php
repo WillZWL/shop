@@ -38,6 +38,7 @@ class ProductVo extends \BaseVo
     private $shipment_restricted_type = '0';
     private $status = '1';
     private $auto_restock = '0';
+    private $product_warranty_type = '0';
 
 
     public function setId($id)
@@ -482,6 +483,18 @@ class ProductVo extends \BaseVo
     public function getAutoRestock()
     {
         return $this->auto_restock;
+    }
+
+    public function setProductWarrantyType($product_warranty_type)
+    {
+        if ($product_warranty_type !== null) {
+            $this->product_warranty_type = $product_warranty_type;
+        }
+    }
+
+    public function getProductWarrantyType()
+    {
+        return $this->product_warranty_type;
     }
 
 }
