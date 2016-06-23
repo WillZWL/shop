@@ -24,6 +24,8 @@ class SalesReport extends MY_Controller
             $is_light_version = $this->input->post("light_version");
             $is_china_oem = $this->input->post('china_oem');
             $clearance = $this->input->post('clearance');
+            $accelerator_salesrpt_bd = $this->input->post('accelerator_salesrpt_bd');
+
             $where = array();
             $where['so.status >= 2'] = NULL;
             $where['so.hold_status !='] = 15;
@@ -46,6 +48,11 @@ class SalesReport extends MY_Controller
                     $where['p.china_oem'] = $is_china_oem;
                 }
             }
+
+            if ($accelerator_salesrpt_bd) {
+                $where['p.accelerator_salesrpt_bd'] = $accelerator_salesrpt_bd;
+            }
+
             switch ($clearance) {
                 case 'clearance':
                     $where['clearance'] = 1;

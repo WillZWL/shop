@@ -8,6 +8,7 @@
 			"currency"=>"Currency:",
 			"brand"=>"Brand:",
 			"payment_gateway"=>"Payment Gateway:",
+			"accelerator_salesrpt_bd" => "Accelerator sales report for BD",
 			""=>""
 			);
 

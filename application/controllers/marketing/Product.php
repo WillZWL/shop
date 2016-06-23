@@ -1218,7 +1218,11 @@ html;
                     if ($_POST["clearance"] == "") {
                         $_POST["clearance"] = 0;
                     }
-                    //$_POST["status"] = 2;
+
+                    if ($_POST['accelerator_salesrpt_bd'] == "") {
+                        $_POST['accelerator_salesrpt_bd'] = 0;
+                    }
+
 
                     $update_bundle = 0;
 
@@ -2831,6 +2835,14 @@ start;
             } else {
                 return false;
             }
+        }
+    }
+
+    public function AutoCreateWarranty($sku = '')
+    {
+        $product_obj = $this->sc['Product']->getDao('Product')->get(array('sku' => $sku));
+        if ($product_obj) {
+            $this->sc['ProductWarranty']->autoCreateProductWarranty($product_obj);
         }
     }
 }

@@ -575,6 +575,13 @@
                             <td class="value"><?=$product->get_modify_by()?></td>
                         </tr>
                         <tr>
+                            <td class="field"><?=$lang["accelerator_salesrpt_bd"]?></td>
+                            <td class="value"><input type="checkbox" name="accelerator_salesrpt_bd" value="1" <?=$product->getAcceleratorSalesrptBd()?"CHECKED":""?>></td>
+                            <td class="field"></td>
+                            <td class="value"></td>
+                        </tr>
+
+                        <tr>
                             <td class="field"><?=$lang["master_sku"]?></td>
                             <td class="value"><input name="master_sku" class="input" value="<?=$master_sku?htmlspecialchars($master_sku->get_ext_sku()):""?>" <?=$lock_master_sku?"DISABLED":""?> onblur="check_master_sku(this);" <?=$master_sku_check?>>
                                 <?php

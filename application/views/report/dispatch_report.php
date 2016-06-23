@@ -31,6 +31,7 @@
                 <td align="right">
                     <table border="0" cellpadding="2" cellspacing="0">
                         <tr>
+                            <td></td>
                             <td align='right'><b><?= $lang["payment_gateway"] ?></b></td>
                             <td>
                                 <select name='payment_gateway' id='payment_gateway'>
@@ -65,6 +66,7 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><input type="checkbox" name="accelerator_salesrpt_bd" id="accelerator_salesrpt_bd" value="1"><?=$lang["accelerator_salesrpt_bd"]?></td>
                             <td align='right'><b><?= $lang["country"] ?></b></td>
                             <td>
                                 <select name='country' id='country'>
