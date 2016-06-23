@@ -52,7 +52,7 @@
                         <br /><br />
                         <?= _('Please check carefully that all information given is accurate and complete when placing an order.') ?>
                         <br /><br />
-                        <?= _('Payment for all orders must be made in advance by credit or debit card. We accept payment from most major credit and debit cards as well as PayPal and Skrill (formerly known as MoneyBookers). ') ?>
+                        <?= _('Payment for all orders must be made in advance by credit or debit card. We accept payment from most major credit and debit cards as well as PayPal and Skrill (formerly known as MoneyBookers). Depending on the payment option available, you may be subject to a variable fee to cover the exchange rate into local currency. By placing an order with us, you agree to pay all fees and charges incurred in connection with your purchase(s).') ?>
                         <br /><br />
                         <?= _('While we make every effort to provide accurate information, technical inaccuracies or typographic or photographic errors may occur. We reserve the right to make changes, corrections, and/or improvements to the information contained on this Site at any time without notice.') ?>
                         <br /><br />
