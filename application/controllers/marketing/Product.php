@@ -2837,6 +2837,14 @@ start;
             }
         }
     }
+
+    public function AutoCreateWarranty($sku = '')
+    {
+        $product_obj = $this->sc['Product']->getDao('Product')->get(array('sku' => $sku));
+        if ($product_obj) {
+            $this->sc['ProductWarranty']->autoCreateProductWarranty($product_obj);
+        }
+    }
 }
 
 
