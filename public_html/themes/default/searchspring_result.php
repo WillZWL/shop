@@ -95,9 +95,8 @@
 
       skus = skus.join(',');
 
-      SearchSpring.jQuery.ajax(
-          ('https:' == document.location.protocol ? 'https://' : 'http://') + 'digitaldiscount.co.uk/search/ssLivePrice/<?=PLATFORM?>?sku=' + skus,
-          {
+      SearchSpring.jQuery.ajax({
+            url:'/search/ssLivePrice/<?=PLATFORM?>?sku=' + skus,
             dataType : 'json',
             success : function(data) {
               for(var sku in data) {
@@ -106,7 +105,6 @@
                 SearchSpring.jQuery('#price_'+sku).text(price[1]);
                 SearchSpring.jQuery('#discount_'+sku).text(price[2]);
                 SearchSpring.jQuery('#stock_'+sku).text(price[3]);
-
                 if (price[4] == 'O' || price[4] == 'A') {
                   SearchSpring.jQuery('.add_'+sku).css("cursor:not-allowed");
                 }

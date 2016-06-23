@@ -8,7 +8,7 @@ class Import extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        ini_set('memory_limit', '1024M');
+        ini_set('memory_limit', '2048M');
         set_time_limit(1800);
     }
 
@@ -29,6 +29,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferPrices']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -36,6 +37,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferSupplierProduct']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -45,6 +47,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductContent']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -60,6 +63,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductCustomClass']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -67,6 +71,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed =$this->sc['VbDataTransferProductIdentifier']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -88,26 +93,23 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferProductKeyword']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
     public function productnote()
     {
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
         $feed =$this->sc['VbDataTransferProductNote']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
     public function productwarranty()
     {
         $xml = file_get_contents('php://input');
-        // header('content-type: text/xml');
-        // print $xml;
-        // exit;
         $feed =$this->sc['VbDataTransferProductWarranty']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -115,6 +117,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferProductComplementaryAcc']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -125,6 +128,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferCategory']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -132,6 +136,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferCategoryExtend']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -139,6 +144,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferBrand']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -146,6 +152,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferColour']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -153,6 +160,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferColourExtend']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -160,6 +168,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferVersion']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -167,6 +176,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferFreightCat']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
     /********************** end master tables **********************/
@@ -179,6 +189,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaGroup']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -186,6 +197,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaGroupContent']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -193,6 +205,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaGroupProduct']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -200,6 +213,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaProduct']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -207,6 +221,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferRaProdCat']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -219,6 +234,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferCategoryMapping']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -226,6 +242,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferExtCategoryMapping']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 
@@ -233,6 +250,7 @@ class Import extends MY_Controller
     {
         $xml = file_get_contents('php://input');
         $feed = $this->sc['VbDataTransferExternalCategory']->startProcess($xml);
+        unset($xml);
         print $feed;
     }
 

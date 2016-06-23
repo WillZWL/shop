@@ -419,6 +419,11 @@
                                     <?= $lang["master_sku"] ?> <?= $sortimg["master_sku"] ?>
                                 </a>
                             </td>
+                            <td title="<?= $lang['sku'] ?>">
+                                <a href="#" onclick="SortCol(document.fm, 'sku', '<?= $xsort["sku"] ?>')">
+                                    <?= $lang['sku'] ?><?= $sortimg['sku'] ?>
+                                </a>
+                            </td>
                             <td title="<?= $lang["product_name"] ?>">
                                 <a href="#" onClick="SortCol(document.fm, 'prod', '<?= $xsort["prod_name"] ?>')">
                                     <?= $lang["product_name"] ?> <?= $sortimg["prod_name"] ?>
@@ -507,6 +512,9 @@
                                 <input name="msku" class="input" value="<?= htmlspecialchars($this->input->get("msku")) ?>">
                             </td>
                             <td>
+                                <input name="sku" class="input" value="<?= htmlspecialchars($this->input->get('sku')) ?>">
+                            </td>
+                            <td>
                                 <input name="prod_name" class="input" value="<?= htmlspecialchars($this->input->get("prod_name")) ?>">
                             </td>
                             <td>
@@ -524,7 +532,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input name="wsqty" style="width:70px" value="<?= htmlspecialchars($this->input->get("wsqty")) ?>">
+                                <input name="wsqty" style="width:30px" value="<?= htmlspecialchars($this->input->get("wsqty")) ?>">
                             </td>
                             <td>
                                 <select name="wsstatus" class="input">
@@ -600,6 +608,9 @@
                             <td>
                                 <a href='<?= base_url()."marketing/pricing_tools/view/website/".$sku."?target=overview" ?>' target="_blank"><?= $product->getExtSku() ?></a>
                             </td>
+                            <td>
+                                <?= $sku ?>
+                            </td>
                             <td><?= $name ?></td>
                             <td>
                                 <select name='<?= "product[{$sku}][clearance]" ?>' title="Clearance Status" class="input">
@@ -614,7 +625,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input name='<?= "product[{$sku}][website_quantity]" ?>' title="Website Quantity" style="width:70px" value='<?= $website_quantity ?>'>
+                                <input name='<?= "product[{$sku}][website_quantity]" ?>' title="Website Quantity" style="width:30px" value='<?= $website_quantity ?>'>
                             </td>
                             <td>
                                 <select name='<?= "product[{$sku}][website_status]" ?>' title="Website Status" class="input">

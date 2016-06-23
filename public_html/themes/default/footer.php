@@ -50,9 +50,9 @@
                                                         <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/mastercard.png">
                                                         </li>
-                                                        <li class="footer-fieldsetitem">
+                                                        <!-- <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/paypal.png">
-                                                        </li>
+                                                        </li> -->
                                                 </ul>
                                            </fieldset>
                                         </div>
@@ -251,7 +251,7 @@
                                                         if (file_exists(FCPATH.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg' )){
                                                             echo '<img src="'.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg">';
                                                         }else{
-                                                            echo '<img src="'.$imgdir.'2year_es_v2.jpg.jpg">';
+                                                            echo '<img src="'.$imgdir.'2year_es_v2.jpg">';
                                                         }
                                                     ?>
                                                     </div>

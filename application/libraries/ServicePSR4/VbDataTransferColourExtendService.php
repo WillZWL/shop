@@ -20,7 +20,7 @@ class VbDataTransferColourExtendService extends VbDataTransferService
 	{
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-
+		unset($feed);
 		$task_id = $xml_vb->attributes()->task_id;
 
 		//Create return xml string
@@ -28,6 +28,7 @@ class VbDataTransferColourExtendService extends VbDataTransferService
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml[] = '<colours task_id="' . $task_id . '">';
 
+		$error_message = '';
 		$c = count($xml_vb->colour);
 		foreach($xml_vb->colour as $colour)
 		{
@@ -93,14 +94,18 @@ class VbDataTransferColourExtendService extends VbDataTransferService
 				$xml[] = '<is_error>' . $colour->is_error . '</is_error>';
 				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</colour>';
+				$error_message .= $colour->colour_id .'-'. $colour->lang_id .'-'. $colour->is_error .'-'. $e->getMessage()."\r\n";
 			}
 		 }
 
 		$xml[] = '</colours>';
-
-
 		$return_feed = implode("", $xml);
 
+		if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'ColourExtend Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
 		return $return_feed;
 	}
 }

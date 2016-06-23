@@ -264,7 +264,8 @@ class FraudOrderWithItemDto
 
     public function getBillAddress1()
     {
-        return $this->bill_address_1;
+        $bill_address_list = explode('|', $this->bill_address_1);
+        return $bill_address_list[0];
     }
 
     public function setBillAddress2($bill_address_2)
@@ -274,7 +275,8 @@ class FraudOrderWithItemDto
 
     public function getBillAddress2()
     {
-        return $this->bill_address_2;
+        $bill_address_list = explode('|', $this->bill_address_2);
+        return $bill_address_list[1];
     }
 
     public function setBillAddress3($bill_address_3)
@@ -284,7 +286,8 @@ class FraudOrderWithItemDto
 
     public function getBillAddress3()
     {
-        return $this->bill_address_3;
+        $bill_address_list = explode('|', $this->bill_address_3);
+        return $bill_address_list[2];
     }
 
     public function setBillCity($bill_city)
@@ -354,7 +357,8 @@ class FraudOrderWithItemDto
 
     public function getDeliveryAddress1()
     {
-        return $this->delivery_address_1;
+        $delivery_address_list = explode('|', $this->delivery_address_1);
+        return $delivery_address_list[0];
     }
 
     public function setDeliveryAddress2($delivery_address_2)
@@ -364,7 +368,8 @@ class FraudOrderWithItemDto
 
     public function getDeliveryAddress2()
     {
-        return $this->delivery_address_2;
+        $delivery_address_list = explode('|', $this->delivery_address_2);
+        return $delivery_address_list[1];
     }
 
     public function setDeliveryAddress3($delivery_address_3)
@@ -374,7 +379,8 @@ class FraudOrderWithItemDto
 
     public function getDeliveryAddress3()
     {
-        return $this->delivery_address_3;
+        $delivery_address_list = explode('|', $this->delivery_address_3);
+        return $delivery_address_list[2];
     }
 
     public function setDeliveryState($delivery_state)

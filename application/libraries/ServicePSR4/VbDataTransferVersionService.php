@@ -20,14 +20,14 @@ class VbDataTransferVersionService extends VbDataTransferService
 	{
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-
+		unset($feed);
 		$task_id = $xml_vb->attributes()->task_id;
 
 		//Create return xml string
 		$xml = array();
 		$xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml[] = '<versions task_id="' . $task_id . '">';
-
+		$error_message = '';
 		$c = count($xml_vb->version);
 		foreach($xml_vb->version as $version)
 		{
@@ -83,6 +83,7 @@ class VbDataTransferVersionService extends VbDataTransferService
 				$xml[] = '<is_error>' . $version->is_error . '</is_error>';
 				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</version>';
+				$error_message .= $version->id .'-'. $version->is_error .'-'. $e->getMessage()."\r\n";
 			}
 		 }
 
@@ -90,9 +91,11 @@ class VbDataTransferVersionService extends VbDataTransferService
 
 		$return_feed = implode("", $xml);
 
-		// print $return_feed;
-		// exit;
-
+		if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Version Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
 		return $return_feed;
 	}
 }

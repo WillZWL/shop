@@ -18,62 +18,67 @@ font-size:8pt;
 <body topmargin="5" leftmargin="5" rightmargin="5" onload="if (parent.frames['printframe']){parent.frames['printframe'].focus();parent.frames['printframe'].print();}else{print();}" style="overflow:none;"><table border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tbody><tr>
 			<td colspan="2" align="left">
-				<p><img border=0 src="http://[:site_url:]/images/logo/[:logo:]"></p>
+				<p><img border=0 src="http://[:site_url:]/images/logo/[:logo:]" height="125"></p>
 			</td>
 		</tr>
 
 		<tr>
 			<td colspan="2" align="left">
-				<font color="#FF6600"><b><i><p>Thank you for shopping with [:site_url:]</p></i></b></font>
+				<font color="#FF6600"><b><i><p>Grazie per la compera con [:site_url:]</p></i></b></font>
 			</td>
 		</tr>
-
 <tr>
 			<td colspan="2" align="left">
-				<b><p style="font-size:18px;">Invoice</p></b>
+				<b><p style="font-size:18px;">Fattura</p></b>
 			</td>
 		</tr>
 
 		<tr>
 			<td width="50%" valign="top">
-				<b>Order Number:</b>
+				<b>No. Fattura/Ordine:</b>
 				<p>[:order_no:]</p>
 				<p> </p>
 			</td>
 			<td width="50%" valign="top">
-				<b>Order Date:</b>
+				<b>Data Ordine:</b>
 				<p>[:order_date:]</p>
 				<p> </p>
 			</td>
 		</tr>
 
-		<tr>
+                 <tr>
 			<td width="50%" valign="top">
-				<b></b>
+				<b>Ditta:</b>
+				<p>[:company_name:]</p>
+				<p></p>
 
 			</td>
-		</tr>
 
+			<td width="50%" valign="top">
+				<b>P.IVA / CF:</b>
+				<p>[:client_id_no:]</p>
+				<p></p>
+
+			</td>
+		    </tr>
 		<tr>
 			<td width="50%" valign="top">
-				<b>Ship To:</b>
+				<b>Spedisci a:</b>
 				<p>[:delivery_name:]</p>
-				<p> </p>
 				<p>[:delivery_address:]</p>
 				<p> </p>
 			</td>
 			<td width="50%" valign="top">
-				<b>Bill To:</b>
+				<b>Addebita a:</b>
 				<p>[:billing_name:]</p>
-				<p> </p>
 				<p>[:billing_address:]</p>
-				<p> </p>
+				<p></p>
 			</td>
 		</tr>
 
 		<tr>
 			<td width="50%" valign="top">
-				<b>Coupon Code Used:</b>
+				<b>Codice Coupon Usato:</b>
 				<p>[:promotion_code:]</p>
 				<p> </p>
 			</td>
@@ -87,45 +92,47 @@ font-size:8pt;
 		<tr>
 			<td colspan="2">
 				<table border="1" width="630" cellspacing="0" cellpadding="4">
-					<tbody><tr>
-						<td colspan="5" valign="top" bgcolor="#FFCC00" bordercolor="#666666" height="10px">
-							<b>Order Details</b>
+					<tr>
+						<td colspan="5" valign=top bgcolor="#FFCC00" bordercolor="#666666" height="10px">
+							<b>Dettagli Ordine</b>
 						</td>
 					</tr>
 
 					<tr>
-						<td width="330" colspan="2" valign"top"="" height="10px" bgcolor="#CCCCCC"><b>Description</b></td>
-						<td width="100" valign"top"="" height="10px" bgcolor="#CCCCCC"><b>Unit Price</b></td>
-						<td width="100" valign"top"="" height="10px" bgcolor="#CCCCCC"><b>Quantity</b></td>
-						<td width="100" valign"top"="" height="10px" bgcolor="#CCCCCC"><b>Total</b></td>
+						<td width="330" colspan="2" valign"top" height="10px" bgcolor="#CCCCCC"><b>Descrizione</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Prezzo unitario</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Quantità</b></td>
+						<td width="100" valign"top" height="10px" bgcolor="#CCCCCC"><b>Totale</b></td>
 					</tr>
-[:item_information:]
-<tr>
+
+					[:item_information:]
+
+					<tr>
 						<td colspan="2" rowspan="5" valign="top"> </td>
-						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Cost of Items</b></td>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Costo degli articoli</b></td>
 						<td valign="top"><b>[:sum_total:]</b></td>
 					</tr>
 
 					<tr>
-						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Delivery</b></td>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Consegna</b></td>
 						<td valign="top"><b>[:sid:]</b></td>
 					</tr>
 
 					<tr>
-						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Processing Fee</b></td>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Costi di Elaborazione</b></td>
 						<td valign="top"><b>[:processing_fee:]</b></td>
 					</tr>
 
 					<tr>
-						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Currency</b></td>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Valuta</b></td>
 						<td valign="top"><b>[:currency:]</b></td>
 					</tr>
 
 					<tr>
-						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Grand Total</b></td>
+						<td colspan="2" valign="top" bgcolor="#CCCCCC"><b>Totale generale</b></td>
 						<td valign="top"><b>[:grand_total:]</b></td>
 					</tr>
-			</tbody></table>
+			</table>
 		</td>
 	</tr>
 
@@ -134,7 +141,7 @@ font-size:8pt;
 			<p> </p>
 
 			<font size="-1">
-				<p>For return instructions, please contact us via our web form <a href="http://[:site_url:]/contact" target="_blank">here</a> and we will be happy to assist you further.</p>
+				<p>Se ti servono istruzioni per la restituzione,per cancellare il tuo ordine o per qualsiasi richiesta ,contattaci tramite il nostro modulo on-line <a href="http://[:site_url:]/display/view/contact" target="_blank">qui</a> e ti risponderemo il prima possibile.</p>
 			</font>
 		</td>
 	</tr>

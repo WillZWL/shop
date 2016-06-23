@@ -14,7 +14,11 @@ class CronUpdatePriceMargin extends MY_Controller
             $this->sc['PriceMargin']->getDao('PriceMargin')->db->save_queries = false;
             $platform_list = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList();
             foreach ($platform_list as $platform_obj) {
-                $this->sc['PriceMargin']->refreshProfitAndMargin($platform_obj->getSellingPlatformId());
+                $platform_id = $platform_obj->getSellingPlatformId();
+                $command = "sh -c \"date >> /var/log/php/cron.log; echo 'php index.php cron/CronUpdatePriceMargin/updateMargin/$platform_id'>>/var/log/php/cron.log;cd /var/www/html/panther/admincentre/;/usr/bin/php index.php cron/CronUpdatePriceMargin/updateMargin/$platform_id>>/var/log/php/cron.log\"";
+                error_log(__METHOD__ . ":" . __LINE__ . "Update PriceMargin ". $platform_id);
+                exec($command);
+                // $this->sc['PriceMargin']->refreshProfitAndMargin($platform_obj->getSellingPlatformId(););
             }
         } else {
             if ($sku === '') {
@@ -23,7 +27,10 @@ class CronUpdatePriceMargin extends MY_Controller
                 $this->sc['PriceMargin']->refreshProfitAndMargin($platform_id, $sku);
             }
         }
-        $this->sc['PriceMargin']->updatLastTime($id, $current_time);
+        //when finish the last platform, update last time
+        if ($platform_id == 'WEBNL') {
+            $this->sc['PriceMargin']->updatLastTime($id, $current_time);
+        }
     }
 
     public function getAppId()

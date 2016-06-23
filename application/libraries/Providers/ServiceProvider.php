@@ -565,5 +565,25 @@ class ServiceProvider implements ServiceProviderInterface
         $serviceContainer['CronShipmentEmail'] = function () {
             return new S\CronShipmentEmailService();
         };
+
+        $serviceContainer['EmailReferralList'] = function () {
+            return new S\EmailReferralListService();
+        };
+
+        $serviceContainer['DataExchange'] = function () {
+            return new S\DataExchangeService();
+        };
+
+        $serviceContainer['RmaExtract'] = function () {
+            return new S\RmaExtractService();
+        };
+
+        $serviceContainer['Chargeback'] = function () {
+            return new S\ChargebackService();
+        };
+
+        $serviceContainer['ProductWarranty'] = function () {
+            return new S\ProductWarrantyService();
+        };
     }
 }

@@ -11,14 +11,14 @@ class VbDataTransferExternalCategoryService extends VbDataTransferService
     {
         //Read the data sent from VB
         $xml_vb = simplexml_load_string($feed);
-
+        unset($feed);
         $task_id = $xml_vb->attributes()->task_id;
 
         //Create return xml string
         $xml = array();
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<external_categories task_id="'.$task_id.'">';
-
+        $error_message = '';
         foreach ($xml_vb->external_category as $external_category) {
             try {
                 if ($cat_obj = $this->getDao('ExternalCategory')->get(['id' => $external_category->id])) {
@@ -52,6 +52,7 @@ class VbDataTransferExternalCategoryService extends VbDataTransferService
                 $xml[] = '<is_error>'.$external_category->is_error.'</is_error>';
                 $xml[] = '<reason>'.$e->getMessage().'</reason>';
                 $xml[] = '</external_category>';
+                $error_message .= $external_category->id .'-'. $external_category->is_error .'-'. $e->getMessage()."\r\n";
             }
         }
 
@@ -59,6 +60,11 @@ class VbDataTransferExternalCategoryService extends VbDataTransferService
 
         $return_feed = implode("", $xml);
 
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'ExternalCategory Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 }

@@ -3298,7 +3298,7 @@ SQL;
         return FALSE;
     }
 
-    public function get_duplicate_purchase()
+    public function getDuplicatePurchase()
     {
         // The cron job may not run at the scheduled time sharp, so add 20 seconds in the SQL to cover this lag
         $sqlTimeBuffer = '00:00:20';
@@ -3306,27 +3306,27 @@ SQL;
 
         $sql =
             "
-            select distinct so.client_id, soi.prod_sku, p.name, so.so_no, so.order_create_date, so.currency_id, soi.unit_price
-                from so inner join so_item soi on so.so_no = soi.so_no left join product p on soi.prod_sku = p.sku
+            select distinct so.client_id, soid.item_sku, p.name, so.so_no, so.order_create_date, so.currency_id, soid.unit_price
+                from so inner join so_item_detail soid on so.so_no = soid.so_no left join product p on soid.item_sku = p.sku
             inner join
             (
-                select so_join.client_id, soi_join.prod_sku from so so_join inner join so_item soi_join on so_join.so_no = soi_join.so_no
+                select so_join.client_id, soid_join.item_sku from so so_join inner join so_item_detail soid_join on so_join.so_no = soid_join.so_no
                 where so_join.status in (2, 3)
                 and so_join.order_create_date >= subdate(addtime(now(), '{$sqlTimeBuffer}'), {$searchFromDayBefore})
-                group by so_join.client_id, soi_join.prod_sku
+                group by so_join.client_id, soid_join.item_sku
                 having count(distinct so_join.so_no) > 1
-            ) filterDuplicate on filterDuplicate.client_id = so.client_id and filterDuplicate.prod_sku = soi.prod_sku
+            ) filterDuplicate on filterDuplicate.client_id = so.client_id and filterDuplicate.item_sku = soid.item_sku
             where 1
-            and so.status >= 2          # only paid orders
+            and so.status >= 2
             and so.order_create_date >= subdate(addtime(now(), '{$sqlTimeBuffer}'), {$searchFromDayBefore})
-            and concat(so.client_id,'|',soi.prod_sku) in
+            and concat(so.client_id,'|',soid.item_sku) in
             (
-                select concat(so_today.client_id,'|',soi_today.prod_sku) from so so_today inner join so_item soi_today on so_today.so_no = soi_today.so_no
+                select concat(so_today.client_id,'|',soid_today.item_sku) from so so_today inner join so_item_detail soid_today on so_today.so_no = soid_today.so_no
                 where so_today.status in (2, 3)
                 and so_today.order_create_date >= subdate(addtime(now(), '{$sqlTimeBuffer}'), 1)
-                group by so_today.client_id, soi_today.prod_sku
+                group by so_today.client_id, soid_today.item_sku
             )
-            order by so.client_id, soi.prod_sku, so.order_create_date desc, so.so_no
+            order by so.client_id, so.so_no, soid.item_sku, so.order_create_date desc, so.so_no
         ";
 
         $result = $this->db->query($sql);
@@ -3441,7 +3441,7 @@ SQL;
                        so.platform_id,
                        soid.item_sku as merchant_sku,
                        so.order_create_date,
-                       concat_ws(" ", "c.title", "c.forename", "c.surname") as name,
+                       concat_ws(" ", CAST(c.title as CHAR), CAST(c.forename as CHAR), CAST(c.surname as CHAR)) as name,
                        so.delivery_address,
                        so.delivery_postcode,
                        so.delivery_city,
@@ -3606,6 +3606,313 @@ SQL;
     public function getNewSoNo()
     {
         return $this->db->query("SELECT next_value('so_no') as so_no")->row('so_no');
+    }
+
+    public function getRmaOrder($where = array(), $option = array())
+    {
+        $this->db->from('so');
+        $this->db->join('client c', 'c.id = so.client_id', 'INNER');
+        $this->db->join('selling_platform sp', 'so.platform_id = sp.selling_platform_id', 'INNER');
+        $this->db->where($where);
+        $select_str = 'so.so_no,
+                       so.biz_type,
+                       so.platform_id,
+                       so.client_id,
+                       so.order_create_date,
+                       concat_ws(" ", CAST(c.title as CHAR), CAST(c.forename as CHAR), CAST(c.surname as CHAR)) as name,
+                       c.email,
+                       so.delivery_address,
+                       so.delivery_postcode,
+                       so.delivery_city,
+                       so.delivery_state,
+                       so.delivery_country_id,
+                       so.currency_id,
+                       so.delivery_charge,
+                       so.amount,
+                       so.hold_status,
+                       so.refund_status,
+                       so.create_on,
+                       so.status,
+                       sp.type,
+                       so.dispatch_date';
+
+        $this->db->select($select_str);
+
+        if (isset($option["orderby"]))
+        {
+            $this->db->order_by($option["orderby"]);
+        }
+
+        // if (empty($option["limit"]))
+        // {
+        //  $option["limit"] = $this->rows_limit;
+        // }
+
+        elseif ($option["limit"] == -1)
+        {
+            $option["limit"] = "";
+        }
+
+        if (!isset($option["offset"]))
+        {
+            $option["offset"] = 0;
+        }
+
+        if ($this->rows_limit != "")
+        {
+            $this->db->limit($option["limit"], $option["offset"]);
+        }
+
+        if ($query = $this->db->get())
+        {
+            $rs = array();
+            //var_dump($query); die();
+            if($query->num_rows() > 0)
+            {
+                foreach ($query->result_array() as $row)
+                {
+                    $rs[] = $row;
+                }
+            }
+            return $rs;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+        public function getRmaItemDetails($where = array(), $option = array())
+        {
+        $this->db->from('so_item_detail soi');
+        $this->db->join('so so', 'so.so_no = soi.so_no', 'INNER');
+        // $this->db->join('so_item_detail soid', 'soid.so_no = soi.so_no AND soi.line_no = soid.line_no', 'INNER');
+        $this->db->join('so_allocate soa', 'soa.so_no = soi.so_no AND soa.line_no = soi.line_no AND soi.item_sku = soa.item_sku', 'INNER');
+        $this->db->join('so_shipment sos', 'soa.sh_no = sos.sh_no', 'INNER');
+        $this->db->join('product p', 'p.sku = soi.item_sku', 'INNER');
+        $this->db->join('product_content pc', 'pc.prod_sku = soi.item_sku', 'INNER');
+        $this->db->join('supplier_prod sp', 'sp.prod_sku = soi.item_sku', 'INNER');
+        $this->db->join('sku_mapping sm', 'sm.sku = soi.item_sku', 'LEFT');
+        $this->db->where($where);
+        $select_str = 'soi.so_no,
+                       soi.line_no,
+                       soi.item_sku as prod_sku,
+                       sm.ext_sku,
+                       p.sub_cat_id,
+                       p.sub_sub_cat_id,
+                       pc.prod_name,
+                       soi.qty,
+                       soi.unit_price,
+                       soi.cost as so_cost,
+                       soi.item_unit_cost as so_cost_hkd,
+                       sp.cost as sup_cost_today,
+                       sp.pricehkd as sup_cost_today_hkd,
+                       sp.currency_id as sup_currency,
+                       soi.warranty_in_month,
+                       soa.sh_no,
+                       sos.courier_id,
+                       sos.tracking_no,
+                       soi.create_on,
+                       pc.contents,
+                       so.currency_id';
+
+        $this->db->select($select_str);
+
+        if (isset($option["orderby"]))
+        {
+            $this->db->order_by($option["orderby"]);
+        }
+
+        if (empty($option["limit"]))
+        {
+            $option["limit"] = $this->rows_limit;
+        }
+
+        elseif ($option["limit"] == -1)
+        {
+            $option["limit"] = "";
+        }
+
+        if (!isset($option["offset"]))
+        {
+            $option["offset"] = 0;
+        }
+
+        if ($this->rows_limit != "")
+        {
+            $this->db->limit($option["limit"], $option["offset"]);
+        }
+
+        if ($query = $this->db->get())
+        {
+
+            // var_dump($this->db->last_query()); die();
+            $rs = array();
+            if($query->num_rows() > 0)
+            {
+                foreach ($query->result_array() as $row)
+                {
+                    $rs[] = $row;
+                }
+            }
+            return $rs;
+        }
+        else
+        {
+            // var_dump($this->db->last_query()); die();
+            return false;
+        }
+
+    }
+
+    public function getRmaClient($where = array(), $option = array())
+    {
+        $this->db->from('client');
+        $this->db->where($where);
+        $select_str = '*';
+
+        $this->db->select($select_str);
+
+        if (isset($option["orderby"]))
+        {
+            $this->db->order_by($option["orderby"]);
+        }
+
+        if (empty($option["limit"]))
+        {
+            $option["limit"] = $this->rows_limit;
+        }
+
+        elseif ($option["limit"] == -1)
+        {
+            $option["limit"] = "";
+        }
+
+        if (!isset($option["offset"]))
+        {
+            $option["offset"] = 0;
+        }
+
+        if ($this->rows_limit != "")
+        {
+            $this->db->limit($option["limit"], $option["offset"]);
+        }
+
+        if ($query = $this->db->get())
+        {
+
+            //var_dump($this->db->last_query()); die();
+            $rs = array();
+            if($query->num_rows() > 0)
+            {
+                foreach ($query->result_array() as $row)
+                {
+                    $rs[] = $row;
+                }
+            }
+            return $rs;
+        }
+        else
+        {
+            //var_dump($this->db->last_query()); die();
+            return false;
+        }
+
+    }
+
+    public function getMasterskuData($where = array(), $option = array())
+    {
+        $this->db->from('sku_mapping sk');
+        $this->db->join('product p', 'p.sku = sk.sku', 'INNER');
+        $this->db->join('product_content pc', 'pc.prod_sku = p.sku', 'INNER');
+        $this->db->join('supplier_prod sp', 'sp.prod_sku = p.sku', 'INNER');
+        $this->db->where($where);
+        $select_str = 'p.sku, sk.ext_sku, p.name, pc.contents,
+                sp.cost as sup_cost_today,
+                sp.cost as sup_cost_today_hkd,
+                sp.currency_id as sup_currency';
+
+        $this->db->select($select_str);
+
+        if ($query = $this->db->get())
+        {
+
+            // var_dump($this->db->last_query()); die();
+            $rs = array();
+            if($query->num_rows() > 0)
+            {
+                foreach ($query->result_array() as $row)
+                {
+                    $rs[] = $row;
+                }
+            }
+            return $rs;
+        }
+        else
+        {
+            //var_dump($this->db->last_query()); die();
+            return false;
+        }
+
+    }
+
+    public function getRmaRefundDetails($where = array(), $option = array())
+    {
+        $this->db->from('refund a');
+        $this->db->join('so e', 'e.so_no = a.so_no', 'INNER');
+        $this->db->join('refund_item b', 'a.id = b.refund_id', 'INNER');
+        $this->db->join('refund_reason d', 'a.reason = d.id', 'INNER');
+        $this->db->where($where);
+        $select_str = 'a.id, a.so_no, e.refund_status, a.status as order_refund_status, a.total_refund_amount, d.description, b.line_no, b.item_sku, b.qty, b.refund_amount, b.status as item_refund_status, b.refund_type,
+                a.create_on, a.create_by';
+
+        $this->db->select($select_str);
+
+        if ($query = $this->db->get())
+        {
+
+            // var_dump($this->db->last_query()); die();
+            $rs = array();
+            if($query->num_rows() > 0)
+            {
+                foreach ($query->result_array() as $row)
+                {
+                    $rs[] = $row;
+                }
+            }
+            return $rs;
+        }
+        else
+        {
+            //var_dump($this->db->last_query()); die();
+            return false;
+        }
+    }
+
+    public function getRiaOrder($where = array(), $option = array(), $classname = 'riaControlDto')
+    {
+        $option['limit'] = -1;
+        $this->db->from('flex_ria fri');
+        $this->db->join('so', 'so.so_no = fri.so_no', 'LEFT');
+        $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'LEFT');
+        $this->db->where('so.refund_status != 4 AND so.status != 0');
+        $this->db->order_by("so.so_no, fri.txn_time");
+        $select_str = 'so.so_no, fri.txn_time as fri_txn_time, so.dispatch_date, fri.gateway_id, fri.txn_id as fri_txn_id, fri.amount as fri_amount, so.amount as so_amount, so.currency_id, so.status as so_status, fri.status as fri_status, fri.amount as ria_control';
+        return $this->commonGetList($classname, $where, $option, $select_str);
+    }
+
+    public function getFullyRefundReport($where = array(), $option = array(), $classname = 'riaControlDto')
+    {
+        $option['limit'] = -1;
+        $this->db->from('flex_refund fre');
+        $this->db->join('flex_ria fri', 'fre.so_no = fri.so_no', 'LEFT');
+        $this->db->join('so', 'fri.so_no = so.so_no', 'LEFT');
+        $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'LEFT');
+        $this->db->where("fre.status = 'R'");
+        $this->db->order_by('so.so_no, fre.txn_time');
+        $select_str = 'so.so_no, fri.txn_time as fri_txn_time, fre.txn_time as fre_txn_time, fre.gateway_id, fri.txn_id as fri_txn_id, fre.internal_txn_id as fre_txn_id, fri.amount as fri_amount, fre.amount as fre_amount, so.currency_id, fri.status as fri_status, fre.status as fre_status, fri.amount as ria_control';
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
 }

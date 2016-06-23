@@ -13,15 +13,6 @@ class Credit_check extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        /*$this->load->model('order/sc['creditCheckModel']');
-        $this->load->helper(array('url', 'notice', 'object', 'operator'));
-        $this->load->library('service/pagination_service');
-        $this->load->library('service/event_service');
-        $this->load->library('service/delivery_option_service');
-        $this->load->library('service/context_config_service');
-        $this->load->library('service/platform_biz_var_service');
-        $this->load->library('encrypt');
-        $this->load->library('service/so_refund_score_service');*/
 
         $this->paginationService = new PaginationService;
     }
@@ -30,7 +21,7 @@ class Credit_check extends MY_Controller
     {
         $sub_app_id = $this->getAppId() . "00";
 
-        $_SESSION["CCLISTPAGE"] = base_url() . "order/credit_check/" . ($pagetype ? "index/" . $pagetype : "") . "?" . $_SERVER['QUERY_STRING'];
+        $_SESSION["LISTPAGE"] = $_SESSION["CCLISTPAGE"] = base_url() . "order/credit_check/" . ($pagetype ? "index/" . $pagetype : "") . "?" . $_SERVER['QUERY_STRING'];
         $_SESSION["CC_QSTRING"] = $_SERVER['QUERY_STRING'];
 
         $where = array();
@@ -47,6 +38,8 @@ class Credit_check extends MY_Controller
             $where["sops.payment_gateway_id"] = "moneybookers";
             $where["so.status"] = "1";
             $where["so.biz_type <> "] = "OFFLINE";
+
+
         } elseif ($pagetype == "challenged") {
             $where["sops.payment_status"] = "P";
             $where["sops.pending_action"] = "CC";
@@ -136,6 +129,8 @@ class Credit_check extends MY_Controller
             $data["pmgw_card_list"][$card_obj->getCardId()] = $card_obj->getCardName();
         }
 
+        $data['save_order'] = [];
+
         if ($data["objlist"]) {
             //include_once(APPPATH . "libraries/service/Payment_gateway_redirect_cybersource_service.php");
             $cybs = $this->sc["PaymentGatewayRedirectCybersource"];
@@ -147,6 +142,10 @@ class Credit_check extends MY_Controller
                     $note_list = $this->sc['So']->getDao('OrderNotes')->getList(array("so_no" => $obj->getSoNo(), "type" => "O"));
                     foreach ($note_list AS $note) {
                         $temp[] = $note->getNote() . ' (' . $note->getCreateOn() . ')';
+
+                        if ($note->getNote() == "Saved from CC, held wait for customer's decision") {
+                            $data['save_order'][$obj->getSoNo()] = 1;
+                        }
                     }
                 } else {
                     $note_list = $this->sc['So']->getDao('OrderNotes')->getList(array("so_no" => $obj->getSoNo(), "type" => "C"));
@@ -163,6 +162,20 @@ class Credit_check extends MY_Controller
                 $data["order_note"][$obj->getSoNo()] = implode('<br />', $temp);
             }
         }
+
+        $r_where = [];
+        $r_where["reason_type in (
+            'change_of_address',
+            'confirmation_required',
+            'customer_request',
+            'oc_fraud',
+            'csvv',
+            'cscc'
+        ) and reason_cat != 'OT' "] = null;
+
+        $data["reason_list"] = $this->sc['So']->getDao('HoldReason')->getList(array_merge($r_where,['status'=>1]), ['orderby'=>'reason_cat asc, description asc', 'limit'=>-1]);
+
+
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
@@ -339,12 +352,12 @@ class Credit_check extends MY_Controller
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                if (in_array($this->input->post("reason"), array("cscc", "csvv", "confirmed_fraud"))) {
+                if (in_array($this->input->post("reason"), array("cscc", "csvv", "oc_fraud"))) {
                     $so_obj->setHoldStatus(1);
-                    $so_obj->setHoldReason($this->input->post("reason"));
+                    // $so_obj->setHoldReason($this->input->post("reason"));
                 } else {
                     $so_obj->setHoldStatus(2);
-                    $so_obj->setHoldReason($this->input->post("reason"));
+                    // $so_obj->setHoldReason($this->input->post("reason"));
                 }
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
@@ -365,7 +378,7 @@ class Credit_check extends MY_Controller
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
                             }
                         }
-                        if ($this->input->post("reason") == "confirmed_fraud") {
+                        if ($this->input->post("reason") == "oc_fraud") {
                             $action = "update";
                             $socc_obj = $this->sc['So']->getDao('SoCreditChk')->get(array("so_no" => $so_no));
                             if (!$socc_obj) {
@@ -451,13 +464,15 @@ class Credit_check extends MY_Controller
         $pbv_obj = $this->sc['PlatformBizVar']->getPlatformBizVar($so_obj->getPlatformId());
         if (($pbv_obj->getPlatformCountryId() == '') || ($pbv_obj->getLanguageId() == '')) {
             $lang_id = "en";
-            $country_id = "US";
         } else {
             $lang_id = trim($pbv_obj->getLanguageId());
-            $country_id = trim($pbv_obj->getPlatformCountryId());
         }
-        include_once(APPPATH . "hooks/Country_selection.php");
-        $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
+
+        $cur_platform_id = $so_obj->getPlatformId();
+
+        if ($site_config_arr = $this->sc['So']->getSiteConfig($cur_platform_id)) {
+            $replace = array_merge($replace, $site_config_arr);
+        }
 
         $client = $this->sc['Client']->getDao('Client')->get(array("id" => $so_obj->getClientId()));
         $replace["forename"] = $client->getForename();
@@ -469,6 +484,7 @@ class Credit_check extends MY_Controller
 
         $dto = new \EventEmailDto();
 
+        $dto->setPlatformId($cur_platform_id);
         $dto->setMailFrom($from_email);
         $dto->setMailTo($client->getEmail());
         $dto->setLangId($lang_id);
@@ -639,7 +655,7 @@ class Credit_check extends MY_Controller
         }
     }
 
-    public function confirmed_fraud($so_no = "")
+    public function oc_fraud($so_no = "", $reason_id = "")
     {
         if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
             $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -649,7 +665,7 @@ class Credit_check extends MY_Controller
             } else {
                 if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
                     $sohr_vo->setSoNo($so_no);
-                    $sohr_vo->setReason("confirmed_fraud");
+                    $sohr_vo->setReason($reason_id);
                     if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
@@ -796,20 +812,10 @@ class Credit_check extends MY_Controller
         if (!$operation)
             redirect($_SESSION["CCLISTPAGE"]);
 
-        $reason = $this->input->post('reason');
-        /*
-        $operation = array(
-                232453 => 'approve',
-                232429 => 'hold',
-                232428 => 'delete');
-        ** $reason contains ALL the so_no's corresponding hold data, no matter that so_no order is selected or not.
-        $reason = array(
-                232453 => 'change_of_address',
-                232429 => 'confirmation_required',
-                232428 => 'confirmed_fraud');
-        */
+        $reasonArr = $this->input->post('reason');
+
         foreach ($operation as $so_no => $operation_type) {
-            if (!$this->all_in_one($so_no, $operation_type, $reason[$so_no])) {
+            if (!$this->all_in_one($so_no, $operation_type, $reasonArr[$so_no])) {
                 if (isset($_SESSION["CCLISTPAGE"])) {
                     redirect($_SESSION["CCLISTPAGE"]);
                 } else {
@@ -826,8 +832,11 @@ class Credit_check extends MY_Controller
     }
 
 
-    public function all_in_one($so_no, $operation_type, $reason)
+    public function all_in_one($so_no, $operation_type, $reason_id)
     {
+        $reasonObj = $this->sc['So']->getDao('HoldReason')->get(['id'=>$reason_id]);
+        $reason_type = $reasonObj->getReasonType();
+
         if ($operation_type == 'delete') {
             if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
                 $_SESSION["NOTICE"] = $this->db->_error_message();
@@ -865,33 +874,27 @@ class Credit_check extends MY_Controller
                 if (empty($so_obj)) {
                     $_SESSION["NOTICE"] = "$so_no order not found";
                 } else {
-                    if (in_array($reason, array("cscc", "csvv", "confirmed_fraud"))) {
+                    if (in_array($reason_type, array("cscc", "csvv", "oc_fraud"))) {
                         $so_obj->setHoldStatus(1);
-                        $so_obj->setHoldReason($reason);
                     } else {
                         $so_obj->setHoldStatus(2);
-                        $so_obj->setHoldReason($reason);
                     }
 
                     if ($this->sc['So']->getDao('So')->update($so_obj)) {
                         if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
                             $sohr_vo->setSoNo($so_no);
-                            $sohr_vo->setReason($reason);
+                            $sohr_vo->setReason($reason_id);
                             if (!$this->sc['So']->getDao('SoHoldReason')->insert($sohr_vo)) {
                                 $_SESSION["NOTICE"] = $this->db->_error_message();
                             }
-                            //if (in_array($reason, array("cscc", "csvv"))) {
-                                //Commented out as requested by CS, send email only after manager reviewed
-                                //$this->sc['creditCheckModel']->fire_cs_request($so_no,$this->input->post("reason"));
-                            //}
-                            if (in_array($reason, array("change_of_address", "confirmation_required", "customer_request"))) {
+
+                            if (in_array($reason_type, array("change_of_address", "confirmation_required", "customer_request"))) {
                                 $so_obj->setHoldStatus(1);
-                                $so_obj->setHoldReason($reason);
                                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                                     $_SESSION["NOTICE"] = $this->db->_error_message();
                                 }
                             }
-                            if ($reason == "confirmed_fraud") {
+                            if ($reason == "oc_fraud") {
                                 $action = "update";
 
 

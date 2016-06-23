@@ -3,44 +3,11 @@
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/jquery.js"></script>
 
     <script>
-        /*function isValidDate(inputDate)
-         {
-         var result = inputDate.search(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])/);
-         return (result >= 0) ? true : false;
-         }
-
-         function checkFormInput()
-         {
-         var start_date = document.getElementById("start_date").value;
-         var end_date = document.getElementById("end_date").value;
-         var so_number = document.getElementById("so_number").value;
-         var message = "";
-
-         if ((so_number == "")
-         && ((start_date == "") || (end_date == "")))
-         message += "You need to put a order number or a date range!\n";
-         else if (so_number == "")
-         {
-         if (!isValidDate(start_date))
-         message += "Not a valid start date!\n";
-         if (!isValidDate(end_date))
-         message += "Not a valid end date!\n";
-         }
-         if (message != "")
-         {
-         alert(message);
-         return false;
-         }
-         else
-         return true;
-         }
-         */
-
-
         $(function () {
             $(".button_edit").click(function (e) {
                 e.preventDefault();
@@ -52,7 +19,6 @@
 
 
                 var this_original_email = this_email_box.attr("data");
-                //var this_original_email = this_email_box.val();
 
                 var readonly_attr = $(this).attr('readonly');
 
@@ -174,15 +140,12 @@
         $total_number_of_records = "";
         //print heading
         print "<tr bgcolor='#000000'>";
-        //print "<td height='20' width='20' class='tableField'>&nbsp;</td>";
         print "<td class='tableField'>" . $lang['client_id'] . "</td>";
         print "<td class='tableField'>" . $lang['Email'] . "</td>";
         print "<td class='tableField'>" . $lang['client_name'] . "</td>";
         print "<td class='tableField'>" . $lang['ip_address'] . "</td>";
         print "<td class='tableField'>" . $lang['address'] . "</td>";
         print "<td class='tableField'>" . $lang['postal_code'] . "</td>";
-        //print "<td class='tableField' align='center'>" . $lang['edit'] . "</td>";
-        //print "<td class='tableField' align='center'>" . $lang['delete'] . "</td>";
         print "<td class='tableField' align='center'> </td>";
         print "</tr>";
         //content
@@ -191,33 +154,32 @@
         $rowcount = 0;
 
         //print heading
-        //var_dump($email_referral_list);die();
-        foreach ($email_referral_list as $per_email_info) {
+        foreach ($email_referral_list as $perEmailInfo) {
             $row_style = "row" . $rowcount % 2;
             ?>
-            <form id="f_<?= $per_email_info->get_id() ?>"
-                  action="<?= base_url() . "order/email_referral_list_management/index/{$per_email_info->get_id()}" ?>"
+            <form id="f_<?= $perEmailInfo->getId() ?>"
+                  action="<?= base_url() . "order/email_referral_list_management/index/{$perEmailInfo->getId()}" ?>"
                   method="post">
                 <tr class="<?= $row_style ?>" name="row<?= $rowcount ?>">
-                    <td><?= $per_email_info->get_client_id() ?></td>
-                    <td><input name='email' class='readonly_box' id='<?= 'e_' . $per_email_info->get_id() ?>'
-                               type='text' value="<?= $per_email_info->get_email() ?>" readonly style="width:200px"
-                               data="<?= $per_email_info->get_email() ?>"></td>
-                    <td><?= $per_email_info->get_surname() . ' ' . $per_email_info->get_forename() ?></td>
-                    <td><?= $per_email_info->get_create_at() ?></td>
-                    <!-- <td><?= $per_email_info->get_address_1() . ',' . $per_email_info->get_address_2() . ',' . $per_email_info->get_address_3() ?></td> -->
-                    <td><?= $per_email_info->get_address() ?></td>
-                    <td><?= $per_email_info->get_postcode() ?></td>
+                    <td><?= $perEmailInfo->getClientId() ?></td>
+                    <td><input name='email' class='readonly_box' id='<?= 'e_' . $perEmailInfo->getId() ?>'
+                               type='text' value="<?= $perEmailInfo->getEmail() ?>" readonly style="width:200px"
+                               data="<?= $perEmailInfo->getEmail() ?>"></td>
+                    <td><?= $perEmailInfo->getSurname() . ' ' . $perEmailInfo->getForename() ?></td>
+                    <td><?= $perEmailInfo->getCreateAt() ?></td>
+                    <!-- <td><?= $perEmailInfo->getAddress1() . ',' . $perEmailInfo->getAddress2() . ',' . $perEmailInfo->getAddress3() ?></td> -->
+                    <td><?= $perEmailInfo->getAddress() ?></td>
+                    <td><?= $perEmailInfo->getPostcode() ?></td>
                     <td style='width:120px;text-align:center'>
-                        <button class="button_edit" style='visibility:hidden' data='<?= $per_email_info->get_id() ?>'>
+                        <button class="button_edit" style='visibility:hidden' data='<?= $perEmailInfo->getId() ?>'>
                             Edit
                         </button>
-                        <button class="button_delete" style='visibility:hidden' data='<?= $per_email_info->get_id() ?>'>
+                        <button class="button_delete" style='visibility:hidden' data='<?= $perEmailInfo->getId() ?>'>
                             Delete
                         </button>
                     </td>
 
-                    <input id='flag_type_<?= $per_email_info->get_id() ?>' type="hidden" name="post" value="update">
+                    <input id='flag_type_<?= $perEmailInfo->getId() ?>' type="hidden" name="post" value="update">
                 </tr>
             </form>
             <?php
@@ -233,7 +195,7 @@
         </tr>
     </table>
 
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
 </div>
 </div>
 

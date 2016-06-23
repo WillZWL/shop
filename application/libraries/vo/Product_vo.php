@@ -45,7 +45,7 @@ class Product_vo extends Base_vo
     private $modify_by;
     private $surplus_quantity = 0;
     private $slow_move_7_days;
-
+    private $accelerator_salesrpt_bd;
     //primary key
     private $primary_key = array("sku");
 
@@ -501,6 +501,17 @@ class Product_vo extends Base_vo
     public function set_modify_by($value)
     {
         $this->modify_by = $value;
+        return $this;
+    }
+
+    public function get_accelerator_salesrpt_bd()
+    {
+        return $this->accelerator_salesrpt_bd;
+    }
+
+    public function set_accelerator_salesrpt_bd($value)
+    {
+        $this->accelerator_salesrpt_bd = $value;
         return $this;
     }
 

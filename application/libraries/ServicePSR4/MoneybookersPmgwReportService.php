@@ -213,6 +213,36 @@ class MoneybookersPmgwReportService extends PmgwReportService
         return false;
     }
 
+    protected function createInterfaceFlexRia($batch_id, $status, $dto_obj, $include_fsf = true)
+    {
+        $ifr_obj = $this->getDao("InterfaceFlexRia")->get();
+        if ($dto_obj->getReference()) {
+            if ($so_obj = $this->getDao('So')->get(array("so_no" => $dto_obj->getReference()))) {
+                $dto_obj->setSoNo($so_obj->getSoNo());
+            }
+        }
+        $ifr_obj->setSoNo($dto_obj->getSoNo());
+        $ifr_obj->setFlexBatchId($batch_id);
+        $ifr_obj->setGatewayId($this->getPmgw());
+        $ifr_obj->setTxnId($dto_obj->getTxnId());
+        $ifr_obj->setTxnTime($dto_obj->getDate());
+        $ifr_obj->setCurrencyId($dto_obj->getCurrencyId());
+        $ifr_obj->setAmount($dto_obj->getAmount());
+        $ifr_obj->setStatus($status);
+        $ifr_obj->setBatchStatus("N");
+        if (!$ifr_obj->getSoNo()) {
+            $ifr_obj->setSoNo(" ");
+            $ifr_obj->setBatchStatus("F");
+            $ifr_obj->setFailedReason(PmgwReportService::WRONG_TRANSACTION_ID);
+        }
+        if ($this->getDao("InterfaceFlexRia")->insert($ifr_obj) && $ifr_obj->getBatchStatus() != "F") {
+            if ($include_fsf) {
+                $this->insertSoFeeFromRiaRecord($batch_id, $status, $dto_obj);
+            }
+        }
+        return $ifr_obj;
+    }
+
     public function insertSoFeeFromRiaRecord($batch_id, $status, $dto_obj)
     {
         return false;

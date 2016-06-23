@@ -13,7 +13,7 @@ class VbDataTransferFreightCatService extends VbDataTransferService
 		// exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-
+		unset($feed);
 		$task_id = $xml_vb->attributes()->task_id;
 
 		//Create return xml string
@@ -22,6 +22,7 @@ class VbDataTransferFreightCatService extends VbDataTransferService
 		$xml[] = '<freight_cats task_id="' . $task_id . '">';
 
 		$c = count($xml_vb->freight_cat);
+		$error_message = '';
 		foreach($xml_vb->freight_cat as $freight_cat)
 		{
 			$c--;
@@ -81,14 +82,18 @@ class VbDataTransferFreightCatService extends VbDataTransferService
 				$xml[] = '<is_error>' . $freight_cat->is_error . '</is_error>';
 				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</freight_cat>';
+
+				$error_message .= $freight_cat->id .'-'. $freight_cat->is_error .'-'. $e->getMessage()."\r\n";
 			}
 		 }
 
 		$xml[] = '</freight_cats>';
-
-
 		$return_feed = implode("", $xml);
-
+		if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'FreightCategory Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
 		return $return_feed;
 	}
 }

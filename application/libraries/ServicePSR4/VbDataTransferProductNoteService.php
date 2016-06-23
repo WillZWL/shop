@@ -23,7 +23,7 @@ class VbDataTransferProductNoteService extends VbDataTransferService
 		// exit;
 		//Read the data sent from VB
 		$xml_vb = simplexml_load_string($feed);
-
+		unset($feed);
 		$task_id = $xml_vb->attributes()->task_id;
 
 		//Create return xml string
@@ -32,7 +32,7 @@ class VbDataTransferProductNoteService extends VbDataTransferService
 		$xml[] = '<products task_id="' . $task_id . '">';
 
 		$current_sku = "";
-
+		$error_message = '';
 		$c = count($xml_vb->product);
 		foreach($xml_vb->product as $pc)
 		{
@@ -124,6 +124,7 @@ class VbDataTransferProductNoteService extends VbDataTransferService
 				$xml[] = '<is_error>' . $pc->is_error . '</is_error>';
 				$xml[] = '<reason>' . $e->getMessage() . '</reason>';
 				$xml[] = '</product>';
+				$error_message .= $pc->sku .'-'. $pc->platform_id .'-'. $pc->master_sku .'-'. $pc->is_error .'-'. $e->getMessage()."\r\n";
 			}
 		 }
 
@@ -131,6 +132,11 @@ class VbDataTransferProductNoteService extends VbDataTransferService
 
 		$return_feed = implode("", $xml);
 
+		if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Product Note Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
 		return $return_feed;
 	}
 }

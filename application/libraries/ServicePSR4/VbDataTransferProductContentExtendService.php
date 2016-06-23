@@ -17,6 +17,7 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<products task_id="' . $task_id . '">';
 
+        $error_message = '';
         foreach($xml_vb->product as $pce)
         {
             try
@@ -95,6 +96,7 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
                 $xml[] = '<is_error>' . $pce->is_error . '</is_error>';
                 $xml[] = '<reason>' . $e->getMessage() . '</reason>';
                 $xml[] = '</product>';
+                $error_message .= $pce->prod_sku .'-'. $pce->lang_id .'-'. $pce->master_sku .'-'. $pce->is_error .'-'. $e->getMessage();
             }
          }
 
@@ -102,6 +104,11 @@ class VbDataTransferProductContentExtendService extends VbDataTransferService
 
         $return_feed = implode("", $xml);
 
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Product Content Extend Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 

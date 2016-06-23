@@ -47,12 +47,12 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
 
         if ($query = $this->db->query($sql, $id)) {
             $cat = $query->row()->cat;
-            $reason = $query->row()->reason;
+            // $reason = $query->row()->reason;
             $reason_type = $query->row()->reason_type;
-            $hrcategory = ["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs", "OT"=>"Others"];
-            $hold_reason = $reason_type . " " . $hrcategory[$cat] ." - ". $reason;
+            // $hrcategory = ["CS"=>"Hold By Customer Service","COMP"=>"Hold By Compliance","LG"=>"Hold By Logisitcs", "OT"=>"Others"];
+            // $hold_reason = $reason_type . " " . $hrcategory[$cat] ." - ". $reason;
 
-            return $hold_reason;
+            return $reason_type;
         }
 
         return FALSE;
@@ -74,9 +74,11 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
     {
         $this->db->from("so_hold_reason sh");
 
+        $this->db->join("hold_reason hr", "hr.id = sh.reason", "INNER");
+
         $this->db->join("user u", "u.id = sh.create_by", "INNER");
 
-        $this->db->select("sh.reason, u.username, sh.create_on");
+        $this->db->select("hr.reason_type reason, u.username, sh.create_on");
 
         $this->db->order_by("sh.create_on DESC");
 

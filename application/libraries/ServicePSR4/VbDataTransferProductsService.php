@@ -21,6 +21,7 @@ class VbDataTransferProductsService extends VbDataTransferService
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?>';
         $xml[] = '<products task_id="'.$task_id.'" is_error_task="'.$is_error_task.'">';
 
+        $error_message = '';
         foreach ($xml_vb->product as $product) {
             try {
                 $master_sku = (string) $product->master_sku;
@@ -62,6 +63,10 @@ class VbDataTransferProductsService extends VbDataTransferService
                     }
                 }
 
+                if ($product_obj) {
+                    $this->getService('ProductWarranty')->autoCreateProductWarranty($product_obj);
+                }
+
                 $xml[] = '<product>';
                 $xml[] = '<sku>'.$vb_sku.'</sku>';
                 $xml[] = '<master_sku>'.$master_sku.'</master_sku>';
@@ -77,12 +82,17 @@ class VbDataTransferProductsService extends VbDataTransferService
                 $xml[] = '<is_error>'.$product->is_error.'</is_error>';
                 $xml[] = '<reason>'.$e->getMessage().'</reason>';
                 $xml[] = '</product>';
+                $error_message .= $vb_sku .'-'. $master_sku .'-'. $product->is_error .'-'. $e->getMessage() ."\r\n";
             }
         }
 
         $xml[] = '</products>';
         $return_feed = implode("", $xml);
-
+        if ($error_message) {
+            mail('data_transfer@eservicesgroup.com', 'Product Transfer Failed', "Error Message :".$error_message);
+        }
+        unset($xml);
+        unset($xml_vb);
         return $return_feed;
     }
 }

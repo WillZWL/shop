@@ -604,8 +604,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
     public function testCourierFeed($courier='DHL')
     {
-        $so_no = $this->input->get("so_no");
-
+        $so_no[] = $this->input->get("so_no");
         $ret = $this->sc['CourierFeed']->generateCourierFile($so_no, $courier, 'Test Mawb', true);
         $_SESSION['courier_file'] = $ret;
         $this->getCourierFile($ret);

@@ -109,6 +109,7 @@ class EmailService extends BaseService
             $phpmail->addAttachment($email['att_file']);
         }
 
+
         $phpmail->Subject = $email['subject'];
 
         return $phpmail->Send();
