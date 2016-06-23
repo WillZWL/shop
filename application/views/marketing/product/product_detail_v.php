@@ -576,7 +576,7 @@
                         </tr>
                         <tr>
                             <td class="field"><?=$lang["accelerator_salesrpt_bd"]?></td>
-                            <td class="value"><input type="checkbox" name="accelerator_salesrpt_bd" value="1" <?=$product->getAcceleratorSalesrptBd()?"CHECKED":""?>></td>
+                            <td class="value"><input type="checkbox" name="accelerator_salesrpt_bd" value="1" <?=$product->get_accelerator_salesrpt_bd()?"CHECKED":""?>></td>
                             <td class="field"></td>
                             <td class="value"></td>
                         </tr>
