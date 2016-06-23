@@ -236,7 +236,21 @@ class BatchTrackingInfoService extends BaseBatchService
 
 							if ($soObj->getDispatchDate() == '0000-00-00 00:00:00')
 							{
-								$soObj->setDispatchDate(date("Y-m-d H:i:s"));
+								$disDate = $itinfoObj->getDispatchDate();
+
+								if ($disDate) {
+									list($dd, $mm, $yy) = explode('/', $disDate);
+									$hh = date('H', time());
+									$ii = date('i', time());
+									$ss = date('s', time());
+									$newDate = mktime($hh,$ii,$ss,$mm,$dd,$yy);
+									$newDispatchDate = date("Y-m-d h:i:s", $newDate);
+								} else {
+									$newDispatchDate = date("Y-m-d h:i:s", time());
+								}
+
+								$soObj->setDispatchDate($newDispatchDate);
+
 								$needUpdate = 1;
 							}
 
