@@ -116,14 +116,14 @@
                                     ?>
                                 </select>
                             </td>
-                            <td><?= $lang["is_china_oem"] ?></td>
-                            <td>
+                            <td><?= $lang["is_china_oem"] ?>
                                 <select name="china_oem" id="china_oem">
                                     <option value="-1"><?= $lang["include"] ?></option>
                                     <option value="0"><?= $lang["exclude"] ?></option>
                                     <option value="1"><?= $lang["only_show"] ?></option>
                                 </select>
                             </td>
+                            <td><input type="checkbox" name="accelerator_salesrpt_bd" id="accelerator_salesrpt_bd" value="1"><?=$lang["accelerator_salesrpt_bd"]?></td>
                             <td align='right'><b><?= $lang["end_date"] ?></b></td>
                             <td>
                                 <input id="end_date" name="end_date"

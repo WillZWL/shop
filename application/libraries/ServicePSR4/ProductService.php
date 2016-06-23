@@ -46,6 +46,7 @@ class ProductService extends BaseProductService
         //$newObj->setCatUpselling((string)$oldObj->cat_upselling);
         $newObj->setLangRestricted((string)$oldObj->lang_restricted);
         $newObj->setShipmentRestrictedType((string)$oldObj->shipment_restricted_type);
+        $newObj->setProductWarrantyType((string)$oldObj->product_warranty_type);
         $newObj->setStatus((string)$oldObj->status);
     }
 

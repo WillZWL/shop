@@ -287,9 +287,10 @@
                             ?>
                                         <?php
                                             if ($robj->getReasonType() == "confirmation_required") :
+                                                // $is_disabled = ($save_order[$obj->getSoNo()]) ? " disabled" : '';
                                         ?>
                                             <input type="button" id="reason" name="reason" value="<?= $lang["hrcategory"][$robj->getReasonCat()] . " - Save Order" ?> "
-                                                onClick="Redirect('<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>/<?= $robj->getId() ?>')"><br>
+                                                onClick="Redirect('<?= base_url() ?>order/on_hold_admin/hold/<?= $obj->getSoNo() ?>?cf=<?= $robj->getId() ?>')"><br>
                                         <?php
                                             endif;
                                         ?>
@@ -378,7 +379,7 @@
                                         if ($reason_list) :
                                             foreach ($reason_list as $robj) :
                                     ?>
-                                        <option value="<?= $robj->getId() ?>"><?= $lang["hrcategory"][$robj->getReasonCat()] . " - " . $robj->getDescription() ?></option>
+                                        <option value="<?= $robj->getId() ?>"><?= $robj->getDescription() ?></option>
                                     <?php
                                             endforeach;
                                         endif;
