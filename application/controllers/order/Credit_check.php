@@ -418,6 +418,7 @@ class Credit_check extends MY_Controller
         $where["so.hold_status"] = "1";
         $where["so.status >"] = "1";
         $where["so.status <"] = "6";
+        $where["cc_reminder_schedule_date >"] = '0000-00-00 00:00:00';
         $where["cc_reminder_schedule_date <="] = date('Y-m-d H:i:s', time());
 
         if (($so_list = $this->sc['So']->getDao('So')->getList($where, array('limit' => '-1'))) === FALSE) {
@@ -438,8 +439,8 @@ class Credit_check extends MY_Controller
                     $this->send_low_risk_cc_reminder($so);
                 }
 
-                $so->setCcReminderType(NULL);
-                $so->setCcReminderScheduleDate(NULL);
+                $so->setCcReminderType('');
+                $so->setCcReminderScheduleDate('0000-00-00 00:00:00');
                 if (!$this->sc['So']->getDao('So')->update($so)) {
                     $_SESSION["NOTICE"] = $this->db->_error_message();
                 }
@@ -520,8 +521,8 @@ class Credit_check extends MY_Controller
                 $this->communication_center_email_common($so_obj, $replace, "apr_fulfill", "apr_fulfill");
 
                 // Update SO
-                $so_obj->setCcReminderScheduleDate(NULL);
-                $so_obj->setCcReminderType(NULL);
+                $so_obj->setCcReminderScheduleDate('0000-00-00 00:00:00');
+                $so_obj->setCcReminderType('');
                 $so_obj->setHoldStatus(0);
                 if ($so_obj->getStatus() < 3) {
                     $so_obj->setStatus(3);
@@ -556,8 +557,8 @@ class Credit_check extends MY_Controller
 
                 // Update SO
                 if (!is_null($so_obj->getCcReminderScheduleDate())) {
-                    $so_obj->setCcReminderScheduleDate(NULL);
-                    $so_obj->setCcReminderType(NULL);
+                    $so_obj->setCcReminderScheduleDate('0000-00-00 00:00:00');
+                    $so_obj->setCcReminderType('');
 
                     if(!$this->sc['So']->getDao('So')->update($so_obj)){
                     //if (!$this->sc['So']->getDao('So')->update($so_obj)) {
@@ -590,8 +591,8 @@ class Credit_check extends MY_Controller
 
                 // Update SO
                 if (!is_null($so_obj->getCcReminderScheduleDate())) {
-                    $so_obj->setCcReminderScheduleDate(NULL);
-                    $so_obj->setCcReminderType(NULL);
+                    $so_obj->setCcReminderScheduleDate('0000-00-00 00:00:00');
+                    $so_obj->setCcReminderType('');
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
@@ -628,8 +629,8 @@ class Credit_check extends MY_Controller
             } else {
                 // Update SO
                 if (!is_null($so_obj->getCcReminderScheduleDate())) {
-                    $so_obj->setCcReminderScheduleDate(NULL);
-                    $so_obj->setCcReminderType(NULL);
+                    $so_obj->setCcReminderScheduleDate('0000-00-00 00:00:00');
+                    $so_obj->setCcReminderType('');
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = $this->db->_error_message();
                     }
@@ -683,8 +684,8 @@ class Credit_check extends MY_Controller
 
                     $so_obj->setStatus(0);
                     if (!is_null($so_obj->getCcReminderScheduleDate())) {
-                        $so_obj->setCcReminderScheduleDate(NULL);
-                        $so_obj->setCcReminderType(NULL);
+                        $so_obj->setCcReminderScheduleDate('0000-00-00 00:00:00');
+                        $so_obj->setCcReminderType('');
                     }
 
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
