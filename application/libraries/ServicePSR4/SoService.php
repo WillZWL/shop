@@ -1322,8 +1322,8 @@ html;
                     list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("|", $so_obj->getBillAddress());
                     $bstatezip = trim($so_obj->getBillState() . ", " . $so_obj->getBillPostcode());
                     if ($bstatezip != ",") {
-                        $bstatezip = ereg_replace("^, ", "", $bstatezip);
-                        $bstatezip = ereg_replace(",$", "", $bstatezip) . "<br>";
+                        $bstatezip = preg_replace("{^, }", "", $bstatezip);
+                        $bstatezip = preg_replace("{,$}", "", $bstatezip) . "<br>";
                     } else {
                         $bstatezip = "";
                     }
@@ -1333,8 +1333,8 @@ html;
                     $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
                     $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
-                        $dstatezip = ereg_replace("^, ", "", $dstatezip);
-                        $dstatezip = ereg_replace(",$", "", $dstatezip) . "<br>";
+                        $dstatezip = preg_replace("{^, }", "", $dstatezip);
+                        $dstatezip = preg_replace("{,$ }", "", $dstatezip) . "<br>";
                     } else {
                         $dstatezip = "";
                     }
