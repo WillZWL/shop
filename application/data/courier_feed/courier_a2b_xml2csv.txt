@@ -17,6 +17,6 @@ declared_value	declare_value
 prod_weight	weight
 	DDP/DDU
 cc_desc	item description
-cc_code	HS code
-prod_weight	Weight of the item
+	HS code	8517 12 00 80
+	Weight of the item	1
 declared_value	declare_value
