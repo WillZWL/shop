@@ -1,4 +1,4 @@
-<?
+<?php
 	$lang = array(
 			"title" => "Courier API (Print Order)",
 			"header" => "Courier API (Print Order)",
