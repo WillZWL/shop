@@ -22,12 +22,20 @@ class SoFactoryService extends BaseService
     public function getNewCartByOrderInfo($orderInfo, $bizType, $clientObj) {
         $skuList = [];
         foreach($orderInfo->items as $sku => $item) {
-            $skuList[$sku] = ["qty" => $item->getQty(), "amount" => $item->getAmount()];
+            $skuList[$sku] = ["qty" => $item->getQty(), "amount" => $item->getAmount(),"promoDiscAmt"=>$item->getPromoDiscAmt()];
         }
 //Centralize a buildcart function, to get all the cart details
         $newCart = $this->rebuildCartBySku($orderInfo, $bizType, $skuList, $clientObj);
+        foreach($newCart->items as $sku => $item){
+            if($skuList[$sku]["promoDiscAmt"]){
+                $item->setPromoDiscAmt($skuList[$sku]["promoDiscAmt"]); 
+                $item->setAmount($skuList[$sku]["amount"]); 
+            } 
+        }
         $newCart->setPlatformOrderId($orderInfo->getPlatformOrderId());
         $newCart->setPlatformId($orderInfo->getPlatformId());
+        $newCart->setPromotionCode($orderInfo->getPromotionCode());
+        $newCart->setPromoDiscTotal($orderInfo->getPromoDiscTotal());
 
         return $newCart;
     }
@@ -115,6 +123,8 @@ class SoFactoryService extends BaseService
             $soExtendObj->setOrderReason($checkoutInfo->getOrderReason());
         if ($checkoutInfo->getOrderNotes())
             $soExtendObj->setNotes($checkoutInfo->getOrderNotes());
+        if ($_COOKIE['af'])
+            $soExtendObj->setConvSiteId($_COOKIE['af']);
 
         $insertSoExtendResult = $this->getDao("SoExtend")->insert($soExtendObj);
         if ($insertSoExtendResult === false) {
@@ -370,6 +380,12 @@ class SoFactoryService extends BaseService
         $soObj->setDeliveryCharge($orderInfo->getDeliveryCharge());
         $soObj->setDeliveryTypeId($orderInfo->getDeliveryType());
         $soObj->setWeight($orderInfo->getTotalWeight());
+        if($orderInfo->getPromotionCode()){
+           $soObj->setPromotionCode($orderInfo->getPromotionCode()); 
+        }
+        if($orderInfo->getPromoDiscTotal()){
+           $soObj->setPromoDiscTotal($orderInfo->getPromoDiscTotal()); 
+        }
         if ($checkoutInfoDto->getPaymentGatewayId())
             $soObj->setPaymentGatewayId($checkoutInfoDto->getPaymentGatewayId());
         if ($checkoutInfoDto->getTxnId())

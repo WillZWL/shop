@@ -11,6 +11,11 @@ class CourierVo extends \BaseVo
     private $tracking_link = '';
     private $weight_type = '';
     private $show_status = '0';
+    private $service_type;
+    private $api_enable;
+    private $api_currency;
+    private $min_declared_value;
+    private $max_declared_value;
 
     protected $primary_key = ['id'];
     protected $increment_field = 'id';
@@ -121,6 +126,56 @@ class CourierVo extends \BaseVo
     public function getShowStatus()
     {
         return $this->show_status;
+    }
+
+    public function setServiceType($value)
+    {
+        $this->service_type = $value;
+    }
+
+    public function getServiceType()
+    {
+        return $this->service_type;
+    }
+
+    public function setApiEnable($value)
+    {
+        $this->api_enable = $value;
+    }
+
+    public function getApiEnable()
+    {
+        return $this->api_enable;
+    }
+
+    public function setApiCurrency($value)
+    {
+        $this->api_currency = $value;
+    }
+
+    public function getApiCurrency()
+    {
+        return $this->api_currency;
+    }
+
+    public function setMinDeclaredValue($value)
+    {
+        $this->min_declared_value = $value;
+    }
+
+    public function getMinDeclaredValue()
+    {
+        return $this->min_declared_value;
+    }
+
+    public function setMaxDeclaredValue($value)
+    {
+        $this->max_declared_value = $value;
+    }
+
+    public function getMaxDeclaredValue()
+    {
+        return $this->max_declared_value;
     }
 
 }

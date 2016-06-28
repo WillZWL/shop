@@ -2,6 +2,8 @@
 
 use ESG\Panther\Models\Website\CartSessionModel;
 use ESG\Panther\Service\AffiliateService;
+use ESG\Panther\Service\PromotionCodeService;
+use ESG\Panther\Models\Website\PromotionFactoryModel;
 
 class ReviewOrder extends PUB_Controller
 {
@@ -19,22 +21,40 @@ class ReviewOrder extends PUB_Controller
 */
         $this->cartSessionModel = new CartSessionModel;
         $this->affiliateService = new AffiliateService();
+        $this->promotionFactoryModel= new PromotionFactoryModel;
+        
     }
 
     public function index()
-    {
-        $data["tracking_data"]['cartInfo']=$data['cartInfo'] = $this->cartSessionModel->getCartInfo();
+    {   
+
+        $cartInfo=$this->cartSessionModel->getCartInfo();
+        if($cartInfo){
+            $promotionCode=$this->input->post("promotion_code");
+            if(!empty($promotionCode)){
+                $result=$this->promotionFactoryModel->initPromotionFactoryService($cartInfo,$promotionCode);
+                if($result){
+                    if($this->input->post("cancel_promotion")){
+                        $cartInfo=$this->promotionFactoryModel->cancelPromotionCart();
+                    }else{
+                        $cartInfo=$this->promotionFactoryModel->getPromotionCart();
+                    }
+                }else{
+                    $cartInfo->setPromotionError($promotionCode);
+                    $cartInfo->setPromotionCode(null);
+                    $cartInfo->setPromoDiscTotal(null);
+                }
+                $_SESSION["cart"] = serialize($cartInfo);
+            }
+        }
+        $data["tracking_data"]['cartInfo']=$data['cartInfo'] = $cartInfo;
         $this->affiliateService->addAfCookie($_GET);
-
-
 //        var_dump($data['cartInfo']);
         if ($data['cartInfo']){
-
             $this->load->view('review', $data);
-        }
-        else
+        }else{
             $this->load->view('reviewEmptyCart', $data);
-
+        }
     }
 
     

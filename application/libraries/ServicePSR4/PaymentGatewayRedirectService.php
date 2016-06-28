@@ -3,6 +3,7 @@ namespace ESG\Panther\Service;
 
 //use ESG\Panther\Service\SoFactoryService
 use ESG\Panther\Dao\CountryDao;
+use ESG\Panther\Service\AffiliateService;
 
 abstract class PaymentGatewayRedirectService extends BaseService
 implements PaymentGatewayRedirectServiceInterface
@@ -46,6 +47,7 @@ implements PaymentGatewayRedirectServiceInterface
         }
         if ($soObj != null)
             $this->so = $soObj;
+       $this->affiliateService=new AffiliateService();
     }
 
     protected function getClient($id = null)
@@ -369,6 +371,7 @@ implements PaymentGatewayRedirectServiceInterface
         unset($_SESSION["cart"]);
 //        unset($_SESSION["ra_items"]);
 //        unset($_SESSION["warranty"]);
+        $this->affiliateService->removeAfRecord();
         unset($_SESSION["promotion_code"]);
         unset($_SESSION["CART_QUICK_INFO"]);
     }

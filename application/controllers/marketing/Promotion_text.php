@@ -74,7 +74,6 @@ class Promotion_text extends MY_Controller
         $prod_name = $this->input->get("name");
 
         if (($sku != "" || $prod_name != "")) {
-
             $data["search"] = 1;
             if ($sku != "") {
                 $where["sku"] = $sku;
@@ -101,11 +100,13 @@ class Promotion_text extends MY_Controller
                 $option["offset"] = $this->input->get("per_page");
             }
 
-            if (empty($sort))
+            if (empty($sort)) {
                 $sort = "sku";
+            }
 
-            if (empty($order))
+            if (empty($order)) {
                 $order = "asc";
+            }
 
             $option["orderby"] = $sort . " " . $order;
             $option["pricegtzero"] = "1";
@@ -114,8 +115,8 @@ class Promotion_text extends MY_Controller
             $data["total"] = $this->promotion_text_model->get_product_list_total($where, $option);
 
             $pconfig['total_rows'] = $data['total'];
-            $this->pagination_service->set_show_count_tag(TRUE);
-            $this->pagination_service->msg_br = TRUE;
+            $this->pagination_service->set_show_count_tag(true);
+            $this->pagination_service->msg_br = true;
             $this->pagination_service->initialize($pconfig);
 
             $data["notice"] = notice($lang);
@@ -131,7 +132,7 @@ class Promotion_text extends MY_Controller
             $where['pbv.language_id'] = $lang_id;
         }
         if ($platform_type == 'all') {
-            $where["((s.type='WEBSITE') OR (s.type='SKYPE'))"] = NULL;
+            $where["((s.type='WEBSITE') OR (s.type='SKYPE'))"] = null;
         } else {
             $where['s.type'] = $platform_type;
         }
@@ -162,7 +163,7 @@ class Promotion_text extends MY_Controller
 
         if ($lang_id != "") {
             if ($platform_type == 'all') {
-                $data['platform_list'] = $this->platform_biz_var_service->get_list_w_platform_name(array("s.status" => 1, "pbv.language_id" => $lang_id, "((s.type='WEBSITE') OR (s.type='SKYPE'))" => NULL), array("orderby" => "s.name ASC"));
+                $data['platform_list'] = $this->platform_biz_var_service->get_list_w_platform_name(array("s.status" => 1, "pbv.language_id" => $lang_id, "((s.type='WEBSITE') OR (s.type='SKYPE'))" => null), array("orderby" => "s.name ASC"));
             } else {
                 if ($platform_id != "" && $platform_id != "all") {
                     $data['platform_list'] = $this->platform_biz_var_service->get_list_w_platform_name(array("s.id" => $platform_id, "s.type" => $platform_type, "s.status" => 1, "pbv.language_id" => $lang_id), array("orderby" => "s.name ASC"));
@@ -178,25 +179,24 @@ class Promotion_text extends MY_Controller
         }
 
         if ($platform_type != 'all') {
-            $promo_text_obj_w_lang = $this->promotion_text_model->get_list(array('platform_type' => $platform_type, 'platform_id IS NULL' => NULL, 'sku IS NULL' => NULL), array("limit" => -1));
+            $promo_text_obj_w_lang = $this->promotion_text_model->get_list(array('platform_type' => $platform_type, 'platform_id IS NULL' => null, 'sku IS NULL' => null), array("limit" => -1));
         } else {
-            $promo_text_obj_w_lang = $this->promotion_text_model->get_list(array('platform_id IS NULL' => NULL, 'sku IS NULL' => NULL), array("limit" => -1));
+            $promo_text_obj_w_lang = $this->promotion_text_model->get_list(array('platform_id IS NULL' => null, 'sku IS NULL' => null), array("limit" => -1));
         }
 
         if ($lang_id != "") {
             if ($platform_type != 'all') {
-                $promo_text_obj_w_platform = $this->promotion_text_model->get_list(array('platform_type' => $platform_type, 'lang_id' => $lang_id, 'platform_id IS NOT NULL' => NULL, 'sku is NULL' => NULL), array("limit" => -1));
+                $promo_text_obj_w_platform = $this->promotion_text_model->get_list(array('platform_type' => $platform_type, 'lang_id' => $lang_id, 'platform_id IS NOT NULL' => null, 'sku is NULL' => null), array("limit" => -1));
             } else {
-                $promo_text_obj_w_platform = $this->promotion_text_model->get_list(array('lang_id' => $lang_id, 'platform_id IS NOT NULL' => NULL, 'sku is NULL' => NULL), array("limit" => -1));
+                $promo_text_obj_w_platform = $this->promotion_text_model->get_list(array('lang_id' => $lang_id, 'platform_id IS NOT NULL' => null, 'sku is NULL' => null), array("limit" => -1));
             }
-
         }
 
         if ($sku != "") {
             if ($platform_type != 'all') {
-                $promo_text_obj_w_sku = $this->promotion_text_model->get_list(array('platform_type' => $platform_type, 'lang_id' => $lang_id, 'platform_id IS NOT NULL' => NULL, 'sku is NOT NULL' => NULL), array("limit" => -1));
+                $promo_text_obj_w_sku = $this->promotion_text_model->get_list(array('platform_type' => $platform_type, 'lang_id' => $lang_id, 'platform_id IS NOT NULL' => null, 'sku is NOT NULL' => null), array("limit" => -1));
             } else {
-                $promo_text_obj_w_sku = $this->promotion_text_model->get_list(array('lang_id' => $lang_id, 'platform_id IS NOT NULL' => NULL, 'sku is NOT NULL' => NULL), array("limit" => -1));
+                $promo_text_obj_w_sku = $this->promotion_text_model->get_list(array('lang_id' => $lang_id, 'platform_id IS NOT NULL' => null, 'sku is NOT NULL' => null), array("limit" => -1));
             }
         }
 
@@ -350,5 +350,3 @@ class Promotion_text extends MY_Controller
         }
     }
 }
-
-?>

@@ -106,7 +106,6 @@ class Checkout extends PUB_Controller
         $filter = new CheckoutFormFilter();
         $client = $this->checkoutModel->isLoggedIn();
         $cart = $this->cartSessionModel->getCartInfo();
-
         $poBoxLimit = $this->checkoutModel->getPoBoxAmountLimit();
         $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => (($client)?true:false), "email" => (($client)?$client["Email"]:""), "poBoxLimit" => $poBoxLimit, "cart" => $cart]);
         if ($filterResult["validInput"]) {

@@ -3,6 +3,7 @@ namespace ESG\Panther\Service;
 
 use ESG\Panther\Service\ProductService;
 use ESG\Panther\Dao\SoDao;
+use ESG\Panther\Models\Website\PromotionFactoryModel;
 
 class CartSessionService extends BaseService
 {
@@ -40,6 +41,7 @@ class CartSessionService extends BaseService
     public function __construct($rebuildMode = false) {
         parent::__construct();
         $this->productService = new ProductService;
+        $this->promotionFactoryModel = new PromotionFactoryModel;
         $this->setSoDao(new SoDao);
 //var_dump($_SESSION["cart"]);
 //unset($_SESSION["cart"]);
@@ -49,6 +51,7 @@ class CartSessionService extends BaseService
         }
         if ((!$this->_rebuildCartNoSessionMode) && (isset($_SESSION["cart"]))) {
             $this->_cart = unserialize($_SESSION["cart"]);
+           
         }
     }
 
@@ -120,7 +123,7 @@ class CartSessionService extends BaseService
         if ($this->_cart) {
             foreach ($this->_cart->items as $sku => $item) {
                 $unitPrice = $item->getPrice();
-                $itemSubTotal = $unitPrice * $item->getQty();
+                $itemSubTotal = $unitPrice * $item->getQty()-$item->getPromoDiscAmt();
                 $this->_cart->items[$sku]->setAmount($itemSubTotal);
                 $totalItems += $item->getQty();
                 $totalAmount += $itemSubTotal;
@@ -145,6 +148,12 @@ class CartSessionService extends BaseService
             $this->calculateAndGetCartProfit();
         }
         $this->updateQuickInfo($totalItems);
+        //start get promotion item
+        $result=$this->initPromotionFactoryService();
+        if($result){
+            $this->_cart=$this->promotionFactoryModel->modifyPromotionCart();
+        }
+        //end get promotion item
         return $this->_cart;    //=return $_SESSION["cart"]
     }
 
@@ -169,6 +178,7 @@ class CartSessionService extends BaseService
     }
 
     public function modifyItem($action, $sku, $qty, $platformId) {
+
         if (isset($this->_cart) && is_array($this->_cart->items) && array_key_exists($sku, $this->_cart->items)) {
             if ($action == self::CART_ACTION_ADD) {
                 $this->_cart->items[$sku]->setQty($this->_cart->items[$sku]->getQty() + $qty);
@@ -193,10 +203,14 @@ class CartSessionService extends BaseService
     }
 
     public function removeItem($sku) {
+
         if (isset($this->_cart))
             unset($this->_cart->items[$sku]);
-        if (sizeof($this->_cart->items) == 0)
-        {
+        $result=$this->initPromotionFactoryService();
+        if($result){
+            $this->_cart=$this->promotionFactoryModel->validRemoveItemPromotion();
+        }
+        if (sizeof($this->_cart->items) == 0){
             $this->emptyCart();
         }
     }
@@ -208,6 +222,7 @@ class CartSessionService extends BaseService
             $this->_cart->setPlatformId($platformId);
             $this->_cart->setPlatformCurrency($platformBizObj->getPlatformCurrencyId());
             $this->_cart->setVatPercent($platformBizObj->getVatPercent());
+            $this->_cart->setLanguageId($platformBizObj->getLanguageId());
 
             if (!is_null($deliveryCharge))
                 $this->_cart->setDeliveryCharge($deliveryCharge);
@@ -229,6 +244,7 @@ class CartSessionService extends BaseService
                     $this->_cart = new \CartDto();
                     $this->_cart->setPlatformId($platformId);
                     $this->_cart->setPlatformCurrency($currencyId);
+                    $this->_cart->setLanguageId($lang);
                     $this->_cart->items = [];
                 }
                 $productDetails->setQty($qty);
@@ -258,7 +274,6 @@ class CartSessionService extends BaseService
 
     public function getCartItemInDetail($sku, $lang, $platformId) {
         $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
-
         $productInfo = $this->getDao('Product')->getCartDataDetail($para["where"], $para["options"]);
 //        print $this->getDao('Product')->db->last_query();
 //        var_dump($productInfo);
@@ -334,6 +349,15 @@ class CartSessionService extends BaseService
         return $calProfitDto;
     }
 
+    public function initPromotionFactoryService()
+    {   if($this->_cart){
+            if($this->_cart->getPromotionCode() && sizeof($this->_cart->items) > 0){
+                $result=$this->promotionFactoryModel->initPromotionFactoryService($this->_cart,$this->_cart->getPromotionCode());
+            }
+           
+            return $result;
+        }
+    }
     public function getCartDetailInfo()
     {
         return $this->cartDetailInfo;

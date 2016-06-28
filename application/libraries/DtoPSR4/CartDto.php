@@ -9,6 +9,7 @@ class CartDto
     protected $vat;
     protected $platformCurrency;
     protected $platformCountryId;
+    protected $languageId;
     protected $cost;
     protected $subtotal;
     protected $grandTotal;
@@ -19,6 +20,9 @@ class CartDto
     protected $deliveryCharge = 0;
     protected $deliveryType = "STD";
     protected $deliveryCost;
+    protected $promotionCode;
+    protected $promotionError;
+    protected $promoDiscTotal;
     protected $totalNumberOfItems;
     protected $orderCreateDate;
 //optional
@@ -74,6 +78,14 @@ class CartDto
         $this->vatPercent = $vatPercent;
     }
 
+    public function getLanguageId() {
+        return $this->languageId;
+    }
+
+    public function setLanguageId($languageId) {
+        $this->languageId = $languageId;
+    }
+
     public function getCost() {
         return $this->cost;
     }
@@ -91,7 +103,7 @@ class CartDto
     }
 
     public function getGrandTotal() {
-        return ($this->subtotal + $this->deliveryCharge + $this->offlineFee);
+        return ($this->subtotal + $this->deliveryCharge + $this->offlineFee - $this->promoDiscTotal);
     }
 
     public function setGrandTotal($grandTotal) {
@@ -168,6 +180,30 @@ class CartDto
 
     public function setDeliveryCost($deliveryCost) {
         $this->deliveryCost = $deliveryCost;
+    }
+
+    public function getPromotionCode() {
+        return $this->promotionCode;
+    }
+
+    public function setPromotionCode($promotionCode) {
+        $this->promotionCode = $promotionCode;
+    }
+
+    public function getPromotionError() {
+        return $this->promotionError;
+    }
+
+    public function setPromotionError($promotionError) {
+        $this->promotionError = $promotionError;
+    }
+
+    public function getPromoDiscTotal() {
+        return $this->promoDiscTotal;
+    }
+
+    public function setPromoDiscTotal($promoDiscTotal) {
+        $this->promoDiscTotal = $promoDiscTotal;
     }
 
     public function getTotalNumberOfItems() {

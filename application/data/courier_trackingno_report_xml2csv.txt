@@ -1,0 +1,19 @@
+#Table name
+data
+
+#Input column name	Output column name
+batch_id	Batch ID
+courier_id	Courier ID
+so_no	Courier OrderNo
+declared_desc	Declared Description
+declared_value	Declared Value
+delivery_country_id	Country Code
+prod_weight	Weight
+declared_currency	Currency
+courier_order_status	Courier Order Status
+courier_parcel_id	Courier Parcel ID
+tracking_no	Tracking No
+real_tracking_no	Ref ID
+manifest_id	Manifest ID
+print_nums	Print Times
+create_date	Create On

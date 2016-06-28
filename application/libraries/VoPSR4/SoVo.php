@@ -46,6 +46,7 @@ class SoVo extends \BaseVo
     private $order_note = '';
     private $payment_gateway_id = '';
     private $promotion_code = '';
+    private $promo_disc_total = '';
     private $client_promotion_code = '';
     private $expect_delivery_date = '0000-00-00';
     private $expect_ship_days = '';
@@ -599,6 +600,14 @@ class SoVo extends \BaseVo
     public function getPromotionCode()
     {
         return $this->promotion_code;
+    }
+
+    public function getPromoDiscTotal() {
+        return $this->promo_disc_total;
+    }
+
+    public function setPromoDiscTotal($promo_disc_total) {
+        $this->promo_disc_total = $promo_disc_total;
     }
 
     public function setClientPromotionCode($client_promotion_code)

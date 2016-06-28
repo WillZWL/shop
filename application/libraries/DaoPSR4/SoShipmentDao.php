@@ -129,16 +129,13 @@ class SoShipmentDao extends BaseDao
             if ($this->rows_limit != "") {
                 $this->db->limit($option["limit"], $option["offset"]);
             }
-
             $rs = [];
-
             if ($query = $this->db->get()) {
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }
                 return (object)$rs;
             }
-
         } else {
             $this->db->select('COUNT(*) AS total');
             if ($query = $this->db->get()) {
@@ -244,6 +241,83 @@ class SoShipmentDao extends BaseDao
 
         return $rs;
 
+    }
+
+    public function getEnableApiCourierOrderList($where=array(),$option=array(), $so_no=array(), $classname='enableApiCourierOrderDto')
+    {
+
+    $this->db->select("so.platform_id, so.status, soal.sh_no, so.so_no, so.platform_order_id,
+                    so.order_create_date, so.weight, so.bill_name, so.bill_company,
+                    so.bill_address, so.bill_postcode, so.bill_city,
+                    so.bill_state, so.bill_country_id, c.email,
+                    c.tel_1, c.tel_2, c.tel_3,
+                    so.delivery_name, so.delivery_company,
+                    so.delivery_address, so.delivery_postcode,
+                    so.delivery_city, so.delivery_state, so.delivery_country_id,
+                    soal.line_no, soal.item_sku sku, p.name prod_name,p.sub_cat_id,
+                    so.currency_id,ipc.declared_value as old_declared_value, soid.amount unit_price, soal.qty, so.delivery_charge,
+                    so.amount, sosh.courier_id,sosh.tracking_no, so.promotion_code, soe.offline_fee,
+                    pcc.description as declared_desc,inc.tracking_no as interface_tracking_no");
+
+        $this->db->from('so');
+        $this->db->join('client c', 'c.id = so.client_id', 'INNER');
+
+        //$this->db->join('(select so_no,SUM(declared_value_hkd) as declared_value from so_item_detail group by so_no) as soid_d','soid_d.so_no = so.so_no', 'INNER');
+
+        $this->db->join('so_item_detail soid', 'soid.so_no = so.so_no', 'INNER');
+        $this->db->join('so_allocate as soal', 'soal.so_no = soid.so_no AND soal.line_no = soid.line_no AND  soal.item_sku = soid.item_sku', 'INNER');
+        $this->db->join('so_shipment as sosh', 'soal.sh_no = sosh.sh_no', 'INNER');
+        //add interface courier trackingno
+        $this->db->join('interface_courier_order as inc', 'inc.courier_order_id = so.so_no and inc.courier_order_status="success" and inc.status="1" ', 'LEFT');
+
+        $this->db->join('product_custom_classification pcc', 'pcc.sku = soid.item_sku AND so.delivery_country_id = pcc.country_id', 'LEFT');
+        $this->db->join('product p', 'p.sku = soid.item_sku', 'INNER');
+        $this->db->join('so_extend soe', 'so.so_no = soe.so_no', 'INNER');
+        //resend get same decare value
+        $this->db->join('(select so_no, declared_value FROM interface_pending_courier group by so_no) as ipc', 'ipc.so_no = so.so_no', 'LEFT');
+        
+        $this->db->where(array("inc.tracking_no is null"=>null));
+        //$this->db->where_in(array('soal.status'=>3));
+        if ($so_no){
+            $this->db->where_in("so.so_no",$so_no);
+        }
+        if ($where) {
+            $this->db->where($where);
+        }
+        if (empty($option["num_rows"])) {
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"])) {
+                $option["limit"] = "";
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $rs = [];
+
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
+                    $rs[] = $obj;
+                }
+                return (object)$rs;
+            }
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
+        return FALSE;
     }
 
 }

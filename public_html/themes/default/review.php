@@ -24,6 +24,9 @@
                             <td class="text-left"><a href="#"><?= $item->getNameInLang() ?></a>
                             </td>
                             <td class="text-left">
+                                <?php if($item->getRedemption()=="1") {?>
+                                <div style="padding-left:25px"><?=$item->getQty();?></div>
+                                <?php }else{ ?>
                                 <div class="input-group btn-block" style="max-width: 200px;">
                                     <input id="update-<?php print $item->getSku()?>" type="text" name="quantity[YToxOntzOjEwOiJwcm9kdWN0X2lkIjtpOjMzO30=]" value="<?php print $item->getQty()?>" size="1" class="form-control">
                                     <span class="input-group-btn">
@@ -31,6 +34,7 @@
                                         <button type="button" data-toggle="tooltip" title="" class="btn btn-primary" onclick="cart.remove('<?php print $item->getSku()?>');" data-original-title="<?= _('Remove') ?>"><i class="fa fa-times-circle"></i></button>
                                     </span>
                                 </div>
+                                <?php }?>
                             </td>
                             <td class="text-right"><?= platform_curr_format($item->getPrice()) ?></td>
                             <td class="text-right"><?= platform_curr_format($item->getAmount()) ?></td>
@@ -40,6 +44,42 @@
                 </table>
             </div>
         </form>
+        <?php if($_GET["debug"]=="true"){?>
+        <div class="silver_box" id="discount_code">
+            <table width="100%">
+                <tr>
+                    <td valign="top">
+                        <div style="width:450px"><font color="#FF6600"></font>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="rokkit_24"><?=_('Discount code')?></p>
+                        <p><?=_('Enter your coupon code if you have one.')?></p>
+                        <form name="fm_promo" action="" class="form-holder" method="post">
+                            <fieldset>
+                                <input type="text" value="<?=$cartInfo->getPromotionCode()?>" name="promotion_code" dname="" notEmpty/>
+                            </fieldset>
+                            <p style="color:">
+                            <?php if($cartInfo->getPromotionError()){
+                                echo _('Sorry, Promotion Code Invalid. Please check if the conditions and/or minimum order amount have been met.');
+                            }?>
+                            </p>
+                            <?php if($cartInfo->getPromotionCode()){?>
+                            <input type="hidden" name="cancel_promotion" value="1">
+                            <button type="submit" class="btn btn-primary cancel-promotion">
+                                <?=_('Cancel Coupon')?>
+                            </button>
+                            <?php }else{?>
+                            <button type="submit" class="btn btn-primary">
+                                <?=_('Apply Coupon')?>
+                            </button>
+                             <?php }?>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <?php } ?>
         <div class="row">
             <div class="col-sm-4 col-sm-offset-8">
                 <table class="table table-bordered">
@@ -52,6 +92,12 @@
                             <td class="text-right"><strong><?=_('Shipping').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getDeliveryCharge()) ?></td>
                         </tr>
+                        <?php if($cartInfo->getPromoDiscTotal())?>
+                        <tr>
+                            <td class="text-right"><strong><?=_('Promotion').':' ?></strong></td>
+                            <td class="text-right"><?= platform_curr_format($cartInfo->getPromoDiscTotal()) ?></td>
+                        </tr>
+                        <?php ?>
                         <tr>
                             <td class="text-right"><strong><?= _('Total').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getGrandTotal()) ?></td>

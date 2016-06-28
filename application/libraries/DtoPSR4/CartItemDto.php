@@ -26,6 +26,7 @@ class CartItemDto
     private $sourcingStatus;
     private $warrantyInMonth;
     private $decPlace;
+    private $redemption=null;
 //optional profit variable
     private $profitRaw;
     private $marginRaw;
@@ -91,6 +92,14 @@ class CartItemDto
 
     public function setNameInLang($nameInLang) {
         $this->nameInLang = $nameInLang;
+    }
+
+    public function getRedemption() {
+        return $this->redemption;
+    }
+
+    public function setRedemption($redemption) {
+        $this->redemption = $redemption;
     }
 
     public function getSupplierUnitCost() {

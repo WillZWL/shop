@@ -688,3 +688,23 @@ input.btn-newsletter {
     .space-20{margin-top:100px;font-size:20px;}
     #offcanvasmenu{display:none;}
 }
+#discount_code{background:#f6f6f6;padding:18px 27px 20px 27px;overflow:hidden;zoom:1;margin-bottom: 25px}
+#discount_code .rokkit_24{float:right;clear:both;color: #549B17;font-size: 22px;font-weight: bold;}
+#discount_code p{float:right;clear:both;padding: 0;margin: 0;}
+#discount_code form{margin:12px 0 0 0;float:right;clear:both;}
+#discount_code .form-holder fieldset{float:right;clear:both;}
+#content .form-holder .btn3-silver,#discount_code .form-holder button{
+    float:right;
+    margin:7px 0 0 0;
+    clear:both;
+    color: #000;
+    background-color: #549B17;
+    border-color: #499209;
+}
+#content .form-holder .btn3-silver,#discount_code .form-holder button.cancel-promotion{
+    background-color: #EF5F16;
+    border-color: #EF5F16;
+    color: #fff;
+}
+    
+#discount_code .form-holder button:hover{background-position:0 -30px;}
