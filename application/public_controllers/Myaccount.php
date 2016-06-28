@@ -466,19 +466,18 @@ class Myaccount extends PUB_Controller
         echo $js;
     }
 
-    function print_invoice($so_no = "")
+    public function print_invoice($so_no = "")
     {
-        $client_id = $_SESSION["client"]["id"];
+        $client_id = $_SESSION["client"]["Id"];
         if (!$so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no, "client_id" => $client_id))) {
             show_404();
         }
-        $html = $this->sc['So']->get_print_invoice_content(array($so_no), 1, get_lang_id());
+        $html = $this->sc['So']->getPrintInvoiceContent(array($so_no), 1, get_lang_id());
         $u_agent = $_SERVER['HTTP_USER_AGENT'];
         if (preg_match('/MSIE/i', $u_agent)) {
-            // Instead of opening the PDF in browser, prompt user to download file if it's IE.
-            $att_file = $this->sc['PdfRendering']->convert_html_to_pdf($html, null, "D", "en");
+            $att_file = $this->sc['PdfRendering']->convertHtmlToPdf($html, null, "D", "en");
         } else {
-            $att_file = $this->sc['PdfRendering']->convert_html_to_pdf($html, null, "I", "en");
+            $att_file = $this->sc['PdfRendering']->convertHtmlToPdf($html, null, "I", "en");
         }
     }
 
