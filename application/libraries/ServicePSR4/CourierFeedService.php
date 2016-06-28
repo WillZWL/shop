@@ -987,11 +987,16 @@ class CourierFeedService extends BaseService
 				$ar_address = @explode("|", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				$row->setDeliveryAddress2($ar_address[1]);
-				$barcode = 'PT'.$row->getSoNo();
+				$barcode = 'ABESGPT'.$row->getSoNo();
 				$row->setBarcode($barcode);
 				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
 				$declared_value = $this->soService->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
-				$row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
+				$declared_value = $declared_value * $row->getRate();
+				if ($declared_value < 60 or $declared_value > 80) {
+					$declared_value = rand(6000, 8000)/100;
+				}
+				$row->setDeclaredValue(round($declared_value, 2));
+				$row->setCategoryName('Refurbished mobile phone');
 				$data_out = $row;
 				$counter++;
 			}
@@ -1007,11 +1012,15 @@ class CourierFeedService extends BaseService
 				$ar_address = @explode("|", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				$row->setDeliveryAddress2($ar_address[1]);
-				$barcode = 'ABESGPT'.$row->getSoNo();
+				$barcode = 'PT'.$row->getSoNo();
 				$row->setBarcode($barcode);
 				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
 				$declared_value = $this->soService->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
-				$row->setDeclaredValue(round($declared_value * $row->getRate(), 2));
+				$declared_value = $declared_value * $row->getRate();
+				if ($declared_value < 60 or $declared_value > 80) {
+					$declared_value = rand(6000, 8000)/100;
+				}
+				$row->setDeclaredValue(round($declared_value, 2));
 				$data_out = $row;
 				$counter++;
 			}
