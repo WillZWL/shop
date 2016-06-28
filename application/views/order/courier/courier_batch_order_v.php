@@ -13,7 +13,7 @@
 <body>
 <div id="main">
 <?=$notice["img"]?>
-<?
+<?php
 	$ars_status = array("4"=>$lang["partial_allocated"], "5"=>$lang["full_allocated"])
 ?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -96,7 +96,7 @@
 <input type="hidden" name="order" value='<?=$this->input->get("order")?>'>
 </form>
 <form name="fm_edit" method="post">
-<?
+<?php
 	if ($objlist){
 
 		$i=0;

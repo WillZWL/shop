@@ -13,7 +13,7 @@
 <body>
 <div id="main">
 <?=$notice["img"]?>
-<?  
+<?php 
 	if($createDate){
 		$today = $createDate;
 	}else{
