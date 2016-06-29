@@ -971,35 +971,63 @@ class Credit_check extends MY_Controller
         die();
     }
 
-    public function approve_if_paid($so_no = "")
+    public function approveIfPaid($so_no = "")
     {
-        if (($so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no))) === FALSE) {
-            $_SESSION["NOTICE"] = $this->db->_error_message();
-        } else {
-            if (empty($so_obj)) {
-                $_SESSION["NOTICE"] = "so_not_found";
-            } else {
-                if ($so_obj->getStatus() == 2) {
-                    $so_obj->setStatus(3);
-                    if (!$this->sc['So']->getDao('So')->update($so_obj))
-                        $_SESSION["NOTICE"] = $this->db->_error_message();
-
+        $so_obj = $this->sc['So']->getDao('So')->get(array("so_no" => $so_no));
+        if ($so_obj) {
+            if ($so_obj->getStatus() == 2) {
+                $so_obj->setStatus(3);
+                if ($this->sc['So']->getDao('So')->update($so_obj)) {
                     return true;
+                } else {
+                    $res = "SO#$so_no set to credit check failed";
+                }
+            } else {
+                $res = "SO#$so_no status is not Paied";
+            }
+        } else {
+            $res = "SO#$so_no is not find";
+        }
+        return $res;
+    }
+
+    public function bulk_update()
+    {
+        $_SESSION['NOTICE'] = '';
+        if ($this->input->post("post")) {
+            if (trim($this->input->post("order_list")) == "") {
+                $_SESSION["NOTICE"] = "order list cannot be NULL";
+            } else {
+                $order_list = explode("\n", $this->input->post("order_list"));
+                $order_list = array_filter($order_list);
+                $note = $this->input->post("note");
+                foreach ($order_list as $k => $so_no) {
+                    if ($this->input->post("approve_if_paid") == 1) {
+                        $result = $this->approveIfPaid($so_no);
+                        if ( $result === TRUE ) {
+                            $_SESSION['NOTICE'] .= "SUCCESS: SO#$so_no marked as credit checked.<br/>";
+                            if ($note <> "") {
+                                $this->sc['creditCheckModel']->addOrderNote($so_no, $note);
+                                $_SESSION['NOTICE'] .= ",and note added for SO#$so_no <br/>";
+                            }
+                        } else {
+                            $_SESSION['NOTICE'] .= "FAILED: to mark SO# $so_no as credit checked, Reason: $result<br/>";
+                        }
+                    } else {
+                        if ($note <> "") {
+                            $this->sc['creditCheckModel']->addOrderNote($so_no, $note);
+                            $_SESSION['NOTICE'] .= "SUCCESS: Added note to SO#$so_no<br/>";
+                        } else {
+                            $_SESSION['NOTICE'] .= "FAILED: Blank note given, no action on SO#$so_no<br/>";
+                        }
+                    }
                 }
             }
         }
-        return false;
-    }
-
-    function bulk_update()
-    {
-        $data["title"] = "Bulk update";
-
-        $langfile = $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
+        $langfile = $this->getAppId() . "04_" . $this->_get_lang_id() . ".php";
         include_once APPPATH . "language/" . $langfile;
         $data["lang"] = $lang;
-
-        $this->load->view('order/credit_check/bulk_update', $data);
+        $this->load->view('order/credit_check/bulk_update_v', $data);
     }
 
 }
