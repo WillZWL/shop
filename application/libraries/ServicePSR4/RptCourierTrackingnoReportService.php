@@ -4,7 +4,7 @@ namespace ESG\Panther\Service;
 
 use ESG\Panther\Dao\InterfacePendingCourierDao;
 
-class RptCourierTrackingnoReportService extends BaseService
+class RptCourierTrackingnoReportService extends ReportService
 {
 	public function __construct()
     {
@@ -19,12 +19,12 @@ class RptCourierTrackingnoReportService extends BaseService
 		return $this->convert($courierBatchOrderDto);
     }
 
-    protected function getDefaultVo2xmlMapping()
+    protected function get_default_vo2xml_mapping()
     {
         return '';
     }
 
-    protected function getDefaultXml2csvMapping()
+    protected function get_default_xml2csv_mapping()
     {
         return APPPATH . 'data/courier_trackingno_report_xml2csv.txt';
     }

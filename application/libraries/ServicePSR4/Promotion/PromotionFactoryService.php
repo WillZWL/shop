@@ -16,7 +16,7 @@ class PromotionFactoryService extends BaseService
         $this->_discountTypeInterface=$_discountTypeInterface;
         $this->_cart=$cartInfo;
         $this->_promotionCodeObj=$promotionCodeObj;
-        $this->productService=new ProductService;
+        $this->productService=new ProductService();
     }
    //FD = Free Delivery / A = Amount / P = Percent / FI = Free Item / R = Redemption
     public function getPromotionCart()

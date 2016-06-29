@@ -562,7 +562,7 @@ class ProductDao extends BaseDao
         }
     }
 
-    public function getProductWithPrice($sku,$site='WSGB',$classname='ProductPriceDto')
+    public function getProductWithPrice($sku,$site='WSGB',$className='ProductPriceDto')
     {
 
         $where = $option = [];

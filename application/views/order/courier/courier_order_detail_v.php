@@ -26,7 +26,7 @@
 		<td height="30" class="title"><?=$lang["title"]?></td>
 		<td width="400" align="right" class="title">
 		<input type="button" value="<?=$lang["post_order"]?>" class="button" onClick="Redirect('<?=site_url('order/courier_order/index/')?>')">&nbsp;
-		<input type="button" value="<?=$lang["print_order"]?>" class="button" onClick="Redirect('<?=site_url('order/courier_order/print_order')?>')"></td>
+		<input type="button" value="<?=$lang["print_order"]?>" class="button" onClick="Redirect('<?=site_url('order/courier_order/print-order')?>')"></td>
 	</tr>
 	<tr>
 		<td height="2" class="line"></td>
@@ -168,7 +168,7 @@
 </td>
 </tr>
 
-<?
+<?php
 	if ($objlist){
 		$i=0;
 		foreach ($objlist as $obj){
