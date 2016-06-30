@@ -418,6 +418,7 @@ class Credit_check extends MY_Controller
         $where["so.hold_status"] = "1";
         $where["so.status >"] = "1";
         $where["so.status <"] = "6";
+        $where["so.refund_status"] = "0";
         $where["cc_reminder_schedule_date >"] = '0000-00-00 00:00:00';
         $where["cc_reminder_schedule_date <="] = date('Y-m-d H:i:s', time());
 
