@@ -45,6 +45,7 @@ class ShipmentInfoToCourierDhlDto
     private $barcode;
     private $id_3_digit;
     private $rate_to_hkd;
+    private $ref_1;
 
     public function setCurrencyId($currency_id)
     {
@@ -498,4 +499,13 @@ class ShipmentInfoToCourierDhlDto
         return $this->rate_to_hkd;
     }
 
+    public function setRef1($ref_1)
+    {
+        $this->ref_1 = $ref_1;
+    }
+
+    public function getRef1()
+    {
+        return $this->ref_1;
+    }
 }

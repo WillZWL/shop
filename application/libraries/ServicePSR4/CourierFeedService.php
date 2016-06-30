@@ -1017,8 +1017,14 @@ class CourierFeedService extends BaseService
 				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
 				$declared_value = $this->soService->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
 				$declared_value = $declared_value * $row->getRate();
-				if ($declared_value < 60 or $declared_value > 80) {
-					$declared_value = rand(6000, 8000)/100;
+				$declared_value1 = $declared_value * $row->getRef1();
+				$category_name = $row->getCategoryName();
+				if (in_array($category_name, array('Lenses', 'Laptops', 'Tablets', 'Digital Cameras', 'Electronic toys')) && $declared_value > 1000) {
+					$declared_value = 70;
+				} else {
+					if ($declared_value < 40 or $declared_value > 49) {
+						$declared_value = rand(4000, 4900)/100;
+					}
 				}
 				$row->setDeclaredValue(round($declared_value, 2));
 				$data_out = $row;
