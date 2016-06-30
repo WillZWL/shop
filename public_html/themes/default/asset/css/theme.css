@@ -108,6 +108,33 @@
     font-family: Open Sans,Arial,Tahoma,Geneva,Helvetica,sans-serif;
 }
 
+#prod_spec {
+    font-size:12px;
+    margin-left: 10px;
+    padding-bottom: 10px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+#prod_spec table {
+    border-spacing:0;
+}
+#prod_spec table tr{
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.spec_key {
+    border: 1px solid black;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 200px;
+}
+.spec_value {
+    border: 1px solid black;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 /* footer */
 .guarantee li {
 	width: 140px;
@@ -706,5 +733,5 @@ input.btn-newsletter {
     border-color: #EF5F16;
     color: #fff;
 }
-    
+
 #discount_code .form-holder button:hover{background-position:0 -30px;}

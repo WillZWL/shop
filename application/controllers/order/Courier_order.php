@@ -8,7 +8,7 @@ use ESG\Panther\Service\RptCourierTrackingnoReportService;
 
 class Courier_order extends MY_Controller
 {	
-	private $app_id="ORD0033";
+	private $appId="ORD0033";
 	private $_courierFactoryModel;
 
 	public function __construct()
@@ -184,7 +184,6 @@ class Courier_order extends MY_Controller
 			if($_POST["dispatch_type"]=="p" && $this->input->post("check")){
 				$this->_courierFactoryModel->printCourierOrder($courierId,$this->input->post("check"));
 			}
-			//
 			if($_POST["dispatch_type"]=="g" && $this->input->post("check")){
 				$result=$this->_courierFactoryModel->getCourierTrackingNo($courierId,$this->input->post("check"));
 			}
@@ -301,10 +300,10 @@ class Courier_order extends MY_Controller
 			}
 			//update so order delivery infomation
 			if($_POST["dispatch_type"]=="u"){
-				$result =$this->_courierFactoryModel->updateInterfacePendingOrder($this->input->post("order"),$batchId);
+				$result =$this->updateInterfacePendingCourier($this->input->post("order"),$batchId);
 			}
 			if($_POST["dispatch_type"]=="g"){
-				$result =$this->_courierFactoryModel->updateErrorOrderExitOrder($courierId,$batchId);
+				$result =$this->_courierFactoryModel->getCourierTrackingNo($courierId,$batchId);
 			}
 			$_SESSION["NOTICE"] = $result["message"];
 			redirect('/order/courier_order/get-courier-batch-order/'.$courierId.'/'.$batchId);
@@ -317,7 +316,7 @@ class Courier_order extends MY_Controller
 		$this->load->view('order/courier/courier_batch_order_v', $data); 
 	}
 
-	public function getDeclaredValue($value,$courierObj)
+	private function getDeclaredValue($value,$courierObj)
 	{
 		$declaredValue = round($this->soService->convertCurrency("HKD", $courierObj->getApiCurrency(), $value), 2);
 		if($declaredValue > $courierObj->getMaxDeclaredValue()){
@@ -326,7 +325,7 @@ class Courier_order extends MY_Controller
 		return $declaredValue;
 	}
 
-	public function getPostDeclaredValue($row,$courierObj)
+	private function getPostDeclaredValue($row,$courierObj)
 	{
 		//$rate need to comfirmed
 		$declaredValue="";
@@ -347,7 +346,60 @@ class Courier_order extends MY_Controller
 		return $declaredValue;
 	}
 
-	public function getSubCatDescription($subCatId,$courtryId)
+
+	private function updateInterfacePendingCourier($formValue,$batchId)
+	{
+        foreach($formValue as $soNo=> $orderInfo){
+            $object=$this->courierService->getInterfacePendingCourierDao()->get(array("so_no"=>$soNo,"batch_id"=>$batchId));
+            $needUpdate=false;
+            if($orderInfo["delivery_name"]){
+                $object->setDeliveryName($orderInfo["delivery_name"]);
+                $needUpdate=true;
+            }
+            if($orderInfo["delivery_address_1"]){
+                $object->setDeliveryAddress1($orderInfo["delivery_address_1"]);
+                $needUpdate=true;
+            }
+             if($orderInfo["delivery_address_2"]){
+                $object->setDeliveryAddress2($orderInfo["delivery_address_2"]);
+                $needUpdate=true;
+            }
+             if($orderInfo["delivery_address_3"]){
+                $object->setDeliveryAddress3($orderInfo["delivery_address_3"]);
+                $needUpdate=true;
+            }
+            if($orderInfo["delivery_city"]){
+                $object->setDeliveryCity($orderInfo["delivery_city"]);
+                $needUpdate=true;
+            }
+            if($orderInfo["delivery_state"]){
+                $object->setDeliveryState($orderInfo["delivery_state"]);
+                $needUpdate=true;
+            }
+            if($orderInfo["delivery_postcode"]){
+                $object->setDeliveryPostcode($orderInfo["delivery_postcode"]);
+                $needUpdate=true;
+            }
+            if($orderInfo["delivery_country_id"]){
+
+                $object->setDeliveryCountryId($orderInfo["delivery_country_id"]);
+                $needUpdate=true;
+            }
+            if($orderInfo["declared_value"]){
+                $object->setDeclaredValue($orderInfo["declared_value"]);
+                $needUpdate=true;
+            }
+            if($needUpdate){
+               $resultUpdate=$this->courierService->getInterfacePendingCourierDao()->update($object);
+               if($resultUpdate){
+               	$result["message"] .="order No : ".$object->getSoNo()." update success.\r\n";
+               }
+            }
+        }
+        return $result;    
+    }
+
+	private function getSubCatDescription($subCatId,$courtryId)
 	{
 		$where = array('ccm.sub_cat_id'=>$subCatId, 'ccm.country_id'=>$courtryId);
 		$hsDetails = $this->customClassService->getHsBySubcatAndCountry($where);
@@ -356,7 +408,7 @@ class Courier_order extends MY_Controller
 
 	public function getAppId()
 	{
-		return $this->app_id;
+		return $this->appId;
 	}
 
 }

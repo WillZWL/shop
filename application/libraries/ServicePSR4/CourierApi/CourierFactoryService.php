@@ -91,7 +91,7 @@ class CourierFactoryService
 		$courierReturnContent=$this->curlPostDataToApi($requestUrl,$courierRequestData);
 		if($courierReturnContent){
 			//update print nums and last print time
-			//$this->courierApiInterface->updatePrintnums();
+			$this->updateInterfaceCourierOrderPrintNums();
 			$filename=$this->courierApiInterface->getCourierId()."-courier-order.pdf";
 			header("Content-type: application/octet-stream");
 				header("Content-disposition: attachment;filename=".$filename);
@@ -110,19 +110,6 @@ class CourierFactoryService
 	public function updateInterfacePendingOrder()
     {   
         
-    }
-
-    public function updateErrorOrderExitOrder()
-    {    
-		$where["batch_id"]=$batchIds;
-		$where["status"]=1;
-		$option["limit"]=-1;
-		$courierOrderArr=$this->_courierOrderDao->getList($where,$option);
-		if($courierOrderArr){
-			$this->runCourierApi("getOrderTrackingNo",$courierOrderArr);
-		}else{
-			return null;
-		}
     }
 
     public function addCourierManifest()
@@ -154,8 +141,16 @@ class CourierFactoryService
 
 	public function getCourierTrackingNo()
 	{
-		$orderId="1023750";
-		$this->runCourierApi("getOrderTrackingNo",$orderId);
+		$batchIds= is_array($this->formValue) ? join(',',$this->formValue) :$this->formValue;
+		$where["batch_id"]=$batchIds;
+		$where["status"]=1;
+		$option["limit"]=-1;
+		$courierOrderArr=$this->_courierOrderDao->getList($where,$option);
+		if($courierOrderArr){
+			$this->runCourierApi("getOrderTrackingNo",$courierOrderArr);
+		}else{
+			return null;
+		}
 	}
 
 	public function getAllShipway()
@@ -212,6 +207,7 @@ class CourierFactoryService
 				}else{
 					$this->updateInterfaceCourierOrder($courierReturnData);
 				}
+				
 			}
 		}
 	}
@@ -232,7 +228,7 @@ class CourierFactoryService
     	$file=$filePath. "/" .date("Y-m-d-H-i").".".$courierApiInterface->getCourierDataType();
     	//write json data into data.json file
 	   if(file_put_contents($file, $data)) {
-	        //echo 'Data successfully saved';
+	       //echo 'Data successfully saved';
 		   return $data;
 	   	}
 	   	return false;
@@ -344,6 +340,24 @@ class CourierFactoryService
     		$this->_courierOrderDao->update($oldObject);
     	}
     }
+
+    public function updateInterfaceCourierOrderPrintNums()
+    {
+		$batchIds=join(',',$this->formValue);  
+		$where["batch_id in($batchIds)"]=null;
+		$where["status"]=1;
+		//$where["courier_order_status"]="success";
+		$option["limit"]=-1;
+		$oldObjectArr= $this->_courierOrderDao->getList($where,$option);
+    	if($oldObjectArr){
+    		foreach($oldObjectArr as $oldObject){
+    			$printNums=$oldObject->getPrintNums()+1;
+    			$oldObject->setPrintNums($printNums);
+    			$oldObject->setLastPrintOn(date("Y-m-d H:i:s"));
+    			$this->_courierOrderDao->update($oldObject);
+    		}
+    	}
+	}
 
     function  createInterfaceCourierManifest($courierManifestDto)
     {
