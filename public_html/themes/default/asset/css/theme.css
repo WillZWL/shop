@@ -109,6 +109,7 @@
 }
 
 #prod_spec {
+    font-size:12px;
     margin-left: 10px;
     padding-bottom: 10px;
     border: 1px solid black;
@@ -126,7 +127,7 @@
     border: 1px solid black;
     padding-left: 10px;
     padding-right: 10px;
-    width: 120px;
+    width: 200px;
 }
 .spec_value {
     border: 1px solid black;
