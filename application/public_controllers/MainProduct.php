@@ -54,7 +54,8 @@ class MainProduct extends PUB_Controller
                     $data['prod_rrp_price'] = $this->sc['Price']->calcWebsiteProductRrp($listing_info->getPrice(), $listing_info->getFixedRrp(), $listing_info->getRrpFactor());
                     $data['listing_status'] = $listing_info->getStatus();
                     $data['display_qty'] = $prod_info->getDisplayQuantity();
-                    $data["overview"] = nl2br(trim($prod_info->getDetailDesc()));
+                    $overview = nl2br(trim($prod_info->getDetailDesc()));
+                    $data["overview"] = str_replace("&#10;", "<br/>", $overview);
                     if ($prod_info->getSpecification() != "") {
                         $data['specification'] = $prod_info->getSpecification();
                     }
