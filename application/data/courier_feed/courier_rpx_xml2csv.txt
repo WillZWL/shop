@@ -15,9 +15,9 @@ delivery_postcode	receiver_Zip
 	declare_currency	USD
 declared_value	declare_value
 weight	weight
-1	DDP/DDU
+	DDP/DDU	1
 cc_desc	item description
 cc_code	HS code
 weight	Weight of the item
 declared_value	declare_value
-1	s_pieces
+	s_pieces	1
