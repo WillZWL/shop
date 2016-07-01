@@ -1717,7 +1717,8 @@ SQL;
                         con.id_3_digit,
                         con.name as country_name,
                         so.rate_to_hkd,
-                        so.ref_1
+                        so.ref_1,
+                        so.weight
                 FROM so
                 inner join so_extend soe on soe.so_no = so.so_no
                 INNER JOIN client c ON (c.id = so.client_id)

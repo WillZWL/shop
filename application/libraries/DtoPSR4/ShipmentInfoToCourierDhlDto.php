@@ -46,6 +46,7 @@ class ShipmentInfoToCourierDhlDto
     private $id_3_digit;
     private $rate_to_hkd;
     private $ref_1;
+    private $weight;
 
     public function setCurrencyId($currency_id)
     {
@@ -507,5 +508,15 @@ class ShipmentInfoToCourierDhlDto
     public function getRef1()
     {
         return $this->ref_1;
+    }
+
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }
