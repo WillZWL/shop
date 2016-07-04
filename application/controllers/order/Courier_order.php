@@ -38,58 +38,11 @@ class Courier_order extends MY_Controller
 			$tempArr = $this->soService->getDao('SoShipment')->getEnableApiCourierOrderList($where, array("option"=>-1),$checkSoNo);
 			$formValue=array();$currentSoNo="";
 			if($tempArr){
-				foreach ($tempArr as $row){
-					if($currentSoNo!=$row->getSoNo() ){
-						$currentSoNo=$row->getSoNo();
-						$declaredValue=$this->getPostDeclaredValue($row,$courierObj);
-						$address= @explode("|", $row->getDeliveryAddress());
-						$row->setDeliveryAddress1($address[0]);
-						if (!empty($address[1])){
-							$row->setDeliveryAddress2($address[1]);
-						}
-						if (!empty($address[2])){
-							$row->setDeliveryAddress3($address[2]);
-						}
-
-						$deliveryPhone=null;$deliveryPostcode=null;$declaredDesc=null;
-						$deliveryPhone= $_POST["delivery_phone"][$row->getSoNo()] ? $_POST["delivery_phone"][$row->getSoNo()] : $row->getTel();
-						$deliveryPostcode= $_POST["delivery_postcode"][$row->getSoNo()] ? $_POST["delivery_postcode"][$row->getSoNo()] : $row->getDeliveryPostcode();
-						$declaredDesc= $_POST["declared_desc"][$row->getSoNo()] ? $_POST["declared_desc"][$row->getSoNo()] : $row->getDeclaredDesc();
-						//SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
-
-						if(empty($declaredDesc) || $declaredDesc==null){
-							$declaredDesc=$this->getSubCatDescription($row->getSubCatId(),$row->getDeliveryCountryId());
-							$row->setDeclaredDesc($declaredDesc);
-						}
-						$formValue[]=array(
-							"courier_id"=>$this->input->post("current_courier_id"),
-							"so_no"=>$row->getSoNo(),
-							"sh_no"=>$row->getShNo(),
-							"service_type"=>$this->input->post("service_type"),
-							"delivery_name"=>$row->getDeliveryName(),
-							"delivery_company"=>$row->getDeliveryCompany(),
-							"delivery_address_1"=>$row->getDeliveryAddress1(),
-							"delivery_address_2"=>$row->getDeliveryAddress2(),
-							"delivery_address_3"=>$row->getDeliveryAddress3(),
-							"delivery_city"=>$row->getDeliveryCity(),
-							"delivery_state"=>$row->getDeliveryState(),
-							"delivery_postcode"=>strtoupper(trim($deliveryPostcode)),
-							"delivery_country_id"=>$row->getDeliveryCountryId(),
-							"email"=>$row->getEmail(),
-							"delivery_phone"=>$deliveryPhone,
-							"declared_desc"=>$declaredDesc,
-							"declared_value"=>floor($declaredValue),
-							"declared_type"=>"O", 
-							"weight"=>$row->getWeight(),
-							"declared_currency"=>$courierObj->getApiCurrency(),
-							"master_sku"=>$row->getSku(),
-						);
-					}
-				}
+				$formValue=$this->getPendingCourierOrderFromValue($tempArr,$courierObj);
 			}
 			$result=$this->_courierFactoryModel->addCourierOrder($courierId,$formValue);
 			$_SESSION["NOTICE"] = $result["message"];
-			redirect('/order/courier_order/get-courier-batch-order/'.$this->input->post("current_courier_id").'/'.$result["batch_id"]);
+			redirect('/order/courier_order/get-courier-batch-order/'.$courierId.'/'.$result["batchId"]);
 		}
 
 		//display courier order
@@ -161,7 +114,6 @@ class Courier_order extends MY_Controller
 				}
 			}
 		}
-
 		$data["lang"] = $lang;
 		$data["objlist"] = $tempObjlist;
 		$data["itemTotal"]=$itemTotal;
@@ -206,7 +158,9 @@ class Courier_order extends MY_Controller
 				$courierManifestObj = $this->courierService->getInterfaceCourierManifestDao()->getList($where, array('limit'=>-1));
 				foreach($courierManifestObj as $manifestObj){
 					$manifestBags=unserialize($manifestObj->getBags());
-					$data["manifest_bags"][$manifestBags[0]->BagNo]=$manifestBags[0];
+					$data["manifestBags"][$manifestBags[0]->BagNo]=$manifestBags[0];
+					$barcode=$this->_courierFactoryModel->getBarcode($manifestBags[0]->BagNo);
+					$data["barcode"][$manifestBags[0]->BagNo]=$barcode;
 				}
 				$this->load->view('order/courier/manifest_label', $data);
 				return;
@@ -214,12 +168,12 @@ class Courier_order extends MY_Controller
 			$_SESSION["NOTICE"] = $result["message"];
 		}
 
-		if($this->input->post("courier_id") || $current_courier_id)
+		if($this->input->post("courier_id") || $courierId)
 		{
 			if($this->input->post("courier_id")){
 				$where["ic.courier_id"]=$data["selectedCourierId"]=$this->input->post("courier_id");	
 			}else{
-				$where["ic.courier_id"]=$data["selectedCourierId"]=$currentCourierId;
+				$where["ic.courier_id"]=$data["selectedCourierId"]=$courierId;
 			}
 			//$where["ic.tracking_no IS NOT NULL "]=null;
 			$where["ic.status"]="1";
@@ -245,7 +199,6 @@ class Courier_order extends MY_Controller
 
 			$data["createDate"]=$_SESSION["createDate"];
 			$data["objlist"]=$this->courierService->getInterfacePendingCourierDao()->getCourierOrderByBatch($where, array("limit"=>"500","orderby"=>"ic.batch_id desc"));
-			//print_r($this->courierService->getInterfacePendingCourierDao()->db->last_query());exit();
 			$data["totalOrder"]=$this->courierService->getInterfacePendingCourierDao()->getCourierOrderByBatch($where, array("num_rows"=>1,"limit"=>"500","orderby"=>"ic.batch_id desc"));
 		}
 		
@@ -255,7 +208,6 @@ class Courier_order extends MY_Controller
 			$data["objlist"]=$this->courierService->getInterfacePendingCourierDao()->getCourierOrderByBatch($searchWhere, array("limit"=>"500","orderby"=>"ic.batch_id desc"));
 			$data["totalOrder"]=$this->courierService->getInterfacePendingCourierDao()->getCourierOrderByBatch($searchWhere, array("num_rows"=>1,"limit"=>"500","orderby"=>"ic.batch_id desc"));
 		}
-
 		$data["lang"] = $lang;
 		$this->load->view('order/courier/courier_order_detail_v', $data);
 	}
@@ -404,6 +356,58 @@ class Courier_order extends MY_Controller
 		$where = array('ccm.sub_cat_id'=>$subCatId, 'ccm.country_id'=>$courtryId);
 		$hsDetails = $this->customClassService->getHsBySubcatAndCountry($where);
 		return $hsDetails[0]['description'];
+	}
+
+	public function getPendingCourierOrderFromValue($pendingCourierOrders,$courierObj)
+	{
+		$currentSoNo=null;
+		foreach ($pendingCourierOrders as $row){
+			if($currentSoNo!=$row->getSoNo() ){
+				$currentSoNo=$row->getSoNo();
+				$declaredValue=$this->getPostDeclaredValue($row,$courierObj);
+				$address= @explode("|", $row->getDeliveryAddress());
+				$row->setDeliveryAddress1($address[0]);
+				if (!empty($address[1])){
+					$row->setDeliveryAddress2($address[1]);
+				}
+				if (!empty($address[2])){
+					$row->setDeliveryAddress3($address[2]);
+				}
+				$deliveryPhone=null;$deliveryPostcode=null;$declaredDesc=null;
+				$deliveryPhone= $_POST["delivery_phone"][$row->getSoNo()] ? $_POST["delivery_phone"][$row->getSoNo()] : $row->getTel();
+				$deliveryPostcode= $_POST["delivery_postcode"][$row->getSoNo()] ? $_POST["delivery_postcode"][$row->getSoNo()] : $row->getDeliveryPostcode();
+				$declaredDesc= $_POST["declared_desc"][$row->getSoNo()] ? $_POST["declared_desc"][$row->getSoNo()] : $row->getDeclaredDesc();
+				//SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
+				if(empty($declaredDesc) || $declaredDesc==null){
+					$declaredDesc=$this->getSubCatDescription($row->getSubCatId(),$row->getDeliveryCountryId());
+					$row->setDeclaredDesc($declaredDesc);
+				}
+				$formValue[]=array(
+					"courier_id"=>$this->input->post("current_courier_id"),
+					"so_no"=>$row->getSoNo(),
+					"sh_no"=>$row->getShNo(),
+					"service_type"=>$this->input->post("service_type"),
+					"delivery_name"=>$row->getDeliveryName(),
+					"delivery_company"=>$row->getDeliveryCompany(),
+					"delivery_address_1"=>$row->getDeliveryAddress1(),
+					"delivery_address_2"=>$row->getDeliveryAddress2(),
+					"delivery_address_3"=>$row->getDeliveryAddress3(),
+					"delivery_city"=>$row->getDeliveryCity(),
+					"delivery_state"=>$row->getDeliveryState(),
+					"delivery_postcode"=>strtoupper(trim($deliveryPostcode)),
+					"delivery_country_id"=>$row->getDeliveryCountryId(),
+					"email"=>$row->getEmail(),
+					"delivery_phone"=>$deliveryPhone,
+					"declared_desc"=>$declaredDesc,
+					"declared_value"=>floor($declaredValue),
+					"declared_type"=>"O", 
+					"weight"=>$row->getWeight(),
+					"declared_currency"=>$courierObj->getApiCurrency(),
+					"master_sku"=>$row->getSku(),
+				);
+			}
+		}
+		return $formValue;
 	}
 
 	public function getAppId()

@@ -2,25 +2,23 @@
 
 namespace ESG\Panther\Service\CourierAPi;
 
-use Illuminate\Http\Request;
-use Esgwe\Src\XmlArray;
+use ESG\Panther\Dao\InterfaceCourierManifestDao;
 
-class ChinaPostApiService implements CourierApiInterface 
+class ChinaPostApiService extends CourierAPiService implements CourierApiInterface 
 {
 	private $courierReturnData=null;
 	private $courierRequestData=null;
 	private $autoIncrementNum;
 	private $formValue;
-	private $courier_id;
 
-	public function __construct(Request $request){
-
-        $this->formValue = $request->get('formValue');
-        $this->courier_id=$this->getCourierId();
+	public function __construct($formValue)
+	{
+        $this->formValue = $formValue;
+        parent::__construct($formValue);
     }
 
-	public function getCourierApiUrl($request){
-
+	public function getCourierApiUrl($request)
+	{
 		$courierApiDomain="http://61.145.202.114/webservices/userapi/";
 		$courierApiUrl=array(
 				"addOrder"	=>"addorupdateorder",
@@ -35,8 +33,8 @@ class ChinaPostApiService implements CourierApiInterface
 		return $courierApiDomain.$courierApiUrl[$request];
 	}
 
-	public function getCourierApiHeader(){
-
+	public function getCourierApiHeader()
+	{
 		$courierApiHeader=array(
 			"headers"=>array(
 				"APIToken"=>"c3f168b35299cdff2d339009a0d6237e", 
@@ -47,12 +45,9 @@ class ChinaPostApiService implements CourierApiInterface
 		return $courierApiHeader;
 	}
 
-	public function getCourierId(){
-
-		return \DB::table('courier')
-					->where("api_class","ChinaPostApiService")
-					->first()
-					->id;
+	public function getCourierId()
+	{
+		return "ChinaPost";
 	}
 
 	/******************************************
@@ -60,7 +55,8 @@ class ChinaPostApiService implements CourierApiInterface
 	**  this will return courier id
 	********************************************/
 
-	public function getCourierDataType(){
+	public function getCourierDataType()
+	{
 		return "xml";
 	}
 	/******************************************
@@ -68,7 +64,8 @@ class ChinaPostApiService implements CourierApiInterface
 	**  this will return courier POST type:xml, json
 	********************************************/
 
-	 public function getCourierRequestData($action,$requestData){
+	 public function getCourierRequestData($action,$requestData)
+	 {
 	 	switch ($action) {
 	 		case 'addOrder':
 	 			$courierRequestData=$this->getAddOrderActionData($requestData);
@@ -96,6 +93,7 @@ class ChinaPostApiService implements CourierApiInterface
 	 			break;
 	 	}
     	if(!empty($courierRequestData)){
+    		//print_r($this->array2Xml($courierRequestData,$xml));exit();
 		    return $this->array2Xml($courierRequestData,$xml);
 		}
     }
@@ -104,47 +102,48 @@ class ChinaPostApiService implements CourierApiInterface
 	**  return courier post data to add order
 	********************************************/
 
-    public function getAddOrderActionData($interfacePendingCourier){
-
+    public function getAddOrderActionData($interfacePendingCourier)
+    {
     	if($interfacePendingCourier){
     		foreach($interfacePendingCourier as $pendingData){
-    				$courierRequestData["Order"] = array (
+    				$requestData=null;
+    				$requestData["Order"] = array (
 				  		"SellerAccountName"=> "default",
-				  		"OrderId"=>$pendingData->so_no,
+				  		"OrderId"=>$pendingData->getSoNo(),
 				  		//"SalesOrderId"=>"1231",
 				  		//"BuyerId"=>"123",
-				  		"ReceiverName"=>$pendingData->delivery_name,
-				  		"AddressLine1"=>$pendingData->delivery_address_1,
-				  		"AddressLine2"=>$pendingData->delivery_address_2,
-				  		"Country"=>$pendingData->delivery_country_id,
-				  		"State"=>$pendingData->delivery_state,
-				  		"City"=>$pendingData->delivery_city,
-				  		"PostCode"=>$pendingData->delivery_postcode,
-				  		"PhoneNumber"=>$pendingData->delivery_phone,
-				  		"Email"=>$pendingData->email,
-				  		"ShipWayCode"=>"002",
+				  		"ReceiverName"=>$pendingData->getDeliveryName(),
+				  		"AddressLine1"=>$pendingData->getDeliveryAddress1(),
+				  		"AddressLine2"=>$pendingData->getDeliveryAddress2(),
+				  		"Country"=>$pendingData->getDeliveryCountryId(),
+				  		"State"=>$pendingData->getDeliveryState(),
+				  		"City"=>$pendingData->getDeliveryCity(),
+				  		"PostCode"=>$pendingData->getDeliveryPostcode(),
+				  		"PhoneNumber"=>$pendingData->getDeliveryPhone(),
+				  		"Email"=>$pendingData->getEmail(),
+				  		"ShipWayCode"=>$pendingData->getServiceType()
 				  		//"TrackingNo"=>"",
 					);
-					$courierRequestData["Order"]["OrderItems"] = array(
+					$requestData["Order"]["OrderItems"] = array(
 				  			"OrderItem" =>array(
 				  				"Quantity" =>"1",
-				  				"Sku" => $pendingData->master_sku,
-				  				"Title" => "test",
+				  				"Sku" => $pendingData->getMasterSku(),
+				  				"Title" => $pendingData->getDeclaredDesc(),
 				  			)
 				  		);
-					$courierRequestData["Order"]["OrderCustoms"] = array(
-				  			"Currency" =>$pendingData->declared_currency,
+					$requestData["Order"]["OrderCustoms"] = array(
+				  			"Currency" =>$pendingData->getDeclaredCurrency(),
 				  			"CustomsType" =>"礼物",
 				  			"OrderCustom" => array(
 				  				"Quantity"=>'1',
-				  				"DescriptionEn"=>$pendingData->declared_desc_en,
-				  				"DescriptionCn"=>$pendingData->declared_desc_cn,
-				  				"Weight"=>$pendingData->weight,
-				  				"Value"=>$pendingData->declared_value,
+				  				"DescriptionEn"=>$pendingData->getDeclaredDesc(),
+				  				"Weight"=>$pendingData->getWeight(),
+				  				"Value"=>$pendingData->getDeclaredValue(),
 				  			)
 				  		);
-					return $courierRequestData;
+				  	$courierRequestData[]=$requestData;	
 			}
+			return $courierRequestData;
     	}
     }
 	/******************************************
@@ -152,15 +151,20 @@ class ChinaPostApiService implements CourierApiInterface
 	**  return PendingCourierData Object
 	********************************************/
    
-	public function getApplyTrackingActionData($orderId){
-		$courierRequestData["Order"] = array (
-			"OrderId" => $orderId,
-			"EubPrintProductFormat"=> "itemtitle"
-    	);
+	public function getApplyTrackingActionData($interfaceCourierDtoArr)
+	{
+		$courierRequestData=null;
+		foreach($interfaceCourierDtoArr as $interfaceCourierDto){
+			$courierRequestData[]["Order"] = array(
+					"OrderId" => $interfaceCourierDto->getCourierOrderId(),
+					"EubPrintProductFormat"=> "itemtitle"
+    		);	
+		}
     	return $courierRequestData;
 	}
 
-	public function getPrintOrderActionData($orderId){
+	public function getPrintOrderActionData($interfaceCourierDtoArr)
+	{
 		$courierRequestData = array (
 			"LableFormat" => "A4_3",
 			"StartPlace"=> "1",
@@ -175,21 +179,24 @@ class ChinaPostApiService implements CourierApiInterface
 			//{sku},{sku}({itemtitle}),{sku}({productname})
 			"PrintProductPosition"=> "1",
     	);
-    	$courierRequestData["Orders"] = array(
-			"Order"=>array(
-					"OrderId"=>$orderId
-				)
-    	);
+    	foreach($interfaceCourierDtoArr as $interfaceCourierDto){
+			$courierRequestData["Orders"][]["Order"]= array(
+				"OrderId" => $interfaceCourierDto->getCourierOrderId(),
+    		);	
+		}
     	return $courierRequestData;
 	}
 
-	public function getDeleteOrderActionData($orderId){
-	
-		$courierRequestData["OrderId"] = $orderId;
+	public function getDeleteOrderActionData($interfaceCourierDtoArr)
+	{
+		foreach($interfaceCourierDtoArr as $interfaceCourierDto){
+			$courierRequestData[]["OrderId"] = $interfaceCourierDto->getCourierOrderId();
+		}
     	return $courierRequestData;
 	}
 
-	public function getFindOrderActionData($requestData){
+	public function getFindOrderActionData($requestData)
+	{
 		$courierRequestData= array (
 			"OrderId" => $requestData["OrderId"],
 			"SalesOrderId"=> $requestData["SalesOrderId"],
@@ -212,46 +219,52 @@ class ChinaPostApiService implements CourierApiInterface
     	return $courierRequestData;
 	}
 
-	public function _getOrderTrackingNoActionData($orderId){
-		$courierRequestData= array (
-			"OrderId" => $orderId,
-			"SalesOrderId"=> "SalesOrderId"
-    	);
+	public function _getOrderTrackingNoActionData($interfaceCourierDtoArr)
+	{
+    	foreach($interfaceCourierDtoArr as $interfaceCourierDto){
+    		$courierRequestData["Order"][]=array(
+    			"OrderId" =>$interfaceCourierDto->getCourierOrderId(),
+    			"SalesOrderId" => "SalesOrderId"
+    			);
+    	}
     	return $courierRequestData;
 	}
 
-	public function _getAllWarehouseActionData(){
-
-    	
+	public function _getAllWarehouseActionData()
+	{
+	
 	}
 
-	public function _getOrderStatusActionData(){
+	public function _getOrderStatusActionData()
+	{
 		
 	}
 
-	public function callbackAcionData(){
+	public function callbackAcionData()
+	{
 		$callbackDataXml = file_get_contents("php://input");
 		$callbackData = simplexml_load_string($callbackDataXml, 'SimpleXMLElement', LIBXML_NOCDATA);
     	return $callbackData->Orders;
 	}
 
 
-	public function getCourierReturnData($action,$courierReturnContent){
+	public function getCourierReturnData($action,$courierReturnContent)
+	{
 		// 把 xml 数据转换成 PHP 的对象
 		$singleOrderArray=array("applyTracking","printOrder","deleteOrder");
 		$courierReturnContent=strtolower($courierReturnContent);
-		$courierReturnDataArr="";
+		$courierReturnData="";
 		$courierReturnObj = simplexml_load_string($courierReturnContent, 'SimpleXMLElement', LIBXML_NOCDATA);
 		foreach ($courierReturnObj->children() as $returnData) {
 			if(in_array($action, $singleOrderArray)){
-				$courierReturnDataArr[]=$this->hydrateReturnData($action,$returnData);
+				$courierReturnData[]=$this->hydrateReturnData($action,$returnData);
 			}else{
-				foreach ($returnData->children() as $order) {
-					$courierReturnDataArr[]=$this->hydrateReturnData($action,$order);
+				foreach ($returnData->children() as $courierOrder) {
+					$courierReturnData[]=$this->hydrateReturnData($action,$courierOrder);
 				}
 			}
 		}
-		return $courierReturnDataArr;
+		return $courierReturnData;
 	}
 
 	/******************************************
@@ -259,36 +272,29 @@ class ChinaPostApiService implements CourierApiInterface
 	**  return  xml data
 	********************************************/
 
-	public function array2Xml($arrayRequestData,$xml){
-		$array2XML = new XmlArray($arrayRequestData);
+	public function array2Xml($arrayRequestData,$xml)
+	{	
+		include_once(BASEPATH . "plugins/XmlArray.php");
+		$array2XML = new \XmlArray($arrayRequestData);
         $result = $array2XML->createXmlFromArray($xml);
         return $result;
 	}
 	
-	public function hydrateReturnData($action,$returnData){
-
-		$courierReturnData="";
-		$courierReturnData["batch_id"]="1";
-		$courierReturnData["courier_order_id"]=(string)$returnData->orderid;
-		$courierReturnData["courier_id"]=$this->courier_id;
-		if($action=="printOrder"){
-			$courierReturnData["print_nums"]=1;
-			$courierReturnData["last_print_on"]=date("Y-m-d H:i:s");
-		}else if($action=="deleteOrder"){
-			$courierReturnData["courier_order_status"]='D';
-		}else{
-			if((string)$returnData->trackingno) 
-			$courierReturnData["real_tracking_no"]=(string)$returnData->trackingno;
-			if((string)$returnData->parcelid)
-			$courierReturnData["courier_parcel_id"]=(string)$returnData->parcelid;
-			if((string)$returnData->error)
-			$courierReturnData["error"]=(string)$returnData->error;
-			if((string)$returnData->error_message)
-			$courierReturnData["error_message"]=(string)$returnData->errormsg;
-			if((string)$returnData->status)
-			$courierReturnData["status"]=(string)$returnData->status;
+	public function hydrateReturnData($action,$returnData)
+	{
+		$this->courierOrderDto = new  \CourierOrderDto();
+		$this->courierOrderDto->setCourierOrderId((string)$returnData->orderid);
+		$this->courierOrderDto->setCourierId($this->getCourierId());
+		if((string)$returnData->trackingno){
+		$this->courierOrderDto->setRealTrackingNo((string)$returnData->trackingno);
 		}
-		return $courierReturnData;
+		if((string)$returnData->parcelid)
+		$this->courierOrderDto->setCourierParcelId((string)$returnData->parcelid);
+		if((string)$returnData->errormsg)
+		$this->courierOrderDto->setErrorMessage((string)$returnData->errormsg);
+		if((string)$returnData->status)
+		$this->courierOrderDto->setCourierOrderStatus((string)$returnData->status);
+		return $this->courierOrderDto;
 	}	
 	 
 } 

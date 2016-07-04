@@ -49,7 +49,7 @@ class AsendiaApiService extends CourierAPiService implements CourierApiInterface
 
 	public function getAsendiaPpi()
 	{
-		return "";
+		return "6713";
 	}
 
 	public function getApiToken()
@@ -62,7 +62,8 @@ class AsendiaApiService extends CourierAPiService implements CourierApiInterface
 	**  this will return courier id
 	********************************************/
 
-	public function getCourierDataType(){
+	public function getCourierDataType()
+	{
 		return "json";
 	}
 	/******************************************
@@ -70,7 +71,8 @@ class AsendiaApiService extends CourierAPiService implements CourierApiInterface
 	**  this will return courier POST type:xml, json
 	********************************************/
 
-	 public function getCourierRequestData($action,$requestData){
+	 public function getCourierRequestData($action,$requestData)
+	 {
 	 	switch ($action) {
 	 		case 'addOrder':
 	 			$courierRequestData=$this->getAddOrderActionData($requestData);
@@ -145,18 +147,25 @@ class AsendiaApiService extends CourierAPiService implements CourierApiInterface
     	return $courierRequestData;
 	}
 
-	public function getDeleteOrderActionData($orderId)
+	public function getDeleteOrderActionData($interfaceCourierDtoArr)
 	{
-		$courierRequestData["OrderId"] = $orderId;
+		$courierRequestData= array (
+			"ApiToken"=>$this->getApiToken()
+    	);
+    	foreach($interfaceCourierDtoArr as $interfaceCourierDto){
+    		$courierRequestData["OrderList"][]=array("OrderId" =>$interfaceCourierDto->getCourierOrderId());
+    	}
     	return $courierRequestData;
 	}
 
-	public function _getOrderTrackingNoActionData($orderId)
+	public function _getOrderTrackingNoActionData($interfaceCourierDtoArr)
 	{
 		$courierRequestData= array (
-			"OrderId" => $orderId,
-			"SalesOrderId"=> "SalesOrderId"
+			"ApiToken"=>$this->getApiToken()
     	);
+    	foreach($interfaceCourierDtoArr as $interfaceCourierDto){
+    		$courierRequestData["OrderList"][]=array("OrderId" =>$interfaceCourierDto->getCourierOrderId());
+    	}
     	return $courierRequestData;
 	}
 
@@ -206,13 +215,16 @@ class AsendiaApiService extends CourierAPiService implements CourierApiInterface
 			if($courierReturnContent->Status=="success"){
 				foreach($courierReturnContent->Result as $courierOrder){
 						$this->courierOrderDto = new  \CourierOrderDto();
-						$this->courierOrderDto->setCourierOrderId($courierOrder->OrderId);
+						$OrderId=$courierOrder->OrderID ? $courierOrder->OrderID :$courierOrder->OrderId;
+						$this->courierOrderDto->setCourierOrderId($OrderId);
 						$this->courierOrderDto->setCourierId($this->getCourierId());
+						if($courierOrder->TrackingNo){
+							$courierOrder->Status ="success";
+							$this->courierOrderDto->setTrackingNo($courierOrder->TrackingNo);
+						}
 						if($courierOrder->Status)
 						$this->courierOrderDto->setCourierOrderStatus($courierOrder->Status);
-						if($courierOrder->TrackingNo)
-						$this->courierOrderDto->setTrackingNo($courierOrder->TrackingNo);
-						if($courierOrder->TrackingNo)
+						if($courierOrder->Error)
 						$this->courierOrderDto->setErrorMessage($courierOrder->Error); 
 						if($courierOrder->RefId)
 					 	$this->courierOrderDto->setRealTrackingNo($courierOrder->RefId);
