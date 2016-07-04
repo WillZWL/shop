@@ -62,7 +62,9 @@ class CourierFactoryService
 		$where=array("batch_id"=>$this->batchId,"courier_id"=>$this->courierId);
 		$interfacePendingCourier=$this->_pengdingCourierDao->getConfirmPendingOrder($where,$option);
 		if($interfacePendingCourier){
-			$this->runCourierApi("addOrder",$interfacePendingCourier);
+			$reuslt["batchId"]=$this->batchId;
+			$reuslt["message"]=$this->runCourierApi("addOrder",$interfacePendingCourier);
+			return $reuslt;
 		}else{
 			return null;
 		}
@@ -70,8 +72,19 @@ class CourierFactoryService
 
 	public function applyCourierTracking()
 	{
-		//$orderId="1023750";
-		$this->runCourierApi("applyTracking",$orderId);
+		$batchIds=join(',',$this->formValue);  
+		$where["batch_id in($batchIds)"]=null;
+		$where["status"]=1;
+		$where["courier_order_status"]="success";
+		$option["limit"]=-1;
+		$option["orderby"]=" CAST(courier_order_id AS DECIMAL) desc";
+		$courierOrderArr=$this->_courierOrderDao->getList($where,$option);
+		if($courierOrderArr){
+			$reuslt["message"]=$this->runCourierApi("applyTracking",$courierOrderArr);
+			return $reuslt;
+		}else{
+			return null;
+		}
 	}
 
 	public function printCourierOrder()
@@ -102,15 +115,19 @@ class CourierFactoryService
 
 	//use soft delete function
 	public function deleteCourierOrder()
-	{
-		$orderId="1023750";
-		$this->runCourierApi("deleteOrder",$orderId);
+	{	
+		$orderIds=join(',',$this->formValue);  
+		$where["courier_order_id in($orderIds)"]=null;
+		$where["status"]=1;
+		//$where["courier_order_status"]="success";
+		$courierOrderArr=$this->_courierOrderDao->getList($where,$option);
+		if($courierOrderArr){
+			$reuslt["message"]=$this->runCourierApi("deleteOrder",$courierOrderArr);
+			return $reuslt;
+		}else{
+			return null;
+		}
 	}
-
-	public function updateInterfacePendingOrder()
-    {   
-        
-    }
 
     public function addCourierManifest()
     {    
@@ -120,7 +137,8 @@ class CourierFactoryService
 		//$where["ic.courier_order_status"]="success";
 		$courierBatchOrderDtoArr=$this->_pengdingCourierDao->getCourierOrderByBatch($where, array("limit"=>-1));
 		if($courierBatchOrderDtoArr){
-			$this->runCourierApi("addManifest",$courierBatchOrderDtoArr);
+			$reuslt["message"]=$this->runCourierApi("addManifest",$courierBatchOrderDtoArr);
+			return $reuslt;
 		}else{
 			return null;
 		}
@@ -147,7 +165,8 @@ class CourierFactoryService
 		$option["limit"]=-1;
 		$courierOrderArr=$this->_courierOrderDao->getList($where,$option);
 		if($courierOrderArr){
-			$this->runCourierApi("getOrderTrackingNo",$courierOrderArr);
+			$reuslt["message"]=$this->runCourierApi("getOrderTrackingNo",$courierOrderArr);
+			return $reuslt;
 		}else{
 			return null;
 		}
@@ -185,6 +204,8 @@ class CourierFactoryService
 	public function runCourierApi($action,$requestData)
 	{
 		$requestUrl=$this->courierApiInterface->getCourierApiUrl($action);
+		if(empty($requestUrl)) 
+			return "No this action, please contact the system manager.";
 		$courierRequestData=$this->courierApiInterface->getCourierRequestData($action,$requestData);
 		$this->saveDataToFile($courierRequestData,$action,$this->courierApiInterface);
 		$courierReturnContent=$this->curlPostDataToApi($requestUrl,$courierRequestData);
@@ -207,8 +228,13 @@ class CourierFactoryService
 				}else{
 					$this->updateInterfaceCourierOrder($courierReturnData);
 				}
-				
+				if($action=="addManifest"){
+					$message.="Batch Id ".$courierReturnData->getCourierBatchId()." ".$action." ".$courierReturnData->getStatus() ."<br>";
+				}else{
+					$message.="Order ".$courierReturnData->getCourierOrderId()." ".$action." ".$courierReturnData->getCourierOrderStatus() ."<br>";
+				}
 			}
+			return $message;
 		}
 	}
 
@@ -310,7 +336,7 @@ class CourierFactoryService
     	$object->setCreateOn(date("Y-m-d H:i:s"));
     	$result=$this->_courierOrderDao->insert($object);
 
-    	$this->_courierOrderDao->db->trans_commit();
+    	//$this->_courierOrderDao->db->trans_commit();
     }
 
     function updateInterfaceCourierOrder($courierOrderDto)
@@ -321,14 +347,20 @@ class CourierFactoryService
 		//$where["courier_order_status"]="success";
 		$oldObject = $this->_courierOrderDao->get($where);
     	if($oldObject){
-    		$oldObject->setRealTrackingNo($courierOrderDto->getRealTrackingNo());
-    		$oldObject->setTrackingNo($courierOrderDto->getTrackingNo());
+    		if($oldObject->getRealTrackingNo()==null && $courierOrderDto->getRealTrackingNo()!=null){
+    			$oldObject->setRealTrackingNo($courierOrderDto->getRealTrackingNo());
+    		}
+  	
+    		if($oldObject->getTrackingNo()==null && $courierOrderDto->getTrackingNo()!=null){
+    			$oldObject->setTrackingNo($courierOrderDto->getTrackingNo());	
+    		}
+
     		$oldObject->setCourierOrderStatus("success");
     		$this->_courierOrderDao->update($oldObject);
     	}
     }
 
-    function cancelInterfaceCourierOrder($courierOrderDto)
+    public function cancelInterfaceCourierOrder($courierOrderDto)
     {
     	//update inactive courier old status.
 		$where["courier_order_id"]=$courierOrderDto->getCourierOrderId();
@@ -346,7 +378,7 @@ class CourierFactoryService
 		$batchIds=join(',',$this->formValue);  
 		$where["batch_id in($batchIds)"]=null;
 		$where["status"]=1;
-		//$where["courier_order_status"]="success";
+		$where["courier_order_status"]="success";
 		$option["limit"]=-1;
 		$oldObjectArr= $this->_courierOrderDao->getList($where,$option);
     	if($oldObjectArr){
@@ -383,7 +415,7 @@ class CourierFactoryService
 	    	$object->setCreateOn(date("Y-m-d H:i:s"));
 	    	$result=$this->_courierManifestDao->insert($object);
 
-	    	$this->_courierManifestDao->db->trans_commit();
+	    	//$this->_courierManifestDao->db->trans_commit();
     	}
     }
 

@@ -16,6 +16,7 @@ class RptCourierTrackingnoReportService extends ReportService
     {
         set_time_limit(300);
 		$courierBatchOrderDto = $this->_pengdingCourierDao->getCourierOrderByBatch($where,array("limit"=>-1));
+        $this->setOutputDelimiter(',');
 		return $this->convert($courierBatchOrderDto);
     }
 

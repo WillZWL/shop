@@ -277,6 +277,7 @@ class SoShipmentDao extends BaseDao
         $this->db->join('(select so_no, declared_value FROM interface_pending_courier group by so_no) as ipc', 'ipc.so_no = so.so_no', 'LEFT');
         
         $this->db->where(array("inc.tracking_no is null"=>null));
+        $this->db->where(array("inc.courier_parcel_id is null"=>null));
         //$this->db->where_in(array('soal.status'=>3));
         if ($so_no){
             $this->db->where_in("so.so_no",$so_no);

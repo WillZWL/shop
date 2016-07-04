@@ -1,8 +1,7 @@
 <?php 
-namespace Esgwe\Src;
 
-use DOMDocument;
-use DOMNode;
+include_once(BASEPATH . "plugins/TransformArray.php");
+include_once(BASEPATH . "plugins/Inflector.php");
 
 class XmlArray extends TransformArray
 {
@@ -31,7 +30,7 @@ class XmlArray extends TransformArray
      * @param string $encoding
      * @return string
      */
-    public function createXmlFromArray($rootName = 'items', $encoding = 'utf-8')
+    public function createXmlFromArray($rootName = 'orders', $encoding = 'utf-8')
     {
         $this->doc = new DOMDocument('1.0', $encoding);
         if (count($this->array) > 0) {
@@ -72,19 +71,43 @@ class XmlArray extends TransformArray
         foreach ($arr as $key => $val) {
             $newKey = $key;
             if (is_int($key)) {
-                $newKey = 'item';
-                if ((strlen($name) > 1) && (str_singular($name) !== $name)) {
-                    $newKey = str_singular($name);
+                $newKey = 'order';
+                if ((strlen($name) > 1) && ($this->singular($name) != $name)) {
+                    $newKey = $this->singular($name);
                 }
+                $node=$n;
+            }else{
+                $node = $this->doc->createElement($newKey);
             }
-            $node = $this->doc->createElement($newKey);
+
             if (is_array($val)) {
-                $this->addArray($arr[$key], $node, $key);
+                $this->addArray($val, $node, $key);
             } else {
                 $nodeText = $this->doc->createTextNode($val);
                 $node->appendChild($nodeText);
             }
-            $n->appendChild($node);
+            if(!is_int($key)){
+               $n->appendChild($node); 
+            }
         }
+    }
+
+    public function singular($value)
+    {
+        $singular=Inflector::singularize($value);
+         return static::matchCase($singular, $value);
+    }
+
+    protected static function matchCase($value, $comparison)
+    {
+        $functions = ['mb_strtolower', 'mb_strtoupper', 'ucfirst', 'ucwords'];
+
+        foreach ($functions as $function) {
+            if (call_user_func($function, $comparison) === $comparison) {
+                return call_user_func($function, $value);
+            }
+        }
+
+        return $value;
     }
 }
