@@ -26,3 +26,4 @@ prod_weight	customsWeight1
 	Width	10
 	Length	10
 category_name	productName1
+cc_code	Hscode
