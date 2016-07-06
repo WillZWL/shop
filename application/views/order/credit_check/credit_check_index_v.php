@@ -3,6 +3,7 @@
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/PaymentGateway/jsPmgwlist"></script>
@@ -37,7 +38,7 @@
                 }
                 ?>
             </td>
-            <td align="right" class="title">
+            <td align="right" style="background:#286512">
                 <input type="button" value="<?= $lang["list_button"] ?>"
                        onclick="Redirect('<?= site_url('order/credit_check/') ?>')"> &nbsp;
                 <input type="button" class="button" value="<?= $lang["list_pending"] ?>"
@@ -421,7 +422,7 @@
         InitPMGW(document.fm.payment_gateway_id);
         document.fm.payment_gateway_id.value = '<?=$this->input->get("payment_gateway_id")?>';
     </script>
-    <?= $this->paginationService->createLinksWithStyle() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>
