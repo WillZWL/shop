@@ -92,12 +92,12 @@
                             <td class="text-right"><strong><?=_('Shipping').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getDeliveryCharge()) ?></td>
                         </tr>
-                        <?php if($cartInfo->getPromoDiscTotal())?>
+                        <?php if($cartInfo->getPromoDiscTotal()!=null){?>
                         <tr>
                             <td class="text-right"><strong><?=_('Promotion').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getPromoDiscTotal()) ?></td>
                         </tr>
-                        <?php ?>
+                        <?php } ?>
                         <tr>
                             <td class="text-right"><strong><?= _('Total').':' ?></strong></td>
                             <td class="text-right"><?= platform_curr_format($cartInfo->getGrandTotal()) ?></td>

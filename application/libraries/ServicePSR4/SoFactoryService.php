@@ -22,22 +22,15 @@ class SoFactoryService extends BaseService
     public function getNewCartByOrderInfo($orderInfo, $bizType, $clientObj) {
         $skuList = [];
         foreach($orderInfo->items as $sku => $item) {
-            $skuList[$sku] = ["qty" => $item->getQty(), "amount" => $item->getAmount(),"promoDiscAmt"=>$item->getPromoDiscAmt()];
+            $skuList[$sku] =array(
+                "qty" => $item->getQty(),
+                "price"=> $item->getPrice(), 
+                "amount" => $item->getAmount(),
+                "promoDiscAmt"=>$item->getPromoDiscAmt()
+            );
         }
 //Centralize a buildcart function, to get all the cart details
-        $newCart = $this->rebuildCartBySku($orderInfo, $bizType, $skuList, $clientObj);
-        foreach($newCart->items as $sku => $item){
-            if($skuList[$sku]["promoDiscAmt"]){
-                $item->setPromoDiscAmt($skuList[$sku]["promoDiscAmt"]); 
-                $item->setAmount($skuList[$sku]["amount"]); 
-            } 
-        }
-        $newCart->setPlatformOrderId($orderInfo->getPlatformOrderId());
-        $newCart->setPlatformId($orderInfo->getPlatformId());
-        $newCart->setPromotionCode($orderInfo->getPromotionCode());
-        $newCart->setPromoDiscTotal($orderInfo->getPromoDiscTotal());
-
-        return $newCart;
+        return $this->rebuildCartBySku($orderInfo, $bizType, $skuList, $clientObj);
     }
 
     public function createSaleOrder(CreateSoInterface $interfaceType) {
@@ -54,11 +47,10 @@ class SoFactoryService extends BaseService
                 $this->getDao("So")->db->trans_start();
                 $soObj = $this->_createSo($clientObj, $newCart, $newSoNo, null, $interfaceType);
                 if ($soObj !== false) {
-                    if (($createSoItemResult = $this->_createSoItemDetailAndUpdateSo($soObj, $newCart))
-                        && ($createSoItemResult["result"])) {
+                    if (($createSoItemResult = $this->_createSoItemDetailAndUpdateSo($soObj, $newCart)) && ($createSoItemResult["result"])) {
 //no error check for complementary accessory
                         $this->_addComplementaryAccessory($soObj, $createSoItemResult["lastLineNo"]);
-
+                
                         if ($this->_createSoPaymentStatus($soObj, $interfaceType->getCheckoutData())) {
                             if (!$this->_createSoExtend($soObj, $interfaceType->getCheckoutData())) {
                                 $this->getDao("So")->db->trans_rollback();
@@ -242,6 +234,7 @@ class SoFactoryService extends BaseService
     }
 
     private function _createSoItemDetailAndUpdateSo($soObj, $cart) {
+
         $result = true;
         $totalCost = 0;
         $i = 0;
@@ -310,6 +303,7 @@ class SoFactoryService extends BaseService
         if ($item->getPromoDiscAmt())
             $soItemDetailObj->setPromoDiscAmt($item->getPromoDiscAmt());
 //better to use a function to calculate VAT, GST in the future
+
         $priceWithCost = new \PriceWithCostDto();
         $priceWithCost->setPrice($item->getAmount());
         $priceWithCost->setPlatformCountryId($soObj->getBillCountryId());
@@ -318,7 +312,7 @@ class SoFactoryService extends BaseService
         $soItemDetailObj->setVatTotal(round(($priceWithCost->getDeclaredValue() * $item->getVatPercent() / 100), $item->getDecPlace()));
         $soItemDetailObj->setAmount($item->getAmount());
         $this->_setProfitInfo($soItemDetailObj, $platformId, $item->getDecPlace());
-
+        
         $insertSoItemDetailResult = $this->getDao("SoItemDetail")->insert($soItemDetailObj);
 //        print $this->getDao("SoItemDetail")->db->last_query();
         if ($insertSoItemDetailResult === false) {
@@ -489,7 +483,22 @@ class SoFactoryService extends BaseService
             $cartSessionService->updateCartDelivery($deliverySurcharge);
         }
         $cart = $cartSessionService->getCart();
+        if($orderInfo->getPromotionCode()){
+            foreach($cart->items as $sku => $item){
+                $item->setPromoDiscAmt($skuInfo[$sku]["promoDiscAmt"]); 
+                $item->setPrice($skuInfo[$sku]["price"]);
+                $item->setAmount($skuInfo[$sku]["amount"]); 
+                $totalAmount += $item->getAmount();
+                $cart->items[$sku]=$item;
+            }
+            $cart->setPromotionCode($orderInfo->getPromotionCode());
+            $cart->setPromoDiscTotal($orderInfo->getPromoDiscTotal());
+            $cart->setSubtotal($totalAmount);
+        }
+        $cart->setPlatformOrderId($orderInfo->getPlatformOrderId());
+        $cart->setPlatformId($orderInfo->getPlatformId());
         return $cart;
+
     }
 
     public function isFraudOrder($soObj = '')
@@ -521,7 +530,7 @@ class SoFactoryService extends BaseService
 */
     private function _setProfitInfo(\BaseVo $soidObj, $platformId, $decPlace)
     {
-        if ($platformId) {
+        if ($platformId && $soidObj->getUnitPrice() > 0) {
             $calProfitDto = new \CalculateProfitDto($soidObj->getItemSku(), $soidObj->getQty(), $soidObj->getUnitPrice(), $soidObj->getAmount());
             $this->getService("CartSession")->storeProfitInfoToDto($calProfitDto, $platformId, $decPlace);
             $soidObj->setProfitRaw($calProfitDto->getRawProfit());

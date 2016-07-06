@@ -57,11 +57,10 @@ class CourierOrderDto
 		return $this->courier_parcel_id;
 	}
 
-	public function setCourierParcelId($value){
-		
+	public function setCourierParcelId($value)
+	{
 		$this->courier_parcel_id = $value;
 	}
-
 
 	public function getTrackingNo(){
 		

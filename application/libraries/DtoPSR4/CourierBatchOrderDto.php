@@ -36,6 +36,7 @@ class CourierBatchOrderDto
 
   	private $sh_no;
   	private $declared_desc;
+  	private $declared_hs_code;
   	private $declared_type;
   	private $print_nums;
   	private $last_print_on;
@@ -310,6 +311,16 @@ class CourierBatchOrderDto
 	public function setDeclaredDesc($value){
 		
 		$this->declared_desc = $value;
+	}
+
+	public function getDeclaredHsCode(){
+
+		return $this->declared_hs_code;
+	}
+
+	public function setDeclaredHsCode($value){
+		
+		$this->declared_hs_code = $value;
 	}
 
 	public function getDeclaredType(){

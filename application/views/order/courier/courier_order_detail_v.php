@@ -114,6 +114,7 @@
 	<col width="90">
 	<col width="90">
 	<col width="60">
+	<col width="60">
 	<col width="120">
 	<col width="50">
 	<col width="100">
@@ -126,6 +127,7 @@
 		<td title="<?=$lang["courier_id"]?>"><a href="#" onClick="SortCol(document.fm, 'courier_id', '<?=$xsort["courier_id"]?>')"><?=$lang["courier_id"]?> <?=$sortimg["courier_id"]?></a></td>
 
 		<td title="<?=$lang["courier_order_id"]?>"><?=$lang["courier_order_id"]?></td>
+		<td title="<?=$lang["declared_hscode"]?>"><?=$lang["declared_hscode"]?></td>
 		<td title="<?=$lang["declared_desc"]?>"><?=$lang["declared_desc"]?></td>
 		<td title="<?=$lang["declared_value"]?>"><?=$lang["declared_value"]?></td>
 		<td title="<?=$lang["delivery_country_id"]?>"><?=$lang["delivery_country_id"]?></td>
@@ -163,6 +165,7 @@
 		<td></td>
 		<td></td>
 		<td></td>
+		<td></td>
 		<td align="center"><input type="button" name="searchsubmit" value="" class="search_button" style="background: url('<?=base_url()?>images/find.gif') no-repeat;" onclick="searchCourierOrder()"></td>
 	</tr>
 </td>
@@ -179,6 +182,7 @@
 		<td><?=$obj->getBatchId()?></td>
 		<td><?=$obj->getCourierId()?></td>
 		<td><?=$obj->getSoNo()?></td>
+		<td><?=$obj->getDeclaredHsCode()?></td>
 		<td><?=$obj->getDeclaredDesc()?></td>
 		<td><?=$obj->getDeclaredValue()?></td>
 		<td><?=$obj->getDeliveryCountryId()?></td>

@@ -26,6 +26,7 @@
 			"qty" => "QTY",
 			"batch_id"=>"Batch ID",
 			"declared_desc"=>"DECLARED DESC",
+			"declared_hscode"=>"HSCODE",
 			"declared_value"=>"DECLARED VALUE",
 			"declared_currency"=>"DECLARED Currency",
 			"unit_price" => "UNIT PRICE",

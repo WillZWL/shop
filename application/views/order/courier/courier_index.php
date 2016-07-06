@@ -57,6 +57,7 @@
 	<col width="80">
 	<col width="80">
 	<col width="40">
+	<col width="50">
 	<col width="120">
 	<col width="95">
 	<col width="50">
@@ -88,6 +89,7 @@
 		<td title="<?=$lang["delivery_country_id"]?>"><a href="#" onClick="SortCol(document.fm, 'delivery_country_id', '<?=$xsort["delivery_country_id"]?>')"><?=$lang["delivery_country_id"]?> <?=$sortimg["delivery_country_id"]?></a></td>
 
 		<td title="<?=$lang["unit_price"]?>"><a href="#" onClick="SortCol(document.fm, 'unit_price', '<?=$xsort["unit_price"]?>')"><?=$lang["unit_price"]?></a></td>
+		<td title="<?=$lang["declared_hscode"]?>"><?=$lang["declared_hscode"]?></td>
 		<td title="<?=$lang["declared_desc"]?>"><?=$lang["declared_desc"]?></td>
 		<td title="<?=$lang["declared_value"]?>"><a href="#" onClick="SortCol(document.fm, 'declared_value', '<?=$xsort["declared_value"]?>')"><?=$lang["declared_value"]?></a></td>
 		<td title="<?=$lang["declared_currency"]?>"><?=$lang["declared_currency"]?></td>
@@ -108,6 +110,7 @@
 		<td></td>
 		<td><input name="delivery_postcode" class="input" value="<?=htmlspecialchars($this->input->get("delivery_postcode"))?>"></td>
 		<td><input name="delivery_country_id" class="input" value="<?=htmlspecialchars($this->input->get("delivery_country_id"))?>"></td>
+		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -146,11 +149,12 @@
 		</td>
 		<td <?=$rowSpan?>><?=$obj->getDeliveryCountryId()?></td>		
 		<td <?=$rowSpan?>><?=$obj->getUnitPrice()?></td>
+		<td <?=$rowSpan?>><?=$obj->getDeclaredHsCode()?></td>
 		<td <?=$rowSpan?>><?=$obj->getDeclaredDesc()?>
 			<input name="declared_desc[<?=$obj->getSoNo()?>]" class="input" value="<?=htmlspecialchars($this->input->post("declared_desc[<?=$obj->getSoNo()?>]"))?>">
 		</td>
 		<td <?=$rowSpan?> ><?=$obj->getDeclaredValue()?>
-			<input name="declared_value[<?=$obj->getSoNo()?>]" class="input" value="<?=htmlspecialchars($this->input->post("declared_value[<?=$obj->getSoNo()?>]"))?>">
+			<input name="declared_value[<?=$obj->getSoNo()?>]" class="input" value="<?=$obj->getDeclaredValue()?>">
 		</td>
 		<td <?=$rowSpan?>><?=$declaredCurrency?></td>					
 		<td <?=$rowSpan?> align="center"><input type="checkbox" name="check[]" value="<?=$obj->getSoNo()?>"></td>

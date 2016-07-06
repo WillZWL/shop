@@ -147,11 +147,13 @@ class CartSessionService extends BaseService
         if ($saveProfit) {
             $this->calculateAndGetCartProfit();
         }
-        $this->updateQuickInfo($totalItems);
-        //start get promotion item
+        //if promotion code used, get promotion item again
         $result=$this->initPromotionFactoryService();
         if($result){
             $this->_cart=$this->promotionFactoryModel->modifyPromotionCart();
+        }
+        if($this->_cart){
+            $this->updateQuickInfo($this->_cart->getTotalNumberOfItems());
         }
         //end get promotion item
         return $this->_cart;    //=return $_SESSION["cart"]
@@ -336,10 +338,8 @@ class CartSessionService extends BaseService
         $jj = json_decode($json, true);
         $calProfitDto->setRawProfit(round($jj["get_profit"], $decPlace));
         $calProfitDto->setRawMargin(round($jj["get_margin"], $decPlace));
-
         if ($calOriginal) {
             $sellingPrice = ($calProfitDto->getTotalAmount()) / $calProfitDto->getQty();
-
             $json = $this->_priceService->getProfitMarginJson($platformId, $calProfitDto->getSku(), $sellingPrice);
             $jj = json_decode($json, true);
             $calProfitDto->setCost(round($jj["get_cost"], $decPlace));
@@ -349,12 +349,12 @@ class CartSessionService extends BaseService
         return $calProfitDto;
     }
 
+    //get the used promotion items
     public function initPromotionFactoryService()
     {   if($this->_cart){
             if($this->_cart->getPromotionCode() && sizeof($this->_cart->items) > 0){
                 $result=$this->promotionFactoryModel->initPromotionFactoryService($this->_cart,$this->_cart->getPromotionCode());
             }
-           
             return $result;
         }
     }

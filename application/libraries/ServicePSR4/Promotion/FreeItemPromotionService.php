@@ -53,6 +53,6 @@ class FreeItemPromotionService extends BaseDiscountItemService implements Discou
     {     
         $cart= $this->removePromotionCart();
         $cart->setPromotionError(null);
-        return $_cart;
+        return $cart;
     }
 }

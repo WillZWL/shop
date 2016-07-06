@@ -49,12 +49,12 @@ class AsendiaApiService extends CourierAPiService implements CourierApiInterface
 
 	public function getAsendiaPpi()
 	{
-		return "6713";
+		return "6712";
 	}
 
 	public function getApiToken()
 	{
-		return "b19296510fc60bc8ca8db06994ad6136";
+		return "488572acf6bd0e518e68616a4c1ad1bc";
 	}
 
 	/******************************************

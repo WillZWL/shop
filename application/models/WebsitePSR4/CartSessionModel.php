@@ -57,6 +57,11 @@ class CartSessionModel extends \CI_Model
     {
         return $this->cartSessionService->getCart();
     }
+
+    public function updateQuickInfo($totalItems = null)
+    {
+        $this->cartSessionService->updateQuickInfo($totalItems);
+    }
 /*
     public function get_detail($platform)
     {

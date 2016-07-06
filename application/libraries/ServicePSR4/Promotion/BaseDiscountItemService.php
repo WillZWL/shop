@@ -30,19 +30,29 @@ class BaseDiscountItemService
 	            }
             }
         }
+
         if($discountAmount){
 			$discountAmount = $redemptionAmount ? $discountAmount - $redemptionAmount :$discountAmount;
 			$unitDiscount=number_format(($discountAmount/$discountQty),2,'.', '');
+            if($redemptionAmount){
+                $unitPrice=number_format(($redemptionAmount/$discountQty),2,'.', '');
+            }else{
+                $unitPrice="0";
+            }
 			foreach($cartItemArr as $sku => $product){
-                $itemSubTotal = $product->getPrice() * $product->getQty();
+                $itemSubTotal = $unitPrice * $product->getQty();
                 $ItemDiscount=$product->getQty()*$unitDiscount;
-                //$product->setPrice($redemptionAmount);
+                $totalAmount += $itemSubTotal;
+                $totalItems += $product->getQty();
+                $product->setPrice($unitPrice);
                 $product->setAmount($itemSubTotal);
-				$product->setPromoDiscAmt($ItemDiscount);
+				//$product->setPromoDiscAmt($ItemDiscount);
 				$this->_cart->items[$sku]=$product;
 			}
-			$this->_cart->setPromoDiscTotal($discountAmount);
-			return $this->_cart;
+			//$this->_cart->setPromoDiscTotal($discountAmount);
+            $this->_cart->setTotalNumberOfItems($this->_cart->getTotalNumberOfItems()+$totalItems);
+            $this->_cart->setSubtotal($this->_cart->getSubtotal()+$totalAmount);
+            return $this->_cart;
         }
     }
 
@@ -55,7 +65,7 @@ class BaseDiscountItemService
                 , "pr.listing_status" => "L"
                 , "p.website_status in ('I', 'P')" => null];
         $options["limit"] = 1;
-        $cartItem=$this->productService->getDao()->getCartDataDetail($Where,$options);
+        $cartItem=$this->productService->getDao()->getCartDataDetail($where,$options);
         return $cartItem;
     }
 
@@ -91,11 +101,18 @@ class BaseDiscountItemService
     public function removePromotionCart()
     {   
     	$this->_cart->setPromotionCode(null);  
-        $this->_cart->setPromoDiscTotal(null);
+        //$this->_cart->setPromoDiscTotal(null);
         foreach($this->_cart->items as $sku => $cartItem){
             if($cartItem->getRedemption()=="1"){
                 unset($this->_cart->items[$sku]);
+                $totalAmount += $cartItem->getAmount();
+                $totalItems += $cartItem->getQty();
             }
+        }
+        if($this->_cart){
+            $totalNumberOfItems=$this->_cart->getTotalNumberOfItems();
+            $this->_cart->setTotalNumberOfItems($totalNumberOfItems-$totalItems);
+            $this->_cart->setSubtotal($this->_cart->getSubtotal()-$totalAmount);
         }
         return $this->_cart;
     }

@@ -38,7 +38,7 @@ class Courier_order extends MY_Controller
 			$tempArr = $this->soService->getDao('SoShipment')->getEnableApiCourierOrderList($where, array("option"=>-1),$checkSoNo);
 			$formValue=array();$currentSoNo="";
 			if($tempArr){
-				$formValue=$this->getPendingCourierOrderFromValue($tempArr,$courierObj);
+				$formValue=$this->getPendingCourierOrderFormValue($tempArr,$courierObj);
 			}
 			$result=$this->_courierFactoryModel->addCourierOrder($courierId,$formValue);
 			$_SESSION["NOTICE"] = $result["message"];
@@ -100,11 +100,12 @@ class Courier_order extends MY_Controller
 						$currentSoNo=$row->getSoNo();
 						$row->setItemNo($counter);
 						$row->setActualCost(number_format($row->getAmount() - $row->getOfflineFee(),2,'.',''));
-						$declaredValue=$this->getDeclaredValue($row->getDeclaredValue(),$currentCourierObj);
+						$declaredValue=$this->getDeclaredValue($row,$currentCourierObj);
 						$row->setDeclaredValue($declaredValue);
 						if($row->getDeclaredDesc()==null){
-							$declaredDesc=$this->getSubCatDescription($row->getSubCatId(),$row->getDeliveryCountryId());
-							$row->setDeclaredDesc($declaredDesc);
+							$hsDetails=$this->getSubCatHsDetails($row->getSubCatId(),$row->getDeliveryCountryId());
+							$row->setDeclaredDesc($hsDetails["description"]);
+							$row->setDeclaredHsCode($hsDetails["code"]);
 						}
 						$counter=1;
 						$itemTotal[$row->getSoNo()]=1;
@@ -161,6 +162,8 @@ class Courier_order extends MY_Controller
 					$data["manifestBags"][$manifestBags[0]->BagNo]=$manifestBags[0];
 					$barcode=$this->_courierFactoryModel->getBarcode($manifestBags[0]->BagNo);
 					$data["barcode"][$manifestBags[0]->BagNo]=$barcode;
+					if(empty($data["asendiaPpi"]))
+					$data["asendiaPpi"]=substr($_manifest_bags[0]->BagNo,0,4);
 				}
 				$this->load->view('order/courier/manifest_label', $data);
 				return;
@@ -268,11 +271,38 @@ class Courier_order extends MY_Controller
 		$this->load->view('order/courier/courier_batch_order_v', $data); 
 	}
 
-	private function getDeclaredValue($value,$courierObj)
+
+	private function getConditionDeclaredValue($row,$courierObj)
+	{	
+		$declaredValue=null;$insideCategory=false;
+		$amount=round($this->soService->convertCurrency($row->getCurrencyId(), $courierObj->getApiCurrency(), $row->getAmount()), 2);
+		$ruleCategory=array("1","6","5","3","2");
+		$ruleSubCategory=array("567");
+		if(in_array($row->getCatId(),$ruleCategory) || in_array($row->getSubCatId(),$ruleSubCategory))
+		{
+			$insideCategory=true;
+		}
+		if($amount >= 1000 && $insideCategory && $row->getWeight() >=2){
+			$declaredValue=70;
+		}else{
+			$declaredValue = round($this->soService->convertCurrency("HKD", $courierObj->getApiCurrency(), $row->getDeclaredValue()), 2);
+			$maxDeclaredValue=$courierObj->getMaxDeclaredValue();
+			$minDeclaredValue=$courierObj->getMinDeclaredValue();
+			if($declaredValue >  $maxDeclaredValue ){
+				$declaredValue = $maxDeclaredValue;
+			}else if($declaredValue < $minDeclaredValue){
+				$declaredValue = rand($minDeclaredValue, $maxDeclaredValue);
+			}
+		}
+		return $declaredValue;
+	}
+
+	private function getDeclaredValue($row,$courierObj)
 	{
-		$declaredValue = round($this->soService->convertCurrency("HKD", $courierObj->getApiCurrency(), $value), 2);
-		if($declaredValue > $courierObj->getMaxDeclaredValue()){
-			$declaredValue = $courierObj->getMaxDeclaredValue();
+		if($row->getOldDeclaredValue()){
+			$declaredValue=$row->getOldDeclaredValue();
+		}else{
+			$declaredValue=$this->getConditionDeclaredValue($row,$courierObj);
 		}
 		return $declaredValue;
 	}
@@ -286,14 +316,7 @@ class Courier_order extends MY_Controller
 		}else if($row->getOldDeclaredValue()){
 			$declaredValue=$row->getOldDeclaredValue();
 		}else{
-			$declaredValue = round($this->soService->convertCurrency("HKD", $courierObj->getApiCurrency(), $row->getDeclaredValue()), 2);
-		}
-		$maxDeclaredValue=$courierObj->getMaxDeclaredValue();
-		$minDeclaredValue=$courierObj->getMinDeclaredValue();
-		if($declaredValue >  $maxDeclaredValue ){
-			$declaredValue = $maxDeclaredValue;
-		}else if($declaredValue < $minDeclaredValue){
-			$declaredValue = rand($minDeclaredValue, $maxDeclaredValue);
+			$declaredValue=$this->getConditionDeclaredValue($row,$courierObj);
 		}
 		return $declaredValue;
 	}
@@ -351,14 +374,14 @@ class Courier_order extends MY_Controller
         return $result;    
     }
 
-	private function getSubCatDescription($subCatId,$courtryId)
+	private function getSubCatHsDetails($subCatId,$courtryId)
 	{
 		$where = array('ccm.sub_cat_id'=>$subCatId, 'ccm.country_id'=>$courtryId);
 		$hsDetails = $this->customClassService->getHsBySubcatAndCountry($where);
-		return $hsDetails[0]['description'];
+		return $hsDetails[0];
 	}
 
-	public function getPendingCourierOrderFromValue($pendingCourierOrders,$courierObj)
+	public function getPendingCourierOrderFormValue($pendingCourierOrders,$courierObj)
 	{
 		$currentSoNo=null;
 		foreach ($pendingCourierOrders as $row){
@@ -379,8 +402,9 @@ class Courier_order extends MY_Controller
 				$declaredDesc= $_POST["declared_desc"][$row->getSoNo()] ? $_POST["declared_desc"][$row->getSoNo()] : $row->getDeclaredDesc();
 				//SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
 				if(empty($declaredDesc) || $declaredDesc==null){
-					$declaredDesc=$this->getSubCatDescription($row->getSubCatId(),$row->getDeliveryCountryId());
-					$row->setDeclaredDesc($declaredDesc);
+					$hsDetails=$this->getSubCatHsDetails($row->getSubCatId(),$row->getDeliveryCountryId());
+					$declaredDesc=$hsDetails["description"];
+					$row->setDeclaredHsCode($hsDetails["code"]);
 				}
 				$formValue[]=array(
 					"courier_id"=>$this->input->post("current_courier_id"),
@@ -399,6 +423,7 @@ class Courier_order extends MY_Controller
 					"email"=>$row->getEmail(),
 					"delivery_phone"=>$deliveryPhone,
 					"declared_desc"=>$declaredDesc,
+					"declared_hs_code"=>$row->getDeclaredHsCode(),
 					"declared_value"=>floor($declaredValue),
 					"declared_type"=>"O", 
 					"weight"=>$row->getWeight(),

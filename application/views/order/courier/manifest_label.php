@@ -48,7 +48,7 @@ p{margin:0;padding:0;}
 <table border="0" class="border_table" cellpadding="0" cellspacing="0" width="450px">
 	<tbody>
 	<tr>
-		<td width="50%"><span>PPI:6713</span></td>
+		<td width="50%"><span>PPI:<?=$asendiaPpi?></span></td>
 		<td width="50%"><span>Country:<?=$manifestBag->CountryCode;?></span></td>
 	</tr>
 	<tr>
