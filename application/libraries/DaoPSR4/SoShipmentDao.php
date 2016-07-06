@@ -243,7 +243,7 @@ class SoShipmentDao extends BaseDao
 
     }
 
-    public function getEnableApiCourierOrderList($where=array(),$option=array(), $so_no=array(), $classname='enableApiCourierOrderDto')
+    public function getEnableApiCourierOrderList($where=array(),$option=array(), $so_no=array(), $classname='EnableApiCourierOrderDto')
     {
 
     $this->db->select("so.platform_id, so.status, soal.sh_no, so.so_no, so.platform_order_id,
