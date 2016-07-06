@@ -611,18 +611,14 @@
                                 </select>
                                 <img src="/images/add_sign.png" id="warranty_add_sign_btn" style="cursor:pointer;">
                                 <?php
-                // SBF 4402 warranty for different countries
                                 $warranty_field_counter = 0;
                                 $warranty_country_list = $this->warranty_model->get_country_warranty_list(array('sku' => $product->get_sku()));
-
                                 foreach ($warranty_country_list as $warranty_country_obj)
                                 {
                                     echo '<span class="warranty_country_section"><select  class="warranty_country" class="warranty_country_section" id="warranty_country_'.$warranty_field_counter.'" name="warranty_country_'.$warranty_field_counter.'">';
-
                                     foreach ($selling_platform_list as $country_obj)
                                     {
-                                        $platform_id = $country_obj['platform_id'];
-                        //$country_name = $country_obj->get_name();
+                                        $platform_id = $country_obj->getSellingPlatformId();
 
                                         if ($platform_id == $warranty_country_obj->get_platform_id())
                                         {
@@ -647,7 +643,7 @@
                                             $selected = "";
                                         echo "<option value='" . $warranty_period . "'" . $selected . '>' . $warranty_period ."</option>";
                                     }
-                                    echo '</select></span>';
+                                    echo '</select></span><br/>';
                                     $warranty_field_counter++;
                                 }
                                 ?>
