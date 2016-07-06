@@ -281,6 +281,7 @@ class CourierFactoryService
     	$object->setDeliveryPhone($pendingCourierDto->getDeliveryPhone());
     	$object->setEmail($pendingCourierDto->getEmail());
     	$object->setDeclaredDesc($pendingCourierDto->getDeclaredDesc());
+    	$object->setDeclaredHsCode($pendingCourierDto->getDeclaredHsCode());
     	$object->setDeclaredValue($pendingCourierDto->getDeclaredValue());
     	$object->setDeclaredType($pendingCourierDto->getDeclaredType());
     	$object->setDeclaredCurrency($pendingCourierDto->getDeclaredCurrency());

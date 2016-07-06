@@ -254,10 +254,10 @@ class SoShipmentDao extends BaseDao
                     so.delivery_name, so.delivery_company,
                     so.delivery_address, so.delivery_postcode,
                     so.delivery_city, so.delivery_state, so.delivery_country_id,
-                    soal.line_no, soal.item_sku sku, p.name prod_name,p.sub_cat_id,
-                    so.currency_id,ipc.declared_value as old_declared_value, soid.amount unit_price, soal.qty, so.delivery_charge,
+                    soal.line_no, soal.item_sku sku, p.name prod_name,p.sub_cat_id,p.cat_id,
+                    so.declared_value,so.currency_id,ipc.declared_value as old_declared_value, soid.amount unit_price, soal.qty, so.delivery_charge,
                     so.amount, sosh.courier_id,sosh.tracking_no, so.promotion_code, soe.offline_fee,
-                    pcc.description as declared_desc,inc.tracking_no as interface_tracking_no");
+                    pcc.description as declared_desc,pcc.code as declared_hs_code,inc.tracking_no as interface_tracking_no");
 
         $this->db->from('so');
         $this->db->join('client c', 'c.id = so.client_id', 'INNER');

@@ -4,6 +4,7 @@
 batch_id	Batch ID
 courier_id	Courier ID
 so_no	Courier OrderNo
+declared_hs_code	Declared HsCode
 declared_desc	Declared Description
 declared_value	Declared Value
 delivery_country_id	Country Code

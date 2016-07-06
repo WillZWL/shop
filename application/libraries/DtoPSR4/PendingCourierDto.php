@@ -20,6 +20,7 @@ class PendingCourierDto
   	private $delivery_phone;
   	private $email;
   	private $declared_desc;
+  	private $declared_hs_code;
   	private $declared_value;
   	private $declared_type;
   	private $declared_currency;
@@ -198,6 +199,16 @@ class PendingCourierDto
 	public function setDeclaredDesc($value){
 		
 		$this->declared_desc = $value;
+	}
+
+	public function getDeclaredHsCode(){
+		
+		return $this->declared_hs_code;
+	}
+
+	public function setDeclaredHsCode($value){
+		
+		$this->declared_hs_code = $value;
 	}
 
 	public function getDeclaredValue(){

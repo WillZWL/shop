@@ -37,14 +37,14 @@ class RedemptionPromotionService extends BaseDiscountItemService implements Disc
 
     public function modifyPromotionCart()
     {
-        return null;
+        return $this->_cart;
     }
 
     public function cancelPromotionCart()
     {     
         $cart= $this->removePromotionCart();
         $cart->setPromotionError(null);
-        return $_cart;
+        return $cart;
     }
 
 }

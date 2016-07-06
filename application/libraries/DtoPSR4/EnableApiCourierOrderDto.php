@@ -20,6 +20,7 @@ class EnableApiCourierOrderDto
 	private $line_no;
 	private $sku;
 	private $prod_name;
+	private $cat_id;
 	private $sub_cat_id;
 	private $qty;
 	private $currency_id;
@@ -30,6 +31,7 @@ class EnableApiCourierOrderDto
 	private $amount;
 	private $old_declared_value;
 	private $declared_desc;
+	private $declared_hs_code;
 	private $cc_desc;
 	private $cc_code;
 	private $courier_id;
@@ -247,6 +249,16 @@ class EnableApiCourierOrderDto
 		return $this->prod_name;
 	}
 
+	public function setCatId($value)
+	{
+		$this->cat_id = $value;
+	}
+
+	public function getCatId()
+	{
+		return $this->cat_id;
+	}
+
 	public function setSubCatId($value)
 	{
 		$this->sub_cat_id = $value;
@@ -340,12 +352,22 @@ class EnableApiCourierOrderDto
 
 	public function getDeclaredDesc()
 	{
-		return $this->declaredDesc;
+		return $this->declared_desc;
 	}
 
 	public function setDeclaredDesc($value)
 	{
-		$this->declaredDesc = $value;
+		$this->declared_desc = $value;
+	}
+
+	public function getDeclaredHsCode()
+	{
+		return $this->declared_hs_code;
+	}
+
+	public function setDeclaredHsCode($value)
+	{
+		$this->declared_hs_code = $value;
 	}
 
 	public function getCcDesc()

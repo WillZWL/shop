@@ -10,6 +10,7 @@
 			"courier_id" => "Courier ID",
 			"courier_order_id" => "Courier OrderNo",
 			"declared_desc" => "Declared Description",
+			"declared_hscode"=>"HsCode",
 			"declared_value" => "Declared Value",
 			"delivery_country_id" => "Country Code",
 			"weight" => "Weight",

@@ -31,6 +31,7 @@ class CourierAPiService
             $this->pendingCourierDto->setDeliveryPhone($courierOrder["delivery_phone"]);
             $this->pendingCourierDto->setEmail($courierOrder["email"]);
             $this->pendingCourierDto->setDeclaredDesc($courierOrder["declared_desc"]);
+            $this->pendingCourierDto->setDeclaredHsCode($courierOrder["declared_hs_code"]);
             $this->pendingCourierDto->setDeclaredValue($courierOrder["declared_value"]);
             $this->pendingCourierDto->setDeclaredType($courierOrder["declared_type"]);
             $this->pendingCourierDto->setDeclaredCurrency($courierOrder["declared_currency"]);

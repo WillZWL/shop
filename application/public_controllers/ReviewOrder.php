@@ -27,7 +27,6 @@ class ReviewOrder extends PUB_Controller
 
     public function index()
     {   
-
         $cartInfo=$this->cartSessionModel->getCartInfo();
         if($cartInfo){
             $promotionCode=$this->input->post("promotion_code");
@@ -44,6 +43,8 @@ class ReviewOrder extends PUB_Controller
                     $cartInfo->setPromotionCode(null);
                     $cartInfo->setPromoDiscTotal(null);
                 }
+                if($cartInfo->getTotalNumberOfItems())
+                $this->cartSessionModel->updateQuickInfo($cartInfo->getTotalNumberOfItems());
                 $_SESSION["cart"] = serialize($cartInfo);
             }
         }
