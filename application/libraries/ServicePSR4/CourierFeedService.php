@@ -53,7 +53,6 @@ class CourierFeedService extends BaseService
 				$phpmail->Password = $this->getDao('Config')->valueOf("smtp_pass");
 			}
 			$phpmail->From = "courier_feed@eservicesgroup.com";
-			$phpmail->AddBCC("brave.liu@eservicesgroup.com");
 			$phpmail->FromName = "Panther Courier Feed";
 			$phpmail->AddAddress($email_addr);
 			$phpmail->IsHTML(true);
