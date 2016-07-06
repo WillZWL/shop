@@ -3914,8 +3914,8 @@ html;
             }
             $result["order_margin"] = null;
         }
-        return 2800;
-//        return $this->getPriorityScoreBase($so_no, $result);
+//        return 2800;
+        return $this->getPriorityScoreBase($so_no, $result);
     }
 
     public function getPriorityScoreChristmas($so_no, $result = null)
@@ -3987,15 +3987,17 @@ html;
         if ($manual = $this->getDao('SoPriorityScore')->get(["so_no" => $so_no, "status" => 1])) {
             $score = $manual->getScore();
         } else {
-            $score = 0;
+            $score = 2800;
 
             #if data was not passed in, we need to query for it
+            /*
             if ($result === null) {
                 $result = $this->getDao('So')->getPriorityScore($so_no);
                 $result["order_margin"] = null;
             }
-
+*/
             $days = $this->getDays(strtotime($result["order_create_date"]), mktime());
+            /*
             if ((($ps_obj = $this->getDao('SoPaymentStatus')->get(array("so_no" => $so_no))) !== FALSE) && ($ps_obj))
                 $pay_to_account = $ps_obj->getPayToAccount();
             else
@@ -4052,6 +4054,7 @@ html;
                 }
 
                 $score += $platform_score;
+                */
                 $min_day_range = $this->sub_domain_cache["PRIORITY_SCORE.DAY_RANGE.MIN"];
                 $min_day = $min_day_range;
                 $max_day_range = $this->sub_domain_cache["PRIORITY_SCORE.DAY_RANGE.MAX"];
@@ -4059,11 +4062,15 @@ html;
                 if ($days < $max_day && $min_day < $days) {
                     $score += $days;
                 }
+/*
                 $retailer_score = $this->sub_domain_cache["PRIORITY_SCORE.RETAILERS_SCORE"];
                 $score += $retailer_score;
+*/
             }
+/*
             if (($days < $this->sub_domain_cache["PRIORITY_SCORE.DAY_RANGE.MIN"]) && ($score < 1000))
                 $score = 0;
+*/
         }
 
         return $score;
