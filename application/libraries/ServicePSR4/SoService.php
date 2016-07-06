@@ -3988,73 +3988,7 @@ html;
             $score = $manual->getScore();
         } else {
             $score = 2800;
-
-            #if data was not passed in, we need to query for it
-            /*
-            if ($result === null) {
-                $result = $this->getDao('So')->getPriorityScore($so_no);
-                $result["order_margin"] = null;
-            }
-*/
             $days = $this->getDays(strtotime($result["order_create_date"]), mktime());
-            /*
-            if ((($ps_obj = $this->getDao('SoPaymentStatus')->get(array("so_no" => $so_no))) !== FALSE) && ($ps_obj))
-                $pay_to_account = $ps_obj->getPayToAccount();
-            else
-                $pay_to_account = "";
-            if ((($margin_score = $this->soPriorityScoreService->hitMarginRule($so_no, $result['biz_type'], $days, false, $result["order_margin"])) > 0)
-                && ($pay_to_account != "paypal.au@valuebasket.com") && ($pay_to_account != "paypal.oce@valuebasket.com") && ($pay_to_account != "paypal.nz@valuebasket.com")
-            ) {
-                // return $margin_score;
-                $score = $margin_score;
-            } else {
-                $platform_score = 0;
-                if (!$platform_score = $this->sub_domain_cache["PRIORITY_SCORE.PLATFORM.{$result['biz_type']}"]) {
-                    $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.DEFAULT"];
-                }
-
-                //affiliate score get here
-                if ($affilate_score = $this->sub_domain_cache["PRIORITY_SCORE.AFFILIATE.{$result['conv_site_id']}"]) {
-                    $platform_score = $affilate_score;
-                }
-
-                //check if payment_gateway = ppau
-                if (($pay_to_account == "paypal.au@valuebasket.com") || ($pay_to_account == "paypal.oce@valuebasket.com")) {
-                    if ($platform_score < $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.AU"])
-                        $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.AU"];
-                } else if ($pay_to_account == "paypal.nz@valuebasket.com") {
-                    if ($platform_score < $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.NZ"])
-                        $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.NZ"];
-                } else if ($pay_to_account == "paypal.value@valuebasket.com") {
-                    if ($platform_score < $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.HK"])
-                        $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.HK"];
-                }
-
-                if (($result['biz_type'] == "EBAY")
-                    || ($result['biz_type'] == "FNAC")
-                    || ($result['biz_type'] == "QOO10")
-                ) {
-//we check this after PP, because ebay may use PP
-                    $platform_day_score = explode("||", $this->sub_domain_cache["PRIORITY_SCORE.PLATFORM.DAYX_SCORE"]);
-                    if ($days > $platform_day_score[1])
-                        $platform_score = $platform_day_score[0];
-                }
-
-                if ($result['biz_type'] == "OFFLINE") {
-//OFFLINE BULK SALES
-                    if (($ps_obj) && ($ps_obj->getPaymentGatewayId() == "paypal")) {
-                        $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.PAYMENT_GATEWAY.PAYPAL.HK"];
-                    } else if ((($soex_obj = $this->getDao('SoExtend')->get(["so_no" => $so_no])) !== FALSE) && ($soex_obj)) {
-                        if ($soex_obj->getOrderReason() == 31) {
-                            $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.BULK_SALES"];
-                        }
-                    }
-                } else if ($result['biz_type'] == "SPECIAL") {
-                    $platform_score = $this->sub_domain_cache["PRIORITY_SCORE.APS_ORDER"];
-                }
-
-                $score += $platform_score;
-                */
                 $min_day_range = $this->sub_domain_cache["PRIORITY_SCORE.DAY_RANGE.MIN"];
                 $min_day = $min_day_range;
                 $max_day_range = $this->sub_domain_cache["PRIORITY_SCORE.DAY_RANGE.MAX"];
@@ -4062,15 +3996,6 @@ html;
                 if ($days < $max_day && $min_day < $days) {
                     $score += $days;
                 }
-/*
-                $retailer_score = $this->sub_domain_cache["PRIORITY_SCORE.RETAILERS_SCORE"];
-                $score += $retailer_score;
-*/
-            }
-/*
-            if (($days < $this->sub_domain_cache["PRIORITY_SCORE.DAY_RANGE.MIN"]) && ($score < 1000))
-                $score = 0;
-*/
         }
 
         return $score;
