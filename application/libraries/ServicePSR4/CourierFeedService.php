@@ -1041,7 +1041,7 @@ class CourierFeedService extends BaseService
 
 	public function set_item_declared_value($so_obj, $declared_value) {
 		
-		$item_list = (array)$this->getDao('SoItemDetail')->getList(['so_no' => $row->getSoNo()]);
+		$item_list = (array)$this->getDao('SoItemDetail')->getList(['so_no' => $so_obj->getSoNo()]);
 		$sum = 0;
 		end($item_list);
 		$lastkey = key($item_list);
