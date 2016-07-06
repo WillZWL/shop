@@ -2025,7 +2025,7 @@ html;
         $data["country_list"] = $this->product_model->get_list("country", array("status" => 1, "allow_sell" => 1), array("orderby" => "name ASC"));
 
         #4402
-        $data['selling_platform_list'] = $this->selling_platform_service->get_platform_list_w_allow_sell_country("WEBSITE");
+        $data['selling_platform_list'] = $this->sc['SellingPlatform']->getPlatformListWithAllowSellCountry("WEBSITE");
 
         foreach ($data["country_list"] as $country_obj) {
             $country_id = $country_obj->get_id();
