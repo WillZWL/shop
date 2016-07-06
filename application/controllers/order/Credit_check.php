@@ -98,14 +98,9 @@ class Credit_check extends MY_Controller
             $submit_search = 1;
         }
 
-        $limit = '20';
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
-        $pconfig['base_url'] = $_SESSION["CCLISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
-
-        if ($option["limit"]) {
-            $option["offset"] = $this->input->get("per_page");
-        }
 
         if (empty($sort)) {
             $sort = "so_no";
@@ -173,9 +168,13 @@ class Credit_check extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->paginationService->setShowCountTag(TRUE);
-        $this->paginationService->initialize($pconfig);
+        $pconfig['base_url'] = $_SESSION["CCLISTPAGE"];
+        $config['total_rows'] = $data["total"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
