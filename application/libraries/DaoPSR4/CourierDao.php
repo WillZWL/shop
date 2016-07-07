@@ -137,7 +137,7 @@ class CourierDao extends BaseDao
         $where["soal.so_no"] = $so_no;
         $this->db->select('courier.*');
         $this->db->from('courier');
-        $this->db->join('so_shipment AS sosh', 'sosh.courier_id = courier.id', 'INNER');
+        $this->db->join('so_shipment AS sosh', 'sosh.courier_id = courier.courier_id', 'INNER');
         $this->db->join('so_allocate AS soal', 'sosh.sh_no = soal.sh_no', 'INNER');
         $this->db->where($where);
         $this->db->limit(1);
