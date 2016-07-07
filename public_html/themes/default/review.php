@@ -49,7 +49,7 @@
              <div class="col-sm-6">
                 <?php if($_GET["debug"]=="true"){?>
                     <div id="discount_code">
-                        <p class="rokkit_24"><?=_('Discount code')?></p>
+                        <p class="rokkit_24"><?=_('Promo code')?></p>
                         <form name="fm_promo" action="" class="form-holder" method="post">
                             <fieldset>
                                 <input type="text" placeholder="<?=_('Enter your promo code')?>" value="<?=$cartInfo->getPromotionCode()?>" name="promotion_code" dname="" notEmpty/>
@@ -57,7 +57,7 @@
                              <?php if($cartInfo->getPromotionCode()){?>
                             <input type="hidden" name="cancel_promotion" value="1">
                             <button type="submit" class="btn btn-primary cancel-promotion">
-                                <?=_('Remove/Edit Code')?>
+                                <?=_('Remove / Edit Code')?>
                             </button>
                             <?php }else{?>
                             <button type="submit" class="btn btn-primary">

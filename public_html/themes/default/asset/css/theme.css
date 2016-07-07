@@ -710,8 +710,8 @@ input.btn-newsletter {
     height: 40px; float: left; width:auto;
 }
 
-#discount_code{padding:18px 0;overflow:hidden;zoom:1;margin-top: 50px}
-#discount_code .rokkit_24{clear:both;color: #549B17;font-size: 22px;font-weight: bold;}
+#discount_code{padding:18px 0;overflow:hidden;zoom:1;margin-top: 80px}
+#discount_code .rokkit_24{clear:both;font-size: 22px;font-weight: bold;}
 #discount_code p{clear:both;padding: 0;margin: 0;}
 #discount_code form{margin:0;clear:both;}
 #discount_code form input{height:36px;line-height: 36px}
@@ -733,5 +733,6 @@ input.btn-newsletter {
     .list-unstyled li{width:80px;}
     .space-20{margin-top:100px;font-size:20px;}
     #offcanvasmenu{display:none;}
+    #discount_code{margin-top: 50px}
     #discount_code .form-holder button{margin-top:7px;}
 }
