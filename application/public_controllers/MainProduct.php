@@ -72,6 +72,11 @@ class MainProduct extends PUB_Controller
                     }
                     $data['delivery_day'] = $this->getDeliveryDayData($listing_info->getDeliveryScenarioid());
                     $data['microdata'] = $this->getMicroData($prod_info, $listing_info);
+
+                    $product_warranty_obj= $this->sc['ProductWarranty']->getDao('ProductWarranty')->get(array('platform_id' => PLATFORM, 'sku'=>$sku));
+                    if ($product_warranty_obj) {
+                        $data['product_warranty'] = $product_warranty_obj->getWarrantyInMonth();
+                    }
                     return $data;
                 }
             }

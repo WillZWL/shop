@@ -71,6 +71,8 @@
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                     <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                     <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= sprintf(_('%s review(s)'), "0") ?></a> / <a href="#review-form" class="popup-with-form" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?= _('Write a review') ?></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span style='color: #589B24'><?=$product_warranty?> <?=_('Month Warranty')?></span>
                                 </div>
                                 <div class="price detail space-20">
                                     <ul class="list-unstyled">
@@ -80,7 +82,7 @@
 
                                 <ul class="list-unstyled">
                                     <li>
-                                        <span class="check-box text-success"><i class="fa fa-check"></i></span>
+                                        <span class="check-box text-success"><i class="fa fa-check" <?php if ($listing_status != 'O') { echo "style='color: #589B24'"; } ?>></i></span>
                                         <b><?= _('Availability').' :' ?></b>
                                         <?php
                                             if ($listing_status == 'I') {

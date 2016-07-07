@@ -331,6 +331,7 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top:5px;">
             <tr>
                 <td align="right" style="padding-right:8px;">
+                    <input type="input" value="" id="shipper" name="shipper_name" placeholder="Shipper Name"> &nbsp;|&nbsp
                     <input type="button" value="<?= $lang['print_order_packing_slip_selected'] ?>" onClick="this.form.action='<?= base_url() ?>order/integrated_order_fulfillment/order_packing_slip';this.form.target='_blank';this.form.submit();this.form.target='';this.form.action='';">
                     &nbsp;|&nbsp
                     <input type="button" value="<?= $lang['import_trackingfile'] ?>" onClick="document.getElementById('a_check').onclick();">
