@@ -100,7 +100,7 @@ class SalesReport extends MY_Controller
         $data['countrys'] = $this->sc['Country']->getDao()->getList(array("allow_sell" => "1"), array("orderby" => "name", "limit" => -1));
         $data['currencys'] = $this->sc['Country']->getSellCurrencyList();
         $data['gateways'] = $this->sc['PaymentGateway']->getDao()->getList(array("status" => 1), array("limit" => -1));
-        $data["start_date"] = date('Y-m-d', strtotime(date('Y-m-d') . ' - 10 day'));
+        $data["start_date"] = date('Y-m-d', strtotime(date('Y-m-d') . ' - 1 day'));
         $data["end_date"] = date('Y-m-d');
         $this->load->view('report/sales_report', $data);
     }
@@ -108,7 +108,7 @@ class SalesReport extends MY_Controller
     public function splitOrdersReport()
     {
         $data['lang'] = $this->loadParentLang();
-        $data["start_date"] = date('Y-m-d', strtotime(date('Y-m-d') . ' - 10 day'));
+        $data["start_date"] = date('Y-m-d', strtotime(date('Y-m-d') . ' - 1 day'));
         $data["end_date"] = date('Y-m-d');
         $data["notice"] = notice($data['lang']);
         $data["prompt_notice"] = 0;

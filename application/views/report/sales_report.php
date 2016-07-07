@@ -60,7 +60,7 @@
                                     <option value='-1'>-- Please select --</option>
                                     <?php
                                     foreach ($gateways as $gateway) {
-                                        print "<option value='" . $gateway->getId() . "'>" . $gateway->getName() . "</option>";
+                                        print "<option value='" . $gateway->getPaymentGatewayId() . "'>" . $gateway->getName() . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -111,7 +111,7 @@
                                     <option value='-1'>-- Please select --</option>
                                     <?php
                                     foreach ($countrys as $country) {
-                                        print "<option value='" . $country->getId() . "'>" . $country->getName() . "</option>";
+                                        print "<option value='" . $country->getCountryId() . "'>" . $country->getName() . "</option>";
                                     }
                                     ?>
                                 </select>
