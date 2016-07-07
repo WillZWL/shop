@@ -144,7 +144,10 @@ class CourierDao extends BaseDao
 
         if ($query = $this->db->get())
         {
-            return $query->row(0, 'object', $class_name);
+            foreach ($query->result($classname) as $obj) {
+                $rs[] = $obj;
+            }
+            return (object)$rs[0];
         }
     }
 
