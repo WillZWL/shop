@@ -279,6 +279,7 @@ class SoShipmentDao extends BaseDao
         $this->db->where(array("inc.tracking_no is null"=>null));
         $this->db->where(array("inc.courier_parcel_id is null"=>null));
         //$this->db->where_in(array('soal.status'=>3));
+        $option["orderby"]="soid.amount desc";
         if ($so_no){
             $this->db->where_in("so.so_no",$so_no);
         }
