@@ -1,8 +1,8 @@
 <?php 
 
-namespace ESG\Panther\Service\CourierAPi;
+namespace ESG\Panther\Service\CourierApi;
 
-class CourierAPiService
+class CourierApiService
 {
 	private $formValue;
 

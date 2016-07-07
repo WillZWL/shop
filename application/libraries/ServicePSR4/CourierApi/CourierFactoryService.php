@@ -1,5 +1,5 @@
 <?php 
-namespace ESG\Panther\Service\CourierAPi;
+namespace ESG\Panther\Service\CourierApi;
 
 use ESG\Panther\Dao\InterfacePendingCourierDao;
 use ESG\Panther\Dao\InterfaceCourierOrderDao;

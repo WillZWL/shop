@@ -1013,7 +1013,7 @@ class CourierFeedService extends BaseService
 				$row->setDeliveryAddress2($ar_address[1]);
 				$barcode = 'PT'.$row->getSoNo();
 				$row->setBarcode($barcode);
-				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
+				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);				
 				$declared_value = $this->soService->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
 				$declared_value = $declared_value * $row->getRate();
 				$declared_value1 = $row->getAmount() * $row->getRef1();
@@ -1026,6 +1026,10 @@ class CourierFeedService extends BaseService
 						$declared_value = rand(4000, 4900)/100;
 					}
 				}
+				#sbf #9993
+				$declared_value = $this->set_item_declared_value($row,$declared_value);
+				#end sbf #9993
+
 				$row->setDeclaredValue(round($declared_value, 2));
 				$data_out = $row;
 				$counter++;
@@ -1033,6 +1037,25 @@ class CourierFeedService extends BaseService
 
 			return $data_out;
 		}
+	}
+
+	public function set_item_declared_value($so_obj, $declared_value) {
+		
+		$item_list = (array)$this->getDao('SoItemDetail')->getList(['so_no' => $so_obj->getSoNo()]);
+		$sum = 0;
+		end($item_list);
+		$lastkey = key($item_list);
+		foreach ($item_list as $key => $item) {
+			if($key === $lastkey){
+				$item_declared_value = $declared_value - $sum;
+			}else{
+				$item_declared_value = $declared_value * ($item->getAmount()/$so_obj->getAmount());
+			}
+			$item->setDeclaredValue( $item_declared_value );
+			$this->getDao('SoItemDetail')->update($item);
+			$sum+= $item_declared_value;
+		}
+		return $declared_value;
 	}
 
 	public function setFedexCourierFeed($row)
