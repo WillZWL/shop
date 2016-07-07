@@ -218,14 +218,8 @@ class Credit_check extends MY_Controller
             $sort = $this->input->get("sort");
             $order = $this->input->get("order");
 
-            $limit = '20';
-
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-            $option["limit"] = $pconfig['per_page'] = $limit;
-
-            if ($option["limit"]) {
-                $option["offset"] = $this->input->get("per_page");
-            }
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             if (empty($sort))
                 $sort = "so_no";
@@ -243,9 +237,13 @@ class Credit_check extends MY_Controller
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
 
-            $pconfig['total_rows'] = $data['total'];
-            $this->paginationService->setShowCountTag(TRUE);
-            $this->paginationService->initialize($pconfig);
+            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
+            $config['total_rows'] = $data["total"];
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
+            $this->pagination->initialize($config);
+            $data['links'] = $this->pagination->create_links();
 
             $data["notice"] = notice($lang);
 
