@@ -410,7 +410,7 @@ class CI_Pagination {
 		// Is there only one page? Hm... nothing more to do here then.
 		if ($num_pages === 1)
 		{
-            return $this->full_tag_open.'<li class="active"><a href="#">'.$num_pages.'</a></li><li><span>' . 1 . ' to ' . $this->total_rows . ' of ' . $this->total_rows.' records. </span></li>'.$this->full_tag_close;
+            return $this->full_tag_open.'<li class="active"><a href="#">'.$num_pages.'</a></li><li><span>' . 0 . ' to ' . $this->total_rows . ' of ' . $this->total_rows.' records. </span></li>'.$this->full_tag_close;
 		}
 
 		// Check the user defined number of links.
