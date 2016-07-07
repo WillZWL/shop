@@ -2018,6 +2018,43 @@ html;
                             </tr>";
                         $sum += $declared_value_converted * $qty;
                     }
+
+                    $courier_info = $this->getDao('Courier')->getCourierInfo( $so_obj->getSoNo() ) ;
+                    if($courier_info && in_array($courier_info->getCourierId(), array('RPX')) ){
+                        $sum = 0;
+                        $item_information='';
+                        foreach ($itemlist as $item_obj) {
+                            $hs_desc = $code = null;
+                            $prod_obj = $this->getDao('Product')->get(["sku" => $item_obj->getMainProdSku()]);
+                            $qty = $item_obj->getQty();
+                            $amount_total = $item_obj->getAmount();
+                            if ($pcc_obj = $this->getDao('ProductCustomClassification')->get(['sku' => $prod_obj->getSku(), 'country_id' => $so_obj->getDeliveryCountryId()])) {
+                                $hs_desc = $pcc_obj->getDescription();
+                                $code = $pcc_obj->getCode();
+                            }
+                            //SBF #4403 - If hs desc and code not found, get the hs desc and code from sub_cat_id of the product
+                            if (!isset($hs_desc) || $hs_desc == '') {
+                                $where = ['ccm.sub_cat_id' => $prod_obj->getSubCatId(), 'ccm.country_id' => $so_obj->getDeliveryCountryId()];
+                                $hsDetails = $this->getDao('CustomClassificationMapping')->getHsBySubcatAndCountry($where, $option);
+                                $hs_desc = $hsDetails[0]['description'];
+                                $code = $hsDetails[0]['code'];
+                            }
+
+                            //$data["currency"] = strtoupper($currency);
+                            $item_declared_value = $item_obj->getDeclaredValue();
+
+                            $item_information .= "
+                                 <tr>
+                                    <td  align='left'>".$hs_desc."</td>
+                                    <td align='right'>".$item_obj->getQty()."</td>
+                                    <td align='right'>".$code."</td>
+                                    <td align='right'>".number_format($item_declared_value, 2)."</td>
+                                    <td align='right'><b>".number_format($item_declared_value * $qty, 2)."</b></td>
+                                </tr>";
+                            $sum += $item_declared_value * $qty;
+                        }
+                    }
+
                     $data["item_info"] = $item_information;
                     $data["total_cost"] = number_format($sum, 2);
                     $data["delivery"] = number_format($delivery_charge_converted, 2);

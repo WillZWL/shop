@@ -1040,8 +1040,11 @@ class CourierFeedService extends BaseService
 	}
 
 	public function set_item_declared_value($so_obj, $declared_value) {
+		 # sbf #3746 don't include complementary accessory on front end
+        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
 		
-		$item_list = (array)$this->getDao('SoItemDetail')->getList(['so_no' => $so_obj->getSoNo()]);
+		$item_list = (array)$this->getDao('SoItemDetail')->getItemsWithName(['so_no' => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL]);
+
 		$sum = 0;
 		end($item_list);
 		$lastkey = key($item_list);
