@@ -408,3 +408,36 @@ if ( ! function_exists('nbs'))
 		return str_repeat('&nbsp;', $num);
 	}
 }
+
+/**
+ * Generates non-breaking space entities based on number supplied
+ *
+ * @access	public
+ * @param	integer
+ * @return	string
+ */
+if ( ! function_exists('optionselect'))
+{
+	function optionselect($list, $selected_key = "", $name = "", $id = "", $class = "")
+	{
+		$ret = "";
+
+		foreach ($list as $key=>$display)
+		{
+			if ($selected_key === $key) $selected = "selected"; else $selected = "";
+			$ret .= <<<html
+<option value="$key" $selected>$display</option>\r\n
+html;
+		}
+
+		if ($id != "") $id = "id='$id'";
+		if ($name != "") $name = "name='$name'";
+		if ($class != "") $class = "class='$class'";
+
+		$head = "<select $name $id $class><option value=''>(Select one)</option><$ret</select>";
+		return $head;
+	}
+}
+
+/* End of file html_helper.php */
+/* Location: ./system/helpers/html_helper.php */

@@ -2215,6 +2215,8 @@ html;
 
             $so_obj = $this->getDao('So')->get(array("so_no" => $so_no));
             if ($so_obj) {
+                $cur_platform_id = $so_obj->getPlatformId();
+
                 $client_obj = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
                 $pbv_obj = $this->getDao('PlatformBizVar')->get(array("selling_platform_id" => $so_obj->getPlatformId()));
                 if ($client_obj) {
