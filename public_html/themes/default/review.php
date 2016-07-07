@@ -6,6 +6,13 @@
         <form action="#" method="post" enctype="multipart/form-data">
             <div class="table-responsive">
                 <table class="table table-bordered">
+                    <colgroup>
+                        <col width="40">
+                        <col width="250">
+                        <col width="70">
+                        <col width="80">
+                        <col width="70">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th class="text-center"><?= _('Image') ?></th>
@@ -86,8 +93,8 @@
                         </tr>
                         <?php if($cartInfo->getPromoDiscTotal()!=null){?>
                         <tr>
-                            <td class="text-right"><strong><?=_('Promotion').':' ?></strong></td>
-                            <td class="text-right"><?= platform_curr_format($cartInfo->getPromoDiscTotal()) ?></td>
+                            <td class="text-right"><strong><?=_('Promotion Discount').':' ?></strong></td>
+                            <td class="text-right"> - <?= platform_curr_format($cartInfo->getPromoDiscTotal()) ?></td>
                         </tr>
                         <?php } ?>
                         <tr>
