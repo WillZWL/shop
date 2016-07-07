@@ -44,44 +44,36 @@
                 </table>
             </div>
         </form>
-        <?php if($_GET["debug"]=="true"){?>
-        <div class="silver_box" id="discount_code">
-            <table width="100%">
-                <tr>
-                    <td valign="top">
-                        <div style="width:450px"><font color="#FF6600"></font>
-                        </div>
-                    </td>
-                    <td>
+        
+        <div class="row">
+             <div class="col-sm-6">
+                <?php if($_GET["debug"]=="true"){?>
+                    <div id="discount_code">
                         <p class="rokkit_24"><?=_('Discount code')?></p>
-                        <p><?=_('Enter your coupon code if you have one.')?></p>
                         <form name="fm_promo" action="" class="form-holder" method="post">
                             <fieldset>
-                                <input type="text" value="<?=$cartInfo->getPromotionCode()?>" name="promotion_code" dname="" notEmpty/>
+                                <input type="text" placeholder="<?=_('Enter your promo code')?>" value="<?=$cartInfo->getPromotionCode()?>" name="promotion_code" dname="" notEmpty/>
                             </fieldset>
+                             <?php if($cartInfo->getPromotionCode()){?>
+                            <input type="hidden" name="cancel_promotion" value="1">
+                            <button type="submit" class="btn btn-primary cancel-promotion">
+                                <?=_('Remove/Edit Code')?>
+                            </button>
+                            <?php }else{?>
+                            <button type="submit" class="btn btn-primary">
+                                <?=_('Apply Code')?>
+                            </button>
+                             <?php } ?>
                             <p style="color:">
                             <?php if($cartInfo->getPromotionError()){
                                 echo _('Sorry, Promotion Code Invalid. Please check if the conditions and/or minimum order amount have been met.');
                             }?>
                             </p>
-                            <?php if($cartInfo->getPromotionCode()){?>
-                            <input type="hidden" name="cancel_promotion" value="1">
-                            <button type="submit" class="btn btn-primary cancel-promotion">
-                                <?=_('Cancel Coupon')?>
-                            </button>
-                            <?php }else{?>
-                            <button type="submit" class="btn btn-primary">
-                                <?=_('Apply Coupon')?>
-                            </button>
-                             <?php }?>
                         </form>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <?php } ?>
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-8">
+                    </div>
+                    <?php } ?>
+             </div>
+            <div class="col-sm-4 col-sm-offset-2">
                 <table class="table table-bordered">
                     <tbody>
                         <tr>

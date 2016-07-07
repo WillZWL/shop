@@ -138,7 +138,7 @@
 		<td name="row<?=$i?>"><?=$obj->getQty()?></td>		
 		<td <?=$rowSpan?>><?=$obj->getDeliveryName()?></td>
 		<td <?=$rowSpan?>><?=$obj->getEmail()?></td>
-		<td <?=$rowSpan?>><?=$obj->getDeliveryAddress()?></td>	
+		<td <?=$rowSpan?>><?=$obj->getDeliveryAddress1()?></td>	
 		<td <?=$rowSpan?>><?=$obj->getDeliveryCity()?></td>	
 		<td <?=$rowSpan?>><?=$obj->getDeliveryState()?></td>
 		<td <?=$rowSpan?>><?=$obj->getTel()?>
