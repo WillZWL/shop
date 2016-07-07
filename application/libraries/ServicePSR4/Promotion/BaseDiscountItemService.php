@@ -65,6 +65,7 @@ class BaseDiscountItemService
                 , "pr.listing_status" => "L"
                 , "p.website_status in ('I', 'P')" => null];
         $options["limit"] = 1;
+        $options["productImage"]=1;
         $cartItem=$this->productService->getDao()->getCartDataDetail($where,$options);
         return $cartItem;
     }
