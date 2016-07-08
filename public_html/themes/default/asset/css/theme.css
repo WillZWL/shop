@@ -710,18 +710,21 @@ input.btn-newsletter {
     height: 40px; float: left; width:auto;
 }
 
-#discount_code{padding:18px 0;overflow:hidden;zoom:1;margin-top: 80px}
-#discount_code .rokkit_24{clear:both;font-size: 16px;font-weight: bold;}
+#discount_code{padding-bottom: 18px;overflow:hidden;zoom:1;}
+#discount_code .rokkit_24{clear:both;font-size: 12px;}
 #discount_code p{clear:both;padding: 0;margin: 0;}
 #discount_code form{margin:0;clear:both;}
-#discount_code form input{height:36px;line-height: 36px}
-#discount_code .form-holder fieldset{clear:both;display: inline-block;width: 290px;}
+#discount_code form input{height: 24px;line-height: 24px;padding: 0;font-size: 12px;}
+#discount_code .form-holder fieldset{clear:both;display: inline-block;width: 180px;padding: 0;height: 24px;line-height: 24px;}
 #content .form-holder .btn3-silver,#discount_code .form-holder button{
     margin:0;
     clear:both;
     color: #000;
     background-color: #549B17;
     border-color: #499209;
+    padding: 2px;
+    font-size: 10px;
+    margin-top: -5px;
 }
 #content .form-holder .btn3-silver,#discount_code .form-holder button.cancel-promotion{
     background-color: #EF5F16;
