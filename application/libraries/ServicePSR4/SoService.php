@@ -2241,6 +2241,7 @@ html;
                     $dto->setMailTo($client_obj->getEmail());
                     $support_email = $this->getCsSupportEmail($cur_platform_id);
 
+                    $dto->setPlatformId($cur_platform_id);
                     $dto->setMailFrom($email_sender);
                     $dto->setTplId($reason . "_request");
                     $dto->setLangId($pbv_obj ? $pbv_obj->getLanguageId() : "");

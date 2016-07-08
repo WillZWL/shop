@@ -52,6 +52,7 @@
 			"modify_at" => "Modify At",
 			"modify_by" => "Modify By",
 			"submit_error" => "Submit Error",
-			"supplier_existed" => "Supplier Existed!"
+			"supplier_existed" => "Supplier Existed!",
+			"release_hold" => "Release Hold",
 			);
 ?>
