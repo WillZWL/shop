@@ -19,7 +19,7 @@ class SoItemDetailVo extends \BaseVo
     private $amount;
     private $promo_disc_amt = '0.00';
     private $cost;
-    private $declared_value = '0.00';
+    private $item_declared_value = '0.00';
     private $item_unit_cost = '0.00';
     private $profit = '0.00';
     private $profit_raw = '0.00';
@@ -246,16 +246,16 @@ class SoItemDetailVo extends \BaseVo
         return $this->cost;
     }
     
-    public function setDeclaredValue($value)
+    public function setItemDeclaredValue($value)
     {
         if ($value !== null) {
-            $this->declared_value = $value;
+            $this->item_declared_value = $value;
         }
     }
 
-    public function getDeclaredValue()
+    public function getItemDeclaredValue()
     {
-        return $this->declared_value;
+        return $this->item_declared_value;
     }
 
     public function setItemUnitCost($item_unit_cost)
