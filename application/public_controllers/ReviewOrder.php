@@ -31,13 +31,17 @@ class ReviewOrder extends PUB_Controller
         if($cartInfo){
             $promotionCode=$this->input->post("promotion_code");
             if(!empty($promotionCode)){
-                $result=$this->promotionFactoryModel->initPromotionFactoryService($cartInfo,$promotionCode);
-                if($result){
-                    if($this->input->post("cancel_promotion")){
-                        $cartInfo=$this->promotionFactoryModel->cancelPromotionCart();
+                if($this->input->post("cancel_promotion")){
+                    if($promotionCode==$cartInfo->getPromotionCode()){
+                        $promoCart=$this->promotionFactoryModel->cancelPromotionCart($cartInfo,$promotionCode);
                     }else{
-                        $cartInfo=$this->promotionFactoryModel->getPromotionCart();
+                        $promoCart=$this->promotionFactoryModel->eidtPromotionCart($cartInfo,$promotionCode);
                     }
+                }else{
+                    $promoCart=$this->promotionFactoryModel->getPromotionCart($cartInfo,$promotionCode);
+                }
+                if($promoCart){
+                    $cartInfo=$promoCart;
                 }else{
                     $cartInfo->setPromotionError($promotionCode);
                     $cartInfo->setPromotionCode(null);

@@ -20,37 +20,56 @@ class PromotionFactoryModel extends \CI_Model
         $this->promotionCodeDao=new PromotionCodeDao();
     }
 
-    public function initPromotionFactoryService($cartInfo,$promotionCode){
+    public function initPromotionFactoryService($cartInfo,$promotionCode,$function)
+    {
         $promotionCodeObj=$this->getPromotionCodeObj($promotionCode);
         if($cartInfo && $promotionCodeObj){
             $promotionType=$promotionCodeObj->getDiscType();
             $discountTypeInterface=new $this->promotionServiceArr[$promotionType]($cartInfo,$promotionCodeObj);
             $this->_promotionFactoryService=new PromotionFactoryService($discountTypeInterface,$cartInfo,$promotionCodeObj);
-            return true;
+            return $this->_promotionFactoryService->$function();
         }else{
-            return false;
+            return null;
         }
     }
 
-    public function getPromotionCart()
+    public function initRemovePrePromotionCart($cartInfo)
     {
-        $promotionCart=$this->_promotionFactoryService->getPromotionCart();
-        return $promotionCart;
+        $promotionCodeObj=$this->getPromotionCodeObj($cartInfo->getPromotionCode());
+        if($cartInfo && $promotionCodeObj){
+            $promotionType=$promotionCodeObj->getDiscType();
+            $discountTypeInterface=new $this->promotionServiceArr[$promotionType]($cartInfo,$promotionCodeObj);
+            $promotionFactoryService=new PromotionFactoryService($discountTypeInterface,$cartInfo,$promotionCodeObj);
+            return $promotionFactoryService->cancelPromotionCart();
+        }else{
+            return null;
+        }
     }
 
-    public function modifyPromotionCart()
-    {
-         return $this->_promotionFactoryService->modifyPromotionCart();
+    public function getPromotionCart($cartInfo,$promotionCode)
+    {   
+        return $this->initPromotionFactoryService($cartInfo,$promotionCode,"getPromotionCart");
     }
 
-    public function cancelPromotionCart()
+    public function modifyPromotionCart($cartInfo,$promotionCode)
     {
-        return $this->_promotionFactoryService->cancelPromotionCart();
+         return $this->initPromotionFactoryService($cartInfo,$promotionCode,"modifyPromotionCart");
     }
 
-    public function validRemoveItemPromotion()
+    public function cancelPromotionCart($cartInfo,$promotionCode)
     {
-        return $this->_promotionFactoryService->validRemoveItemPromotion();
+        return $this->initPromotionFactoryService($cartInfo,$promotionCode,"cancelPromotionCart");
+    }
+
+    public function validRemoveItemPromotion($cartInfo,$promotionCode)
+    {
+        return $this->initPromotionFactoryService($cartInfo,$promotionCode,"validRemoveItemPromotion");
+    }
+
+    public function eidtPromotionCart($cartInfo,$promotionCode)
+    {
+        $cartInfo=$this->initRemovePrePromotionCart($cartInfo);
+        return $this->initPromotionFactoryService($cartInfo,$promotionCode,"getPromotionCart");
     }
 
     protected function getPromotionCodeObj($promotionCode)
