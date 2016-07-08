@@ -1023,7 +1023,7 @@ class CourierFeedService extends BaseService
 					$declared_value = 70;
 				} else {
 					if ($declared_value < 40 or $declared_value > 49) {
-						$declared_value = rand(4000, 4900)/100;
+						$declared_value = rand(4100, 4800)/100;
 					}
 				}
 				#sbf #9993
@@ -1050,15 +1050,17 @@ class CourierFeedService extends BaseService
 		$lastkey = key($item_list);
 		foreach ($item_list as $key => $item) {
 			if($key === $lastkey){
-				$item_declared_value = $declared_value - $sum;
+				$item_declared_value = round(($declared_value - $sum)/$item->getQty(),2)*$item->getQty();
 			}else{
 				$item_declared_value = $declared_value * ($item->getAmount()/$so_obj->getAmount());
+				$item_declared_value = round($item_declared_value / $item->getQty() , 2) * $item->getQty();
 			}
-			$item->setDeclaredValue( $item_declared_value );
+			
+			$item->setItemDeclaredValue( $item_declared_value );
 			$this->getDao('SoItemDetail')->update($item);
 			$sum+= $item_declared_value;
 		}
-		return $declared_value;
+		return $sum;
 	}
 
 	public function setFedexCourierFeed($row)

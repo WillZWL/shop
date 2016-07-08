@@ -2040,18 +2040,18 @@ html;
                                 $code = $hsDetails[0]['code'];
                             }
 
-                            //$data["currency"] = strtoupper($currency);
-                            $item_declared_value = $item_obj->getDeclaredValue();
+                            $data["currency"] = strtoupper("EUR");
+                            $item_declared_value = $item_obj->getItemDeclaredValue();
 
                             $item_information .= "
                                  <tr>
                                     <td  align='left'>".$hs_desc."</td>
                                     <td align='right'>".$item_obj->getQty()."</td>
                                     <td align='right'>".$code."</td>
-                                    <td align='right'>".number_format($item_declared_value, 2)."</td>
-                                    <td align='right'><b>".number_format($item_declared_value * $qty, 2)."</b></td>
+                                    <td align='right'>".number_format($item_declared_value/$qty, 2)."</td>
+                                    <td align='right'><b>".number_format($item_declared_value, 2)."</b></td>
                                 </tr>";
-                            $sum += $item_declared_value * $qty;
+                            $sum += $item_declared_value;
                         }
                     }
 
@@ -2241,6 +2241,7 @@ html;
                     $dto->setMailTo($client_obj->getEmail());
                     $support_email = $this->getCsSupportEmail($cur_platform_id);
 
+                    $dto->setPlatformId($cur_platform_id);
                     $dto->setMailFrom($email_sender);
                     $dto->setTplId($reason . "_request");
                     $dto->setLangId($pbv_obj ? $pbv_obj->getLanguageId() : "");

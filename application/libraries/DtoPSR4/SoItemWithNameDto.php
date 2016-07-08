@@ -9,7 +9,7 @@ class SoItemWithNameDto
     private $vat_total;
     private $gst_total;
     private $amount;
-    private $declared_value;
+    private $item_declared_value;
     private $website_status;
     private $create_on;
     private $create_at;
@@ -104,12 +104,12 @@ class SoItemWithNameDto
         return $this->amount;
     }
 
-    public function setDeclaredValue($value){
-        $this->declared_value = $value;
+    public function setItemDeclaredValue($value){
+        $this->item_declared_value = $value;
     }
     
-    public function getDeclaredValue(){
-        return $this->declared_value;
+    public function getItemDeclaredValue(){
+        return $this->item_declared_value;
     }
 
     public function setWebsiteStatus($website_status)

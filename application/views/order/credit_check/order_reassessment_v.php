@@ -3,6 +3,7 @@
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/PaymentGateway/jsPmgwlist"></script>
@@ -21,7 +22,7 @@
         <tr>
             <td height="30"
                 class="title"><?= $lang["title"] . " - " . $lang[($this->input->get('type') ? "online_order" : "offline_order")] ?></td>
-            <td width="400" align="right" class="title"><input type="button"
+            <td width="400" align="right" style="background:#286512; padding-right: 8px;"><input type="button"
                                                                value="<?= $lang[($this->input->get('type') ? "offline_order" : "online_order")] ?>"
                                                                onClick="Redirect('<?= site_url('order/order_reassessment/?type=' . ($this->input->get('type') ? "0" : "1")) ?>')">
             </td>
@@ -31,7 +32,7 @@
             <td height="2" class="line"></td>
         </tr>
     </table>
-    <form name="fm" method="post">
+    <form name="fm" method="get">
         <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tb_list">
             <col width="20">
             <col width="150">

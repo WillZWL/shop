@@ -74,8 +74,8 @@ $body = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>
                     <td width='521' valign'top' height='10px' bgcolor='#CCCCCC'><b>Description</b></td>
                     <td width='117' valign'top' height='10px' bgcolor='#CCCCCC'><b>Qty</b></td>
                     <td width='117' valign'top' height='10px' bgcolor='#CCCCCC'><b>HS Code</b></td>
-                    <td width='117' valign'top' height='10px' bgcolor='#CCCCCC'><b>Unit Price<br>(HKD)</b></td>
-                    <td width='117' valign'top' height='10px' bgcolor='#CCCCCC'><b>Total Price<br>(HKD)</b></td>
+                    <td width='117' valign'top' height='10px' bgcolor='#CCCCCC'><b>Unit Price<br>(".$currency.")</b></td>
+                    <td width='117' valign'top' height='10px' bgcolor='#CCCCCC'><b>Total Price<br>(".$currency.")</b></td>
                 </tr>"
                 .$item_info.
                 "<tr>
