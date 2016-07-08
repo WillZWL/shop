@@ -57,17 +57,17 @@
                 <?php if($_GET["debug"]=="true"){?>
                     <div id="discount_code">
                         <p class="rokkit_24"><?=_('Promo code')?></p>
-                        <form name="fm_promo" action="" class="form-holder" method="post">
+                        <form name="fm_promo" id="promo_form" action="" class="form-holder" method="post">
                             <fieldset>
                                 <input type="text" placeholder="<?=_('Enter your promo code')?>" value="<?=$cartInfo->getPromotionCode()?>" name="promotion_code" dname="" notEmpty/>
                             </fieldset>
                              <?php if($cartInfo->getPromotionCode()){?>
                             <input type="hidden" name="cancel_promotion" value="1">
-                            <button type="submit" class="btn btn-primary cancel-promotion">
+                            <button type="button" class="btn btn-primary cancel-promotion">
                                 <?=_('Remove / Edit Code')?>
                             </button>
                             <?php }else{?>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary apply-promotion">
                                 <?=_('Apply Code')?>
                             </button>
                              <?php } ?>
@@ -78,6 +78,16 @@
                             </p>
                         </form>
                     </div>
+                    <script>
+                        $(document).ready(function(){
+                            $(".apply-promotion").click(function(){
+                                 $( "form#promo_form" ).submit();
+                            });
+                            $(".cancel-promotion").click(function(){
+                                 $( "form#promo_form" ).submit();
+                            });
+                        });
+                    </script>
                     <?php } ?>
              </div>
             <div class="col-sm-4 col-sm-offset-2">

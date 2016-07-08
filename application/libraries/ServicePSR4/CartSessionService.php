@@ -148,10 +148,8 @@ class CartSessionService extends BaseService
             $this->calculateAndGetCartProfit();
         }
         //if promotion code used, get promotion item again
-        $result=$this->initPromotionFactoryService();
-        if($result){
-            $this->_cart=$this->promotionFactoryModel->modifyPromotionCart();
-        }
+        $this->initPromotionFactoryService("modifyPromotionCart");
+
         if($this->_cart){
             $this->updateQuickInfo($this->_cart->getTotalNumberOfItems());
         }
@@ -208,10 +206,7 @@ class CartSessionService extends BaseService
 
         if (isset($this->_cart))
             unset($this->_cart->items[$sku]);
-        $result=$this->initPromotionFactoryService();
-        if($result){
-            $this->_cart=$this->promotionFactoryModel->validRemoveItemPromotion();
-        }
+        $this->initPromotionFactoryService("validRemoveItemPromotion");
         if (sizeof($this->_cart->items) == 0){
             $this->emptyCart();
         }
@@ -350,12 +345,14 @@ class CartSessionService extends BaseService
     }
 
     //get the used promotion items
-    public function initPromotionFactoryService()
+    public function initPromotionFactoryService($function)
     {   if($this->_cart){
             if($this->_cart->getPromotionCode() && sizeof($this->_cart->items) > 0){
-                $result=$this->promotionFactoryModel->initPromotionFactoryService($this->_cart,$this->_cart->getPromotionCode());
+                $promotionCart=$this->promotionFactoryModel->initPromotionFactoryService($this->_cart,$this->_cart->getPromotionCode(),$function);
+                if($promotionCart){
+                    $this->_cart=$promotionCart;
+                }
             }
-            return $result;
         }
     }
     public function getCartDetailInfo()
