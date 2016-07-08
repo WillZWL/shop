@@ -3431,6 +3431,7 @@ SQL;
         $this->db->join('selling_platform sp', 'so.platform_id = sp.selling_platform_id', 'INNER');
         $this->db->join('so_item_detail soid', 'so.so_no = soid.so_no', 'INNER');
         $this->db->join('product p', 'p.sku = soid.item_sku', 'INNER');
+        $this->db->join('product_type pt', "pt.sku = p.sku and pt.type_id = 'VIRTUAL' and pt.status = 1", 'LEFT');
         $this->db->join('sku_mapping sm', 'sm.sku = p.sku', 'LEFT');
         $this->db->join('so_payment_status sops', 'sops.so_no = so.so_no', 'LEFT');
         $this->db->join('client c', 'so.client_id = c.id', 'INNER');
