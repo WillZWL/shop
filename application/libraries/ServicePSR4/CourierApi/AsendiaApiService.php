@@ -118,6 +118,7 @@ class AsendiaApiService extends CourierApiService implements CourierApiInterface
 					"ConsigneePhone" => $pendingData->getDeliveryPhone(), //电话
 					"Zip" => $pendingData->getDeliveryPostcode(), //邮编
 					"Email" => $pendingData->getEmail(), //电子邮箱
+					"HsCode"=> $pendingData->getDeclaredHsCode(), //海关编码 专线时需要填写
 					"Description" => $pendingData->getDeclaredDesc(), //申报内容
 					"Value" => $pendingData->getDeclaredValue(), // 申报价值
 					"CustomsType" => $pendingData->getDeclaredType(), //申报类型
