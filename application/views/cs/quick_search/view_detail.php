@@ -661,7 +661,7 @@ html;
 
                                 if (ctype_digit($max_ship_day)) :
                                     $max_ship_date = date('Y-m-d', (strtotime($order_obj->getOrderCreateDate()) + $max_ship_day * 24 * 60 * 60));
-                                    $ship_text = "Ship time frame: $min_ship_day - $max_ship_day days (latest $max_ship_date)";
+                                    $ship_text = "Ship time frame: ". $order_obj->getExpectShipDays() ." days (latest $max_ship_date)";
                                 endif;
                             endif;
                             if ($del_days = $order_obj->getExpectDelDays()) :
@@ -670,7 +670,7 @@ html;
 
                                 if (ctype_digit($max_del_day)) :
                                     $max_ship_date = date('Y-m-d', (strtotime($order_obj->getOrderCreateDate()) + $max_del_day * 24 * 60 * 60));
-                                    $del_text = "Del time frame: $min_del_day - $max_del_day days (latest $max_ship_date)";
+                                    $del_text = "Del time frame: ". $order_obj->getExpectDelDays() ." days (latest $max_ship_date)";
                                 endif;
                             endif;
                             ?>

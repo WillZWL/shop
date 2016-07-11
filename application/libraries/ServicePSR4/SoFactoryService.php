@@ -24,7 +24,7 @@ class SoFactoryService extends BaseService
         foreach($orderInfo->items as $sku => $item) {
             $skuList[$sku] =array(
                 "qty" => $item->getQty(),
-                "price"=> $item->getPrice(), 
+                "price"=> $item->getPrice(),
                 "amount" => $item->getAmount(),
                 "promoDiscAmt"=>$item->getPromoDiscAmt()
             );
@@ -50,7 +50,7 @@ class SoFactoryService extends BaseService
                     if (($createSoItemResult = $this->_createSoItemDetailAndUpdateSo($soObj, $newCart)) && ($createSoItemResult["result"])) {
 //no error check for complementary accessory
                         $this->_addComplementaryAccessory($soObj, $createSoItemResult["lastLineNo"]);
-                
+
                         if ($this->_createSoPaymentStatus($soObj, $interfaceType->getCheckoutData())) {
                             if (!$this->_createSoExtend($soObj, $interfaceType->getCheckoutData())) {
                                 $this->getDao("So")->db->trans_rollback();
@@ -238,6 +238,7 @@ class SoFactoryService extends BaseService
         $result = true;
         $totalCost = 0;
         $i = 0;
+        $expect_days = [];
         foreach($cart->items as $sku => $item) {
             $i++;
             $soItemDetailObj = $this->_createSingleSoItemDetail($soObj, $item, $i, $cart->getPlatformId());
@@ -246,6 +247,18 @@ class SoFactoryService extends BaseService
             else {
                 $totalCost += $soItemDetailObj->getCost() * $soItemDetailObj->getQty();
             }
+
+            //save expect_del_days && expect_ship_days to so
+            $platform_id = $soObj->getPlatformId();
+            $delivery_country_id = $soObj->getDeliveryCountryId();
+            if (empty($expect_days)) {
+                $expect_days = $this->_getSoExpectDays($sku, $platform_id, $delivery_country_id);
+            }
+        }
+
+        if ($expect_days) {
+            $soObj->setExpectShipDays($expect_days['expect_ship_days']);
+            $soObj->setExpectDelDays($expect_days['expect_del_days']);
         }
 
         if ($i > 0) {
@@ -312,7 +325,7 @@ class SoFactoryService extends BaseService
         $soItemDetailObj->setVatTotal(round(($priceWithCost->getDeclaredValue() * $item->getVatPercent() / 100), $item->getDecPlace()));
         $soItemDetailObj->setAmount($item->getAmount());
         $this->_setProfitInfo($soItemDetailObj, $platformId, $item->getDecPlace());
-        
+
         $insertSoItemDetailResult = $this->getDao("SoItemDetail")->insert($soItemDetailObj);
 //        print $this->getDao("SoItemDetail")->db->last_query();
         if ($insertSoItemDetailResult === false) {
@@ -375,10 +388,10 @@ class SoFactoryService extends BaseService
         $soObj->setDeliveryTypeId($orderInfo->getDeliveryType());
         $soObj->setWeight($orderInfo->getTotalWeight());
         if($orderInfo->getPromotionCode()){
-           $soObj->setPromotionCode($orderInfo->getPromotionCode()); 
+           $soObj->setPromotionCode($orderInfo->getPromotionCode());
         }
         if($orderInfo->getPromoDiscTotal()){
-           $soObj->setPromoDiscTotal($orderInfo->getPromoDiscTotal()); 
+           $soObj->setPromoDiscTotal($orderInfo->getPromoDiscTotal());
         }
         if ($checkoutInfoDto->getPaymentGatewayId())
             $soObj->setPaymentGatewayId($checkoutInfoDto->getPaymentGatewayId());
@@ -485,9 +498,9 @@ class SoFactoryService extends BaseService
         $cart = $cartSessionService->getCart();
         if($orderInfo->getPromotionCode()){
             foreach($cart->items as $sku => $item){
-                $item->setPromoDiscAmt($skuInfo[$sku]["promoDiscAmt"]); 
+                $item->setPromoDiscAmt($skuInfo[$sku]["promoDiscAmt"]);
                 $item->setPrice($skuInfo[$sku]["price"]);
-                $item->setAmount($skuInfo[$sku]["amount"]); 
+                $item->setAmount($skuInfo[$sku]["amount"]);
                 $totalAmount += $item->getAmount();
                 $cart->items[$sku]=$item;
             }
@@ -518,16 +531,7 @@ class SoFactoryService extends BaseService
             return FALSE;
         }
     }
-/*
-    private function _initPriceService($platformType = null) {
-        if (is_null($platformType)) {
-            $this->_priceService = new PriceService;
-        } else if (is_null($this->_priceService)) {
-            $classname = "ESG\Panther\Service\Price" . ucfirst(strtolower($platformType)) . "Service";
-            $this->_priceService = new $classname($platformType);
-        }
-    }
-*/
+
     private function _setProfitInfo(\BaseVo $soidObj, $platformId, $decPlace)
     {
         if ($platformId && $soidObj->getUnitPrice() > 0) {
@@ -543,32 +547,6 @@ class SoFactoryService extends BaseService
             $soidObj->setProfit(0);
             $soidObj->setMargin(0);
         }
-/*
-        $use_new = true;
-        if (!$this->_platformType) {
-            if (defined('PLATFORM_TYPE'))
-                $this->_platformType = PLATFORM_TYPE;
-            else
-                $this->_platformType = $this->getService("SellingPlatform")->getDao("SellingPlatform")->get(["selling_platform_id" => $platformId])->getType();
-        }
-
-        $this->_initPriceService($this->_platformType);
-        $unitSellingPrice = $soidObj->getUnitPrice();
-        $json = $this->_priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $unitSellingPrice);
-        $jj = json_decode($json, true);
-
-        $soidObj->setProfitRaw(round($jj["get_profit"], $decPlace));
-        $soidObj->setMarginRaw(round($jj["get_margin"], $decPlace));
-
-        if ($use_new) {
-            $selling_price = ($soidObj->getAmount()) / $soidObj->getQty();
-            $json = $this->_priceService->getProfitMarginJson($platformId, $soidObj->getItemSku(), $selling_price);
-            $jj = json_decode($json, true);
-            $soidObj->setCost(round($jj["get_cost"], $decPlace));
-            $soidObj->setProfit(round($jj["get_profit"], $decPlace));
-            $soidObj->setMargin(round($jj["get_margin"], $decPlace));
-        }
-*/
     }
 
     public function _getDeclaredValue($country_id = "", $price = "", $vat = 0)
@@ -645,5 +623,19 @@ class SoFactoryService extends BaseService
             $declared = $price * $declared_pcent / 100;
         }
         return $declared;
+    }
+
+    public function _getSoExpectDays($sku = '', $platform_id = '', $delivery_country_id)
+    {
+        $data = [];
+        $priceObj = $this->getService("Price")->getDao()->get(["platform_id" => $platform_id, "sku" => $sku]);
+        if ($priceObj) {
+            $deliveryScenerioObj = $this->getService("DeliveryTime")->getDeliverytimeObj($delivery_country_id, $priceObj->getDeliveryScenarioid());
+            if ($deliveryScenerioObj->getShipMinDay())
+                $data["expect_ship_days"] = $deliveryScenerioObj->getShipMinDay() . " - " . $deliveryScenerioObj->getShipMaxDay();
+            if ($deliveryScenerioObj->getDelMinDay())
+                $data["expect_del_days"] = $deliveryScenerioObj->getDelMinDay() . " - " . $deliveryScenerioObj->getDelMaxDay();
+        }
+        return $data;
     }
 }
