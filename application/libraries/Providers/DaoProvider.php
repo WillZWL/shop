@@ -689,5 +689,20 @@ class DaoProvider implements ServiceProviderInterface
             return new D\PlatformWarrantyDao();
         };
 
+        $daoContainer['DisplayBanner'] = function () {
+            return new D\DisplayBannerDao();
+        };
+
+        $daoContainer['DisplayCategoryBanner'] = function () {
+            return new D\DisplayCategoryBannerDao();
+        };
+
+        $daoContainer['Display'] = function () {
+            return new D\DisplayDao();
+        };
+
+        $daoContainer['DisplayBannerConfig'] = function () {
+            return new D\DisplayBannerConfigDao();
+        };
     }
 }
