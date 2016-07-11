@@ -1,22 +1,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Panther\n"
-"POT-Creation-Date: 2016-06-03 11:05+0800\n"
-"PO-Revision-Date: 2016-06-03 15:15+0800\n"
+"POT-Creation-Date: 2016-07-11 15:38+0800\n"
+"PO-Revision-Date: 2016-07-11 15:40+0800\n"
 "Last-Translator: \n"
 "Language-Team: it@eservicesgroup.net <it@eservicesgroup.net>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.3\n"
 "X-Poedit-Basepath: ../../../projectV2/atomv2/public_html/themes/default\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: display/conditions_of_use.php\n"
 
-#: cart/info.php:35 review.php:15 review.php:56
+#: cart/info.php:35 review.php:22 review.php:101
 msgid "Total"
 msgstr "Totaal"
 
@@ -24,7 +24,7 @@ msgstr "Totaal"
 msgid "View Cart"
 msgstr "Bekijk winkelwagen"
 
-#: cart/info.php:41 checkout/index.php:7 review.php:65
+#: cart/info.php:41 checkout/index.php:7 review.php:110
 msgid "Checkout"
 msgstr "Bestellen"
 
@@ -115,7 +115,7 @@ msgid "Save"
 msgstr "Bespaar"
 
 #: cat.php:235 cat.php:241 product/accessories.php:119
-#: product/accessories.php:125 product/detail.php:121 product/grid.php:68
+#: product/accessories.php:125 product/detail.php:123 product/grid.php:68
 #: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Voeg toe aan winkelmandje"
@@ -470,7 +470,7 @@ msgstr "via e-mail"
 msgid "Payment Review"
 msgstr "Betalingsoverzicht"
 
-#: checkout/paymentReview.php:6 checkout/paymentSuccess.php:6
+#: checkout/paymentReview.php:6 checkout/paymentSuccess.php:10
 msgid "Thank you for your purchase!"
 msgstr "Dank u voor uw aankoop!"
 
@@ -490,16 +490,16 @@ msgstr ""
 msgid "We'll send you an email as soon as the payment has been verified!"
 msgstr "We zullen uw een e-mail versturen wanneer de betaling geverifieerd is!"
 
-#: checkout/paymentSuccess.php:4
+#: checkout/paymentSuccess.php:8
 msgid "Payment Successful"
 msgstr "Betaling gelukt"
 
-#: checkout/paymentSuccess.php:8
+#: checkout/paymentSuccess.php:12
 #, php-format
 msgid "Your order number is %s."
 msgstr "Uw ordernummer is %s"
 
-#: checkout/paymentSuccess.php:10
+#: checkout/paymentSuccess.php:14
 msgid ""
 "You will receive an order confirmation email with details of your order and "
 "a link to track its progress."
@@ -507,13 +507,13 @@ msgstr ""
 "U ontvangt een bevestigings e-mail met de gegevens van uw bestelling en een "
 "link om de voortgang te traceren"
 
-#: checkout/paymentSuccess.php:12
+#: checkout/paymentSuccess.php:16
 msgid "Please note all charges will appear on your statement as CHATANDVISION."
 msgstr ""
 "Alle in rekening gebrachte onderdelen wordt op uw afgeschrift getoond onder "
 "CHATANDVISION."
 
-#: checkout/paymentSuccess.php:14
+#: checkout/paymentSuccess.php:18
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "Wij zullen u een e-mail versturen zodra uw bestelling is verzonden!"
 
@@ -550,7 +550,7 @@ msgstr ""
 "9digital.nl Flat/RM 12, Tower 8, 25/F Langham Place Office Argyle Street, "
 "Kowloon, Hong Kong"
 
-#: contact.php:13 display/contact.php:64
+#: contact.php:13 display/contact.php:66
 msgid "Tel"
 msgstr "Telefoon"
 
@@ -586,7 +586,7 @@ msgstr "Bericht"
 msgid "Your Name"
 msgstr "Uw naam"
 
-#: contact.php:35 display/contact.php:59 myaccount/forget_password.php:41
+#: contact.php:35 display/contact.php:61 myaccount/forget_password.php:41
 #: myaccount/login.php:14 myaccount/login.php:15
 msgid "Email"
 msgstr "E-mailadres"
@@ -700,622 +700,6 @@ msgstr ""
 "helpen wanneer u problemen hebt bij het kiezen van het juiste product of "
 "vragen hebt over het bestelproces."
 
-#: display/conditions_of_use.php:2
-msgid "Term and Conditions"
-msgstr "Algemene voorwaarden"
-
-#: display/conditions_of_use.php:3
-msgid "DigitalDiscount.co.uk Conditions of Use and Sale"
-msgstr "Voorwaarden van het gebruik en verkoop bij 9digital.nl"
-
-#: display/conditions_of_use.php:6 display/privacy_policy.php:6
-msgid "CONTENTS"
-msgstr "INHOUD"
-
-#: display/conditions_of_use.php:8 display/conditions_of_use.php:22
-msgid "CONDITIONS OF USE"
-msgstr "GEBRUIKSVOORWAARDEN"
-
-#: display/conditions_of_use.php:9 display/conditions_of_use.php:31
-msgid "SITE CONTENTS, OWNERSHIP, AND USE RESTRICTIONS"
-msgstr "WEBSITE INHOUD, EIGENDOMSRECHT EN GEBRUIKSBEPERKINGEN"
-
-#: display/conditions_of_use.php:10 display/conditions_of_use.php:48
-msgid "PLACING AN ORDER"
-msgstr "EEN BESTELLING PLAATSEN"
-
-#: display/conditions_of_use.php:11 display/conditions_of_use.php:66
-msgid "TAX AND DUTIES"
-msgstr "BELASTINGEN EN HEFFINGEN "
-
-#: display/conditions_of_use.php:12 display/conditions_of_use.php:76
-msgid "DELIVERY"
-msgstr "LEVERING"
-
-#: display/conditions_of_use.php:13 display/conditions_of_use.php:84
-msgid "CANCELLING YOUR ORDER"
-msgstr "ANNULERING VAN UW ORDER"
-
-#: display/conditions_of_use.php:14 display/conditions_of_use.php:90
-msgid "DEFECTIVE ITEM"
-msgstr "DEFECTE PRODUCTEN"
-
-#: display/conditions_of_use.php:15 display/conditions_of_use.php:99
-msgid "PRODUCT WARRANTIES"
-msgstr "PRODUCTGARANTIE"
-
-#: display/conditions_of_use.php:16 display/conditions_of_use.php:134
-msgid "DISCLAIMER OF LIABILITY"
-msgstr "VRIJWARINGSVERKLARING VAN GARANTIE"
-
-#: display/conditions_of_use.php:17 display/conditions_of_use.php:142
-#: display/privacy_policy.php:12 display/privacy_policy.php:54
-msgid "SECURITY"
-msgstr "BEVEILIGING"
-
-#: display/conditions_of_use.php:18 display/conditions_of_use.php:158
-msgid "CONDITIONS OF USE REVISIONS"
-msgstr "HERZIENINGCONDITIES"
-
-#: display/conditions_of_use.php:19 display/conditions_of_use.php:164
-msgid "BILLING TERMS AND CONDITIONS"
-msgstr "FACTURERINGSVOORWAARDEN"
-
-#: display/conditions_of_use.php:24
-msgid ""
-"DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
-"ChatandVision (HK) Limited. By visiting or shopping at the DigitalDiscount "
-"website, you agree to accept and be bound by these conditions of use, as "
-"well as any other policies posted on the website, as modified from time to "
-"time. IF YOU DO NOT AGREE TO THESE CONDITIONS THEN PLEASE DO NOT USE THE "
-"SITE."
-msgstr ""
-"9digital.nl is volledig eigendom van en wordt geëxploiteerd door "
-"ChatandVision (HK) Limited. Door het bezoeken of winkelen bij 9digital.nl "
-"website, gaat u er mee accoord met deze gebruikersvoorwaarden, mede ook de "
-"overige beleid die staan omschreven op deze website die van tijd tot tijd "
-"aangepast worden. MAAK GEEN GEBRUIK VAN DEZE WEBSITE, ALS U NIET ACCOORRD "
-"GAAT MET DEZE GEBRUIKSVOORWAARDEN."
-
-#: display/conditions_of_use.php:26
-#, php-format
-msgid ""
-"DigitalDiscount is a trading name with registered offices in: <br><br> Hong "
-"Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office "
-"Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
-"<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
-"SW19 2R. <br><br>Through its websites, ChatandVision (HK) Limited offers "
-"consumer electronics hardware, and services."
-msgstr ""
-"9digital.nl is een handelsnaam met geregistreerde kantoren in: <br><br> Hong "
-"Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place Office "
-"Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
-"<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
-"SW19 2R. <br><br>Through deze website, offreert ChatandVision (HK) Limited "
-"consumenten electronica hardware en services."
-
-#: display/conditions_of_use.php:28
-msgid ""
-"If you have any queries relating to our terms and conditions, please contact "
-"the Customer Support team or read our FAQ."
-msgstr ""
-"Als u vragen hebt met betrekking tot onze algemene voorwaarden, neem dan "
-"contact op met het Customer Support team of lees onze FAQ."
-
-#: display/conditions_of_use.php:33
-msgid ""
-"The information contained in this Site including all images, illustrations, "
-"designs, photographs, video clips, writings and other materials that appear "
-"herein are copyrights, trademarks, trade dress or other intellectual "
-"property owned, controlled, or licensed (all of which, collectively, are "
-"herein referred to as the \"Contents\") by ChatandVision (HK) Limited or its "
-"subsidiaries and affiliates (\"ChatandVision\") or are the property of their "
-"respective owners. The name ChatandVision and the ChatandVision logo are "
-"registered marks of ChatandVision. "
-msgstr ""
-"De informatie op deze website met inbegrip van alle foto's, illustraties, "
-"afbeeldingen, videoclips, geschriften en andere materialen die hierin worden "
-"vermeld op zijn auteursrechten, merken, handelsnamen jurk of andere "
-"intellectuele eigendomsrechten in eigendom, beheer of in licentie (die "
-"allemaal hierin zal worden aangeduid als \"Inhoud\") door ChatandVision (HK) "
-"Limited of haar dochterondernemingen en filialen ( \"ChatandVision\") of "
-"zijn het eigendom van hun betreffende eigenaar. De naam ChatandVision en "
-"ChatandVision logo zijn geregistreerde handelsmerken van ChatandVision."
-
-#: display/conditions_of_use.php:35
-msgid ""
-"Permission is granted to display, copy, distribute, download, and print in "
-"hard copy portions of this Site for the purposes of: "
-msgstr ""
-"Het is toegestaan om delen van deze webpagina te laten zien, kopiëren, "
-"distribueren, downloaden en af te drukken in hard copy voor de volgende "
-"doeleinden:"
-
-#: display/conditions_of_use.php:37
-msgid "placing an order with DigitalDiscount.co.uk or"
-msgstr "het plaatsen van een bestelling bij 9digital.nl of"
-
-#: display/conditions_of_use.php:38
-msgid ""
-"using this Site as a shopping resource, provided you do not modify the Site "
-"and that you retain all copyright and other proprietary notices contained in "
-"the Contents."
-msgstr ""
-"het gebruiken van deze webpagina als een winkelbron, op de voorwaarde dat u "
-"niets van de webpagina aanpast en dat u zich houdt aan alle auteursrechten "
-"en andere eigendomsrechten in de inhoud."
-
-#: display/conditions_of_use.php:40
-msgid ""
-"Except in connection with shopping or placing an order, none of the Contents "
-"may be copied, reproduced, distributed, re-published, downloaded, displayed, "
-"posted electronically or mechanically, transmitted, recorded, in any manner "
-"mirrored, photocopied, or reproduced without the prior written permission of "
-"ChatandVision or the applicable copyright owner. "
-msgstr ""
-"Behalve in verband met winkelen of het plaatsen van een order, kan geen van "
-"de inhoud worden gekopieerd, gereproduceerd, gedistribueerd, opnieuw "
-"gepubliceerd, gedownload, weergegeven, gepost elektronisch gepost of "
-"mechanisch, overgebracht, geregistreerd, op welke wijze gespiegeld, "
-"gefotokopieerd of gereproduceerd worden zonder de voorafgaande schriftelijke "
-"toestemming van ChatandVision of de betreffende eigenaar van het "
-"auteursrecht."
-
-#: display/conditions_of_use.php:42
-msgid ""
-"Please note that the permission granted herein terminates automatically if "
-"you breach any of these Site terms or conditions. Any other use of the "
-"Contents on this Site including reproduction for purposes other than as "
-"noted above, and including any reproduction, modification, distribution, or "
-"republication may violate copyright or trademark laws, and, without the "
-"prior written permission of ChatandVision, is strictly prohibited."
-msgstr ""
-"Houdt u er rekening mee dat de hierin verleende toestemming automatisch "
-"eindigt als u inbreuk maakt op een van deze webpagina’s regels of "
-"voorwaarden. Elk ander gebruik van de inhoud van deze webpagina met inbegrip "
-"van de reproductie voor andere doeleinden dan zoals hierboven vermeld en met "
-"inbegrip van elke reproductie, aanpassing, distributie of herpublicatie die "
-"de auteursrecht of merkenrecht kans schaden en zonder de voorafgaande "
-"schriftelijke toestemming van ChatandVision doeleinden, is ten strengste "
-"verboden ."
-
-#: display/conditions_of_use.php:44
-msgid ""
-"If you choose to leave this Site via links to other non-ChatandVision "
-"operated sites, ChatandVision is not responsible for the privacy policies of "
-"those sites or the cookies those sites use."
-msgstr ""
-"Als u ervoor kiest om deze webpagina te verlaten via de links naar andere "
-"niet-ChatandVision webpagina’s, is ChatandVision niet verantwoordelijk voor "
-"het privacybeleid van desbetreffende webpagina of de cookies die deze "
-"paginas gebruikt worden."
-
-#: display/conditions_of_use.php:50
-msgid ""
-"The prices advertised on this Site are for Internet orders. Prices and the "
-"availability of items are subject to change without notice. Any recommended "
-"retail prices used on this Site are based on manufacturers’ suggested retail "
-"prices and may not be indicative of the actual selling prices in your area."
-msgstr ""
-"De geadverteerde prijzen op deze webpagina zijn voor de internet orders. De "
-"prijzen en de beschikbaarheid van items zijn onderhevig aan verandering "
-"zonder kennisgeving. Alle gebruikte adviesprijzen op deze webpagina zijn "
-"gebaseerd op de adviesprijzen van fabrikanten en hoeven niet indicatief voor "
-"de werkelijke verkoopprijzen in uw omgeving te zijn."
-
-#: display/conditions_of_use.php:52
-msgid ""
-"Any reference to savings used on this Site indicates the promotional savings "
-"off the recommended retail price and the actual savings will vary depending "
-"upon the goods purchased and the date of the transaction."
-msgstr ""
-"Elke verwijzing naar besparingen gebruikt op deze webpagina geeft aan dat de "
-"promotie-besparingen uit de adviesprijs en de daadwerkelijke besparingen "
-"zullen variëren afhankelijk van de gekochte goederen en de datum van de "
-"transactie."
-
-#: display/conditions_of_use.php:54
-msgid ""
-"Please check carefully that all information given is accurate and complete "
-"when placing an order."
-msgstr ""
-"Gelieve zorgvuldig te controleren of alle verstrekte informatie juist en "
-"volledig is bij het plaatsen van een bestelling."
-
-#: display/conditions_of_use.php:56
-msgid ""
-"Payment for all orders must be made in advance by credit or debit card. We "
-"accept payment from most major credit and debit cards as well as PayPal and "
-"Skrill (formerly known as MoneyBookers). "
-msgstr ""
-"Betaling voor alle bestellingen moeten vooraf worden voldaan met een "
-"creditcard of bankpas. Wij accepteren betaling van de meeste grote credit en "
-"debit kaarten en ook PayPal en Skrill (voorheen Moneybookers)."
-
-#: display/conditions_of_use.php:58
-msgid ""
-"While we make every effort to provide accurate information, technical "
-"inaccuracies or typographic or photographic errors may occur. We reserve the "
-"right to make changes, corrections, and/or improvements to the information "
-"contained on this Site at any time without notice."
-msgstr ""
-"Hoewel we er alles aan doen om accurate informatie te verstrekken, kunnen "
-"technische onjuistheden en typografische of fotografische fouten optreden. "
-"Wij behouden ons het recht voor om ten allen tijde informatie op deze "
-"webpagina te wijzigingen, corrigeren en/of verbeteren zonder voorafgaande "
-"kennisgeving."
-
-#: display/conditions_of_use.php:60
-msgid ""
-"There may be certain orders that we are either unable to accept or must "
-"cancel. We reserve the right, at our sole discretion, to refuse or cancel "
-"any order for any reason. Possible circumstances involving cancellation of "
-"orders may be limitations on quantities available for purchases or "
-"inaccuracies or errors in product or pricing information."
-msgstr ""
-"Er kunnen bepaalde opdrachten zijn die we niet in staat zijn te accepteren "
-"of deze te moeten annuleren. Wij behouden ons het recht voor om naar eigen "
-"goeddunken, te weigeren of een bestelling om welke reden te annuleren. "
-"Mogelijke omstandigheden met betrekking tot de annulering van orders kunnen "
-"beperkingen op de hoeveelheden beschikbaar voor de aankoop of onjuistheden "
-"of fouten in product- of prijsinformatie zijn."
-
-#: display/conditions_of_use.php:62
-msgid ""
-"When you place an order to purchase a product from DigitalDiscount.co.uk, we "
-"will send you an e-mail confirming receipt of your order and containing the "
-"details of your order. Your order represents an offer to us to purchase a "
-"product which is accepted by us when we send e-mail confirmation to you that "
-"we've dispatched that product to you (the \"Dispatch Confirmation E-mail\"). "
-"That acceptance will be complete at the time we send the Dispatch "
-"Confirmation E-mail to you. Any products on the same order which we have not "
-"confirmed in a Dispatch Confirmation E-mail to have been dispatched do not "
-"form part of that contract."
-msgstr ""
-"Wanneer u een order plaatst om een product uit 9digital.nl aan te schaffen, "
-"sturen wij u een e-mail te ter bevestiging voor het ontvangst van uw "
-"bestelling met de gegevens van uw bestelling. Uw opdracht vertegenwoordigt "
-"een aanbod aan ons om een product aan te schaffen, dat door ons wordt "
-"geaccepteerd wanneer we een e-mail naar u sturen ter bevestiging we dat "
-"product hebben verzonden (de \"Verzend bevestigings e-mail\"). Die "
-"acceptatie zal worden voltooid op het moment dat we de Verzend bevestigings "
-"e-mail sturen naar u. Alle producten op dezelfde order die we niet hebben "
-"bevestigd in een Verzend bevestigings e-mail verzonden te hebben, vormen "
-"geen deel uit dat contract."
-
-#: display/conditions_of_use.php:68
-msgid ""
-"In using our services, you authorize ChatandVision to make arrangements for "
-"customs clearance for the products ordered. The responsibility for ensuring "
-"that your ordered product can be lawfully imported outside of Hong Kong to "
-"your destination country remains with our customers, and any applicable "
-"import duties and taxes will be subjected to the recipient. We do not have "
-"control over these import duties and taxes. Customs policies vary widely "
-"from country to country, hence if you should have any queries regarding your "
-"local Customs policies, contact your local Customs office for further "
-"information. "
-msgstr ""
-"Bij het gebruik van onze diensten, machtigt u ChatandVision om afspraken te "
-"maken voor de douane-inklaring voor de bestelde producten. De "
-"verantwoordelijkheid om ervoor te zorgen dat uw bestelde product legaal "
-"buiten Hong Kong kunnen worden geïmporteerd naar uw land van bestemming "
-"blijft met onze klanten en eventuele invoerrechten en belastingen zullen "
-"worden onderworpen aan de ontvanger. Wij hebben geen controle over deze "
-"invoerrechten en belastingen hebben. Douane verschillen sterk van land tot "
-"land, dus als u nog vragen zou hebben met betrekking tot uw lokale douane-"
-"beleid, neem dan contact op voor meer informatie met uw lokale douanekantoor."
-
-#: display/conditions_of_use.php:70
-msgid ""
-"Where the price of the goods allows, certain shipments to some countries may "
-"include a fee which is borne by ChatandVision, for import of the goods. This "
-"will be noted on your shipment invoice."
-msgstr ""
-"Wanneer de prijs van de goederen het mogelijk maakt, wordt de vergoeding vab "
-"bepaalde transporten naar sommige landen gedragen door ChatandVision, voor "
-"de invoer van de goederen. Dit zal worden vermeld op uw zendingsfactuur."
-
-#: display/conditions_of_use.php:72
-msgid ""
-"In the event where customs clearance is required, this will cause delays to "
-"the original delivery estimate."
-msgstr ""
-"In het geval waar de inklaring nodig is, zal deze vertraging bij de "
-"oorspronkelijke levertijdschatting veroorzaken."
-
-#: display/conditions_of_use.php:78
-msgid ""
-"Goods will be sent to the address given by you in your order. If you are "
-"ordering more than one item, your goods may be sent to you in separate "
-"shipments. There will not be extra delivery charges for these delivery cases."
-msgstr ""
-"Goederen worden verzonden naar het adres dat u in uw bestelling hebt "
-"opgegeven. Maakt u meer dan één order, dan zullen uw goederen afzonderlijke "
-"verstuurd worden. Er zullen geen extra verzendkosten voor deze aflevering "
-"berekend worden."
-
-#: display/conditions_of_use.php:80
-msgid ""
-"Your order should not take any more than 7 to 14 working days to arrive, "
-"however, this is not guaranteed and we cannot be held responsible for events "
-"outside of our control. If you have not received your order within 20 "
-"working days you should contact our Customer Support team."
-msgstr ""
-"Uw bestelling zal niet langer dan 7 tot 14 werkdagen aankomen, maar dit is "
-"niet gegarandeerd en wij kunnen niet verantwoordelijk  gesteld worden voor "
-"de gebeurtenissen buiten onze controle. Als u uw bestelling binnen 20 "
-"werkdagen nog niet hebt ontvangen, dan moet u contact opnemen met onze "
-"klantenservice."
-
-#: display/conditions_of_use.php:86
-msgid ""
-"The period in which you can exercise the right to cancel an order is 30 days "
-"beginning the day after your goods are received. The cancellation request "
-"has to be received by us in writing - by email, or letter. The unused goods "
-"(including any accessories which were included in the price of the goods) "
-"must be returned at the customer's expense within 30 days after receipt of "
-"parcel and customer is responsible for any damage during the transit of the "
-"returned goods, (it also applies to products purchased as Christmas "
-"presents). We reserve the right to have the goods inspected by a technician "
-"prior to replacement or refund. Please note that software packages may only "
-"be returned unopened. Should you cancel your order within the cooling off "
-"period we will issue you a full refund for the price you paid for the "
-"item(s). Any cancellation made outside the 30 day \"cooling-off\" period may "
-"not be accepted."
-msgstr ""
-"De periode waarin u het recht om een bestelling te annuleren, is binnen 14 "
-"dagen nadat u uw goederen hebt ontvangen. Het verzoek tot annulering moet "
-"schriftelijk door ons zijn ontvangen - via e-mail of brief. De ongebruikte "
-"goederen (met inbegrip van alle accessoires die zijn inbegrepen in de prijs "
-"van de goederen) moeten worden geretourneerd op kosten van de klant binnen "
-"14 dagen na ontvangst van het pakket en de klant is verantwoordelijk voor "
-"eventuele schade tijdens de doorvoer van de geretourneerde goederen (is ook "
-"van toepassing bij producten aangeschaft als kerstcadeaus). Wij behouden ons "
-"het recht om de goederen te laten inpecteren door een technicus voorafgaand "
-"aan een vervanging of terugbetaling. Houd er rekening mee dat de software "
-"pakketten alleen ongeopend geretourneerd kunnen worden. Mocht u uw "
-"bestelling annuleren binnen de afkoelingsperiode, dan zullen wij u een "
-"volledige terugbetaling geven voor de prijs die u betaald hebt voor de "
-"producten. Als de annulering plaatsvindt buiten de 14 dagen "
-"\"afkoelingsperiode\", dan kan deze niet worden aanvaard."
-
-#: display/conditions_of_use.php:92
-msgid ""
-"In the unlikely event your order is damaged in transit please contact us "
-"immediately. Please send the product back to us in the original packaging "
-"and a valid RMA (Return Merchandise Authorization) form. We will arrange for "
-"a prompt replacement or refund, whichever is your preference. Please note "
-"that we are unable to offer a refund if you notify us about the damaged "
-"goods after more than 30 days starting the day after receipt of goods."
-msgstr ""
-"In het onwaarschijnlijke geval dat uw bestelling is beschadigd tijdens het "
-"transport neem dan onmiddellijk contact op met ons. Stuur het product terug "
-"naar ons in de originele verpakking en een geldig RMA-formulier (Return "
-"Merchandise Authorization). Wij zorgen voor een snelle vervanging of "
-"terugbetaling, afhankelijk van wat uw voorkeur is. Houd er rekening mee dat "
-"we niet in staat zijn om een terugbetaling te bieden als u ons informeert "
-"over de beschadigde goederen na meer dan 6 dagen op de dag na ontvangst van "
-"de goederen."
-
-#: display/conditions_of_use.php:95
-msgid ""
-"During the RMA process, ChatandVision (HK) Limited will follow up with you "
-"via email on issues requiring your clarification and agreement, using the "
-"trading name DigitalDiscount. If no response is received from you within 7 "
-"days from the date of emailing, ChatandVision will follow up with a kind "
-"reminder in the form of a 1st and 2nd email at 7 day intervals. In the event "
-"no response is received within 7 days of the 2nd email being sent, "
-"ChatandVision will send a 3rd and final reminder email together with a "
-"recorded letter. Should no response be received within 2 weeks from date of "
-"final reminders, ChatandVision reserves the right to dispose of the RMA "
-"item(s) at its discretion in any way seen fit."
-msgstr ""
-"Tijdens het RMA proces zal ChatandVision (HK) Limited contact met u opnemen "
-"via e-mail, op kwesties die uw opheldering en akkoord nodig heeft, met de "
-"handelsnaam 9digital.nl. Als er geen reactie is ontvangen van u binnen 7 "
-"dagen na het e-mailen, zal ChatandVision een herinnering in de vorm van een "
-"1e en 2e e-mail op 7 dagen intervallen. In het geval er geen antwoord wordt "
-"ontvangen binnen 7 dagen na de 2 e-mail wordt verzonden, zal ChatandVision "
-"een 3e en laatste herinnering e-mailen samen met een aangetekende brief. "
-"Indien er geen antwoord ontvangen binnen 2 weken na datum van de laatste "
-"herinneringen, behoudt ChatandVision zich het recht te beschikken over de "
-"RMA-producten naar eigen inzicht."
-
-#: display/conditions_of_use.php:101
-msgid ""
-"All products, unless otherwise stated in the product listing, are supplied "
-"with an in-house warranty where our facilities are able to process all "
-"returns for a quick and efficient all-round service. The warranty period may "
-"vary for different product categories. The table below sets out the "
-"applicable warranty period commencing from the date of receipt for the "
-"Product."
-msgstr ""
-"Alle producten, tenzij anders vermeld in het productenlijst, worden geleverd "
-"met een in-house garantie waar onze faciliteiten in staat zijn om alle "
-"rendementen voor een snelle en efficiënte all-round service te verwerken. De "
-"garantieperiode kan variëren voor verschillende productcategorieën. De "
-"onderstaande tabel geeft de garantieperiode vanaf de datum van ontvangst van "
-"het product."
-
-#: display/conditions_of_use.php:125
-msgid ""
-"This warranty does not cover:\n"
-"                                - Damage, fault or failure due to alteration "
-"or repairs made by anyone other than us\n"
-"                                - Dents, scratches, and other conditions to "
-"the product that occur over time considered as normal wear and tear\n"
-"                                - Accidental damage (including but not "
-"limited to shock, impact, dropping, water damage or sand damage)\n"
-"                                - Not satisfied with the product\n"
-"                            "
-msgstr ""
-"Deze garantie geldt niet voor:\n"
-"- Schade, fouten of defecten als gevolg van wijziging of reparatie door "
-"iemand anders dan ons.\n"
-"- Deuken, krassen en andere voorwaarden om het product dat na verloop van "
-"tijd beschouwd als normale slijtage\n"
-"- Incidentele schade (inclusief maar niet beperkt tot: schokken, stoten, "
-"vallen, water- of zandschade)\n"
-"- Niet tevreden met het product"
-
-#: display/conditions_of_use.php:136
-msgid ""
-"IN NO EVENT SHALL CHATANDVISION BE LIABLE FOR SPECIAL, INDIRECT, EXEMPLARY, "
-"OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER, INCLUDING BUT NOT "
-"LIMITED TO, LOSS OF USE, DATA, OR PROFITS, WITHOUT REGARD TO THE FORM OF ANY "
-"ACTION, INCLUDING BUT NOT LIMITED TO CONTRACT, NEGLIGENCE, OR OTHER TORTIOUS "
-"ACTIONS, ALL ARISING OUT OF OR IN CONNECTION WITH THE USE, COPYING, OR "
-"DISPLAY OF THE CONTENTS OF THIS SITE. In an effort to provide our customers "
-"with the most current information, ChatandVision will, from time to time, "
-"make changes in the Contents and in the products or services described on "
-"this Site. "
-msgstr ""
-"IN GEEN GEVAL ZAL CHATANDVISION AANSPRAKELIJK ZIJN VOOR SPECIALE, INDIRECTE, "
-"MORELE OF GEVOLGSCHADE OF ENIGE ANDERE SCHADE, INCLUSIEF MAAR NIET BEPERKT "
-"TOT: VERLIES VAN GEBRUIK, GEGEVENS OF WINST, ONGEACHT DE VORM VAN DE ACTIE, "
-"INCLUSIEF MAAR NIET BEPERKT TO cONTRACT, NALATIGHEID OF ANDERE ONRECHTMATIGE "
-"ACTIES, ALLE ALS GEVOLG VAN OF IN VERBAND MET HET GEBRUIK, KOPIËREN OF "
-"WEERGEVEN VAN DE INHOUD VAN DEZE WEBPAGINA. In een poging om onze klanten te "
-"voorzien van de meest actuele informatie, zal ChatandVision van tijd tot "
-"tijd wijzigingen aanbrengen in de inhoud, de producten of beschreven "
-"diensten op deze webpagina."
-
-#: display/conditions_of_use.php:138
-msgid ""
-"ChatandVision (HK) Limited does not accept liability for any loss caused by "
-"delay in the delivery of products ordered."
-msgstr ""
-"ChatandVision (HK) Limited is niet aansprakelijk voor eventuele schade "
-"veroorzaakt door vertraging in de levering van bestelde producten."
-
-#: display/conditions_of_use.php:144
-msgid "In using this Site you agree to the following:"
-msgstr "Met het gebruik van deze webpagina gaat u akkoord met het volgende:"
-
-#: display/conditions_of_use.php:147
-msgid ""
-"You will not use any device, software, or other instrumentality to disrupt, "
-"damage or interfere with or attempt to disrupt, damage or interfere with the "
-"proper functioning of this site;"
-msgstr ""
-"U zult geen apparaat, software of andere instrument gebruiken voor het "
-"verstoren, beschadigen, proberen te verstoren of interfereren van de "
-"functionaliteit van deze webpagina;"
-
-#: display/conditions_of_use.php:148
-msgid ""
-"You will not to violate or attempt to violate the security of this Site, "
-"including, without limitation,"
-msgstr ""
-"U zult de veiligheid van deze webpagina niet schenden of proberen te "
-"schenden, waaronder, maar niet beperkt tot:"
-
-#: display/conditions_of_use.php:150
-msgid "logging onto an account which you are not authorized to access;"
-msgstr ""
-"I.\tHet aanmelden op een account waarvan u niet bevoegd bent om toegang te "
-"krijgen;"
-
-#: display/conditions_of_use.php:151
-msgid ""
-"attempting to interfere with service to any user, host or network, "
-"including, without limitation, via means of submitting a virus to the Site, "
-"overloading, flooding, spamming, mail bombing or crashing; or"
-msgstr ""
-"II.\tHet proberen te bemoeien met service naar gebruikers, host of netwerk, "
-"inclusief, maar niet beperkt tot, middels het indienen van een virus op de "
-"webpagina, overbelasting, flooding, spamming, mail bombing of crashen; of"
-
-#: display/conditions_of_use.php:152
-msgid ""
-"attempt to transmit any virus, Trojan horse or other software destruction or "
-"disruption device; and"
-msgstr ""
-"III.\tHet proberen om een virus, Trojaanse paard, andere "
-"softwarevernietiging of verstoring van het apparaat te verzenden; en"
-
-#: display/conditions_of_use.php:155
-msgid ""
-"You will not intentionally or unintentionally violate any applicable "
-"international, federal, state or local law, including but not limited to any "
-"regulations applicable to your use of this Site. "
-msgstr ""
-"U zal niet opzettelijk of onopzettelijk schenden van de toepasselijke "
-"internationale, federale, provinciale of lokale wetgeving, met inbegrip van, "
-"maar niet beperkt tot, regelgeving die van toepassing zijn op uw gebruik van "
-"deze webpagina."
-
-#: display/conditions_of_use.php:160
-msgid ""
-"ChatandVision (HK) Limited may revise these conditions of use by updating "
-"this posting. You agree that in the event any portion of these Site "
-"conditions of use is found to be unenforceable, the remainder of these Site "
-"conditions shall remain in full force and effect. By using this Site you "
-"agree to be bound by any such revisions and should therefore periodically "
-"visit this page to determine the current conditions of use to which you are "
-"bound."
-msgstr ""
-"ChatandVision (HK) Limited kan deze gebruiksvoorwaarden herzien door deze "
-"voorwaarden. U stemt ermee in dat in het geval een deel van deze webpagina’s "
-"gebruiksvoorwaarden onuitvoerbaar zijn, zal de rest van deze webpagina’s "
-"voorwaarden volledig van kracht blijven. Door het gebruik van deze webpagina "
-"gaat u akkoord gebonden te zijn aan dergelijke herzieningen en moet derhalve "
-"regelmatig deze pagina bezoeken om de huidige voorwaarden voor het gebruik "
-"waaraan u gebonden bent vast te stellen."
-
-#: display/conditions_of_use.php:165
-msgid "Methods of Payment"
-msgstr "Betaalmethoden"
-
-#: display/conditions_of_use.php:167
-msgid ""
-"A variety of payment methods are offered on the Site for the convenience of "
-"customers. You agree to pay all fees incurred in connection with your "
-"purchases at the rates in effect when the charges were incurred. If you pay "
-"by credit card, your card issuer agreement governs your use of your card, "
-"and you must refer to that agreement and not these Terms of Use to determine "
-"your rights and liabilities as a cardholder. YOU, AND NOT DigitalDiscount.co."
-"uk (DigitalDiscount), ARE RESPONSIBLE FOR PAYING ANY UNAUTHORIZED AMOUNTS "
-"BILLED TO YOUR CREDIT CARD BY A THIRD PARTY."
-msgstr ""
-"Een verscheidenheid aan betaalmethoden worden aangeboden op de webpagina "
-"voor het gemak van de klanten. U stemt ermee in om alle kosten gemaakt zijn "
-"in verband met uw aankopen te betalen, wanneer de kosten worden gemaakt. "
-"Wanneer u betaalt met een creditcard, geldt de overeenkomst met uw "
-"kaartuitgever op het gebruik van uw kaart. U moet verwijzen naar deze "
-"overeenkomst en niet deze Gebruiksvoorwaarden om uw rechten en "
-"verplichtingen als een kaarthouder te bepalen. U, en niet 9digital.nl, BENT "
-"VERANTWOORDELIJK VOOR HET BETALEN VAN ONBEVOEGDE GEFACTUREERDE BEDRAGEN DOOR "
-"EEN DERDE OP UW CREDITCARD."
-
-#: display/conditions_of_use.php:170
-msgid "Payment Fees and Charges"
-msgstr "Betalingsvergoedingen en heffingen"
-
-#: display/conditions_of_use.php:172
-msgid ""
-"You agree to pay all fees and charges incurred in connection with your "
-"purchases at the rates in effect when the charges were incurred. Unless you "
-"notify DigitalDiscount of any discrepancies within sixty (60) days after "
-"they first appear on your credit card statement, you agree that they will be "
-"deemed accepted by you in all respects and for all purposes. If "
-"DigitalDiscount does not receive payment from your credit card issuer or its "
-"agent, you agree to pay all amounts due upon demand by DigitalDiscount or "
-"its agents."
-msgstr ""
-"U stemt ermee in om alle vergoedingen en kosten, gemaakt in verband met uw "
-"aankopen, te betalen wanneer de kosten worden gemaakt. Tenzij u 9digital.nl "
-"de eventuele afwijkingen meldt binnen zestig (60) dagen nadat ze voor het "
-"eerst verschijnen op uw credit card statement, gaat u ermee akkoord dat zij "
-"geacht door u wordt geaccepteerd in alle opzichten en voor alle doeleinden. "
-"Als 9digital.nl geen betaling heeft ontvangen van uw creditcardmaatschappij "
-"of haar gemachtigde, gaat u ermee akkoord om alle verschuldigde bedragen op "
-"aanvraag aan 9digital of haar agenten te betalen."
-
-#: display/conditions_of_use.php:175
-msgid "Updated: July 09, 2015 "
-msgstr "Bijgewerkt: 9 juli 2015"
-
 #: display/contact.php:8
 msgid ""
 "Having an issue? There are a number of ways you can get in touch with our "
@@ -1365,7 +749,7 @@ msgstr ""
 "Kunt u nog steeds het antwoord niet vinden? Ga dan naar %s Contacteer ons "
 "%s ! Bedankt."
 
-#: display/privacy_policy.php:2 footer.php:277
+#: display/privacy_policy.php:2 footer.php:276
 msgid "Privacy Policy"
 msgstr "Privacybeleid"
 
@@ -1373,6 +757,10 @@ msgstr "Privacybeleid"
 #, php-format
 msgid "%s Privacy Policy"
 msgstr "%s Privacybeleid"
+
+#: display/privacy_policy.php:6
+msgid "CONTENTS"
+msgstr "INHOUD"
 
 #: display/privacy_policy.php:9 display/privacy_policy.php:24
 msgid "WHY WE COLLECT"
@@ -1385,6 +773,10 @@ msgstr "WAT VERZAMELEN WE"
 #: display/privacy_policy.php:11 display/privacy_policy.php:42
 msgid "WHAT WE DO WITH THE INFORMATION WE GATHER"
 msgstr "WAT DOEN WE MET DE INFORMATIE DIE WIJ VERZAMELEN"
+
+#: display/privacy_policy.php:12 display/privacy_policy.php:54
+msgid "SECURITY"
+msgstr "BEVEILIGING"
 
 #: display/privacy_policy.php:13 display/privacy_policy.php:67
 msgid "HOW WE USE COOKIES"
@@ -1804,121 +1196,121 @@ msgstr "Betaal met Vertrouwen"
 msgid " SHOP WITH CONFIDENCE "
 msgstr "Winkel met Vertrouwen"
 
-#: footer.php:160
+#: footer.php:158
 msgid "About Us"
 msgstr " Over ons"
 
-#: footer.php:163
+#: footer.php:161
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr "%s is trots op besparende deals zonder in te leveren op service! "
 
-#: footer.php:163
+#: footer.php:161
 msgid "Feel free to contact us anytime for more information"
 msgstr "Mocht u nog vragen hebben, neem dan contact op met ons."
 
-#: footer.php:171 footer.php:183
+#: footer.php:169 footer.php:181
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr "Schrijf in om onze laatste nieuws en akties regelmatig te krijgen."
 
-#: footer.php:182
+#: footer.php:180
 msgid "Sign up for Newsletter"
 msgstr "Aanmelden voor Nieuwsbrief"
 
-#: footer.php:187
+#: footer.php:185
 msgid "Enter you email address"
 msgstr "Vul uw e-mailadres in"
 
-#: footer.php:197
+#: footer.php:195
 msgid "Subscribe"
 msgstr "Inschrijven"
 
-#: footer.php:201
+#: footer.php:199
 msgid "indicates required"
 msgstr "verplichte velden"
 
-#: footer.php:216
+#: footer.php:214
 msgid "100% Secure "
 msgstr "100% veilig"
 
-#: footer.php:216
+#: footer.php:214
 msgid "with SSL encryption"
 msgstr "met SSL Encryptie"
 
-#: footer.php:224
+#: footer.php:222
 msgid "Free Delivery"
 msgstr "Gratis Bezorging"
 
-#: footer.php:224
+#: footer.php:222
 msgid "For All Orders*"
 msgstr "Voor alle bestellingen*"
 
-#: footer.php:224
+#: footer.php:222
 msgid "Shipping:"
 msgstr "Verzenden:"
 
-#: footer.php:224
+#: footer.php:222
 msgid "3-5 Working Days"
 msgstr "3-5 Werkdagen"
 
-#: footer.php:244 header.php:147
+#: footer.php:242 header.php:147
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s dagen geld terug garantie"
 
-#: footer.php:260
+#: footer.php:259
 msgid "Warranty "
 msgstr "Garantie"
 
-#: footer.php:260
+#: footer.php:259
 msgid "Up to 2 Years"
 msgstr "Tot 2 jaar"
 
-#: footer.php:272
+#: footer.php:271
 msgid "2015 All Right reserved"
 msgstr "2015 All Right reserved"
 
-#: footer.php:273
+#: footer.php:272
 msgid "Conditions of Use"
 msgstr "Gebruiksvoorwaarden"
 
-#: footer.php:274
+#: footer.php:273
 msgid "Shipping Policy"
 msgstr "Leveringsbeleid"
 
-#: footer.php:275
+#: footer.php:274
 msgid "Return and Refund Policy"
 msgstr "Retournerings- & restitutiebeleid"
 
-#: footer.php:276
+#: footer.php:275
 msgid "Billing Terms and Conditions"
 msgstr "Algemene Factureringsvoorwaarde"
 
-#: footer.php:282
+#: footer.php:281
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "SELECTEER LAND"
 
-#: footer.php:285
+#: footer.php:284
 msgid "Australia"
 msgstr "Australië"
 
-#: footer.php:286
+#: footer.php:285
 msgid "Belgium"
 msgstr "België"
 
-#: footer.php:287
+#: footer.php:286
 msgid "Finland"
 msgstr "Finland"
 
-#: footer.php:288
+#: footer.php:287
 msgid "France"
 msgstr "Frankrijk"
 
-#: footer.php:289
+#: footer.php:288
 msgid "Great Britain"
 msgstr "Groot-Brittannië"
 
-#: footer.php:290
+#: footer.php:289
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
@@ -2424,51 +1816,55 @@ msgstr "%s review(s)"
 msgid "Write a review"
 msgstr "Schrijf een review"
 
-#: product/detail.php:84
+#: product/detail.php:75
+msgid "Month Warranty"
+msgstr "maanden garantie"
+
+#: product/detail.php:86
 msgid "Availability"
 msgstr "Beschikbaarheid"
 
-#: product/detail.php:88 product/detail.php:94
+#: product/detail.php:90 product/detail.php:96
 msgid " In Stock"
 msgstr "Op voorraad"
 
-#: product/detail.php:90
+#: product/detail.php:92
 msgid "Out of Stock"
 msgstr "Niet op voorraad"
 
-#: product/detail.php:92
+#: product/detail.php:94
 msgid "Pre Order"
 msgstr "Pre-order"
 
-#: product/detail.php:103
+#: product/detail.php:105
 msgid "Qty:"
 msgstr "Aantal:"
 
-#: product/detail.php:128 product/detail.php:129
+#: product/detail.php:130 product/detail.php:131
 msgid "Ships in"
 msgstr "Verzonden in"
 
-#: product/detail.php:128 product/detail.php:129
+#: product/detail.php:130 product/detail.php:131
 msgid "working days"
 msgstr "werkdagen"
 
-#: product/detail.php:128
+#: product/detail.php:130
 msgid "and"
 msgstr "en"
 
-#: product/detail.php:128
+#: product/detail.php:130
 msgid "delivered in"
 msgstr "geleverd in"
 
-#: product/detail.php:164
+#: product/detail.php:166
 msgid "Specification"
 msgstr "Specificatie"
 
-#: product/detail.php:165
+#: product/detail.php:167
 msgid "Overview"
 msgstr "Overzicht"
 
-#: product/detail.php:167
+#: product/detail.php:169
 msgid "In the box"
 msgstr "In de doos"
 
@@ -2480,39 +1876,67 @@ msgstr "Gerelateerde Producten"
 msgid "Shopping Cart"
 msgstr "Winkelwagen"
 
-#: review.php:11
+#: review.php:18
 msgid "Image"
 msgstr "Afbeelding"
 
-#: review.php:12
+#: review.php:19
 msgid "Product Name"
 msgstr "Productnaam"
 
-#: review.php:13
+#: review.php:20
 msgid "Quantity"
 msgstr "Aantal"
 
-#: review.php:14
+#: review.php:21
 msgid "Unit Price"
 msgstr "Stukprijs"
 
-#: review.php:30
+#: review.php:40
 msgid "Update"
 msgstr "Verversen"
 
-#: review.php:31
+#: review.php:41
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: review.php:48
+#: review.php:59
+msgid "Promo code"
+msgstr "Promotiecode"
+
+#: review.php:62
+msgid "Enter your promo code"
+msgstr "Voer uw promotiecode in"
+
+#: review.php:67
+msgid "Remove / Edit Code"
+msgstr "Verwijder / bewerk code"
+
+#: review.php:71
+msgid "Apply Code"
+msgstr "Code toepassen"
+
+#: review.php:76
+msgid ""
+"Sorry, Promotion Code Invalid. Please check if the conditions and/or minimum "
+"order amount have been met."
+msgstr ""
+"Sorry, de ingevoerde promotiecode is niet geldig. Controleer of u voldoet "
+"aan de voorwaarden en/of het totaal bedrag."
+
+#: review.php:87
 msgid "Subtotal"
 msgstr "Subtotaal"
 
-#: review.php:52
+#: review.php:91
 msgid "Shipping"
 msgstr "Verzending"
 
-#: review.php:64 reviewEmptyCart.php:7
+#: review.php:96
+msgid "Promotion Discount"
+msgstr "Promotie korting"
+
+#: review.php:109 reviewEmptyCart.php:7
 msgid "Continue Shopping"
 msgstr "Veder winkelen"
 
@@ -2533,6 +1957,569 @@ msgstr "Zoekresultaten voor \"%s\""
 #: search.php:162
 msgid "Display"
 msgstr "Producten per pagina"
+
+#~ msgid "Term and Conditions"
+#~ msgstr "Algemene voorwaarden"
+
+#~ msgid "DigitalDiscount.co.uk Conditions of Use and Sale"
+#~ msgstr "Voorwaarden van het gebruik en verkoop bij 9digital.nl"
+
+#~ msgid "CONDITIONS OF USE"
+#~ msgstr "GEBRUIKSVOORWAARDEN"
+
+#~ msgid "SITE CONTENTS, OWNERSHIP, AND USE RESTRICTIONS"
+#~ msgstr "WEBSITE INHOUD, EIGENDOMSRECHT EN GEBRUIKSBEPERKINGEN"
+
+#~ msgid "PLACING AN ORDER"
+#~ msgstr "EEN BESTELLING PLAATSEN"
+
+#~ msgid "TAX AND DUTIES"
+#~ msgstr "BELASTINGEN EN HEFFINGEN "
+
+#~ msgid "DELIVERY"
+#~ msgstr "LEVERING"
+
+#~ msgid "CANCELLING YOUR ORDER"
+#~ msgstr "ANNULERING VAN UW ORDER"
+
+#~ msgid "DEFECTIVE ITEM"
+#~ msgstr "DEFECTE PRODUCTEN"
+
+#~ msgid "PRODUCT WARRANTIES"
+#~ msgstr "PRODUCTGARANTIE"
+
+#~ msgid "DISCLAIMER OF LIABILITY"
+#~ msgstr "VRIJWARINGSVERKLARING VAN GARANTIE"
+
+#~ msgid "CONDITIONS OF USE REVISIONS"
+#~ msgstr "HERZIENINGCONDITIES"
+
+#~ msgid "BILLING TERMS AND CONDITIONS"
+#~ msgstr "FACTURERINGSVOORWAARDEN"
+
+#~ msgid ""
+#~ "DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
+#~ "ChatandVision (HK) Limited. By visiting or shopping at the "
+#~ "DigitalDiscount website, you agree to accept and be bound by these "
+#~ "conditions of use, as well as any other policies posted on the website, "
+#~ "as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS "
+#~ "THEN PLEASE DO NOT USE THE SITE."
+#~ msgstr ""
+#~ "9digital.nl is volledig eigendom van en wordt geëxploiteerd door "
+#~ "ChatandVision (HK) Limited. Door het bezoeken of winkelen bij 9digital.nl "
+#~ "website, gaat u er mee accoord met deze gebruikersvoorwaarden, mede ook "
+#~ "de overige beleid die staan omschreven op deze website die van tijd tot "
+#~ "tijd aangepast worden. MAAK GEEN GEBRUIK VAN DEZE WEBSITE, ALS U NIET "
+#~ "ACCOORRD GAAT MET DEZE GEBRUIKSVOORWAARDEN."
+
+#~ msgid ""
+#~ "DigitalDiscount is a trading name with registered offices in: <br><br> "
+#~ "Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place "
+#~ "Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br>Through its websites, ChatandVision (HK) Limited offers "
+#~ "consumer electronics hardware, and services."
+#~ msgstr ""
+#~ "9digital.nl is een handelsnaam met geregistreerde kantoren in: <br><br> "
+#~ "Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place "
+#~ "Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br>Through deze website, offreert ChatandVision (HK) "
+#~ "Limited consumenten electronica hardware en services."
+
+#~ msgid ""
+#~ "If you have any queries relating to our terms and conditions, please "
+#~ "contact the Customer Support team or read our FAQ."
+#~ msgstr ""
+#~ "Als u vragen hebt met betrekking tot onze algemene voorwaarden, neem dan "
+#~ "contact op met het Customer Support team of lees onze FAQ."
+
+#~ msgid ""
+#~ "The information contained in this Site including all images, "
+#~ "illustrations, designs, photographs, video clips, writings and other "
+#~ "materials that appear herein are copyrights, trademarks, trade dress or "
+#~ "other intellectual property owned, controlled, or licensed (all of which, "
+#~ "collectively, are herein referred to as the \"Contents\") by "
+#~ "ChatandVision (HK) Limited or its subsidiaries and affiliates "
+#~ "(\"ChatandVision\") or are the property of their respective owners. The "
+#~ "name ChatandVision and the ChatandVision logo are registered marks of "
+#~ "ChatandVision. "
+#~ msgstr ""
+#~ "De informatie op deze website met inbegrip van alle foto's, illustraties, "
+#~ "afbeeldingen, videoclips, geschriften en andere materialen die hierin "
+#~ "worden vermeld op zijn auteursrechten, merken, handelsnamen jurk of "
+#~ "andere intellectuele eigendomsrechten in eigendom, beheer of in licentie "
+#~ "(die allemaal hierin zal worden aangeduid als \"Inhoud\") door "
+#~ "ChatandVision (HK) Limited of haar dochterondernemingen en filialen "
+#~ "( \"ChatandVision\") of zijn het eigendom van hun betreffende eigenaar. "
+#~ "De naam ChatandVision en ChatandVision logo zijn geregistreerde "
+#~ "handelsmerken van ChatandVision."
+
+#~ msgid ""
+#~ "Permission is granted to display, copy, distribute, download, and print "
+#~ "in hard copy portions of this Site for the purposes of: "
+#~ msgstr ""
+#~ "Het is toegestaan om delen van deze webpagina te laten zien, kopiëren, "
+#~ "distribueren, downloaden en af te drukken in hard copy voor de volgende "
+#~ "doeleinden:"
+
+#~ msgid "placing an order with DigitalDiscount.co.uk or"
+#~ msgstr "het plaatsen van een bestelling bij 9digital.nl of"
+
+#~ msgid ""
+#~ "using this Site as a shopping resource, provided you do not modify the "
+#~ "Site and that you retain all copyright and other proprietary notices "
+#~ "contained in the Contents."
+#~ msgstr ""
+#~ "het gebruiken van deze webpagina als een winkelbron, op de voorwaarde dat "
+#~ "u niets van de webpagina aanpast en dat u zich houdt aan alle "
+#~ "auteursrechten en andere eigendomsrechten in de inhoud."
+
+#~ msgid ""
+#~ "Except in connection with shopping or placing an order, none of the "
+#~ "Contents may be copied, reproduced, distributed, re-published, "
+#~ "downloaded, displayed, posted electronically or mechanically, "
+#~ "transmitted, recorded, in any manner mirrored, photocopied, or reproduced "
+#~ "without the prior written permission of ChatandVision or the applicable "
+#~ "copyright owner. "
+#~ msgstr ""
+#~ "Behalve in verband met winkelen of het plaatsen van een order, kan geen "
+#~ "van de inhoud worden gekopieerd, gereproduceerd, gedistribueerd, opnieuw "
+#~ "gepubliceerd, gedownload, weergegeven, gepost elektronisch gepost of "
+#~ "mechanisch, overgebracht, geregistreerd, op welke wijze gespiegeld, "
+#~ "gefotokopieerd of gereproduceerd worden zonder de voorafgaande "
+#~ "schriftelijke toestemming van ChatandVision of de betreffende eigenaar "
+#~ "van het auteursrecht."
+
+#~ msgid ""
+#~ "Please note that the permission granted herein terminates automatically "
+#~ "if you breach any of these Site terms or conditions. Any other use of the "
+#~ "Contents on this Site including reproduction for purposes other than as "
+#~ "noted above, and including any reproduction, modification, distribution, "
+#~ "or republication may violate copyright or trademark laws, and, without "
+#~ "the prior written permission of ChatandVision, is strictly prohibited."
+#~ msgstr ""
+#~ "Houdt u er rekening mee dat de hierin verleende toestemming automatisch "
+#~ "eindigt als u inbreuk maakt op een van deze webpagina’s regels of "
+#~ "voorwaarden. Elk ander gebruik van de inhoud van deze webpagina met "
+#~ "inbegrip van de reproductie voor andere doeleinden dan zoals hierboven "
+#~ "vermeld en met inbegrip van elke reproductie, aanpassing, distributie of "
+#~ "herpublicatie die de auteursrecht of merkenrecht kans schaden en zonder "
+#~ "de voorafgaande schriftelijke toestemming van ChatandVision doeleinden, "
+#~ "is ten strengste verboden ."
+
+#~ msgid ""
+#~ "If you choose to leave this Site via links to other non-ChatandVision "
+#~ "operated sites, ChatandVision is not responsible for the privacy policies "
+#~ "of those sites or the cookies those sites use."
+#~ msgstr ""
+#~ "Als u ervoor kiest om deze webpagina te verlaten via de links naar andere "
+#~ "niet-ChatandVision webpagina’s, is ChatandVision niet verantwoordelijk "
+#~ "voor het privacybeleid van desbetreffende webpagina of de cookies die "
+#~ "deze paginas gebruikt worden."
+
+#~ msgid ""
+#~ "The prices advertised on this Site are for Internet orders. Prices and "
+#~ "the availability of items are subject to change without notice. Any "
+#~ "recommended retail prices used on this Site are based on manufacturers’ "
+#~ "suggested retail prices and may not be indicative of the actual selling "
+#~ "prices in your area."
+#~ msgstr ""
+#~ "De geadverteerde prijzen op deze webpagina zijn voor de internet orders. "
+#~ "De prijzen en de beschikbaarheid van items zijn onderhevig aan "
+#~ "verandering zonder kennisgeving. Alle gebruikte adviesprijzen op deze "
+#~ "webpagina zijn gebaseerd op de adviesprijzen van fabrikanten en hoeven "
+#~ "niet indicatief voor de werkelijke verkoopprijzen in uw omgeving te zijn."
+
+#~ msgid ""
+#~ "Any reference to savings used on this Site indicates the promotional "
+#~ "savings off the recommended retail price and the actual savings will vary "
+#~ "depending upon the goods purchased and the date of the transaction."
+#~ msgstr ""
+#~ "Elke verwijzing naar besparingen gebruikt op deze webpagina geeft aan dat "
+#~ "de promotie-besparingen uit de adviesprijs en de daadwerkelijke "
+#~ "besparingen zullen variëren afhankelijk van de gekochte goederen en de "
+#~ "datum van de transactie."
+
+#~ msgid ""
+#~ "Please check carefully that all information given is accurate and "
+#~ "complete when placing an order."
+#~ msgstr ""
+#~ "Gelieve zorgvuldig te controleren of alle verstrekte informatie juist en "
+#~ "volledig is bij het plaatsen van een bestelling."
+
+#~ msgid ""
+#~ "Payment for all orders must be made in advance by credit or debit card. "
+#~ "We accept payment from most major credit and debit cards as well as "
+#~ "PayPal and Skrill (formerly known as MoneyBookers). "
+#~ msgstr ""
+#~ "Betaling voor alle bestellingen moeten vooraf worden voldaan met een "
+#~ "creditcard of bankpas. Wij accepteren betaling van de meeste grote credit "
+#~ "en debit kaarten en ook PayPal en Skrill (voorheen Moneybookers)."
+
+#~ msgid ""
+#~ "While we make every effort to provide accurate information, technical "
+#~ "inaccuracies or typographic or photographic errors may occur. We reserve "
+#~ "the right to make changes, corrections, and/or improvements to the "
+#~ "information contained on this Site at any time without notice."
+#~ msgstr ""
+#~ "Hoewel we er alles aan doen om accurate informatie te verstrekken, kunnen "
+#~ "technische onjuistheden en typografische of fotografische fouten "
+#~ "optreden. Wij behouden ons het recht voor om ten allen tijde informatie "
+#~ "op deze webpagina te wijzigingen, corrigeren en/of verbeteren zonder "
+#~ "voorafgaande kennisgeving."
+
+#~ msgid ""
+#~ "There may be certain orders that we are either unable to accept or must "
+#~ "cancel. We reserve the right, at our sole discretion, to refuse or cancel "
+#~ "any order for any reason. Possible circumstances involving cancellation "
+#~ "of orders may be limitations on quantities available for purchases or "
+#~ "inaccuracies or errors in product or pricing information."
+#~ msgstr ""
+#~ "Er kunnen bepaalde opdrachten zijn die we niet in staat zijn te "
+#~ "accepteren of deze te moeten annuleren. Wij behouden ons het recht voor "
+#~ "om naar eigen goeddunken, te weigeren of een bestelling om welke reden te "
+#~ "annuleren. Mogelijke omstandigheden met betrekking tot de annulering van "
+#~ "orders kunnen beperkingen op de hoeveelheden beschikbaar voor de aankoop "
+#~ "of onjuistheden of fouten in product- of prijsinformatie zijn."
+
+#~ msgid ""
+#~ "When you place an order to purchase a product from DigitalDiscount.co.uk, "
+#~ "we will send you an e-mail confirming receipt of your order and "
+#~ "containing the details of your order. Your order represents an offer to "
+#~ "us to purchase a product which is accepted by us when we send e-mail "
+#~ "confirmation to you that we've dispatched that product to you (the "
+#~ "\"Dispatch Confirmation E-mail\"). That acceptance will be complete at "
+#~ "the time we send the Dispatch Confirmation E-mail to you. Any products on "
+#~ "the same order which we have not confirmed in a Dispatch Confirmation E-"
+#~ "mail to have been dispatched do not form part of that contract."
+#~ msgstr ""
+#~ "Wanneer u een order plaatst om een product uit 9digital.nl aan te "
+#~ "schaffen, sturen wij u een e-mail te ter bevestiging voor het ontvangst "
+#~ "van uw bestelling met de gegevens van uw bestelling. Uw opdracht "
+#~ "vertegenwoordigt een aanbod aan ons om een product aan te schaffen, dat "
+#~ "door ons wordt geaccepteerd wanneer we een e-mail naar u sturen ter "
+#~ "bevestiging we dat product hebben verzonden (de \"Verzend bevestigings e-"
+#~ "mail\"). Die acceptatie zal worden voltooid op het moment dat we de "
+#~ "Verzend bevestigings e-mail sturen naar u. Alle producten op dezelfde "
+#~ "order die we niet hebben bevestigd in een Verzend bevestigings e-mail "
+#~ "verzonden te hebben, vormen geen deel uit dat contract."
+
+#~ msgid ""
+#~ "In using our services, you authorize ChatandVision to make arrangements "
+#~ "for customs clearance for the products ordered. The responsibility for "
+#~ "ensuring that your ordered product can be lawfully imported outside of "
+#~ "Hong Kong to your destination country remains with our customers, and any "
+#~ "applicable import duties and taxes will be subjected to the recipient. We "
+#~ "do not have control over these import duties and taxes. Customs policies "
+#~ "vary widely from country to country, hence if you should have any queries "
+#~ "regarding your local Customs policies, contact your local Customs office "
+#~ "for further information. "
+#~ msgstr ""
+#~ "Bij het gebruik van onze diensten, machtigt u ChatandVision om afspraken "
+#~ "te maken voor de douane-inklaring voor de bestelde producten. De "
+#~ "verantwoordelijkheid om ervoor te zorgen dat uw bestelde product legaal "
+#~ "buiten Hong Kong kunnen worden geïmporteerd naar uw land van bestemming "
+#~ "blijft met onze klanten en eventuele invoerrechten en belastingen zullen "
+#~ "worden onderworpen aan de ontvanger. Wij hebben geen controle over deze "
+#~ "invoerrechten en belastingen hebben. Douane verschillen sterk van land "
+#~ "tot land, dus als u nog vragen zou hebben met betrekking tot uw lokale "
+#~ "douane-beleid, neem dan contact op voor meer informatie met uw lokale "
+#~ "douanekantoor."
+
+#~ msgid ""
+#~ "Where the price of the goods allows, certain shipments to some countries "
+#~ "may include a fee which is borne by ChatandVision, for import of the "
+#~ "goods. This will be noted on your shipment invoice."
+#~ msgstr ""
+#~ "Wanneer de prijs van de goederen het mogelijk maakt, wordt de vergoeding "
+#~ "vab bepaalde transporten naar sommige landen gedragen door ChatandVision, "
+#~ "voor de invoer van de goederen. Dit zal worden vermeld op uw "
+#~ "zendingsfactuur."
+
+#~ msgid ""
+#~ "In the event where customs clearance is required, this will cause delays "
+#~ "to the original delivery estimate."
+#~ msgstr ""
+#~ "In het geval waar de inklaring nodig is, zal deze vertraging bij de "
+#~ "oorspronkelijke levertijdschatting veroorzaken."
+
+#~ msgid ""
+#~ "Goods will be sent to the address given by you in your order. If you are "
+#~ "ordering more than one item, your goods may be sent to you in separate "
+#~ "shipments. There will not be extra delivery charges for these delivery "
+#~ "cases."
+#~ msgstr ""
+#~ "Goederen worden verzonden naar het adres dat u in uw bestelling hebt "
+#~ "opgegeven. Maakt u meer dan één order, dan zullen uw goederen "
+#~ "afzonderlijke verstuurd worden. Er zullen geen extra verzendkosten voor "
+#~ "deze aflevering berekend worden."
+
+#~ msgid ""
+#~ "Your order should not take any more than 7 to 14 working days to arrive, "
+#~ "however, this is not guaranteed and we cannot be held responsible for "
+#~ "events outside of our control. If you have not received your order within "
+#~ "20 working days you should contact our Customer Support team."
+#~ msgstr ""
+#~ "Uw bestelling zal niet langer dan 7 tot 14 werkdagen aankomen, maar dit "
+#~ "is niet gegarandeerd en wij kunnen niet verantwoordelijk  gesteld worden "
+#~ "voor de gebeurtenissen buiten onze controle. Als u uw bestelling binnen "
+#~ "20 werkdagen nog niet hebt ontvangen, dan moet u contact opnemen met onze "
+#~ "klantenservice."
+
+#~ msgid ""
+#~ "The period in which you can exercise the right to cancel an order is 30 "
+#~ "days beginning the day after your goods are received. The cancellation "
+#~ "request has to be received by us in writing - by email, or letter. The "
+#~ "unused goods (including any accessories which were included in the price "
+#~ "of the goods) must be returned at the customer's expense within 30 days "
+#~ "after receipt of parcel and customer is responsible for any damage during "
+#~ "the transit of the returned goods, (it also applies to products purchased "
+#~ "as Christmas presents). We reserve the right to have the goods inspected "
+#~ "by a technician prior to replacement or refund. Please note that software "
+#~ "packages may only be returned unopened. Should you cancel your order "
+#~ "within the cooling off period we will issue you a full refund for the "
+#~ "price you paid for the item(s). Any cancellation made outside the 30 day "
+#~ "\"cooling-off\" period may not be accepted."
+#~ msgstr ""
+#~ "De periode waarin u het recht om een bestelling te annuleren, is binnen "
+#~ "14 dagen nadat u uw goederen hebt ontvangen. Het verzoek tot annulering "
+#~ "moet schriftelijk door ons zijn ontvangen - via e-mail of brief. De "
+#~ "ongebruikte goederen (met inbegrip van alle accessoires die zijn "
+#~ "inbegrepen in de prijs van de goederen) moeten worden geretourneerd op "
+#~ "kosten van de klant binnen 14 dagen na ontvangst van het pakket en de "
+#~ "klant is verantwoordelijk voor eventuele schade tijdens de doorvoer van "
+#~ "de geretourneerde goederen (is ook van toepassing bij producten "
+#~ "aangeschaft als kerstcadeaus). Wij behouden ons het recht om de goederen "
+#~ "te laten inpecteren door een technicus voorafgaand aan een vervanging of "
+#~ "terugbetaling. Houd er rekening mee dat de software pakketten alleen "
+#~ "ongeopend geretourneerd kunnen worden. Mocht u uw bestelling annuleren "
+#~ "binnen de afkoelingsperiode, dan zullen wij u een volledige terugbetaling "
+#~ "geven voor de prijs die u betaald hebt voor de producten. Als de "
+#~ "annulering plaatsvindt buiten de 14 dagen \"afkoelingsperiode\", dan kan "
+#~ "deze niet worden aanvaard."
+
+#~ msgid ""
+#~ "In the unlikely event your order is damaged in transit please contact us "
+#~ "immediately. Please send the product back to us in the original packaging "
+#~ "and a valid RMA (Return Merchandise Authorization) form. We will arrange "
+#~ "for a prompt replacement or refund, whichever is your preference. Please "
+#~ "note that we are unable to offer a refund if you notify us about the "
+#~ "damaged goods after more than 30 days starting the day after receipt of "
+#~ "goods."
+#~ msgstr ""
+#~ "In het onwaarschijnlijke geval dat uw bestelling is beschadigd tijdens "
+#~ "het transport neem dan onmiddellijk contact op met ons. Stuur het product "
+#~ "terug naar ons in de originele verpakking en een geldig RMA-formulier "
+#~ "(Return Merchandise Authorization). Wij zorgen voor een snelle vervanging "
+#~ "of terugbetaling, afhankelijk van wat uw voorkeur is. Houd er rekening "
+#~ "mee dat we niet in staat zijn om een terugbetaling te bieden als u ons "
+#~ "informeert over de beschadigde goederen na meer dan 6 dagen op de dag na "
+#~ "ontvangst van de goederen."
+
+#~ msgid ""
+#~ "During the RMA process, ChatandVision (HK) Limited will follow up with "
+#~ "you via email on issues requiring your clarification and agreement, using "
+#~ "the trading name DigitalDiscount. If no response is received from you "
+#~ "within 7 days from the date of emailing, ChatandVision will follow up "
+#~ "with a kind reminder in the form of a 1st and 2nd email at 7 day "
+#~ "intervals. In the event no response is received within 7 days of the 2nd "
+#~ "email being sent, ChatandVision will send a 3rd and final reminder email "
+#~ "together with a recorded letter. Should no response be received within 2 "
+#~ "weeks from date of final reminders, ChatandVision reserves the right to "
+#~ "dispose of the RMA item(s) at its discretion in any way seen fit."
+#~ msgstr ""
+#~ "Tijdens het RMA proces zal ChatandVision (HK) Limited contact met u "
+#~ "opnemen via e-mail, op kwesties die uw opheldering en akkoord nodig "
+#~ "heeft, met de handelsnaam 9digital.nl. Als er geen reactie is ontvangen "
+#~ "van u binnen 7 dagen na het e-mailen, zal ChatandVision een herinnering "
+#~ "in de vorm van een 1e en 2e e-mail op 7 dagen intervallen. In het geval "
+#~ "er geen antwoord wordt ontvangen binnen 7 dagen na de 2 e-mail wordt "
+#~ "verzonden, zal ChatandVision een 3e en laatste herinnering e-mailen samen "
+#~ "met een aangetekende brief. Indien er geen antwoord ontvangen binnen 2 "
+#~ "weken na datum van de laatste herinneringen, behoudt ChatandVision zich "
+#~ "het recht te beschikken over de RMA-producten naar eigen inzicht."
+
+#~ msgid ""
+#~ "All products, unless otherwise stated in the product listing, are "
+#~ "supplied with an in-house warranty where our facilities are able to "
+#~ "process all returns for a quick and efficient all-round service. The "
+#~ "warranty period may vary for different product categories. The table "
+#~ "below sets out the applicable warranty period commencing from the date of "
+#~ "receipt for the Product."
+#~ msgstr ""
+#~ "Alle producten, tenzij anders vermeld in het productenlijst, worden "
+#~ "geleverd met een in-house garantie waar onze faciliteiten in staat zijn "
+#~ "om alle rendementen voor een snelle en efficiënte all-round service te "
+#~ "verwerken. De garantieperiode kan variëren voor verschillende "
+#~ "productcategorieën. De onderstaande tabel geeft de garantieperiode vanaf "
+#~ "de datum van ontvangst van het product."
+
+#~ msgid ""
+#~ "This warranty does not cover:\n"
+#~ "                                - Damage, fault or failure due to "
+#~ "alteration or repairs made by anyone other than us\n"
+#~ "                                - Dents, scratches, and other conditions "
+#~ "to the product that occur over time considered as normal wear and tear\n"
+#~ "                                - Accidental damage (including but not "
+#~ "limited to shock, impact, dropping, water damage or sand damage)\n"
+#~ "                                - Not satisfied with the product\n"
+#~ "                            "
+#~ msgstr ""
+#~ "Deze garantie geldt niet voor:\n"
+#~ "- Schade, fouten of defecten als gevolg van wijziging of reparatie door "
+#~ "iemand anders dan ons.\n"
+#~ "- Deuken, krassen en andere voorwaarden om het product dat na verloop van "
+#~ "tijd beschouwd als normale slijtage\n"
+#~ "- Incidentele schade (inclusief maar niet beperkt tot: schokken, stoten, "
+#~ "vallen, water- of zandschade)\n"
+#~ "- Niet tevreden met het product"
+
+#~ msgid ""
+#~ "IN NO EVENT SHALL CHATANDVISION BE LIABLE FOR SPECIAL, INDIRECT, "
+#~ "EXEMPLARY, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER, INCLUDING "
+#~ "BUT NOT LIMITED TO, LOSS OF USE, DATA, OR PROFITS, WITHOUT REGARD TO THE "
+#~ "FORM OF ANY ACTION, INCLUDING BUT NOT LIMITED TO CONTRACT, NEGLIGENCE, OR "
+#~ "OTHER TORTIOUS ACTIONS, ALL ARISING OUT OF OR IN CONNECTION WITH THE USE, "
+#~ "COPYING, OR DISPLAY OF THE CONTENTS OF THIS SITE. In an effort to provide "
+#~ "our customers with the most current information, ChatandVision will, from "
+#~ "time to time, make changes in the Contents and in the products or "
+#~ "services described on this Site. "
+#~ msgstr ""
+#~ "IN GEEN GEVAL ZAL CHATANDVISION AANSPRAKELIJK ZIJN VOOR SPECIALE, "
+#~ "INDIRECTE, MORELE OF GEVOLGSCHADE OF ENIGE ANDERE SCHADE, INCLUSIEF MAAR "
+#~ "NIET BEPERKT TOT: VERLIES VAN GEBRUIK, GEGEVENS OF WINST, ONGEACHT DE "
+#~ "VORM VAN DE ACTIE, INCLUSIEF MAAR NIET BEPERKT TO cONTRACT, NALATIGHEID "
+#~ "OF ANDERE ONRECHTMATIGE ACTIES, ALLE ALS GEVOLG VAN OF IN VERBAND MET HET "
+#~ "GEBRUIK, KOPIËREN OF WEERGEVEN VAN DE INHOUD VAN DEZE WEBPAGINA. In een "
+#~ "poging om onze klanten te voorzien van de meest actuele informatie, zal "
+#~ "ChatandVision van tijd tot tijd wijzigingen aanbrengen in de inhoud, de "
+#~ "producten of beschreven diensten op deze webpagina."
+
+#~ msgid ""
+#~ "ChatandVision (HK) Limited does not accept liability for any loss caused "
+#~ "by delay in the delivery of products ordered."
+#~ msgstr ""
+#~ "ChatandVision (HK) Limited is niet aansprakelijk voor eventuele schade "
+#~ "veroorzaakt door vertraging in de levering van bestelde producten."
+
+#~ msgid "In using this Site you agree to the following:"
+#~ msgstr "Met het gebruik van deze webpagina gaat u akkoord met het volgende:"
+
+#~ msgid ""
+#~ "You will not use any device, software, or other instrumentality to "
+#~ "disrupt, damage or interfere with or attempt to disrupt, damage or "
+#~ "interfere with the proper functioning of this site;"
+#~ msgstr ""
+#~ "U zult geen apparaat, software of andere instrument gebruiken voor het "
+#~ "verstoren, beschadigen, proberen te verstoren of interfereren van de "
+#~ "functionaliteit van deze webpagina;"
+
+#~ msgid ""
+#~ "You will not to violate or attempt to violate the security of this Site, "
+#~ "including, without limitation,"
+#~ msgstr ""
+#~ "U zult de veiligheid van deze webpagina niet schenden of proberen te "
+#~ "schenden, waaronder, maar niet beperkt tot:"
+
+#~ msgid "logging onto an account which you are not authorized to access;"
+#~ msgstr ""
+#~ "I.\tHet aanmelden op een account waarvan u niet bevoegd bent om toegang "
+#~ "te krijgen;"
+
+#~ msgid ""
+#~ "attempting to interfere with service to any user, host or network, "
+#~ "including, without limitation, via means of submitting a virus to the "
+#~ "Site, overloading, flooding, spamming, mail bombing or crashing; or"
+#~ msgstr ""
+#~ "II.\tHet proberen te bemoeien met service naar gebruikers, host of "
+#~ "netwerk, inclusief, maar niet beperkt tot, middels het indienen van een "
+#~ "virus op de webpagina, overbelasting, flooding, spamming, mail bombing of "
+#~ "crashen; of"
+
+#~ msgid ""
+#~ "attempt to transmit any virus, Trojan horse or other software destruction "
+#~ "or disruption device; and"
+#~ msgstr ""
+#~ "III.\tHet proberen om een virus, Trojaanse paard, andere "
+#~ "softwarevernietiging of verstoring van het apparaat te verzenden; en"
+
+#~ msgid ""
+#~ "You will not intentionally or unintentionally violate any applicable "
+#~ "international, federal, state or local law, including but not limited to "
+#~ "any regulations applicable to your use of this Site. "
+#~ msgstr ""
+#~ "U zal niet opzettelijk of onopzettelijk schenden van de toepasselijke "
+#~ "internationale, federale, provinciale of lokale wetgeving, met inbegrip "
+#~ "van, maar niet beperkt tot, regelgeving die van toepassing zijn op uw "
+#~ "gebruik van deze webpagina."
+
+#~ msgid ""
+#~ "ChatandVision (HK) Limited may revise these conditions of use by updating "
+#~ "this posting. You agree that in the event any portion of these Site "
+#~ "conditions of use is found to be unenforceable, the remainder of these "
+#~ "Site conditions shall remain in full force and effect. By using this Site "
+#~ "you agree to be bound by any such revisions and should therefore "
+#~ "periodically visit this page to determine the current conditions of use "
+#~ "to which you are bound."
+#~ msgstr ""
+#~ "ChatandVision (HK) Limited kan deze gebruiksvoorwaarden herzien door deze "
+#~ "voorwaarden. U stemt ermee in dat in het geval een deel van deze "
+#~ "webpagina’s gebruiksvoorwaarden onuitvoerbaar zijn, zal de rest van deze "
+#~ "webpagina’s voorwaarden volledig van kracht blijven. Door het gebruik van "
+#~ "deze webpagina gaat u akkoord gebonden te zijn aan dergelijke "
+#~ "herzieningen en moet derhalve regelmatig deze pagina bezoeken om de "
+#~ "huidige voorwaarden voor het gebruik waaraan u gebonden bent vast te "
+#~ "stellen."
+
+#~ msgid "Methods of Payment"
+#~ msgstr "Betaalmethoden"
+
+#~ msgid ""
+#~ "A variety of payment methods are offered on the Site for the convenience "
+#~ "of customers. You agree to pay all fees incurred in connection with your "
+#~ "purchases at the rates in effect when the charges were incurred. If you "
+#~ "pay by credit card, your card issuer agreement governs your use of your "
+#~ "card, and you must refer to that agreement and not these Terms of Use to "
+#~ "determine your rights and liabilities as a cardholder. YOU, AND NOT "
+#~ "DigitalDiscount.co.uk (DigitalDiscount), ARE RESPONSIBLE FOR PAYING ANY "
+#~ "UNAUTHORIZED AMOUNTS BILLED TO YOUR CREDIT CARD BY A THIRD PARTY."
+#~ msgstr ""
+#~ "Een verscheidenheid aan betaalmethoden worden aangeboden op de webpagina "
+#~ "voor het gemak van de klanten. U stemt ermee in om alle kosten gemaakt "
+#~ "zijn in verband met uw aankopen te betalen, wanneer de kosten worden "
+#~ "gemaakt. Wanneer u betaalt met een creditcard, geldt de overeenkomst met "
+#~ "uw kaartuitgever op het gebruik van uw kaart. U moet verwijzen naar deze "
+#~ "overeenkomst en niet deze Gebruiksvoorwaarden om uw rechten en "
+#~ "verplichtingen als een kaarthouder te bepalen. U, en niet 9digital.nl, "
+#~ "BENT VERANTWOORDELIJK VOOR HET BETALEN VAN ONBEVOEGDE GEFACTUREERDE "
+#~ "BEDRAGEN DOOR EEN DERDE OP UW CREDITCARD."
+
+#~ msgid "Payment Fees and Charges"
+#~ msgstr "Betalingsvergoedingen en heffingen"
+
+#~ msgid ""
+#~ "You agree to pay all fees and charges incurred in connection with your "
+#~ "purchases at the rates in effect when the charges were incurred. Unless "
+#~ "you notify DigitalDiscount of any discrepancies within sixty (60) days "
+#~ "after they first appear on your credit card statement, you agree that "
+#~ "they will be deemed accepted by you in all respects and for all purposes. "
+#~ "If DigitalDiscount does not receive payment from your credit card issuer "
+#~ "or its agent, you agree to pay all amounts due upon demand by "
+#~ "DigitalDiscount or its agents."
+#~ msgstr ""
+#~ "U stemt ermee in om alle vergoedingen en kosten, gemaakt in verband met "
+#~ "uw aankopen, te betalen wanneer de kosten worden gemaakt. Tenzij u "
+#~ "9digital.nl de eventuele afwijkingen meldt binnen zestig (60) dagen nadat "
+#~ "ze voor het eerst verschijnen op uw credit card statement, gaat u ermee "
+#~ "akkoord dat zij geacht door u wordt geaccepteerd in alle opzichten en "
+#~ "voor alle doeleinden. Als 9digital.nl geen betaling heeft ontvangen van "
+#~ "uw creditcardmaatschappij of haar gemachtigde, gaat u ermee akkoord om "
+#~ "alle verschuldigde bedragen op aanvraag aan 9digital of haar agenten te "
+#~ "betalen."
+
+#~ msgid "Updated: July 09, 2015 "
+#~ msgstr "Bijgewerkt: 9 juli 2015"
 
 #~ msgid "Unknow error: Please contact our CS!"
 #~ msgstr "Onbekende fout: Neem contact op met onze klantenservice!"
