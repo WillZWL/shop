@@ -4,7 +4,7 @@ namespace ESG\Panther\Service\CourierApi;
 
 use ESG\Panther\Dao\InterfaceCourierManifestDao;
 
-class AsendiaApiService extends CourierAPiService implements CourierApiInterface 
+class AsendiaApiService extends CourierApiService implements CourierApiInterface 
 {
 	private $courierReturnData=null;
 	private $courierRequestData=null;

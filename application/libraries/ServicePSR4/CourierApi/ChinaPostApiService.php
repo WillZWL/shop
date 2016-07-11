@@ -4,7 +4,7 @@ namespace ESG\Panther\Service\CourierApi;
 
 use ESG\Panther\Dao\InterfaceCourierManifestDao;
 
-class ChinaPostApiService extends CourierAPiService implements CourierApiInterface 
+class ChinaPostApiService extends CourierApiService implements CourierApiInterface 
 {
 	private $courierReturnData=null;
 	private $courierRequestData=null;
