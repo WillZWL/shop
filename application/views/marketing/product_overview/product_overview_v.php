@@ -77,6 +77,34 @@
                 }
             }
         }
+
+        function getElementsByClassName(n) {
+            var classElements = [];
+            var allElements = document.getElementsByTagName('*');
+            for (var i=0; i< allElements.length; i++ ) {
+               if (allElements[i].className == n ) {
+                classElements[classElements.length] = allElements[i];
+                //alert(classElements.length);
+               }
+            }
+            return classElements;
+        }
+
+        function check_all_class(checkboxname, className) {
+            // name of main checkbox
+            var main_adword_cb = document.getElementById(checkboxname);
+            var checkedval = main_adword_cb.checked;
+            
+            var adwords_eles = getElementsByClassName(className);
+            for (var i = 0; i < adwords_eles.length; i++) {
+                if (adwords_eles[i].disabled != true) {
+                    adwords_eles[i].checked = checkedval;
+                }
+            }
+            
+        }
+
+
     </script>
 </head>
 
@@ -330,15 +358,17 @@
                             <td>
                             </td>
                             <td style="padding-right:8px" align="right">
-                                <b>Margin</b>
+                               <!-- <b>Margin</b>-->
                             </td>
                             <td>
+                                <!--
                                 <select id="margin_prefix" name="margin_prefix">
                                     <option value="2"> Smaller <= </option>
                                     <option value="1"> greater > 0 and Smaller <= </option>
                                     <option value="3"> Greater >= </option>
                                 </select>
-                                <input name="margin" class="input" value="" style="width:200px">%
+                                <input name="margin" class="input" value="" style="width:200px">% 
+                                -->
                             </td>
                         </tr>
 
@@ -461,7 +491,7 @@
                             </td>
                             <td title="PLA" align="center">
                                 PLA <br>
-                                <input type="checkbox" id="chkpla" name="chkpla" onClick="checkall_ele('<?= $this->input->get("pfid") ?>','chkpla','is_advertised[<?= $platform_id ?>][]');">
+                                <input type="checkbox" id="chkpla" name="chkpla" onClick="check_all_class('chkpla','pla_advert');">
                             </td>
                             <td title="pla result" align="center">
                                 PLA Result
@@ -570,9 +600,27 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <select id="price_prefix" name="price_prefix">
+                                    <option value="2"><= </option>
+                                    <option value="1">> 0 and <= </option>
+                                    <option value="3">>= </option>
+                                </select>
+                                <input name="price" class="input" value="<?=htmlspecialchars($this->input->get("price"))?>"></td>
+                            <td>
+                                <select id="profit_prefix" name="profit_prefix" style="width:45px">
+                                    <option value="2"><= </option>
+                                    <option value="1">> 0 and <= </option>
+                                    <option value="3">>= </option>
+                                </select>
+                                <input name="profit" class="input" value="<?=htmlspecialchars($this->input->get("profit"))?>"></td>
+                            <td>
+                                <select id="margin_prefix" name="margin_prefix" style="width:45px">
+                                    <option value="2"><= </option>
+                                    <option value="1">> 0 and <= </option>
+                                    <option value="3">>= </option>
+                                </select>
+                                <input name="margin" class="input" value="<?=htmlspecialchars($this->input->get("margin"))?>"></td>
                             <td align="center">
                                 <input type="submit" name="searchsubmit" value="" class="search_button" style="background: url('<?= base_url() ?>images/find.gif') no-repeat;">
                                 <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
@@ -641,7 +689,7 @@
                             <td><?= $lang['supplier_status'][$product->getSupplierStatus()] ?></td>
                             <td><?= $product->getModifyOn() ?></td>
                             <td>
-                                <input type="checkbox" <?= ($is_advertised === 'Y') ? 'checked' : '' ?> name='<?= "price[{$sku}][{$platform_id}][is_advertised]" ?>' <?= ($enabled_pla_checkbox) ?: 'disabled' ?> value="Y">
+                                <input type="checkbox" <?= ($is_advertised === 'Y') ? 'checked' : '' ?> class="pla_advert" name='<?= "price[{$sku}][{$platform_id}][is_advertised]" ?>' <?= ($enabled_pla_checkbox) ?: 'disabled' ?> value="Y">
                                 <?= $gsc_comment ?>
                             </td>
                             <td><a href="#" data-toggle="tooltip" data-placement="top" title="<?= $pla_last_update_result ?>"><?= $pla_status ?></a></td>
