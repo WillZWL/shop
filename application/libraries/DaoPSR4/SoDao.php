@@ -2929,7 +2929,6 @@ SQL;
         $this->db->join("client c", "c.id = so.client_id", "INNER");
         $this->db->join("so_shipment sosh", "soa.sh_no = sosh.sh_no", "LEFT");
         $this->db->join("country cy", "cy.id = so.bill_country_id", "INNER");
-        $this->db->join("order_status_history osh", "osh.so_no = so.so_no", "INNER");
         $this->db->group_by("so.so_no");
         return $this->commonGetList($classname, $where, $option, 'sosh.courier_id courier, sosh.tracking_no trackingno, c.email clientemail, CONCAT_WS(" ",c.tel_1, c.tel_2,c.tel_3) as buyertel, so.so_no so_no, so.bill_name bill_name, cy.id_3_digit country_code, so.dispatch_date');
     }
