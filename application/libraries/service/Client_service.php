@@ -17,6 +17,7 @@ class Client_service extends Base_service
     public function __construct()
     {
         parent::__construct();
+        $CI =& get_instance();
         include_once(APPPATH . "libraries/dao/Client_dao.php");
         $this->set_dao(new Client_dao());
         include_once(APPPATH . "libraries/dao/Client_log_dao.php");
