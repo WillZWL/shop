@@ -35,7 +35,7 @@ class Courier_order extends MY_Controller
 			$where['sosh.courier_id']=$courierId;
 			$courierObj=$this->courierService->get(array("courier_id"=>$courierId));
 			$checkSoNo=$this->input->post("check");
-			$tempArr = $this->soService->getDao('SoShipment')->getEnableApiCourierOrderList($where, array("option"=>-1),$checkSoNo);
+			$tempArr = $this->soService->getDao('SoShipment')->getEnableApiCourierOrderList($where, array("option"=>-1,"orderby"=>"soal.so_no,soid.amount desc"),$checkSoNo);
 			$formValue=array();$currentSoNo="";
 			if($tempArr){
 				$formValue=$this->getPendingCourierOrderFormValue($tempArr,$courierObj);
@@ -57,7 +57,7 @@ class Courier_order extends MY_Controller
 			if ($option["limit"]){
 				$option["offset"] = $this->input->get("per_page");
 			}
-			if (empty($sort)){ $sortstr = "soal.so_no";}else{ $sortstr = "$sort $order";}
+			if (empty($sort)){ $sortstr = "soal.so_no,soid.amount desc";}else{ $sortstr = "$sort $order";}
 			if (empty($order)) $order = "asc";
 			$option["orderby"] = $sortstr;
 
@@ -85,7 +85,7 @@ class Courier_order extends MY_Controller
 			$where['so.status !="6" ']=null;	
 			$tempArr = $this->soService->getDao('SoShipment')->getEnableApiCourierOrderList($where, $option);
 			$counter = 1;
-			
+			print_r($this->soService->getDao('SoShipment')->db->last_query());exit();
 			$currentSoNo="";$totalOrder=0; $totalItem=0;
 			if($tempArr){
 				foreach ($tempArr as $row){
