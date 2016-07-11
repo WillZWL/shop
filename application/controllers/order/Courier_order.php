@@ -85,7 +85,7 @@ class Courier_order extends MY_Controller
 			$where['so.status !="6" ']=null;	
 			$tempArr = $this->soService->getDao('SoShipment')->getEnableApiCourierOrderList($where, $option);
 			$counter = 1;
-			print_r($this->soService->getDao('SoShipment')->db->last_query());exit();
+
 			$currentSoNo="";$totalOrder=0; $totalItem=0;
 			if($tempArr){
 				foreach ($tempArr as $row){
