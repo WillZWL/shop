@@ -10,7 +10,7 @@ class ProductWarrantyService extends BaseService
 
     protected $warranty_arr = [1 => 'accessories', 2 => 'waterproof', 3 => 'main_items', 4 => 'action_camera', 5 => 'drones', 6 => 'refurbished', 7 => 'no_warranty'];
 
-    public function autoCreateProductWarranty($product_obj)
+    public function autoCreateProductWarranty($product_obj, $platform_id = '')
     {
         $sku = $product_obj->getSku();
         $product_warranty_type = $product_obj->getProductWarrantyType();
@@ -20,27 +20,37 @@ class ProductWarrantyService extends BaseService
         $warranty_arr = $this->warranty_arr;
 
         if ($product_warranty_type > 0) {
+
             $product_warranty = $warranty_arr[$product_warranty_type];
 
-            foreach ($platform_lsit as $platform_obj) {
-
-                $platform_id = $platform_obj->getSellingPlatformId();
+            if ($platform_id) {
                 $warranty_in_month = $warranty_data[$product_warranty][$platform_id];
-
                 $product_warranty_obj = $this->getDao('ProductWarranty')->get(array('sku' => $sku, 'platform_id' => $platform_id));
                 if ($product_warranty_obj) {
                     if ($warranty_in_month != $product_warranty_obj->getWarrantyInMonth()) {
                         $product_warranty_obj->setWarrantyInMonth($warranty_in_month);
                         $this->getDao('ProductWarranty')->update($product_warranty_obj);
                     }
-                } else {
-                    $product_warranty_vo = $this->getDao('ProductWarranty')->get();
-                    $product_warranty_obj = clone $product_warranty_vo;
-                    $product_warranty_obj->setSku($sku);
-                    $product_warranty_obj->setPlatformId($platform_id);
-                    $product_warranty_obj->setWarrantyInMonth($warranty_in_month);
+                }
+            } else {
+                foreach ($platform_lsit as $platform_obj) {
+                    $platform_id = $platform_obj->getSellingPlatformId();
+                    $warranty_in_month = $warranty_data[$product_warranty][$platform_id];
+                    $product_warranty_obj = $this->getDao('ProductWarranty')->get(array('sku' => $sku, 'platform_id' => $platform_id));
+                    if ($product_warranty_obj) {
+                        if ($warranty_in_month != $product_warranty_obj->getWarrantyInMonth()) {
+                            $product_warranty_obj->setWarrantyInMonth($warranty_in_month);
+                            $this->getDao('ProductWarranty')->update($product_warranty_obj);
+                        }
+                    } else {
+                        $product_warranty_vo = $this->getDao('ProductWarranty')->get();
+                        $product_warranty_obj = clone $product_warranty_vo;
+                        $product_warranty_obj->setSku($sku);
+                        $product_warranty_obj->setPlatformId($platform_id);
+                        $product_warranty_obj->setWarrantyInMonth($warranty_in_month);
 
-                    $this->getDao('ProductWarranty')->insert($product_warranty_obj);
+                        $this->getDao('ProductWarranty')->insert($product_warranty_obj);
+                    }
                 }
             }
         }
