@@ -567,20 +567,17 @@ implements PaymentGatewayRedirectServiceInterface
         $replace['site_url'] = base_url();
 
         $this->soids = $this->getSoItemDetail($soObj->getSoNo());
-/*
-        $ca_catid_arr = implode(',', $this->get_ca_srv()->get_accessory_catid_arr());
-        $so_items = $so_srv->get_soi_dao()->get_items_w_name(array("so_no" => $soObj->get_so_no(), "p.cat_id NOT IN ($ca_catid_arr)" => null), array("lang_id" => $lang_id));
-*/
+
         $replace["so_items_text"] = '<table>';
         $isPreorder = false;
-        $priceObj = "";
+        // $priceObj = "";
         foreach($this->soids as $item) {
             $websiteStatus = $item->getWebsiteStatus();
             if (($websiteStatus == "P") || ($websiteStatus == "A")) {
                 $isPreorder = true;
             }
-            if ($priceObj == "")
-                $priceObj = $this->getService("Price")->getDao()->get(["platform_id" => $soObj->getPlatformId(), "sku" => $item->getItemSku()]);
+            // if ($priceObj == "")
+            //     $priceObj = $this->getService("Price")->getDao()->get(["platform_id" => $soObj->getPlatformId(), "sku" => $item->getItemSku()]);
             $total += $item->getAmount();
             $replace["so_items_text"] .=
                 "<tr>
@@ -591,21 +588,23 @@ implements PaymentGatewayRedirectServiceInterface
                 </tr>\n";
         }
         $replace["so_items_text"] .= '</table>';
-        
-        if ($priceObj) {
-            $deliveryScenerioObj = $this->getService("DeliveryTime")->getDeliverytimeObj($soObj->getDeliveryCountryId(), $priceObj->getDeliveryScenarioid());
-            if ($deliveryScenerioObj->getShipMinDay())
-                $replace["expect_ship_days"] = $deliveryScenerioObj->getShipMinDay() . " - " . $deliveryScenerioObj->getShipMaxDay();
-            if ($deliveryScenerioObj->getDelMinDay())
-                $replace["expect_del_days"] = $deliveryScenerioObj->getDelMinDay() . " - " . $deliveryScenerioObj->getDelMaxDay();
-        }
+
+        // if ($priceObj) {
+        //     $deliveryScenerioObj = $this->getService("DeliveryTime")->getDeliverytimeObj($soObj->getDeliveryCountryId(), $priceObj->getDeliveryScenarioid());
+        //     if ($deliveryScenerioObj->getShipMinDay())
+        //         $replace["expect_ship_days"] = $deliveryScenerioObj->getShipMinDay() . " - " . $deliveryScenerioObj->getShipMaxDay();
+        //     if ($deliveryScenerioObj->getDelMinDay())
+        //         $replace["expect_del_days"] = $deliveryScenerioObj->getDelMinDay() . " - " . $deliveryScenerioObj->getDelMaxDay();
+        // }
+        $replace["expect_ship_days"] = $soObj->getExpectShipDays();
+        $replace["expect_del_days"] = $soObj->getExpectDelDays();
+
         $replace["total"] = platform_curr_format($total, 0);
 
         $replace["delivery_charge"] = platform_curr_format($soObj->getDeliveryCharge(), 0);
         $replace["email"] = $client->getEmail();
         $encrypt = new \CI_Encrypt();
         $replace["password"] = $encrypt->decode($client->getPassword());
-//        $lang_id = $pbvObj->getLanguageId();
         $dto = new \EventEmailDto();
 
         if (defined("SITE_NAME"))
@@ -619,21 +618,8 @@ implements PaymentGatewayRedirectServiceInterface
         $dto->setMailFrom($from_email);
         $dto->setMailTo($client->getEmail());
         $dto->setPlatformId($platformId);
-/*
-        if ($isPreorder) {
-            $replace["delivery_address"] = ($soObj->get_delivery_company() ? $soObj->get_delivery_company() . " - " : "");
-            $replace["delivery_address"] .= trim(str_replace("|", " ", $soObj->get_delivery_address()));
-            $replace["delivery_address"] .= ", " . $soObj->get_delivery_city();
-            $replace["delivery_address"] .= ($soObj->get_delivery_state() ? ", " . $soObj->get_delivery_state() : "");
-            $replace["delivery_address"] .= ", " . $soObj->get_delivery_postcode() . ", " . $country->get_name();
-            $replace["expect_delivery_date"] = $soObj->get_expect_delivery_date();
-            $dto->set_event_id("preorder_confirmation");
-            $dto->set_tpl_id("preorder_confirmation");
-        } else {
-*/
-            $dto->setEventId("payment_success");
-            $dto->setTplId("payment_success");
-//        }
+        $dto->setEventId("payment_success");
+        $dto->setTplId("payment_success");
         if ($this->soext = $this->getSoExt($soObj->getSoNo())) {
             $processingFee = $this->soext->getOfflineFee();
         }
@@ -670,12 +656,6 @@ implements PaymentGatewayRedirectServiceInterface
     public function updatePromo($code)
     {
         if ($code) {
-/*
-        if ($promo_cd_obj = $this->get_promo_cd_srv()->get(array("code" => $code))) {
-            $promo_cd_obj->set_no_taken($promo_cd_obj->get_no_taken() + 1);
-            $this->get_promo_cd_srv()->update($promo_cd_obj);
-        }
-*/
         }
     }
 
