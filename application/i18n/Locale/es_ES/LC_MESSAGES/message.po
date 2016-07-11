@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-07 11:33+0800\n"
-"PO-Revision-Date: 2016-06-07 11:35+0800\n"
+"POT-Creation-Date: 2016-07-11 15:31+0800\n"
+"PO-Revision-Date: 2016-07-11 15:33+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.3\n"
 
-#: cart/info.php:35 review.php:15 review.php:56
+#: cart/info.php:35 review.php:22 review.php:101
 msgid "Total"
 msgstr "Total"
 
@@ -25,7 +25,7 @@ msgstr "Total"
 msgid "View Cart"
 msgstr "Ver Carrito"
 
-#: cart/info.php:41 checkout/index.php:7 review.php:65
+#: cart/info.php:41 checkout/index.php:7 review.php:110
 msgid "Checkout"
 msgstr "Ir al pago"
 
@@ -116,7 +116,7 @@ msgid "Save"
 msgstr "Ahorro"
 
 #: cat.php:235 cat.php:241 product/accessories.php:119
-#: product/accessories.php:125 product/detail.php:121 product/grid.php:68
+#: product/accessories.php:125 product/detail.php:123 product/grid.php:68
 #: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Añadir a la cesta"
@@ -478,7 +478,7 @@ msgstr "a través de e-mail"
 msgid "Payment Review"
 msgstr "Comprobación de pago"
 
-#: checkout/paymentReview.php:6 checkout/paymentSuccess.php:6
+#: checkout/paymentReview.php:6 checkout/paymentSuccess.php:10
 msgid "Thank you for your purchase!"
 msgstr "¡Gracias por su compra!"
 
@@ -498,16 +498,16 @@ msgstr ""
 msgid "We'll send you an email as soon as the payment has been verified!"
 msgstr "¡Le enviaremos un e-mail tan pronto como el pago haya sido verificado!"
 
-#: checkout/paymentSuccess.php:4
+#: checkout/paymentSuccess.php:8
 msgid "Payment Successful"
 msgstr "Pago Realizado"
 
-#: checkout/paymentSuccess.php:8
+#: checkout/paymentSuccess.php:12
 #, php-format
 msgid "Your order number is %s."
 msgstr "Su número de compra es %s."
 
-#: checkout/paymentSuccess.php:10
+#: checkout/paymentSuccess.php:14
 msgid ""
 "You will receive an order confirmation email with details of your order and "
 "a link to track its progress."
@@ -515,12 +515,12 @@ msgstr ""
 "Recibirá un e-mail con la confirmación y los detalles de su compra y un link "
 "para seguir su proceso."
 
-#: checkout/paymentSuccess.php:12
+#: checkout/paymentSuccess.php:16
 msgid "Please note all charges will appear on your statement as CHATANDVISION."
 msgstr ""
 "Ten en cuenta que los cargos aparecerá en su factura como CHATANDVISION"
 
-#: checkout/paymentSuccess.php:14
+#: checkout/paymentSuccess.php:18
 msgid "We'll send you an email as soon as it's shipped!"
 msgstr "¡Le enviaremos un e-mail tan pronto se haga el envío!"
 
@@ -754,7 +754,7 @@ msgstr ""
 "Si no obtiene la respuesta que necesita, póngase en %s contacto %s con "
 "nosotros a través nuestra página de Contacto. Gracias."
 
-#: display/privacy_policy.php:2 footer.php:277
+#: display/privacy_policy.php:2 footer.php:276
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
@@ -1200,124 +1200,124 @@ msgstr "PAGA CON CONFIANZA"
 msgid " SHOP WITH CONFIDENCE "
 msgstr "COMPRA CON CONFIANZA"
 
-#: footer.php:160
+#: footer.php:158
 msgid "About Us"
 msgstr "Acerca de nosotros"
 
-#: footer.php:163
+#: footer.php:161
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr ""
 "¡%s se enorgullece de ofrecer ofertas excepcionales sin comprometer el "
 "servicio!"
 
-#: footer.php:163
+#: footer.php:161
 msgid "Feel free to contact us anytime for more information"
 msgstr ""
 "Siéntete libre de contactarnos en cualquier momento para más información"
 
-#: footer.php:171 footer.php:183
+#: footer.php:169 footer.php:181
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr "Suscríbete para saber nuestras últimas noticias y promociones."
 
-#: footer.php:182
+#: footer.php:180
 msgid "Sign up for Newsletter"
 msgstr "Suscríbete a nuestra Newsletter"
 
-#: footer.php:187
+#: footer.php:185
 msgid "Enter you email address"
 msgstr "Introduce tu correo electrónico"
 
-#: footer.php:197
+#: footer.php:195
 msgid "Subscribe"
 msgstr "Suscríbite"
 
-#: footer.php:201
+#: footer.php:199
 msgid "indicates required"
 msgstr "indica requerido"
 
-#: footer.php:216
+#: footer.php:214
 msgid "100% Secure "
 msgstr "100% Seguro"
 
-#: footer.php:216
+#: footer.php:214
 msgid "with SSL encryption"
 msgstr "con encriptación SSL"
 
-#: footer.php:224
+#: footer.php:222
 msgid "Free Delivery"
 msgstr "Envío Gratuito"
 
-#: footer.php:224
+#: footer.php:222
 msgid "For All Orders*"
 msgstr "Para Todas las Compras*"
 
-#: footer.php:224
+#: footer.php:222
 msgid "Shipping:"
 msgstr "Envío:"
 
-#: footer.php:224
+#: footer.php:222
 msgid "3-5 Working Days"
 msgstr "3-5 Días Laborables"
 
-#: footer.php:244 header.php:147
+#: footer.php:242 header.php:147
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s días Reembolso Garantizado"
 
-#: footer.php:260
+#: footer.php:259
 msgid "Warranty "
 msgstr "Garantía"
 
-#: footer.php:260
+#: footer.php:259
 msgid "Up to 2 Years"
 msgstr "Hasta 2 años"
 
-#: footer.php:272
+#: footer.php:271
 msgid "2015 All Right reserved"
 msgstr "2015 Todos los Derechos Reservados"
 
-#: footer.php:273
+#: footer.php:272
 msgid "Conditions of Use"
 msgstr "Condiciones de Uso"
 
-#: footer.php:274
+#: footer.php:273
 msgid "Shipping Policy"
 msgstr "Política de Envio"
 
-#: footer.php:275
+#: footer.php:274
 msgid "Return and Refund Policy"
 msgstr "Política de Devolución y Reembolso"
 
-#: footer.php:276
+#: footer.php:275
 msgid "Billing Terms and Conditions"
 msgstr "Términos y Condiciones de Facturación"
 
-#: footer.php:282
+#: footer.php:281
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "SELECCIONA PAIS DE ENVIO"
 
-#: footer.php:285
+#: footer.php:284
 msgid "Australia"
 msgstr "Australia"
 
-#: footer.php:286
+#: footer.php:285
 msgid "Belgium"
 msgstr "Bélgica"
 
-#: footer.php:287
+#: footer.php:286
 msgid "Finland"
 msgstr "Finlandia"
 
-#: footer.php:288
+#: footer.php:287
 msgid "France"
 msgstr "Francia"
 
-#: footer.php:289
+#: footer.php:288
 msgid "Great Britain"
 msgstr "Gran Bretaña"
 
-#: footer.php:290
+#: footer.php:289
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
@@ -1816,51 +1816,55 @@ msgstr "%s opinión(es)"
 msgid "Write a review"
 msgstr "Escribe una opinión"
 
-#: product/detail.php:84
+#: product/detail.php:75
+msgid "Month Warranty"
+msgstr "Garantía Mensual"
+
+#: product/detail.php:86
 msgid "Availability"
 msgstr "Disponibilidad"
 
-#: product/detail.php:88 product/detail.php:94
+#: product/detail.php:90 product/detail.php:96
 msgid " In Stock"
 msgstr "En Stock"
 
-#: product/detail.php:90
+#: product/detail.php:92
 msgid "Out of Stock"
 msgstr "Fuera de stock"
 
-#: product/detail.php:92
+#: product/detail.php:94
 msgid "Pre Order"
 msgstr "Reserva"
 
-#: product/detail.php:103
+#: product/detail.php:105
 msgid "Qty:"
 msgstr "Cantidad:"
 
-#: product/detail.php:128 product/detail.php:129
+#: product/detail.php:130 product/detail.php:131
 msgid "Ships in"
 msgstr "Envío en"
 
-#: product/detail.php:128 product/detail.php:129
+#: product/detail.php:130 product/detail.php:131
 msgid "working days"
 msgstr "días laborables"
 
-#: product/detail.php:128
+#: product/detail.php:130
 msgid "and"
 msgstr "y"
 
-#: product/detail.php:128
+#: product/detail.php:130
 msgid "delivered in"
 msgstr "entrega en"
 
-#: product/detail.php:164
+#: product/detail.php:166
 msgid "Specification"
 msgstr "Especificaciones"
 
-#: product/detail.php:165
+#: product/detail.php:167
 msgid "Overview"
 msgstr "Descripción"
 
-#: product/detail.php:167
+#: product/detail.php:169
 msgid "In the box"
 msgstr "En la caja"
 
@@ -1872,39 +1876,67 @@ msgstr "Productos Relacionados"
 msgid "Shopping Cart"
 msgstr "Cesta de la compra"
 
-#: review.php:11
+#: review.php:18
 msgid "Image"
 msgstr "Imagen"
 
-#: review.php:12
+#: review.php:19
 msgid "Product Name"
 msgstr "Nombre del Producto"
 
-#: review.php:13
+#: review.php:20
 msgid "Quantity"
 msgstr "Cantidad"
 
-#: review.php:14
+#: review.php:21
 msgid "Unit Price"
 msgstr "Precio unitario"
 
-#: review.php:30
+#: review.php:40
 msgid "Update"
 msgstr "Actualizar"
 
-#: review.php:31
+#: review.php:41
 msgid "Remove"
 msgstr "Eliminar"
 
-#: review.php:48
+#: review.php:59
+msgid "Promo code"
+msgstr "Código Promocional"
+
+#: review.php:62
+msgid "Enter your promo code"
+msgstr "Introduzca su código promocional"
+
+#: review.php:67
+msgid "Remove / Edit Code"
+msgstr "Borrar / Modificar Código"
+
+#: review.php:71
+msgid "Apply Code"
+msgstr "Utilizar Código"
+
+#: review.php:76
+msgid ""
+"Sorry, Promotion Code Invalid. Please check if the conditions and/or minimum "
+"order amount have been met."
+msgstr ""
+"Lo sentimos, Código Promocional Inválido. Por favor verifique si cumple con "
+"las condiciones y/o mínimo de compra requerido. "
+
+#: review.php:87
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: review.php:52
+#: review.php:91
 msgid "Shipping"
 msgstr "Envío"
 
-#: review.php:64 reviewEmptyCart.php:7
+#: review.php:96
+msgid "Promotion Discount"
+msgstr "Descuento Promocional"
+
+#: review.php:109 reviewEmptyCart.php:7
 msgid "Continue Shopping"
 msgstr "Sigue comprando"
 
