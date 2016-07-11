@@ -358,7 +358,7 @@
                             <td>
                             </td>
                             <td style="padding-right:8px" align="right">
-                                <b>Margin</b>
+                               <!-- <b>Margin</b>-->
                             </td>
                             <td>
                                 <!--
@@ -600,8 +600,20 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><input name="price" class="input" value="<?=htmlspecialchars($this->input->get("price"))?>"></td>
-                            <td><input name="profit" class="input" value="<?=htmlspecialchars($this->input->get("profit"))?>"></td>
+                            <td>
+                                <select id="price_prefix" name="price_prefix">
+                                    <option value="2"><= </option>
+                                    <option value="1">> 0 and <= </option>
+                                    <option value="3">>= </option>
+                                </select>
+                                <input name="price" class="input" value="<?=htmlspecialchars($this->input->get("price"))?>"></td>
+                            <td>
+                                <select id="profit_prefix" name="profit_prefix">
+                                    <option value="2"><= </option>
+                                    <option value="1">> 0 and <= </option>
+                                    <option value="3">>= </option>
+                                </select>
+                                <input name="profit" class="input" value="<?=htmlspecialchars($this->input->get("profit"))?>"></td>
                             <td>
                                 <select id="margin_prefix" name="margin_prefix">
                                     <option value="2"><= </option>

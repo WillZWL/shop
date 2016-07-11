@@ -37,13 +37,39 @@ class ProductOverviewWebsite extends MY_Controller
         ($this->input->get('wsstatus') != '') ? $where['p.website_status'] = $this->input->get('wsstatus') : '';
         ($this->input->get('suppstatus') != '') ? $where['supplier_status'] = $this->input->get('suppstatus') : '';
         ($this->input->get('purcupdate') != '') ? $where['sp.modify_on >= '] = $this->input->get('purcupdate') : '';
-        ($this->input->get('profit') != '') ? $where['pm.profit'] = $this->input->get('profit') : '';
+        //($this->input->get('profit') != '') ? $where['pm.profit'] = $this->input->get('profit') : '';
         // ($this->input->get('margin') != '') ? $where['pm.margin'] = $this->input->get('margin') : '';
-        ($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
+        //($this->input->get('price') != '') ? $where['pr.price'] = $this->input->get('price') : '';
         ($this->input->get('limit') != '') ? $option['limit'] = $this->input->get('limit') : '';
         ($this->input->get('per_page') != '') ? $option['offset'] = $this->input->get('per_page') : '';
         ($this->input->get('auto_restock') != '') ? $where['p.auto_restock'] = $this->input->get('auto_restock') : '';
 
+        if ($this->input->get('price') != '') {
+            switch($this->input->get("price_prefix")) {
+                case 1:
+                    $where["pr.price > 0 and pr.price <= {$this->input->get("price")}"] = null;
+                    break;
+                case 2:
+                    $where["pr.price <= {$this->input->get("price")}"] = null;
+                    break;
+                case 3:
+                    $where["pr.price >= {$this->input->get("price")}"] = null;
+                    break;
+            }
+        }
+        if ($this->input->get('profit') != '') {
+            switch($this->input->get("profit_prefix")) {
+                case 1:
+                    $where["pm.profit > 0 and pm.profit <= {$this->input->get("profit")}"] = null;
+                    break;
+                case 2:
+                    $where["pm.profit <= {$this->input->get("profit")}"] = null;
+                    break;
+                case 3:
+                    $where["pm.profit >= {$this->input->get("profit")}"] = null;
+                    break;
+            }
+        }
         if ($this->input->get('margin') != '') {
             switch($this->input->get("margin_prefix")) {
                 case 1:
