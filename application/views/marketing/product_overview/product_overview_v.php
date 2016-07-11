@@ -608,14 +608,14 @@
                                 </select>
                                 <input name="price" class="input" value="<?=htmlspecialchars($this->input->get("price"))?>"></td>
                             <td>
-                                <select id="profit_prefix" name="profit_prefix">
+                                <select id="profit_prefix" name="profit_prefix" style="width:45px">
                                     <option value="2"><= </option>
                                     <option value="1">> 0 and <= </option>
                                     <option value="3">>= </option>
                                 </select>
                                 <input name="profit" class="input" value="<?=htmlspecialchars($this->input->get("profit"))?>"></td>
                             <td>
-                                <select id="margin_prefix" name="margin_prefix">
+                                <select id="margin_prefix" name="margin_prefix" style="width:45px">
                                     <option value="2"><= </option>
                                     <option value="1">> 0 and <= </option>
                                     <option value="3">>= </option>
