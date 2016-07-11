@@ -712,10 +712,10 @@ input.btn-newsletter {
 
 #discount_code{padding-bottom: 18px;overflow:hidden;zoom:1;}
 #discount_code .rokkit_24{clear:both;font-size: 12px;}
-#discount_code p{clear:both;padding: 0;margin: 0;}
+#discount_code p{clear:both;padding: 0;margin: 0;font-size: 12px;line-height: 18px;margin-top: 5px;}
 #discount_code form{margin:0;clear:both;}
 #discount_code form input{height: 24px;line-height: 24px;padding: 0;font-size: 12px;}
-#discount_code .form-holder fieldset{clear:both;display: inline-block;width: 180px;padding: 0;height: 24px;line-height: 24px;}
+#discount_code .form-holder fieldset{clear:both;display: inline-block;width: 220px;padding: 0;height: 24px;line-height: 24px;}
 #content .form-holder .btn3-silver,#discount_code .form-holder button{
     margin:0;
     clear:both;
