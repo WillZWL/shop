@@ -5,6 +5,7 @@ class Order_reassessment extends MY_Controller
 
     private $appId = "ORD0014";
     private $lang_id = "en";
+    private $allowAccessList = ["Rachel", "russel", "eugenetse", "jessicawong", "joyce"];
 
 
     public function __construct()
@@ -16,6 +17,8 @@ class Order_reassessment extends MY_Controller
         // $this->load->library('encrypt');
         // $this->load->library('dao/so_hold_reason_dao');
         // $this->load->library('dao/order_notes_dao');
+        if (!in_array($_SESSION["user"]["id"], $this->allowAccessList))
+            show_error("Access Denied!");
     }
 
     public function index($pmghold = 0)

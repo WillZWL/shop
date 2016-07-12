@@ -2007,8 +2007,10 @@ html;
             }
         } else {
 
+            // Here use 1 == 0 temporarily hold WOW template
             if ($this->isFilfullWowEmailCriteria($so_obj->getDeliveryCountryId(), $so_obj->getSoNo(), $replace['courier'])
                 && is_file($this->config->valueOf("wow_tpl_path") . "wow_email.html")
+                && 1 == 0
             ) {
                 # SBF #4168 - if fulfill wow criteria, send info to FIANET
                 $this->reviewFianetService->sendOrderData($so_obj, $client);
@@ -2044,21 +2046,17 @@ html;
                 # sbf #4349
                 switch ($platform_id) {
                     case 'WEBAU':
-                    case 'WEBSG':
-                    case 'WEBMY':
                     case 'WEBNZ':
                         $wow_bcc = array("wow-apac@valuebasket.com");
                         break;
 
                     case 'WEBES':
                     case 'WEBPT':
-                    case 'WEBFI':
                         $wow_bcc = array("wow-es@valuebasket.com");
                         break;
 
                     case 'WEBFR':
                     case 'WEBBE':
-                    case 'WEBCH':
                         $wow_bcc = array("wow-fr@valuebasket.com");
                         break;
 
@@ -2066,18 +2064,12 @@ html;
                         $wow_bcc = array("wow-it@valuebasket.com");
                         break;
 
-                    case 'WEBRU':
                     case 'WEBPL':
                         $wow_bcc = array("wow-ru@valuebasket.com");
                         break;
 
                     case 'WEBGB':
-                    case 'WEBIE':
                         $wow_bcc = array("wow-gb@valuebasket.com", "valuebasket-com@b2b.reviews.co.uk");
-                        break;
-
-                    case 'WEBMT':
-                        $wow_bcc = array("wow-gb@valuebasket.com");
                         break;
 
                     default:
@@ -2096,14 +2088,7 @@ html;
 
                 $sendagain = "no-reply@feedback-valuebasket.com";
 
-                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
-                    $dto->setMailFrom($email_sender);
-                    $dto->setTplId("wow_email_dispatch_gb");
-                    $dto->setLangId("en");
-                } else {
-                    $dto->setTplId("wow_email_dispatch");
-                    $dto->setLangId($lang_id);
-                }
+                $dto->setTplId("wow_email_dispatch");
                 $dto->setReplace($replace);
             } else {
                 $dto->setEventId("confirm_dispatch");
@@ -2112,14 +2097,7 @@ html;
                 // bcc send to eKomi
                 $dto->setMailBcc(array("valuebasketbccemail@gmail.com"));
 
-                // if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
-                //     $dto->setMailFrom($email_sender);
-                //     $dto->setTplId("confirm_dispatch_gb");
-                //     $dto->setLangId("en");
-                // } else {
-                    $dto->setTplId("confirm_dispatch");
-                    $dto->setLangId($lang_id);
-                // }
+                $dto->setTplId("confirm_dispatch");
                 $dto->setReplace($replace);
             }
 

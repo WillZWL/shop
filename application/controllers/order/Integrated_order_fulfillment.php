@@ -222,7 +222,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
     public function to_ship($offset = 0)
     {
-        set_time_limit(60);
+        set_time_limit(300);
         $sub_app_id = $this->getAppId() . "01";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/integrated_order_fulfillment/to_ship/?" . $_SERVER['QUERY_STRING'];
@@ -408,7 +408,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
     public function dispatch($offset = 0)
     {
-        set_time_limit(60);
+        set_time_limit(300);
         $sub_app_id = $this->getAppId() . "02";
 
         $_SESSION["LISTPAGE"] = base_url() . "order/integrated_order_fulfillment/dispatch/?" . $_SERVER['QUERY_STRING'];
@@ -763,7 +763,7 @@ class Integrated_order_fulfillment extends MY_Controller
 
     public function import_trackingfile()
     {
-        set_time_limit(120);
+        set_time_limit(300);
         $wh_list = ["ams", "im", "rmr"];
         foreach ($wh_list as $wh) {
             $this->sc["BatchTrackingInfo"]->cronTrackingInfo($wh);

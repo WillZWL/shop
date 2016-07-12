@@ -102,8 +102,8 @@ class AsendiaApiService extends CourierApiService implements CourierApiInterface
     public function getAddOrderActionData($interfacePendingCourier){
 
     	if($interfacePendingCourier){
+    		$courierRequestData=array("ApiToken"=>$this->getApiToken());
     		foreach($interfacePendingCourier as $pendingData){
-    			$courierRequestData=array("ApiToken"=>$this->getApiToken());
 				$courierRequestData["OrderList"][] = array (
 			  		"OrderNumber" => $pendingData->getSoNo(), 
 					"ServiceType" => $pendingData->getServiceType(),
