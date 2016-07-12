@@ -2009,7 +2009,6 @@ html;
 
             // Here use 1 == 0 temporarily hold WOW template
             if ($this->isFilfullWowEmailCriteria($so_obj->getDeliveryCountryId(), $so_obj->getSoNo(), $replace['courier'])
-                && is_file($this->config->valueOf("wow_tpl_path") . "wow_email.html")
                 && 1 == 0
             ) {
                 # SBF #4168 - if fulfill wow criteria, send info to FIANET
