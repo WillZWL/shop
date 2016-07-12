@@ -106,7 +106,10 @@
                 SearchSpring.jQuery('#discount_'+sku).text(price[2]);
                 SearchSpring.jQuery('#stock_'+sku).text(price[3]);
                 if (price[4] == 'O' || price[4] == 'A') {
-                  SearchSpring.jQuery('.add_'+sku).css("cursor:not-allowed");
+                  //set product outstock
+                  SearchSpring.jQuery('.add_'+sku).css("cursor","not-allowed");
+                  SearchSpring.jQuery('.add_'+sku).removeAttr("onclick");
+                  SearchSpring.jQuery('#'+sku+" a").removeAttr("href");
                 }
               }
             }
