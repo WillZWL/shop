@@ -1,6 +1,5 @@
 <?php
 namespace ESG\Panther\Service;
-use ESG\Panther\Service\RefundService;
 use ESG\Panther\Service\ReportService;
 
 
@@ -72,9 +71,8 @@ class RptRefundReportService extends ReportService
 
     public function get_data($where)
     {
-        $this->RefundService = new RefundService;
         set_time_limit(300);
-        $res = $this->RefundService->getDao('Refund')->getRefundReportContent($where, array("limit" => -1));
+        $res = $this->getDao('Refund')->getRefundReportContent($where, array("limit" => -1));
 
         return $res;
     }
