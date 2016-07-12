@@ -1,20 +1,15 @@
 <?php
 
-include_once "base_report.php";
+include_once "Base_report.php";
 
 class aps_report extends Base_report
 {
     private $appId = "RPT0041";
     private $lang_id = "en";
 
-    public function aps_report()
+    public function __construct()
     {
         parent::__construct();
-        $this->load->model('report/compensation_report_model');
-        $this->load->helper(array('url', 'notice'));
-        $this->load->library('service/so_service');
-        $this->load->library('service/price_service');
-        $this->template->set_template('report');
     }
 
     public function index()
@@ -56,7 +51,7 @@ class aps_report extends Base_report
         } else {
             $order_list = explode("\n", $this->input->post("order_list"));
 
-            $list = $this->so_service->get_dao()->get_so_aps_report($order_list);
+            $list = $this->sc['So']->getDao("So")->get_so_aps_report($order_list);
 
             $content = "SO Number,Platform,Order Create Date,Product Name,SKU,Quantity,Amount,Margin,Hold Status,Refund Status\r\n";
             foreach ($list as $line) {
@@ -72,7 +67,7 @@ class aps_report extends Base_report
                 if ($hold_status == null) $hold_status = "Error";
                 if ($refund_status == null) $refund_status = "Error";
 
-                $json = $this->price_service->get_profit_margin_json($line->platform_id, $line->prod_sku, $line->amount, -1, false);
+                $json = $this->sc['Price']->getProfitMarginJson($line->platform_id, $line->prod_sku, $line->amount);
                 $info = json_decode($json, true);
                 $margin = $info["get_margin"];
 
