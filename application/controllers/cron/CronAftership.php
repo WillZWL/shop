@@ -34,9 +34,9 @@ class CronAftership extends MY_Controller
         // $where["so.dispatch_date <= "] = $end_date . ' 23:59:59';
 
         ## SBF 9986 change save dispatch_date, this date maybe not is today
-        $where["osh.create_on >"] = $from_date.' 00:00:00';
-        $where["osh.create_on < "] = $to_date.' 23:59:59';
-        $where["so.dispatch_date is not null"] = null;
+        $where["osh.create_on >="] = $start_date.' 00:00:00';
+        $where["osh.create_on <="] = $end_date.' 23:59:59';
+        $where["so.dispatch_date !="] = '0000-00-00 00:00:00';
 
         $where["so.status"] = 6;
         $where["sosh.courier_id is not null"] = null;
