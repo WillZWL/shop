@@ -117,6 +117,10 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\RefundService();
         };
 
+        $serviceContainer['RptRefundReport'] = function () {
+            return new S\RptRefundReportService();
+        };
+
         $serviceContainer['So'] = function () {
             return new S\SoService();
         };

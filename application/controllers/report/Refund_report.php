@@ -8,10 +8,6 @@ class Refund_report extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('report/refund_report_model');
-        $this->load->helper(array('url', 'notice'));
-        $this->load->library('input');
-        $this->load->library('service/context_config_service');
     }
 
     public function index()
@@ -69,7 +65,7 @@ class Refund_report extends MY_Controller
         }
 
         $data['lang'] = $this->_load_parent_lang();
-        $data['output'] = $this->refund_report_model->get_csv($where);
+        $data['output'] = $this->sc['RptRefundReport']->get_csv($where);
         $data['filename'] = 'refund_report.csv';
         $this->load->view('output_csv.php', $data);
     }
