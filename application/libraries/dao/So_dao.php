@@ -3732,14 +3732,14 @@ ORDER BY so.so_no, soid.line_no
             so.platform_id,
             so.create_on,
             si.prod_name,
-            si.prod_sku,
+            si.item_sku as prod_sku,
             si.qty,
             si.amount,
             so.hold_status,
             so.refund_status
             ");
         $this->db->from("so");
-        $this->db->join("so_item si", "si.so_no = so.so_no", "inner");
+        $this->db->join("so_item_detail si", "si.so_no = so.so_no", "inner");
         $this->db->where_in("so.so_no", $list);
 
         if ($query = $this->db->get()) {
