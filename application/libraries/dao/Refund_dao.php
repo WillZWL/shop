@@ -244,8 +244,7 @@ class Refund_dao extends Base_dao
         $this->db->join("so_item_detail AS soid", "soid.so_no = so.so_no", "INNER");
         $this->db->join("product AS p", "p.sku = soid.item_sku", "INNER");
         $this->db->join("category AS cat", "p.cat_id = cat.id", "INNER");
-        //$this->db->join("refund_item AS ri", "ri.refund_id = r.id AND ri.item_sku = soid.item_sku", "INNER");
-        $this->db->join("refund_item AS ri", "ri.refund_id = r.id AND (ri.item_sku = soid.item_sku OR ri.item_sku IS NULL)", "INNER");
+        $this->db->join("refund_item AS ri", "ri.refund_id = r.id AND ri.item_sku = soid.item_sku", "INNER");
         $this->db->join("refund_history AS rh", "r.id = rh.refund_id", "INNER");
         $this->db->join("(
                             SELECT refund_id, max(id) max_id
