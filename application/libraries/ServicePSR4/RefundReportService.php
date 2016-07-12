@@ -3,7 +3,7 @@ namespace ESG\Panther\Service;
 use ESG\Panther\Service\ReportService;
 
 
-class RptRefundReportService extends ReportService
+class RefundReportService extends ReportService
 {
     private $so_service;
 

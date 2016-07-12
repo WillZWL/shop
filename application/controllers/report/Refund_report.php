@@ -65,7 +65,7 @@ class Refund_report extends MY_Controller
         }
 
         $data['lang'] = $this->_load_parent_lang();
-        $data['output'] = $this->sc['RptRefundReport']->get_csv($where);
+        $data['output'] = $this->sc['RefundReport']->get_csv($where);
         $data['filename'] = 'refund_report.csv';
         $this->load->view('output_csv.php', $data);
     }
