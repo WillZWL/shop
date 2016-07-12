@@ -2944,7 +2944,16 @@ SQL;
         $this->db->join("country cy", "cy.country_id = so.bill_country_id", "INNER");
         $this->db->join("order_status_history osh", "osh.so_no = so.so_no AND osh.status = 6", "INNER");
         $this->db->group_by("so.so_no");
-        return $this->commonGetList($classname, $where, $option, 'sosh.tracking_no trackingno, if(cr.aftership_id<>'', cr.aftership_id, sosh.courier_id) courier, so.so_no so_no, so.bill_name bill_name, c.email clientemail, cy.id_3_digit country_code, so.dispatch_date');
+        $select_str = "
+                sosh.tracking_no trackingno,
+                if(cr.aftership_id<>'', cr.aftership_id, sosh.courier_id) courier,
+                so.so_no so_no,
+                so.bill_name bill_name,
+                c.email clientemail,
+                cy.id_3_digit country_code,
+                so.dispatch_date
+        ";
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
     public function getWowEmailListData($where = [], $option = [], $classname = "AftershipDataDto")
