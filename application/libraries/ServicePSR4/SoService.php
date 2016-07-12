@@ -2044,21 +2044,17 @@ html;
                 # sbf #4349
                 switch ($platform_id) {
                     case 'WEBAU':
-                    case 'WEBSG':
-                    case 'WEBMY':
                     case 'WEBNZ':
                         $wow_bcc = array("wow-apac@valuebasket.com");
                         break;
 
                     case 'WEBES':
                     case 'WEBPT':
-                    case 'WEBFI':
                         $wow_bcc = array("wow-es@valuebasket.com");
                         break;
 
                     case 'WEBFR':
                     case 'WEBBE':
-                    case 'WEBCH':
                         $wow_bcc = array("wow-fr@valuebasket.com");
                         break;
 
@@ -2066,18 +2062,12 @@ html;
                         $wow_bcc = array("wow-it@valuebasket.com");
                         break;
 
-                    case 'WEBRU':
                     case 'WEBPL':
                         $wow_bcc = array("wow-ru@valuebasket.com");
                         break;
 
                     case 'WEBGB':
-                    case 'WEBIE':
                         $wow_bcc = array("wow-gb@valuebasket.com", "valuebasket-com@b2b.reviews.co.uk");
-                        break;
-
-                    case 'WEBMT':
-                        $wow_bcc = array("wow-gb@valuebasket.com");
                         break;
 
                     default:
