@@ -54,7 +54,6 @@
         
         <div class="row">
              <div class="col-sm-6">
-                <?php if($_GET["debug"]=="true"){?>
                     <div id="discount_code">
                         <p class="rokkit_24"><?=_('Promo code')?></p>
                         <form name="fm_promo" id="promo_form" action="" class="form-holder" method="post">
@@ -88,7 +87,6 @@
                             });
                         });
                     </script>
-                    <?php } ?>
              </div>
             <div class="col-sm-4 col-sm-offset-2">
                 <table class="table table-bordered">
