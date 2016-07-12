@@ -5,7 +5,7 @@ class Order_reassessment extends MY_Controller
 
     private $appId = "ORD0014";
     private $lang_id = "en";
-    private $allowAccessList = ["Rachel", "russel", "eugenetse", "jessicawong"];
+    private $allowAccessList = ["Rachel", "russel", "eugenetse", "jessicawong", "joyce"];
 
 
     public function __construct()
