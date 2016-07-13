@@ -223,6 +223,8 @@ class AsendiaApiService extends CourierApiService implements CourierApiInterface
 							$courierOrder->Status ="success";
 							$this->courierOrderDto->setTrackingNo($courierOrder->TrackingNo);
 						}
+						if($courierOrder->ParcelId)
+						$this->courierOrderDto->setCourierParcelId($courierOrder->ParcelId);
 						if($courierOrder->Status)
 						$this->courierOrderDto->setCourierOrderStatus($courierOrder->Status);
 						if($courierOrder->Error)
