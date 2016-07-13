@@ -2563,6 +2563,7 @@ SQL;
         $option = ["limit" => -1];
         $this->db->from("so");
         $this->db->join("so_item_detail AS soid", "soid.so_no = so.so_no", "INNER");
+        $this->db->join("so_allocate AS soal", "soal.so_no = soid.so_no and soid.line_no = soal.line_no", "LEFT");
         $this->db->join("so_payment_status as sops", "so.so_no = sops.so_no", "LEFT");
         $this->db->join("client AS c", "c.id = so.client_id", "INNER");
         $this->db->join("product AS p", "p.sku = soid.item_sku", "INNER");
@@ -2571,15 +2572,28 @@ SQL;
         # so.hold_status = 15 means this is parent of order with split. We exclude parent and use each split child with concatenated so_no with split_so_group
         $this->db->where(["so.client_id" => $client_id, "so.status >= 2" => null, "so.hold_status != 15" => null, "p.cat_id NOT IN ($ca_catid_arr)" => null]);
 
-        return $this->commonGetList($classname, $where, $option, "
+        $selectStr = "
                 pbv.platform_currency_id currency_id,
                 so.platform_id,
                 so.so_no,
                 IF(ISNULL(so.split_so_group), so.so_no, CONCAT_WS('/',so.split_so_group,so.so_no)) AS join_split_so_no,
                 so.split_so_group,
                 c.id client_id,
-                so.order_create_date, so.delivery_name, p.sku, soid.prod_name, soid.amount,
-                so.status, so.refund_status, so.hold_status, so.dispatch_date, sops.payment_gateway_id");
+                so.order_create_date,
+                so.delivery_name,
+                p.sku,
+                soid.prod_name,
+                soid.amount,
+                so.status,
+                so.refund_status,
+                so.hold_status,
+                so.hold_reason,
+                so.dispatch_date,
+                soal.create_on allocate_date,
+                sops.payment_gateway_id
+            ";
+
+        return $this->commonGetList($classname, $where, $option, $selectStr);
     }
 
     public function getAccessoryCatidArr()

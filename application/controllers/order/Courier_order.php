@@ -171,7 +171,7 @@ class Courier_order extends MY_Controller
 					$barcode=$this->_courierFactoryModel->getBarcode($manifestBags[0]->BagNo);
 					$data["barcode"][$manifestBags[0]->BagNo]=$barcode;
 					if(empty($data["asendiaPpi"]))
-					$data["asendiaPpi"]=substr($_manifest_bags[0]->BagNo,0,4);
+					$data["asendiaPpi"]=substr($manifestBags[0]->BagNo,0,4);
 				}
 				$this->load->view('order/courier/manifest_label', $data);
 				return;
