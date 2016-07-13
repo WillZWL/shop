@@ -3,7 +3,7 @@ namespace ESG\Panther\Service;
 use ESG\Panther\Service\ReportService;
 
 
-class RptRefundReportService extends ReportService
+class RefundReportService extends ReportService
 {
     private $so_service;
 
@@ -17,54 +17,54 @@ class RptRefundReportService extends ReportService
     {
         $arr = $this->get_data($where);
         foreach ($arr as $obj) {
-            $refund_type = $obj->get_refund_type();
+            $refund_type = $obj->getRefundType();
             switch ($refund_type) {
                 case "R":
-                    $obj->set_refund_type("Refund");
+                    $obj->setRefundType("Refund");
                     break;
                 case "C":
-                    $obj->set_refund_type("CashBack");
+                    $obj->setRefundType("CashBack");
                     break;
                 default:
             }
 
-            $refund_status = $obj->get_refund_status();
+            $refund_status = $obj->getRefundStatus();
             switch ($refund_status) {
                 case "N":
-                    $obj->set_refund_status("NEW");
+                    $obj->setRefundStatus("NEW");
                     break;
                 case "CS":
                     break;
                 case "LG":
-                    $obj->set_refund_status("LOGISTICS");
+                    $obj->setRefundStatus("LOGISTICS");
                     break;
                 case "AC":
-                    $obj->set_refund_status("ACCOUNT");
+                    $obj->setRefundStatus("ACCOUNT");
                     break;
                 case "D":
-                    $obj->set_refund_status("DENIED");
+                    $obj->setRefundStatus("DENIED");
                     break;
                 case "C":
-                    $obj->set_refund_status("COMPLETED");
+                    $obj->setRefundStatus("COMPLETED");
                     break;
                 default:
             }
 
-            if ($obj->get_reason_cat() == "O") {
-                if ($rh_obj = $this->get_history_dao()->get(array("refund_id" => $obj->get_refund_id(), "status" => "N"))) {
-                    $obj->set_description("Others: " . $rh_obj->get_notes());
+            if ($obj->getReasonCat() == "O") {
+                if ($rh_obj = $this->getDao('RefundHistory')->get(array("refund_id" => $obj->getRefundId(), "status" => "N"))) {
+                    $obj->setReasonCat("Others: " . $rh_obj->getNotes());
                 }
             }
 
             $search = array(chr(10), chr(13));
             $replace = array(" ", " ");
-            $refund_reason = str_replace($search, $replace, $obj->get_description());
+            $refund_reason = str_replace($search, $replace, $obj->getDescription());
             $refund_reason = trim($refund_reason);
-            $obj->set_description($refund_reason);
+            $obj->setDescription($refund_reason);
 
-            $refund_comment = str_replace($search, $replace, $obj->get_notes());
+            $refund_comment = str_replace($search, $replace, $obj->getNotes());
             $refund_comment = trim($refund_comment);
-            $obj->set_notes($refund_comment);
+            $obj->setNotes($refund_comment);
         }
         return $this->convert($arr);
     }
@@ -75,11 +75,6 @@ class RptRefundReportService extends ReportService
         $res = $this->getDao('Refund')->getRefundReportContent($where, array("limit" => -1));
 
         return $res;
-    }
-
-    public function get_history_dao()
-    {
-        return $this->history_dao;
     }
 
     protected function get_default_vo2xml_mapping()

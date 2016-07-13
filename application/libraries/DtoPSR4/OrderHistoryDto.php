@@ -7,6 +7,7 @@ class OrderHistoryDto
     private $client_id;
     private $order_create_date;
     private $delivery_name;
+    private $allocate_date;
     private $dispatch_date;
     private $sku;
     private $prod_name;
@@ -14,6 +15,7 @@ class OrderHistoryDto
     private $status;
     private $refund_status;
     private $hold_status;
+    private $hold_reason;
     private $net_diff_status;
     private $payment_gateway_id;
     private $bill_country_id;
@@ -79,6 +81,16 @@ class OrderHistoryDto
     public function getDeliveryName()
     {
         return $this->delivery_name;
+    }
+
+    public function setAllocateDate($allocate_date)
+    {
+        $this->allocate_date = $allocate_date;
+    }
+
+    public function getAllocateDate()
+    {
+        return $this->allocate_date;
     }
 
     public function setDispatchDate($dispatch_date)
@@ -149,6 +161,16 @@ class OrderHistoryDto
     public function getHoldStatus()
     {
         return $this->hold_status;
+    }
+
+    public function setHoldReason($hold_reason)
+    {
+        $this->hold_reason = $hold_reason;
+    }
+
+    public function getHoldReason()
+    {
+        return $this->hold_reason;
     }
 
     public function setNetDiffStatus($net_diff_status)
