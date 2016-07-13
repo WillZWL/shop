@@ -57,7 +57,14 @@
 					<td><?=$order_arr['delivery_name']?></td>
 					<td><?=$order_arr['product_name']?></td>
 					<td><?=$order_arr['total_amount']?></td>
-					<td><b><?=$order_arr['order_status']?></b><br /><?=$order_arr['status_desc']?></td>
+					<td>
+						<?php if ($order_arr['order_status']) : ?>
+							<b><?= _($order_arr['order_status']) ?></b><br />
+						<?php endif; ?>
+						<?php if ($order_arr['status_desc']) : ?>
+							<?= _($order_arr['status_desc']) ?>
+						<?php endif; ?>
+					</td>
 				</tr>
 				<?php
 					endforeach;
