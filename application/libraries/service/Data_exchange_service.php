@@ -428,7 +428,8 @@ class Xml_to_csv implements out_converter
                             $rsvalue = trim($rsvalue);
                             $spec_value = trim($spec_value);
                             $mapping[] = array($rskey, $rsvalue, $spec_value);
-                            $heading[] = strpos((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
+//                            $heading[] = strpos((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
+                            $heading[] = strpos((string)$rsvalue, '"') === FALSE && strpos((string)$rsvalue, $this->delimiter) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
                         }
                     }
                 } else {
@@ -438,7 +439,7 @@ class Xml_to_csv implements out_converter
                 $container = $this->map_file["container"];
                 foreach ($this->map_file["mapping"] as $rskey => $rsvalue) {
                     $mapping[] = array($rskey, $rsvalue);
-                    $heading[] = strpos((string)$rsvalue, array('"', $this->delimiter)) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
+                    $heading[] = strpos((string)$rsvalue, '"') === FALSE && strpos((string)$rsvalue, $this->delimiter) === FALSE ? $rsvalue : '"' . str_replace('"', '""', $rsvalue) . '"';
                 }
             }
         }
