@@ -9,16 +9,11 @@ class Display_banner extends MY_Controller
     {
         parent::__construct();
         $this->load->helper(array('form', 'url', 'directory', 'notice'));
-        $this->load->model('marketing/display_banner_model');
-        $this->load->model('marketing/display_category_banner_model');
-        $this->load->library('service/authorization_service');
-        $this->load->library('service/context_config_service');
-        $this->load->library('service/country_service');
     }
 
     public function index()
     {
-        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;
         $this->load->view('marketing/display_banner/index', $data);
     }
@@ -28,17 +23,16 @@ class Display_banner extends MY_Controller
         return $this->appId;
     }
 
-    public function _get_lang_id()
+    public function getLangId()
     {
         return $this->lang_id;
     }
 
-    public function get_list()
+    public function getList()
     {
-        $data["catlist"] = $this->display_category_banner_model->get_list('1', '0');
+        $data["catlist"] = $this->sc['DisplayCategoryBanner']->getListWithName('1', '0');
         $data["level"] = 1;
-
-        $data["objlist"] = $this->display_banner_model->get_display_list(array("banner_status" => 1));
+        $data["objlist"] = $this->sc['DisplayBanner']->getDisplayList(array("banner_status" => 1));
         $this->load->view('marketing/display_banner/list', $data);
     }
 
@@ -47,9 +41,9 @@ class Display_banner extends MY_Controller
         if ($this->input->get('id') == "" || $this->input->get('level') == "" || $this->input->get('display_id') == "") {
             return;
         } else {
-            $data["catlist"] = $this->display_category_banner_model->get_list($this->input->get('level'), $this->input->get('id'));
+            $data["catlist"] = $this->sc['DisplayCategoryBanner']->getListWithName($this->input->get('level'), $this->input->get('id'));
             $data["level"] = $this->input->get('level');
-            $objlist = $this->display_banner_model->get_display_list(array("id" => $this->input->get('display_id'), "banner_status" => 1));
+            $objlist = $this->sc['DisplayBanner']->getDisplayList(array("id" => $this->input->get('display_id'), "banner_status" => 1));
             $objlist = (array)$objlist;
             $data['banner_obj'] = $objlist[0];
             $this->load->view('marketing/display_banner/next', $data);
@@ -58,45 +52,44 @@ class Display_banner extends MY_Controller
 
     public function to_publish($catid = "")
     {
-        define('GRAPHIC_PH', $this->context_config_service->value_of("default_graphic_path"));
+        define('GRAPHIC_PH', $this->sc['ContextConfig']->valueOf("default_graphic_path"));
         $_SESSION["LISTPAGE"] = $_SERVER['QUERY_STRING'];
-
         $item = array();
         $item = explode('/', $_SERVER['QUERY_STRING']);
         $display_id = $item[6];
         $country_id = $item[7];
         $lang_id = $item[8];
         if ($country_id != "ALL") {
-            if ($country_obj = $this->display_banner_model->get_country(array("id" => $country_id))) {
-                $lang_id = $country_obj->get_language_id();
-                $pv_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("usage" => "PV", "display_id" => $display_id, "country_id" => $country_id, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
-                $pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("usage" => "PB", "display_id" => $display_id, "country_id" => $country_id, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
+            if ($country_obj = $this->sc['Country']->get(array("id" => $country_id))) {
+                $lang_id = $country_obj->getLanguageId();
+                $pv_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("usage" => "PV", "display_id" => $display_id, "country_id" => $country_id, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
+                $pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("usage" => "PB", "display_id" => $display_id, "country_id" => $country_id, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
             }
         } else {
             $country_id = "";
-            $pv_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("usage" => "PV", "display_id" => $display_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
-            $pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("usage" => "PB", "display_id" => $display_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
+            $pv_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("usage" => "PV", "display_id" => $display_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
+            $pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("usage" => "PB", "display_id" => $display_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
         }
         if ($country_id) {
-            $current_pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PB", "country_id" => $country_id, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
-            $num_of_current_pb_dbc_list = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PB", "country_id" => $country_id, "lang_id" => $lang_id));
+            $current_pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PB", "country_id" => $country_id, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
+            $num_of_current_pb_dbc_list = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PB", "country_id" => $country_id, "lang_id" => $lang_id));
         } else {
-            $current_pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
-            $num_of_current_pb_dbc_list = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $lang_id));
+            $current_pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "position_id ASC"));
+            $num_of_current_pb_dbc_list = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $lang_id));
         }
-        $default_pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => "en"), array("orderby" => "position_id ASC"));
+        $default_pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => "en"), array("orderby" => "position_id ASC"));
         if ($num_of_current_pb_dbc_list == 0) {
             foreach ($default_pb_dbc_list AS $d_pb_dbc_obj) {
-                $c_pb_dbc_obj = $this->display_banner_model->get_display_banner_config();
-                $c_pb_dbc_obj->set_display_id($d_pb_dbc_obj->get_display_id());
-                $c_pb_dbc_obj->set_usage($d_pb_dbc_obj->get_usage());
-                $c_pb_dbc_obj->set_country_id($country_id);
-                $c_pb_dbc_obj->set_lang_id($lang_id);
-                $c_pb_dbc_obj->set_position_id($d_pb_dbc_obj->get_position_id());
-                $c_pb_dbc_obj->set_banner_type($d_pb_dbc_obj->get_banner_type());
-                $c_pb_dbc_obj->set_height($d_pb_dbc_obj->get_height());
-                $c_pb_dbc_obj->set_width($d_pb_dbc_obj->get_width());
-                if (!$this->display_banner_model->insert_display_banner_config($c_pb_dbc_obj)) {
+                $c_pb_dbc_obj = $this->sc['DisplayBanner']->getDao('DisplayBannerConfig')->get();
+                $c_pb_dbc_obj->setDisplayId($d_pb_dbc_obj->getDisplayId());
+                $c_pb_dbc_obj->setUsage($d_pb_dbc_obj->getUsage());
+                $c_pb_dbc_obj->setCountryId($country_id);
+                $c_pb_dbc_obj->setLangId($lang_id);
+                $c_pb_dbc_obj->setPositionId($d_pb_dbc_obj->getPositionId());
+                $c_pb_dbc_obj->setBannerType($d_pb_dbc_obj->getBannerType());
+                $c_pb_dbc_obj->setHeight($d_pb_dbc_obj->getHeight());
+                $c_pb_dbc_obj->setWidth($d_pb_dbc_obj->getWidth());
+                if (!$this->sc['DisplayBanner']->insertDisplayBannerConfig($c_pb_dbc_obj)) {
                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                 }
             }
@@ -104,117 +97,117 @@ class Display_banner extends MY_Controller
 
         if (!$_SESSION["NOTICE"]) {
             foreach ($pv_dbc_list AS $pv_dbc_obj) {
-                $pv_display_id = $pv_dbc_obj->get_display_id();
-                $pv_country_id = $pv_dbc_obj->get_country_id();
-                $pv_lang_id = $pv_dbc_obj->get_lang_id();
-                $pv_position_id = $pv_dbc_obj->get_position_id();
+                $pv_display_id = $pv_dbc_obj->getDisplayId();
+                $pv_country_id = $pv_dbc_obj->getCountryId();
+                $pv_lang_id = $pv_dbc_obj->getLangId();
+                $pv_position_id = $pv_dbc_obj->getPositionId();
                 if ($pv_country_id) {
-                    $pb_dbc_obj = $this->display_banner_model->get_display_banner_config(array("usage" => "PB", "display_id" => $pv_display_id, "country_id" => $pv_country_id, "lang_id" => $pv_lang_id, "position_id" => $pv_position_id));
+                    $pb_dbc_obj = $this->sc['DisplayBanner']->getDao('DisplayBannerConfig')->get(array("usage" => "PB", "display_id" => $pv_display_id, "country_id" => $pv_country_id, "lang_id" => $pv_lang_id, "position_id" => $pv_position_id));
                 } else {
-                    $pb_dbc_obj = $this->display_banner_model->get_display_banner_config(array("usage" => "PB", "display_id" => $pv_display_id, "country_id IS NULL" => NULL, "lang_id" => $pv_lang_id, "position_id" => $pv_position_id));
+                    $pb_dbc_obj = $this->sc['DisplayBanner']->getDao('DisplayBannerConfig')->get(array("usage" => "PB", "display_id" => $pv_display_id, "country_id IS NULL" => NULL, "lang_id" => $pv_lang_id, "position_id" => $pv_position_id));
                 }
-                $pb_dbc_obj->set_banner_type($pv_dbc_obj->get_banner_type());
-                $pb_dbc_obj->set_height($pv_dbc_obj->get_height());
-                $pb_dbc_obj->set_width($pv_dbc_obj->get_width());
-                $pb_dbc_obj->set_status(1);
-                if ($this->display_banner_model->update_display_banner_config($pb_dbc_obj) === FALSE) {
+                $pb_dbc_obj->setBannerType($pv_dbc_obj->getBannerType());
+                $pb_dbc_obj->setHeight($pv_dbc_obj->getHeight());
+                $pb_dbc_obj->setWidth($pv_dbc_obj->getWidth());
+                $pb_dbc_obj->setStatus(1);
+                if ($this->sc['DisplayBanner']->updateDisplayBannerConfig($pb_dbc_obj) === FALSE) {
                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                 }
             }
             if (!$_SESSION["NOTICE"]) {
                 foreach ($pb_dbc_list AS $pb_dbc_obj) {
-                    $display_banner_config_id = $pb_dbc_obj->get_id();
-                    $banner_type = $pb_dbc_obj->get_banner_type();
-                    $position_id = $pb_dbc_obj->get_position_id();
+                    $display_banner_config_id = $pb_dbc_obj->getId();
+                    $banner_type = $pb_dbc_obj->getBannerType();
+                    $position_id = $pb_dbc_obj->getPositionId();
                     if ($pv_country_id) {
                         if ($catid) {
-                            $pv_list = $this->display_category_banner_model->get_display_banner_list(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
+                            $pv_list = $this->sc['DisplayCategoryBanner']->getDisplayBannerList(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
                         } else {
-                            $pv_list = $this->display_banner_model->get_display_banner_list(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
+                            $pv_list = $this->sc['DisplayBanner']->getDisplayBannerList(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
                         }
                     } else {
                         if ($catid) {
-                            $pv_list = $this->display_category_banner_model->get_display_banner_list(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
+                            $pv_list = $this->sc['DisplayCategoryBanner']->getDisplayBannerList(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
                         } else {
-                            $pv_list = $this->display_banner_model->get_display_banner_list(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
+                            $pv_list = $this->sc['DisplayBanner']->getDisplayBannerList(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id), array("orderby" => "slide_id ASC"));
                         }
                     }
                     if ($pv_list) {
                         foreach ($pv_list AS $pv_obj) {
                             $replace_flash = $replace_image = TRUE;
-                            $slide_id = $pv_obj->get_slide_id();
+                            $slide_id = $pv_obj->getSlideId();
                             if ($pv_country_id) {
                                 if ($catid) {
-                                    $pb_obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id, "slide_id" => $slide_id));
+                                    $pb_obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id, "slide_id" => $slide_id));
                                 } else {
-                                    $pb_obj = $this->display_banner_model->get_display_banner(array("usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id, "slide_id" => $slide_id));
+                                    $pb_obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $pv_country_id, "lang_id" => $lang_id, "slide_id" => $slide_id));
                                 }
                             } else {
                                 if ($catid) {
-                                    $pb_obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id, "slide_id" => $slide_id));
+                                    $pb_obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id, "slide_id" => $slide_id));
                                 } else {
-                                    $pb_obj = $this->display_banner_model->get_display_banner(array("usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id, "slide_id" => $slide_id));
+                                    $pb_obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PB", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $lang_id, "slide_id" => $slide_id));
                                 }
                             }
 
-                            $pv_image_id = $pv_obj->get_image_id();
-                            $pv_flash_id = $pv_obj->get_flash_id();
+                            $pv_image_id = $pv_obj->getImageId();
+                            $pv_flash_id = $pv_obj->getFlashId();
                             if ($pb_obj) {
-                                $pb_action = "update_display_banner";
-                                $banner_type = $pb_dbc_obj->get_banner_type();
-                                $pb_flash_id = $pb_obj->get_flash_id();
-                                $pb_image_id = $pb_obj->get_image_id();
+                                $pb_action = "update";
+                                $banner_type = $pb_dbc_obj->getBannerType();
+                                $pb_flash_id = $pb_obj->getFlashId();
+                                $pb_image_id = $pb_obj->getImageId();
                                 if ($pb_flash_id) {
-                                    $pb_flash_graphic = $this->display_banner_model->get_graphic(array("id" => $pb_flash_id));
+                                    $pb_flash_graphic = $this->sc['DisplayBanner']->getGraphic(array("id" => $pb_flash_id));
                                     if ($pv_flash_id) {
-                                        $pv_flash_graphic = $this->display_banner_model->get_graphic(array("id" => $pv_flash_id));
-                                        if ($pv_flash_graphic->get_file() != $pb_flash_graphic->get_file()) {
+                                        $pv_flash_graphic = $this->sc['DisplayBanner']->getGraphic(array("id" => $pv_flash_id));
+                                        if ($pv_flash_graphic->getFile() != $pb_flash_graphic->getFile()) {
                                             if ($catid) {
-                                                $db_num_rows = $this->display_category_banner_model->get_db_num_rows(array("flash_id" => $pb_flash_id));
+                                                $db_num_rows = $this->sc['DisplayCategoryBanner']->getDbNumRows(array("flash_id" => $pb_flash_id));
                                             } else {
-                                                $db_num_rows = $this->display_banner_model->get_db_num_rows(array("flash_id" => $pb_flash_id));
+                                                $db_num_rows = $this->sc['DisplayBanner']->getDbNumRows(array("flash_id" => $pb_flash_id));
                                             }
                                             if ($db_num_rows == 1) {
-                                                @unlink(GRAPHIC_PH . $pb_flash_graphic->get_location() . $pb_flash_graphic->get_file());
-                                                $pb_flash_graphic->set_status(0);
-                                                if (!$this->display_banner_model->update_graphic($pb_flash_graphic)) {
+                                                @unlink(GRAPHIC_PH . $pb_flash_graphic->getLocation() . $pb_flash_graphic->getFile());
+                                                $pb_flash_graphic->setStatus(0);
+                                                if (!$this->sc['DisplayBanner']->updateGraphic($pb_flash_graphic)) {
                                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                                 }
-                                                $pb_obj->set_flash_id(NULL);
+                                                $pb_obj->setFlashId(NULL);
                                             }
                                         } else {
                                             $replace_flash = FALSE;
                                         }
                                     } else {
                                         if ($catid) {
-                                            $db_num_rows = $this->display_category_banner_model->get_db_num_rows(array("flash_id" => $pb_flash_id));
+                                            $db_num_rows = $this->sc['DisplayCategoryBanner']->getDbNumRows(array("flash_id" => $pb_flash_id));
                                         } else {
-                                            $db_num_rows = $this->display_banner_model->get_db_num_rows(array("flash_id" => $pb_flash_id));
+                                            $db_num_rows = $this->sc['DisplayBanner']->getDbNumRows(array("flash_id" => $pb_flash_id));
                                         }
                                         if ($db_num_rows == 1) {
-                                            @unlink(GRAPHIC_PH . $pb_flash_graphic->get_location() . $pb_flash_graphic->get_file());
-                                            $pb_flash_graphic->set_status(0);
-                                            if (!$this->display_banner_model->update_graphic($pb_flash_graphic)) {
+                                            @unlink(GRAPHIC_PH . $pb_flash_graphic->getLocation() . $pb_flash_graphic->getFile());
+                                            $pb_flash_graphic->setStatus(0);
+                                            if (!$this->sc['DisplayBanner']->updateGraphic($pb_flash_graphic)) {
                                                 $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                             }
-                                            $pb_obj->set_flash_id(NULL);
+                                            $pb_obj->setFlashId(NULL);
                                         }
                                     }
                                 }
                                 if ($pb_image_id) {
-                                    $pb_image_graphic = $this->display_banner_model->get_graphic(array("id" => $pb_image_id));
+                                    $pb_image_graphic = $this->sc['DisplayBanner']->getGraphic(array("id" => $pb_image_id));
                                     if ($pv_image_id) {
-                                        $pv_image_graphic = $this->display_banner_model->get_graphic(array("id" => $pv_image_id));
-                                        if ($pv_image_graphic->get_file() != $pb_image_graphic->get_file()) {
+                                        $pv_image_graphic = $this->sc['DisplayBanner']->getGraphic(array("id" => $pv_image_id));
+                                        if ($pv_image_graphic->getFile() != $pb_image_graphic->getFile()) {
                                             if ($catid) {
-                                                $db_num_rows = $this->display_category_banner_model->get_db_num_rows(array("image_id" => $pb_image_id));
+                                                $db_num_rows = $this->sc['DisplayCategoryBanner']->getDbNumRows(array("image_id" => $pb_image_id));
                                             } else {
-                                                $db_num_rows = $this->display_banner_model->get_db_num_rows(array("image_id" => $pb_image_id));
+                                                $db_num_rows = $this->sc['DisplayBanner']->getDbNumRows(array("image_id" => $pb_image_id));
                                             }
                                             if ($db_num_rows == 1) {
-                                                @unlink(GRAPHIC_PH . $pb_image_graphic->get_location() . $pb_image_graphic->get_file());
-                                                $pb_image_graphic->set_status(0);
-                                                if (!$this->display_banner_model->update_graphic($pb_image_graphic)) {
+                                                @unlink(GRAPHIC_PH . $pb_image_graphic->getLocation() . $pb_image_graphic->getFile());
+                                                $pb_image_graphic->setStatus(0);
+                                                if (!$this->sc['DisplayBanner']->updateGraphic($pb_image_graphic)) {
                                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                                 }
                                                 $pb_obj->set_image_id(NULL);
@@ -224,15 +217,15 @@ class Display_banner extends MY_Controller
                                         }
                                     } else {
                                         if ($catid) {
-                                            $db_num_rows = $this->display_category_banner_model->get_db_num_rows(array("image_id" => $pb_image_id));
+                                            $db_num_rows = $this->sc['DisplayCategoryBanner']->getDbNumRows(array("image_id" => $pb_image_id));
                                         } else {
-                                            $db_num_rows = $this->display_banner_model->get_db_num_rows(array("image_id" => $pb_image_id));
+                                            $db_num_rows = $this->sc['DisplayBanner']->getDbNumRows(array("image_id" => $pb_image_id));
                                         }
                                         if ($db_num_rows == 1) {
-                                            $pb_image_graphic = $this->display_banner_model->get_graphic(array("id" => $pb_image_id));
-                                            @unlink(GRAPHIC_PH . $pb_image_graphic->get_location() . $pb_image_graphic->get_file());
-                                            $pb_image_graphic->set_status(0);
-                                            if (!$this->display_banner_model->update_graphic($pb_image_graphic)) {
+                                            $pb_image_graphic = $this->sc['DisplayBanner']->getGraphic(array("id" => $pb_image_id));
+                                            @unlink(GRAPHIC_PH . $pb_image_graphic->getLocation() . $pb_image_graphic->getFile());
+                                            $pb_image_graphic->setStatus(0);
+                                            if (!$this->sc['DisplayBanner']->updateGraphic($pb_image_graphic)) {
                                                 $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                             }
                                             $pb_obj->set_image_id(NULL);
@@ -240,73 +233,72 @@ class Display_banner extends MY_Controller
                                     }
                                 }
                             } else {
-                                $pb_action = "insert_display_banner";
+                                $pb_action = "insert";
                                 if ($catid) {
-                                    $pb_obj = $this->display_category_banner_model->get_display_banner();
-                                    $pb_obj->set_catid($catid);
+                                    $pb_obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner();
+                                    $pb_obj->setCatid($catid);
                                 } else {
-                                    $pb_obj = $this->display_banner_model->get_display_banner();
+                                    $pb_obj = $this->sc['DisplayBanner']->getDisplayBanner();
                                 }
-                                $pb_obj->set_display_banner_config_id($pv_obj->get_display_banner_config_id());
-                                $pb_obj->set_display_id($pv_obj->get_display_id());
-                                $pb_obj->set_position_id($pv_obj->get_position_id());
-                                $pb_obj->set_slide_id($pv_obj->get_slide_id());
-                                $pb_obj->set_country_id($pv_obj->get_country_id());
-                                $pb_obj->set_lang_id($pv_obj->get_lang_id());
+                                $pb_obj->setDisplayBannerConfigId($pv_obj->getDisplayBannerConfigId());
+                                $pb_obj->setDisplayId($pv_obj->getDisplayId());
+                                $pb_obj->setPositionId($pv_obj->getPositionId());
+                                $pb_obj->setSlideId($pv_obj->getSlideId());
+                                $pb_obj->setCountryId($pv_obj->getCountryId());
+                                $pb_obj->setLangId($pv_obj->getLangId());
                             }
-                            $pb_obj->set_time_interval($pv_obj->get_time_interval());
-                            $pb_obj->set_usage("PB");
-                            $pb_obj->set_link_type($pv_obj->get_link_type());
-                            $pb_obj->set_height($pv_obj->get_height());
-                            $pb_obj->set_width($pv_obj->get_width());
-                            $pb_obj->set_link($pv_obj->get_link());
-                            $pb_obj->set_priority($pv_obj->get_priority());
-                            $pb_obj->set_status($pv_obj->get_status());
+                            $pb_obj->setTimeInterval($pv_obj->getTimeInterval());
+                            $pb_obj->setUsage("PB");
+                            $pb_obj->setLinkType($pv_obj->getLinkType());
+                            $pb_obj->setHeight($pv_obj->getHeight());
+                            $pb_obj->setWidth($pv_obj->getWidth());
+                            $pb_obj->setLink($pv_obj->getLink());
+                            $pb_obj->setPriority($pv_obj->getPriority());
+                            $pb_obj->setStatus($pv_obj->getStatus());
                             if ($pv_image_id && $replace_image) {
-                                $graphic_obj = $this->display_banner_model->get_graphic(array("id" => $pv_image_id));
-                                $pv_image_link = GRAPHIC_PH . $graphic_obj->get_location() . $graphic_obj->get_file();
-                                @copy($pv_image_link, GRAPHIC_PH . "adbanner/publish/" . $graphic_obj->get_file());
+                                $graphic_obj = $this->sc['DisplayBanner']->getGraphic(array("id" => $pv_image_id));
+                                $pv_image_link = GRAPHIC_PH . $graphic_obj->getLocation() . $graphic_obj->getFile();
+                                @copy($pv_image_link, GRAPHIC_PH . "adbanner/publish/" . $graphic_obj->getFile());
 
-                                $graphic_id = $this->display_banner_model->graphic_seq_next_val();
-                                $this->display_banner_model->update_graphic_seq($graphic_id);
-
-                                $new_graphic_obj = $this->display_banner_model->get_graphic();
-                                $new_graphic_obj->set_id($graphic_id);
-                                $new_graphic_obj->set_type("image");
-                                $new_graphic_obj->set_location("adbanner/publish/");
-                                $new_graphic_obj->set_file($graphic_obj->get_file());
-                                $new_graphic_obj->set_status(1);
-                                if (!$this->display_banner_model->insert_graphic($new_graphic_obj)) {
+                                $graphic_id = $this->sc['DisplayBanner']->graphic_seq_next_val();
+                                $this->sc['DisplayBanner']->updateGraphic_seq($graphic_id);
+                                $new_graphic_obj = $this->sc['DisplayBanner']->getGraphic();
+                                $new_graphic_obj->setId($graphic_id);
+                                $new_graphic_obj->setType("image");
+                                $new_graphic_obj->setLocation("adbanner/publish/");
+                                $new_graphic_obj->setFile($graphic_obj->getFile());
+                                $new_graphic_obj->setStatus(1);
+                                if (!$this->sc['DisplayBanner']->insertGraphic($new_graphic_obj)) {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                 }
                                 $pb_obj->set_image_id($graphic_id);
                             }
                             if ($pv_flash_id && $banner_type == "F" && $replace_flash) {
-                                $graphic_obj = $this->display_banner_model->get_graphic(array("id" => $pv_flash_id));
-                                $pv_flash_link = GRAPHIC_PH . $graphic_obj->get_location() . $graphic_obj->get_file();
-                                @copy($pv_flash_link, GRAPHIC_PH . "adbanner/publish/" . $graphic_obj->get_file());
+                                $graphic_obj = $this->sc['DisplayBanner']->getGraphic(array("id" => $pv_flash_id));
+                                $pv_flash_link = GRAPHIC_PH . $graphic_obj->getLocation() . $graphic_obj->getFile();
+                                @copy($pv_flash_link, GRAPHIC_PH . "adbanner/publish/" . $graphic_obj->getFile());
 
-                                $graphic_id = $this->display_banner_model->graphic_seq_next_val();
-                                $this->display_banner_model->update_graphic_seq($graphic_id);
+                                $graphic_id = $this->sc['DisplayBanner']->graphic_seq_next_val();
+                                $this->sc['DisplayBanner']->updateGraphic_seq($graphic_id);
 
-                                $new_graphic_obj = $this->display_banner_model->get_graphic();
-                                $new_graphic_obj->set_id($graphic_id);
-                                $new_graphic_obj->set_type("flash");
-                                $new_graphic_obj->set_location("adbanner/publish/");
-                                $new_graphic_obj->set_file($graphic_obj->get_file());
-                                $new_graphic_obj->set_status(1);
-                                if (!$this->display_banner_model->insert_graphic($new_graphic_obj)) {
+                                $new_graphic_obj = $this->sc['DisplayBanner']->getGraphic();
+                                $new_graphic_obj->setId($graphic_id);
+                                $new_graphic_obj->setType("flash");
+                                $new_graphic_obj->setLocation("adbanner/publish/");
+                                $new_graphic_obj->setFile($graphic_obj->getFile());
+                                $new_graphic_obj->setStatus(1);
+                                if (!$this->sc['DisplayBanner']->insertGraphic($new_graphic_obj)) {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                 }
-                                $pb_obj->set_flash_id($graphic_id);
+                                $pb_obj->setFlashId($graphic_id);
                             }
 
                             if ($catid) {
-                                if (!$this->display_category_banner_model->$pb_action($pb_obj)) {
+                                if (!$this->sc['DisplayCategoryBanner']->$pb_action($pb_obj)) {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                 }
                             } else {
-                                if (!$this->display_banner_model->$pb_action($pb_obj)) {
+                                if (!$this->sc['DisplayBanner']->$pb_action($pb_obj)) {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                 }
                             }
@@ -318,15 +310,15 @@ class Display_banner extends MY_Controller
         redirect($_SESSION["LISTPAGE"] . "?catid=$catid");
     }
 
-    public function view($display_id, $country_id = "", $lang_id = "")
+    public function view($display_id = '', $country_id = "", $lang_id = "")
     {
-        define('GRAPHIC_PH', $this->context_config_service->value_of("default_graphic_path"));
+        define('GRAPHIC_PH', $this->sc['ContextConfig']->valueOf("default_graphic_path"));
 
         $catid = $this->input->get('catid');
 
         if ($country_id != "ALL") {
-            if ($country_obj = $this->display_banner_model->get_country(array("id" => $country_id))) {
-                $selected_lang_id = $country_obj->get_language_id();
+            if ($country_obj = $this->sc['Country']->getDao('Country')->get(array("id" => $country_id))) {
+                $selected_lang_id = $country_obj->getLanguageId();
                 $selected_country_id = $country_id;
             }
         } else {
@@ -347,26 +339,25 @@ class Display_banner extends MY_Controller
             $width = $this->input->post('width');
 
             if ($selected_country_id) {
-                $current_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id), array("orderby" => "position_id ASC"));
-                $num_of_current_dbc_list = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
+                $current_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id), array("orderby" => "position_id ASC"));
+                $num_of_current_dbc_list = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
             } else {
-                $current_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id), array("orderby" => "position_id ASC"));
-                $num_of_current_dbc_list = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                $current_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id), array("orderby" => "position_id ASC"));
+                $num_of_current_dbc_list = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
             }
-            $default_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => "en"), array("orderby" => "position_id ASC"));
-            //isnert display banner config record(lang_id == "en")
+            $default_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => "en"), array("orderby" => "position_id ASC"));
             if ($num_of_current_dbc_list == 0) {
                 foreach ($default_dbc_list AS $d_dbc_obj) {
-                    $c_dbc_obj = $this->display_banner_model->get_display_banner_config();
-                    $c_dbc_obj->set_display_id($d_dbc_obj->get_display_id());
-                    $c_dbc_obj->set_usage($d_dbc_obj->get_usage());
-                    $c_dbc_obj->set_country_id($selected_country_id);
-                    $c_dbc_obj->set_lang_id($selected_lang_id);
-                    $c_dbc_obj->set_position_id($d_dbc_obj->get_position_id());
-                    $c_dbc_obj->set_banner_type($d_dbc_obj->get_banner_type());
-                    $c_dbc_obj->set_height($d_dbc_obj->get_height());
-                    $c_dbc_obj->set_width($d_dbc_obj->get_width());
-                    if (!$this->display_banner_model->insert_display_banner_config($c_dbc_obj)) {
+                    $c_dbc_obj = $this->sc['DisplayBanner']->getDao('DisplayBannerConfig')->get();
+                    $c_dbc_obj->setDisplayId($d_dbc_obj->getDisplayId());
+                    $c_dbc_obj->setUsage($d_dbc_obj->getUsage());
+                    $c_dbc_obj->setCountryId($selected_country_id);
+                    $c_dbc_obj->setLangId($selected_lang_id);
+                    $c_dbc_obj->setPositionId($d_dbc_obj->getPositionId());
+                    $c_dbc_obj->setBannerType($d_dbc_obj->getBannerType());
+                    $c_dbc_obj->setHeight($d_dbc_obj->getHeight());
+                    $c_dbc_obj->setWidth($d_dbc_obj->getWidth());
+                    if (!$this->sc['DisplayBanner']->insertDisplayBannerConfig($c_dbc_obj)) {
                         $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                     }
                 }
@@ -374,67 +365,66 @@ class Display_banner extends MY_Controller
 
             if (!$_SESSION["NOTICE"]) {
                 if ($selected_country_id) {
-                    $dbc_obj = $this->display_banner_model->get_display_banner_config(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
+                    $dbc_obj = $this->sc['DisplayBanner']->getDao('DisplayBannerConfig')->get(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
                 } else {
-                    $dbc_obj = $this->display_banner_model->get_display_banner_config(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                    $dbc_obj = $this->sc['DisplayBanner']->getDao('DisplayBannerConfig')->get(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
                 }
-                $dbc_obj->set_banner_type($banner_type);
-                if ($this->display_banner_model->update_display_banner_config($dbc_obj) === FALSE) {
+                $dbc_obj->setBannerType($banner_type);
+                if ($this->sc['DisplayBanner']->updateDisplayBannerConfig($dbc_obj) === FALSE) {
                     $_SESSION["NOTICE"] .= "Error: " . __LINE__ . ": " . $this->db->_error_message();
                 }
 
-                $dbc_id = $dbc_obj->get_id();
+                $dbc_id = $dbc_obj->getId();
 
                 if (!$_SESSION["NOTICE"]) {
-                    $pv_action = "update_display_banner";
+                    $pv_action = "update";
 
                     if ($selected_country_id) {
                         if ($catid) {
-                            $db_obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
+                            $db_obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
                         } else {
-                            $db_obj = $this->display_banner_model->get_display_banner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
+                            $db_obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id" => $selected_country_id, "lang_id" => $selected_lang_id));
                         }
                     } else {
                         if ($catid) {
-                            $db_obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                            $db_obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
                         } else {
-                            $db_obj = $this->display_banner_model->get_display_banner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                            $db_obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $slide_id, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
                         }
                     }
 
                     if ($banner_type == "F" || $banner_type == "I") {
                         for ($no = 1; $no <= 3; $no++) {
-                            //disable other slide
 
                             if ($selected_country_id) {
                                 if ($catid) {
-                                    $obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
                                 } else {
-                                    $obj = $this->display_banner_model->get_display_banner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
                                 }
                             } else {
                                 if ($catid) {
-                                    $obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
                                 } else {
-                                    $obj = $this->display_banner_model->get_display_banner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
                                 }
                             }
                             if ($obj) {
-                                $obj->set_status(0);
-                                if ($obj->get_image_id()) {
-                                    $graphic_obj = $this->display_banner_model->get_graphic(array("id" => $obj->get_image_id()));
-                                    @unlink(GRAPHIC_PH . $graphic_obj->get_location() . $graphic_obj->get_file());
-                                    $graphic_obj->set_status(0);
-                                    $this->display_banner_model->update_graphic($graphic_obj);
+                                $obj->setStatus(0);
+                                if ($obj->getImageId()) {
+                                    $graphic_obj = $this->sc['DisplayBanner']->getGraphic(array("id" => $obj->getImageId()));
+                                    @unlink(GRAPHIC_PH . $graphic_obj->getLocation() . $graphic_obj->getFile());
+                                    $graphic_obj->setStatus(0);
+                                    $this->sc['DisplayBanner']->updateGraphic($graphic_obj);
                                     $obj->set_image_id(NULL);
                                 }
-                                $obj->set_priority(NULL);
-                                $obj->set_time_interval(NULL);
+                                $obj->setPriority(NULL);
+                                $obj->setTimeInterval(NULL);
 
                                 if ($catid) {
-                                    $this->display_category_banner_model->update_display_banner($obj);
+                                    $this->sc['DisplayCategoryBanner']->update($obj);
                                 } else {
-                                    $this->display_banner_model->update_display_banner($obj);
+                                    $this->sc['DisplayBanner']->update($obj);
                                 }
                             }
                         }
@@ -442,138 +432,63 @@ class Display_banner extends MY_Controller
                         for ($no = 1; $no <= 3; $no++) {
                             if ($selected_country_id) {
                                 if ($catid) {
-                                    $obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
                                 } else {
-                                    $obj = $this->display_banner_model->get_display_banner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id" => $country_id, "lang_id" => $selected_lang_id));
                                 }
                             } else {
                                 if ($catid) {
-                                    $obj = $this->display_category_banner_model->get_display_banner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner(array("catid" => $catid, "usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
                                 } else {
-                                    $obj = $this->display_banner_model->get_display_banner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
+                                    $obj = $this->sc['DisplayBanner']->getDisplayBanner(array("usage" => "PV", "display_id" => $display_id, "position_id" => $position_id, "slide_id" => $no, "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id));
                                 }
                             }
                             if ($obj) {
-                                $obj->set_time_interval($time_interval);
+                                $obj->setTimeInterval($time_interval);
                                 if ($catid) {
-                                    $this->display_category_banner_model->update_display_banner($obj);
+                                    $this->sc['DisplayCategoryBanner']->update($obj);
                                 } else {
-                                    $this->display_banner_model->update_display_banner($obj);
+                                    $this->sc['DisplayBanner']->update($obj);
                                 }
                             }
                         }
                     }
                     if (empty($db_obj)) {
                         if ($catid) {
-                            $db_obj = $this->display_category_banner_model->get_display_banner();
-                            $db_obj->set_catid($catid);
+                            $db_obj = $this->sc['DisplayCategoryBanner']->getDisplayBanner();
+                            $db_obj->setCatid($catid);
                         } else {
-                            $db_obj = $this->display_banner_model->get_display_banner();
+                            $db_obj = $this->sc['DisplayBanner']->getDisplayBanner();
                         }
-                        $db_obj->set_display_banner_config_id($dbc_id);
-                        $db_obj->set_display_id($display_id);
-                        $db_obj->set_position_id($position_id);
-                        $db_obj->set_slide_id($slide_id);
-                        $db_obj->set_country_id($selected_country_id);
-                        $db_obj->set_lang_id($selected_lang_id);
-                        $db_obj->set_time_interval($time_interval);
-                        $db_obj->set_height($this->input->post('height'));
-                        $db_obj->set_width($this->input->post('width'));
-                        $db_obj->set_usage("PV");
-                        $db_obj->set_link_type($link_type);
-                        $db_obj->set_link($link);
-                        $db_obj->set_priority($priority);
-                        $db_obj->set_status($status);
-
-                        $pv_action = "insert_display_banner";
+                        $db_obj->setDisplayBannerConfigId($dbc_id);
+                        $db_obj->setDisplayId($display_id);
+                        $db_obj->setPositionId($position_id);
+                        $db_obj->setSlideId($slide_id);
+                        $db_obj->setCountryId($selected_country_id);
+                        $db_obj->setLangId($selected_lang_id);
+                        $db_obj->setTimeInterval($time_interval);
+                        $db_obj->setHeight($this->input->post('height'));
+                        $db_obj->setWidth($this->input->post('width'));
+                        $db_obj->setUsage("PV");
+                        $db_obj->setLinkType($link_type);
+                        $db_obj->setLink($link);
+                        $db_obj->setPriority($priority);
+                        $db_obj->setStatus($status);
+                        $pv_action = "insert";
                     } else {
-                        $db_obj->set_link_type($link_type);
-                        $db_obj->set_link($link);
-                        $db_obj->set_status($status);
-                        $db_obj->set_priority($priority);
-                        $db_obj->set_time_interval($time_interval);
+                        $db_obj->setLinkType($link_type);
+                        $db_obj->setLink($link);
+                        $db_obj->setStatus($status);
+                        $db_obj->setPriority($priority);
+                        $db_obj->setTimeInterval($time_interval);
                     }
-                    /*
-                    if($_FILES["flash"]["name"])
-                    {
-                        if($_FILES["flash"]["size"] > $this->context_config_service->value_of('default_banner_flash_size'))
-                        {
-                            $_SESSION["NOTICE"] = "flash_too_large";
-                        }
-                        else
-                        {
-                            $config['allowed_types'] = 'swf';
-                            $config['overwrite'] = TRUE;
-                            $config['is_image'] = FALSE;
-                            $graphic_location = "adbanner/preview/";
-                            $config["upload_path"] = GRAPHIC_PH.$graphic_location;
 
-                            if($pv_action == "update_display_banner")
-                            {
-                                $flash_id = $db_obj->get_flash_id();
-                                if($catid)
-                                {
-                                    $db_num_rows = $this->display_category_banner_model->get_db_num_rows(array("flash_id"=>$flash_id));
-                                }
-                                else
-                                {
-                                    $db_num_rows = $this->display_banner_model->get_db_num_rows(array("flash_id"=>$flash_id));
-                                }
-                                if($db_num_rows == 1)
-                                {
-                                    @unlink(GRAPHIC_PH.$graphic_obj->get_location().$graphic_obj->get_file());
-                                    $graphic_obj = $this->display_banner_model->get_graphic(array("id"=>$flash_id));
-                                    $graphic_obj->set_status(0);
-                                    if(!$this->display_banner_model->update_graphic($graphic_obj))
-                                    {
-                                        $_SESSION["NOTICE"] = "Error: ".__LINE__.": ".$this->db->_error_message();
-                                    }
-                                }
-                            }
-                            $graphic_id = $this->display_banner_model->graphic_seq_next_val();
-                            $this->display_banner_model->update_graphic_seq($graphic_id);
-
-                            $graphic_obj = $this->display_banner_model->get_graphic();
-                            $graphic_obj->set_id($graphic_id);
-                            $graphic_obj->set_location($graphic_location);
-                            $graphic_obj->set_type("flash");
-                            if($catid)
-                            {
-                                $config["file_name"] = $display_id."_".$position_id."_".$slide_id."_".$catid."_".$selected_country_id."_".$selected_lang_id."_".$graphic_id;
-                            }
-                            else
-                            {
-                                $config["file_name"] = $display_id."_".$position_id."_".$slide_id."_".$selected_country_id."_".$selected_lang_id."_".$graphic_id;
-                            }
-
-                            $this->load->library('upload', $config);
-                            $this->upload->initialize($config);
-                            if ($this->upload->do_upload("flash"))
-                            {
-                                $res = $this->upload->data();
-                                $graphic_obj->set_file($res["file_name"]);
-                                $db_obj->set_flash_id($graphic_id);
-                            }
-                            else
-                            {
-                                $_SESSION["NOTICE"] = "Error: ".__LINE__.": ".$this->upload->display_errors();
-                            }
-                            if(!$_SESSION["NOTICE"])
-                            {
-                                if(!$this->display_banner_model->insert_graphic($graphic_obj))
-                                {
-                                    $_SESSION["NOTICE"] = "Error: ".__LINE__.": ".$this->db->_error_message();
-                                }
-                            }
-                        }
-                    }
-                    */
                     if ($_FILES["image"]["name"]) {
                         $isize = getimagesize($_FILES["image"]["tmp_name"]);
                         $width = $isize[0];
                         $height = $isize[1];
-                        $width_limit = (int)$dbc_obj->get_width();
-                        $height_limit = (int)$dbc_obj->get_height();
+                        $width_limit = (int)$dbc_obj->getWidth();
+                        $height_limit = (int)$dbc_obj->getHeight();
                         $check_dimension = FALSE;
                         if ((!$err && $width == $width_limit && $height == $height_limit) || !($check_dimension)) {
                             $config['allowed_types'] = 'gif|jpg|jpeg|png';
@@ -582,30 +497,30 @@ class Display_banner extends MY_Controller
                             $graphic_location = "adbanner/preview/";
                             $config["upload_path"] = GRAPHIC_PH . $graphic_location;
 
-                            if ($pv_action == "update_display_banner") {
-                                $image_id = $db_obj->get_image_id();
+                            if ($pv_action == "update") {
+                                $image_id = $db_obj->getImageId();
                                 if ($catid) {
-                                    $db_num_rows = $this->display_category_banner_model->get_db_num_rows(array("image_id" => $image_id));
+                                    $db_num_rows = $this->sc['DisplayCategoryBanner']->getDbNumRows(array("image_id" => $image_id));
                                 } else {
-                                    $db_num_rows = $this->display_banner_model->get_db_num_rows(array("image_id" => $image_id));
+                                    $db_num_rows = $this->sc['DisplayBanner']->getDbNumRows(array("image_id" => $image_id));
                                 }
 
                                 if ($db_num_rows == 1) {
-                                    $graphic_obj = $this->display_banner_model->get_graphic(array("id" => $image_id));
-                                    @unlink(GRAPHIC_PH . $graphic_obj->get_location() . $graphic_obj->get_file());
-                                    $graphic_obj->set_status(0);
-                                    if (!$this->display_banner_model->update_graphic($graphic_obj)) {
+                                    $graphic_obj = $this->sc['DisplayBanner']->getGraphic(array("id" => $image_id));
+                                    @unlink(GRAPHIC_PH . $graphic_obj->getLocation() . $graphic_obj->getFile());
+                                    $graphic_obj->setStatus(0);
+                                    if (!$this->sc['DisplayBanner']->updateGraphic($graphic_obj)) {
                                         $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                     }
                                 }
                             }
-                            $graphic_id = $this->display_banner_model->graphic_seq_next_val();
-                            $this->display_banner_model->update_graphic_seq($graphic_id);
+                            $graphic_id = $this->sc['DisplayBanner']->graphic_seq_next_val();
+                            $this->sc['DisplayBanner']->updateGraphic_seq($graphic_id);
 
-                            $graphic_obj = $this->display_banner_model->get_graphic();
-                            $graphic_obj->set_id($graphic_id);
-                            $graphic_obj->set_location($graphic_location);
-                            $graphic_obj->set_type("image");
+                            $graphic_obj = $this->sc['DisplayBanner']->getGraphic();
+                            $graphic_obj->setId($graphic_id);
+                            $graphic_obj->setLocation($graphic_location);
+                            $graphic_obj->setType("image");
                             if ($catid) {
                                 $config["file_name"] = $display_id . "_" . $position_id . "_" . $slide_id . "_" . $catid . "_" . $selected_country_id . "_" . $selected_lang_id . "_" . $graphic_id;
                             } else {
@@ -616,13 +531,13 @@ class Display_banner extends MY_Controller
                             $this->upload->initialize($config);
                             if ($this->upload->do_upload("image")) {
                                 $res = $this->upload->data();
-                                $graphic_obj->set_file($res["file_name"]);
+                                $graphic_obj->setFile($res["file_name"]);
                                 $db_obj->set_image_id($graphic_id);
                             } else {
                                 $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->upload->display_errors();
                             }
                             if (!$_SESSION["NOTICE"]) {
-                                if (!$this->display_banner_model->insert_graphic($graphic_obj)) {
+                                if (!$this->sc['DisplayBanner']->insertGraphic($graphic_obj)) {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                 }
                             }
@@ -632,13 +547,13 @@ class Display_banner extends MY_Controller
                     }
                     if (!$_SESSION["NOTICE"]) {
                         if ($catid) {
-                            if (!$this->display_category_banner_model->$pv_action($db_obj)) {
+                            if (!$this->sc['DisplayCategoryBanner']->getDao('DisplayCategoryBanner')->$pv_action($db_obj)) {
                                 {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                 }
                             }
                         } else {
-                            if (!$this->display_banner_model->$pv_action($db_obj)) {
+                            if (!$this->sc['DisplayBanner']->getDao('DisplayBanner')->$pv_action($db_obj)) {
                                 {
                                     $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
                                 }
@@ -648,135 +563,131 @@ class Display_banner extends MY_Controller
                 }
             }
         }
-
-        $data["different_country_list"] = $this->display_banner_model->get_different_country_list($display_id, $lang_id);
-        $data["disp_obj"] = $this->display_banner_model->get_display(array("id" => $display_id));
+        $data["different_country_list"] = $this->sc['DisplayBanner']->getDifferentCountryList($display_id, $lang_id);
+        $data["disp_obj"] = $this->sc['DisplayBanner']->getDao('Display')->get(array("id" => $display_id));
         if ($catid) {
-            $data["cat_obj"] = $this->display_category_banner_model->get_cat_detail($catid);
+            $data["cat_obj"] = $this->sc['Category']->get($catid);
         }
-
         if ($country_id || $lang_id) {
             if ($selected_country_id) {
-                $pv_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
-                $data["pv_num_of_banner"] = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1));
-                $pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PB", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
-                $data["pb_num_of_banner"] = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PB", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1));
+                $pv_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
+                $data["pv_num_of_banner"] = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PV", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1));
+                $pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PB", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
+                $data["pb_num_of_banner"] = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PB", "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1));
             } else {
-                $pv_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
-                $data["pv_num_of_banner"] = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1));
-                $pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
-                $data["pb_num_of_banner"] = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1));
+                $pv_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
+                $data["pv_num_of_banner"] = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1));
+                $pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
+                $data["pb_num_of_banner"] = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1));
             }
             //use english as default
             if ($data["pv_num_of_banner"] == 0) {
-                $pv_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => "en", "status" => 1), array("orderby" => "position_id ASC"));
-                $data["pv_num_of_banner"] = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => "en", "status" => 1));
+                $pv_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => "en", "status" => 1), array("orderby" => "position_id ASC"));
+                $data["pv_num_of_banner"] = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PV", "country_id IS NULL" => NULL, "lang_id" => "en", "status" => 1));
             }
-
             if ($pv_dbc_list) {
                 foreach ($pv_dbc_list AS $dbc_obj) {
-                    $data["pv_db_obj"][$dbc_obj->get_position_id()]["config"] = $dbc_obj;
+                    $data["pv_db_obj"][$dbc_obj->getPositionId()]["config"] = $dbc_obj;
                     if ($selected_country_id) {
                         if ($catid) {
-                            $data["db_pv_list"] = $this->display_category_banner_model->get_display_banner_list(array("catid" => $catid, "usage" => $dbc_obj->get_usage(), "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
+                            $data["db_pv_list"] = $this->sc['DisplayCategoryBanner']->getDisplayBannerList(array("catid" => $catid, "usage" => $dbc_obj->getUsage(), "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
                         } else {
-                            $data["db_pv_list"] = $this->display_banner_model->get_display_banner_list(array("usage" => $dbc_obj->get_usage(), "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
+                            $data["db_pv_list"] = $this->sc['DisplayBanner']->getDisplayBannerList(array("usage" => $dbc_obj->getUsage(), "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
                         }
                     } else {
                         if ($catid) {
-                            $data["db_pv_list"] = $this->display_category_banner_model->get_display_banner_list(array("catid" => $catid, "usage" => $dbc_obj->get_usage(), "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
+                            $data["db_pv_list"] = $this->sc['DisplayCategoryBanner']->getDisplayBannerList(array("catid" => $catid, "usage" => $dbc_obj->getUsage(), "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
                         } else {
-                            $data["db_pv_list"] = $this->display_banner_model->get_display_banner_list(array("usage" => $dbc_obj->get_usage(), "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
+                            $data["db_pv_list"] = $this->sc['DisplayBanner']->getDisplayBannerList(array("usage" => $dbc_obj->getUsage(), "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id), array("orderby" => "slide_id ASC"));
                         }
                     }
                     foreach ($data["db_pv_list"] AS $db_obj) {
                         if ($catid) {
-                            $db_w_g_pv = $this->display_category_banner_model->get_db_w_graphic($catid, $dbc_obj->get_banner_type(), $display_id, $dbc_obj->get_position_id(), $db_obj->get_slide_id(), $selected_country_id, $selected_lang_id, "PV", FALSE);
+                            $db_w_g_pv = $this->sc['DisplayCategoryBanner']->getDbWithGraphic($catid, $dbc_obj->getBannerType(), $display_id, $dbc_obj->getPositionId(), $db_obj->getSlideId(), $selected_country_id, $selected_lang_id, "PV", FALSE);
                         } else {
-                            $db_w_g_pv = $this->display_banner_model->get_db_w_graphic($dbc_obj->get_banner_type(), $display_id, $dbc_obj->get_position_id(), $db_obj->get_slide_id(), $selected_country_id, $selected_lang_id, "PV", FALSE);
+                            $db_w_g_pv = $this->sc['DisplayBanner']->getDbWithGraphic($dbc_obj->getBannerType(), $display_id, $dbc_obj->getPositionId(), $db_obj->getSlideId(), $selected_country_id, $selected_lang_id, "PV", FALSE);
                         }
-                        $data["pv_db_obj"][$dbc_obj->get_position_id()]["details"][$db_obj->get_slide_id()] = $db_w_g_pv;
+                        $data["pv_db_obj"][$dbc_obj->getPositionId()]["details"][$db_obj->getSlideId()] = $db_w_g_pv;
                     }
                 }
             } else {
                 $country_id = "";
             }
             if ($data["pb_num_of_banner"] == 0 && $country_id != ALL) {
-                $pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
-                $data["pb_num_of_banner"] = $this->display_banner_model->get_dbc_num_rows(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1));
+                $pb_dbc_list = $this->sc['DisplayBanner']->getDisplayBannerConfigList(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "position_id ASC"));
+                $data["pb_num_of_banner"] = $this->sc['DisplayBanner']->getDbcNumRows(array("display_id" => $display_id, "usage" => "PB", "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1));
                 $selected_country_id = "";
             }
             if ($pb_dbc_list) {
+                // var_dump($pb_dbc_list);die();
                 foreach ($pb_dbc_list AS $dbc_obj) {
-
                     if ($dbc_obj) {
                         if ($catid) {
-                            $publish_banner[$dbc_obj->get_position_id()] = $this->display_category_banner_model->get_publish_banner($catid, $dbc_obj->get_display_id(), $dbc_obj->get_position_id(), $dbc_obj->get_country_id(), $dbc_obj->get_lang_id(), $dbc_obj->get_usage());
+                            $publish_banner[$dbc_obj->getPositionId()] = $this->sc['DisplayCategoryBanner']->getPublishBanner($catid, $dbc_obj->getDisplayId(), $dbc_obj->getPositionId(), $dbc_obj->getCountryId(), $dbc_obj->getLangId(), $dbc_obj->getUsage());
                         } else {
-                            $publish_banner[$dbc_obj->get_position_id()] = $this->display_banner_model->get_publish_banner($dbc_obj->get_display_id(), $dbc_obj->get_position_id(), $dbc_obj->get_country_id(), $dbc_obj->get_lang_id(), $dbc_obj->get_usage());
+                            $publish_banner[$dbc_obj->getPositionId()] = $this->sc['DisplayBanner']->getPublishBanner($dbc_obj->getDisplayId(), $dbc_obj->getPositionId(), $dbc_obj->getCountryId(), $dbc_obj->getLangId(), $dbc_obj->getUsage());
                         }
 
-                        $data["pb_db_obj"][$dbc_obj->get_position_id()]["config"] = $dbc_obj;
+                        $data["pb_db_obj"][$dbc_obj->getPositionId()]["config"] = $dbc_obj;
                     } else {
-                        $data["pb_db_obj"][$dbc_obj->get_position_id()]["config"] = "";
+                        $data["pb_db_obj"][$dbc_obj->getPositionId()]["config"] = "";
                     }
 
                     if ($selected_country_id) {
                         if ($catid) {
-                            $data["pb_db_list"] = $this->display_category_banner_model->get_display_banner_list(array("catid" => $catid, "usage" => "PB", "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
+                            $data["pb_db_list"] = $this->sc['DisplayCategoryBanner']->getDisplayBannerList(array("catid" => $catid, "usage" => "PB", "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
                         } else {
-                            $data["pb_db_list"] = $this->display_banner_model->get_display_banner_list(array("usage" => "PB", "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
+                            $data["pb_db_list"] = $this->sc['DisplayBanner']->getDisplayBannerList(array("usage" => "PB", "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id" => $selected_country_id, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
                         }
                     } else {
                         if ($catid) {
-                            $data["pb_db_list"] = $this->display_category_banner_model->get_display_banner_list(array("catid" => $catid, "usage" => "PB", "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
+                            $data["pb_db_list"] = $this->sc['DisplayCategoryBanner']->getDisplayBannerList(array("catid" => $catid, "usage" => "PB", "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
                         } else {
-                            $data["pb_db_list"] = $this->display_banner_model->get_display_banner_list(array("usage" => "PB", "display_id" => $dbc_obj->get_display_id(), "position_id" => $dbc_obj->get_position_id(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
+                            $data["pb_db_list"] = $this->sc['DisplayBanner']->getDisplayBannerList(array("usage" => "PB", "display_id" => $dbc_obj->getDisplayId(), "position_id" => $dbc_obj->getPositionId(), "country_id IS NULL" => NULL, "lang_id" => $selected_lang_id, "status" => 1), array("orderby" => "priority DESC"));
                         }
                     }
                     foreach ($data["pb_db_list"] AS $db_obj) {
                         if ($catid) {
-                            if ($db_w_g_pb = $this->display_category_banner_model->get_db_w_graphic($catid, $dbc_obj->get_banner_type(), $display_id, $dbc_obj->get_position_id(), $db_obj->get_slide_id(), $selected_country_id, $selected_lang_id, "PB")) {
-                                if ($db_obj->get_image_id() && $dbc_obj->get_banner_type() == "F") {
-                                    $data["pb_db_obj"][$dbc_obj->get_position_id()]["backup_image"] = $this->display_category_banner_model->get_db_w_graphic($catid, $dbc_obj->get_banner_type(), $display_id, $dbc_obj->get_position_id(), $db_obj->get_slide_id(), $selected_country_id, $selected_lang_id, "PB", TRUE);
+                            if ($db_w_g_pb = $this->sc['DisplayCategoryBanner']->getDbWithGraphic($catid, $dbc_obj->getBannerType(), $display_id, $dbc_obj->getPositionId(), $db_obj->getSlideId(), $selected_country_id, $selected_lang_id, "PB")) {
+                                if ($db_obj->getImageId() && $dbc_obj->getBannerType() == "F") {
+                                    $data["pb_db_obj"][$dbc_obj->getPositionId()]["backup_image"] = $this->sc['DisplayCategoryBanner']->getDbWithGraphic($catid, $dbc_obj->getBannerType(), $display_id, $dbc_obj->getPositionId(), $db_obj->getSlideId(), $selected_country_id, $selected_lang_id, "PB", TRUE);
                                 }
-                                $data["pb_db_obj"][$dbc_obj->get_position_id()]["details"][$db_obj->get_slide_id()] = $db_w_g_pb;
+                                $data["pb_db_obj"][$dbc_obj->getPositionId()]["details"][$db_obj->getSlideId()] = $db_w_g_pb;
                             } else {
-                                $data["pb_db_obj"][$dbc_obj->get_position_id()]["details"][$db_obj->get_slide_id()] = "";
+                                $data["pb_db_obj"][$dbc_obj->getPositionId()]["details"][$db_obj->getSlideId()] = "";
                             }
                         } else {
-                            if ($db_w_g_pb = $this->display_banner_model->get_db_w_graphic($dbc_obj->get_banner_type(), $display_id, $dbc_obj->get_position_id(), $db_obj->get_slide_id(), $selected_country_id, $selected_lang_id, "PB")) {
-                                if ($db_obj->get_image_id() && $dbc_obj->get_banner_type() == "F") {
-                                    $data["pb_db_obj"][$dbc_obj->get_position_id()]["backup_image"] = $this->display_banner_model->get_db_w_graphic($dbc_obj->get_banner_type(), $display_id, $dbc_obj->get_position_id(), $db_obj->get_slide_id(), $selected_country_id, $selected_lang_id, "PB", TRUE);
+                            if ($db_w_g_pb = $this->sc['DisplayBanner']->getDbWithGraphic($dbc_obj->getBannerType(), $display_id, $dbc_obj->getPositionId(), $db_obj->getSlideId(), $selected_country_id, $selected_lang_id, "PB")) {
+                                if ($db_obj->getImageId() && $dbc_obj->getBannerType() == "F") {
+                                    $data["pb_db_obj"][$dbc_obj->getPositionId()]["backup_image"] = $this->sc['DisplayBanner']->getDbWithGraphic($dbc_obj->getBannerType(), $display_id, $dbc_obj->getPositionId(), $db_obj->getSlideId(), $selected_country_id, $selected_lang_id, "PB", TRUE);
                                 }
-                                $data["pb_db_obj"][$dbc_obj->get_position_id()]["details"][$db_obj->get_slide_id()] = $db_w_g_pb;
+                                $data["pb_db_obj"][$dbc_obj->getPositionId()]["details"][$db_obj->getSlideId()] = $db_w_g_pb;
                             } else {
-                                $data["pb_db_obj"][$dbc_obj->get_position_id()]["details"][$db_obj->get_slide_id()] = "";
+                                $data["pb_db_obj"][$dbc_obj->getPositionId()]["details"][$db_obj->getSlideId()] = "";
                             }
                         }
                     }
                 }
             }
         }
-        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->_get_lang_id() . ".php";
+        include_once APPPATH . "language/" . $this->getAppId() . "01_" . $this->getLangId() . ".php";
         $data["lang"] = $lang;
         $data["publish_banner"] = $publish_banner;
-        $data["lang_list"] = $this->display_banner_model->get_language_list(array("status" => 1), array("orderby" => "name ASC"));
-        $data["country_list"] = $this->display_banner_model->get_country_list(array("status" => 1, "url_enable" => 1), array("orderby" => "name ASC"));
+        $data["lang_list"] = $this->sc['Language']->getDao('Language')->getList(array("status" => 1), array("orderby" => "lang_name ASC"));
+        $data["country_list"] = $this->sc['Country']->getList(array("status" => 1, "url_enable" => 1), array("orderby" => "name ASC"));
         $data["display_id"] = $display_id;
         $data["lang_id"] = $lang_id;
         $data["country_id"] = $country_id;
         $data['catid'] = $this->input->get('catid');
-
         $data["lytebox_country_id"] = $country_id;
         if ($country_id == "ALL") {
-            if ($country_obj = $this->country_service->get(array("language_id" => $lang_id, "status" => 1, "url_enable" => 1))) {
-                $data["lytebox_country_id"] = $country_obj->get_id();
+            if ($country_obj = $this->sc['Country']->get(array("language_id" => $lang_id, "status" => 1, "url_enable" => 1))) {
+                $data["lytebox_country_id"] = $country_obj->getId();
             }
         }
-        $display_obj_list = $this->display_banner_model->get_display_list(array("banner_status" => 1));
+        $display_obj_list = $this->sc['DisplayBanner']->getDao('Display')->get(array("banner_status" => 1));
         foreach ($display_obj_list as $obj) {
-            $data["show_lightbox"][$obj->get_id()] = $obj->get_lightbox_status();
+            $data["show_lightbox"][$obj->getId()] = $obj->getLightboxStatus();
         }
 
         $data["notice"] = notice($lang);
@@ -789,15 +700,14 @@ class Display_banner extends MY_Controller
         $item = array();
         $item = explode('/', $_SERVER['QUERY_STRING']);
         $display_id = $item[6];
-        $pb_dbc_list = $this->display_banner_model->get_display_banner_config_list(array("country_id" => $country_id, "display_id" => $display_id, "usage" => "PB"));
+        $pb_dbc_list = $this->sc['DisplayBanner']->getDifferentCountryList(array("country_id" => $country_id, "display_id" => $display_id, "usage" => "PB"));
         foreach ($pb_dbc_list AS $pb_dbc_obj) {
-            $pb_dbc_obj->set_status(0);
-            if (!$this->display_banner_model->update_display_banner_config($pb_dbc_obj)) {
+            $pb_dbc_obj->setStatus(0);
+            if (!$this->sc['DisplayBanner']->updateDisplayBannerConfig($pb_dbc_obj)) {
                 $_SESSION["NOTICE"] = "Error: " . __LINE__ . ": " . $this->db->_error_message();
             }
         }
         redirect($_SESSION["LISTPAGE"]);
     }
-
 }
 

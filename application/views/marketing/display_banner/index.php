@@ -39,7 +39,7 @@
                     style="font-size:14px"><?= $lang["title"] ?></b><br><?= $lang["subheader"] ?></td>
         </tr>
     </table>
-    <iframe name="clist" id="plist" src="<?= base_url() ?>/marketing/display_banner/get_list/" width="200" height="600"
+    <iframe name="clist" id="plist" src="<?= base_url() ?>marketing/display_banner/getList/" width="200" height="600"
             style="float:left;border-right:1px solid #000000;" noresize frameborder="0" marginwidth="0" marginheight="0"
             hspace=0 vspace=0 onLoad="SetFrameFullHeight('plist')"></iframe>
     <iframe name="cview" id="pview" src="" width="1059" height="600" style="float:left;border-left:1px solid #999999;"
