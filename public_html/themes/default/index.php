@@ -13,8 +13,12 @@
     $siteobj = \PUB_Controller::$siteInfo;
     $lang_id = $siteobj->getLangId();
 
-    $banner_total = 2;
-    if($lang_id =="nl"){$banner_total = 4;}
+    $banner_total = 2;$banner_link=array();
+    if($lang_id =="nl"){
+        $banner_total = 4;
+        $banner_link[1]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM4PTNL&AF=HPNL";
+        $banner_link[2]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM3PTNL&AF=HPNL";
+    }
 ?>
 <div class="pav-container ">
     <div class="pav-inner ">
@@ -39,9 +43,11 @@
                                     $active = $i == 1 ? ' active' : "";
                             ?>
                                 <div class="item<?= $active ?>">
+                                    <a href="<?php echo $banner_link[$i];  ?>">
                                     <img data-src="<?= base_url('/images/banner/'. $lang_id .'_banner'.$i.'.jpg') ?>"
                                     src="<?= base_url('/images/banner/'. $lang_id .'_banner'.$i.'.jpg') ?>"
                                     data-holder-rendered="true">
+                                    </a>
                                 </div>
                             <?php
                                 endfor;
