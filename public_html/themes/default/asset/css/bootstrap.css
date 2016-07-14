@@ -3505,7 +3505,7 @@ output {
   padding: 8px 25px;
   font-size: 12px;
   line-height: 1.875;
-  color: #666666;
+  color: #999999;
   background-color: transparent;
   background-image: none;
   border: 1px solid #e5e5e5;
@@ -3525,16 +3525,16 @@ output {
 }
 /* line 103, ../development/scss/mixins/mixins/_vendor-prefixes.scss */
 .form-control::-moz-placeholder {
-  color: #666666;
+  color: #999999;
   opacity: 1;
 }
 /* line 107, ../development/scss/mixins/mixins/_vendor-prefixes.scss */
 .form-control:-ms-input-placeholder {
-  color: #666666;
+  color: #999999;
 }
 /* line 108, ../development/scss/mixins/mixins/_vendor-prefixes.scss */
 .form-control::-webkit-input-placeholder {
-  color: #666666;
+  color: #999999;
 }
 /* line 141, ../development/scss/bootstrap/_forms.scss */
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
