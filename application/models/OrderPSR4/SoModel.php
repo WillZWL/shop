@@ -256,13 +256,17 @@ class SoModel extends \CI_Model
                     break;
                 case 4:
                 case 5:
-                    $working_days = $this->soService->getWorkingDays(strtotime($so_obj->getAllocateDate()), $now_time);
-                    if ($working_days < 3) {
-                        $status = 'order_packed';
-                    } elseif ($working_days < 5) {
-                        $status = 'in_transit_warehouse';
+                    if ($soal_obj = $this->soService->getDao('SoAllocate')->get(['so_no'=>$so_obj->getSoNo()])) {
+                        $working_days = $this->soService->getWorkingDays(strtotime($soal_obj->getCreateOn()), $now_time);
+                        if ($working_days < 3) {
+                            $status = 'order_packed';
+                        } elseif ($working_days < 5) {
+                            $status = 'in_transit_warehouse';
+                        } else {
+                            $status = 'in_transit_warehouse';
+                        }
                     } else {
-                        $status = 'in_transit_warehouse';
+                        $status = 'order_delay';
                     }
                     break;
                 case 6:
