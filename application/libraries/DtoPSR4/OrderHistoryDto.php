@@ -7,7 +7,6 @@ class OrderHistoryDto
     private $client_id;
     private $order_create_date;
     private $delivery_name;
-    private $allocate_date;
     private $dispatch_date;
     private $sku;
     private $prod_name;
@@ -81,16 +80,6 @@ class OrderHistoryDto
     public function getDeliveryName()
     {
         return $this->delivery_name;
-    }
-
-    public function setAllocateDate($allocate_date)
-    {
-        $this->allocate_date = $allocate_date;
-    }
-
-    public function getAllocateDate()
-    {
-        return $this->allocate_date;
     }
 
     public function setDispatchDate($dispatch_date)
