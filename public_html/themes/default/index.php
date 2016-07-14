@@ -14,6 +14,7 @@
     $lang_id = $siteobj->getLangId();
 
     $banner_total = 2;
+    if($lang_id =="nl"){$banner_total = 4;}
 ?>
 <div class="pav-container ">
     <div class="pav-inner ">
