@@ -2563,7 +2563,6 @@ SQL;
         $option = ["limit" => -1];
         $this->db->from("so");
         $this->db->join("so_item_detail AS soid", "soid.so_no = so.so_no", "INNER");
-        $this->db->join("so_allocate AS soal", "soal.so_no = soid.so_no and soid.line_no = soal.line_no", "LEFT");
         $this->db->join("so_payment_status as sops", "so.so_no = sops.so_no", "LEFT");
         $this->db->join("client AS c", "c.id = so.client_id", "INNER");
         $this->db->join("product AS p", "p.sku = soid.item_sku", "INNER");
@@ -2589,7 +2588,6 @@ SQL;
                 so.hold_status,
                 so.hold_reason,
                 so.dispatch_date,
-                soal.create_on allocate_date,
                 sops.payment_gateway_id
             ";
 
