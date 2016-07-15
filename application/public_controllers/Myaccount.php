@@ -245,7 +245,7 @@ class Myaccount extends PUB_Controller
                     }
                     // show split order text
                     $split_so_group = $obj->getSplitSoGroup();
-                    if (isset($split_so_group) && $split_so_group != $obj->getSoNo()) {
+                    if (!empty($split_so_group) && $split_so_group != $obj->getSoNo()) {
                         $data["show_partial_ship_text"] = TRUE;
                     }
                     if($is_shipped && (strtotime($obj->getOrderCreateDate()) > strtotime('3 months ago')))
