@@ -35,6 +35,7 @@ class aps_report extends Base_report
 
     public function export_csv()
     {
+        set_time_limit(500);
         $hold_status_list[0] = "No";
         $hold_status_list[1] = "Requested";
         $hold_status_list[2] = "Manager Requested";
