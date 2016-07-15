@@ -3263,7 +3263,8 @@ SQL;
             si.qty,
             si.amount,
             so.hold_status,
-            so.refund_status
+            so.refund_status,
+            so.margin
             ");
         $this->db->from("so");
         $this->db->join("so_item_detail si", "si.so_no = so.so_no", "inner");
