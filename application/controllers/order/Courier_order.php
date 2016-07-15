@@ -186,7 +186,7 @@ class Courier_order extends MY_Controller
 			}else{
 				$where["ic.courier_id"]=$data["selectedCourierId"]=$courierId;
 			}
-			//$where["ic.tracking_no IS NOT NULL "]=null;
+			$where["ic.tracking_no IS NOT NULL "]=null;
 			$where["ic.status"]="1";
 			if($_POST["create_year"] && $_POST["create_year"] && $_POST["create_year"]){
 				$_SESSION["createDate"]=array(
