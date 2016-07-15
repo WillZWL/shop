@@ -48,13 +48,14 @@ class ProductDao extends BaseDao
         $this->db->join("supplier_prod AS sp", "sp.prod_sku=p.sku and sp.order_default=1", 'LEFT');
         $this->db->join("exchange_rate er", "er.from_currency_id=sp.currency_id and er.to_currency_id=pbv.platform_currency_id", 'INNER');
         $this->db->join("freight_category fc", "p.freight_cat_id=fc.id", 'LEFT');
+        $this->db->join("product_warranty pw", "pw.platform_id=pr.platform_id and pw.sku=p.sku", 'LEFT');
 
         $select = "pbv.dec_place as decPlace, fc.weight as unitWeight, pbv.vat_percent as vatPercent, pbv.admin_fee as adminFee
                 , er.rate as supplierProdExRate, pbv.platform_currency_id as platformCurrency
                 , p.sku, p.name, pc.prod_name as nameInLang
                 , pr.price, pr.listing_status as listingStatus
                 , p.website_status as websiteStatus, sp.currency_id as supplierCostCurrency
-                , p.warranty_in_month as warrantyInMonth
+                , ifnull(pw.warranty_in_month, p.warranty_in_month) as warrantyInMonth
                 , ROUND((sp.cost * er.rate), pbv.dec_place) as unitCost
                 , sp.cost as supplierUnitCost
                 , sp.pricehkd as supplierUnitCostInHkd
