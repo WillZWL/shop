@@ -171,6 +171,11 @@
                         </ul>
                         <div class="tab-content text-left">
                             <div class="tab-pane active" id="tab-overview">
+                            <?php if ($countryid == 'NL') : ?>
+                                <p class="intro_point">
+                                    Wij zijn momenteel druk bezig om zoveel mogelijk productomschrijvingen te vertalen naar het Nederlands. De omschrijvingen worden automatisch vertaald vanuit het Engels, zolang deze nog niet beschikbaar zijn.
+                                </p>
+                            <?php endif ; ?>
                                 <p class="intro">
                                     <?= $overview ?>
                                 </p>
