@@ -1623,7 +1623,7 @@ jQuery(function(){
                 <?php
                 foreach ($selling_platform_list as $country_obj)
                 {
-                    $platform_id_list[] = $country_obj["platform_id"];
+                    $platform_id_list[] = $country_obj->getSellingPlatformId();
                 }
                 ?>
                 var platform_id_list = ["<?php echo implode('\',\'', $platform_id_list) ?>"];
