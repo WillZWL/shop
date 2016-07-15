@@ -3264,7 +3264,7 @@ SQL;
             si.amount,
             so.hold_status,
             so.refund_status,
-            so.margin
+            si.margin
             ");
         $this->db->from("so");
         $this->db->join("so_item_detail si", "si.so_no = so.so_no", "inner");
