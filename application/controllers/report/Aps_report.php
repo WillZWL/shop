@@ -68,11 +68,7 @@ class aps_report extends Base_report
                 if ($hold_status == null) $hold_status = "Error";
                 if ($refund_status == null) $refund_status = "Error";
 
-                $json = $this->sc['Price']->getProfitMarginJson($line->platform_id, $line->prod_sku, $line->amount);
-                $info = json_decode($json, true);
-                $margin = $info["get_margin"];
-
-                $content .= "{$line->so_no},{$line->platform_id},{$line->create_on},\"{$line->prod_name}\",{$line->prod_sku},{$line->qty},{$line->amount},$margin,{$hold_status},{$refund_status}\r\n";
+                $content .= "{$line->so_no},{$line->platform_id},{$line->create_on},\"{$line->prod_name}\",{$line->prod_sku},{$line->qty},{$line->amount},{$line->margin},{$hold_status},{$refund_status}\r\n";
             }
         }
 
