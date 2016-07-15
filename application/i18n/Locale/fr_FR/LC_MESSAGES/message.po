@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-13 18:52+0800\n"
-"PO-Revision-Date: 2016-07-13 18:52+0800\n"
+"POT-Creation-Date: 2016-07-15 17:01+0800\n"
+"PO-Revision-Date: 2016-07-15 17:04+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-Basepath: atomv2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -237,7 +237,7 @@ msgstr "Telephone"
 #: checkout/index.php:78 myaccount/index.php:368 myaccount/index.php:369
 #: myaccount/login.php:70
 msgid "Country Code"
-msgstr "Code du pays"
+msgstr "Indicateur téléphonique"
 
 #: checkout/index.php:79 myaccount/index.php:372 myaccount/index.php:373
 #: myaccount/login.php:74
@@ -260,13 +260,15 @@ msgstr "Votre adresse"
 msgid "Company"
 msgstr "Entreprise"
 
-#: checkout/index.php:103 checkout/index.php:104
-msgid "Address 1"
-msgstr "Première adresse "
+#: checkout/index.php:103 checkout/index.php:104 myaccount/index.php:162
+#: myaccount/index.php:163 myaccount/index.php:357 myaccount/login.php:59
+msgid "Address Line 1"
+msgstr "Adresse ligne 1"
 
-#: checkout/index.php:107 checkout/index.php:108
-msgid "Address 2"
-msgstr "Deuxième adresse "
+#: checkout/index.php:107 checkout/index.php:108 myaccount/index.php:166
+#: myaccount/index.php:167 myaccount/index.php:358 myaccount/login.php:60
+msgid "Address Line 2"
+msgstr "Adresse ligne 2"
 
 #: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:154
 #: myaccount/index.php:155 myaccount/index.php:348 myaccount/index.php:349
@@ -369,8 +371,8 @@ msgstr ""
 "des caractères alphabétiques et numériques"
 
 #: checkout/index.php:629
-msgid "The billing address 1 is required"
-msgstr "Veuillez renseigner la première adresse de facturation "
+msgid "The billing Address Line 1 is required"
+msgstr ""
 
 #: checkout/index.php:633
 msgid "The billing address1 name can only consist of alphabetical, number"
@@ -1579,16 +1581,6 @@ msgstr "Nom"
 msgid "State"
 msgstr "Pays"
 
-#: myaccount/index.php:162 myaccount/index.php:163 myaccount/index.php:357
-#: myaccount/login.php:59
-msgid "Address Line 1"
-msgstr "Adresse ligne 1"
-
-#: myaccount/index.php:166 myaccount/index.php:167 myaccount/index.php:358
-#: myaccount/login.php:60
-msgid "Address Line 2"
-msgstr "Adresse ligne 2"
-
 #: myaccount/index.php:170 myaccount/index.php:171 myaccount/index.php:361
 #: myaccount/index.php:362
 msgid "Postcode"
@@ -1841,7 +1833,7 @@ msgstr "Ecrivez un avis"
 
 #: product/detail.php:75
 msgid "Month Warranty"
-msgstr "Garantie mensuelle"
+msgstr "mois de garantie"
 
 #: product/detail.php:86
 msgid "Availability"
@@ -2181,6 +2173,15 @@ msgid "Contact us to know regarding latest update of parcel"
 msgstr ""
 "l'expédition de votre colis ne dispose pas d'informations de suivi depuis 7 "
 "jours, ou de changement de statut depuis 30 jours."
+
+#~ msgid "Address 1"
+#~ msgstr "Première adresse "
+
+#~ msgid "Address 2"
+#~ msgstr "Deuxième adresse "
+
+#~ msgid "The billing address 1 is required"
+#~ msgstr "Veuillez renseigner la première adresse de facturation "
 
 #~ msgid "Term and Conditions"
 #~ msgstr "Termes et conditions "
