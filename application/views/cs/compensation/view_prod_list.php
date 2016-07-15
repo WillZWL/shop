@@ -119,9 +119,9 @@
                         <td height="20"></td>
                         <td><img src="<?= get_image_file($obj->getImage(), 's', $obj->getSku()) ?>"></td>
                         <td><?= $obj->getSku() ?></td>
-                        <td><?= $obj->getProdName() ?></td>
+                        <td><?= $obj->getName() ?></td>
                         <td><?= $obj->getCategory() ?></td>
-                        <td><?= $obj->getSubCat() ?></td>
+                        <td><?= $obj->getSubCategory() ?></td>
                         <td><?= $obj->getSubSubCategory() ?></td>
                         <td><?= $obj->getBrandName() ?></td>
                         <?php $wsstatus = ($obj->getWebsiteStatus() == "I" && $obj->getWebsiteQuantity() < 1) ? "O" : $obj->getWebsiteStatus()?>
