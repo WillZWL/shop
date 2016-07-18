@@ -28,7 +28,7 @@ class SoDao extends BaseDao  implements HooksUpdate, HooksInsert
 
     public function tableFieldsHooksInsert($newObj)
     {
-        $table1 = [];
+        $table1 = $table2 = [];
 
         $table1 = [
                     'table' => 'order_status_history',
@@ -38,7 +38,15 @@ class SoDao extends BaseDao  implements HooksUpdate, HooksInsert
                                 ]
                   ];
 
-        $this->insertTables([$table1, ]);
+        $table2 = [
+                    'table' => 'so_hold_status_history',
+                    'keyValue'=>[
+                                    'so_no' => $newObj->getSoNo(),
+                                    'hold_status' => $newObj->getHoldStatus(),
+                                ]
+                  ];
+
+        $this->insertTables([$table1, $table2, ]);
     }
 
     public function triggerAfterUpdate($newObj, $oldObj)
