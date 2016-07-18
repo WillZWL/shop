@@ -21,7 +21,7 @@ class SoHoldReasonDao extends BaseDao implements HooksInsert
         return $this->tableName;
     }
 
-    public function insertAfterExecute($obj)
+    public function triggerAfterInsert($obj)
     {
         $this->tableFieldsHooksInsert($obj);
     }

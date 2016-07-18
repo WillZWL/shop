@@ -3,8 +3,8 @@ namespace ESG\Panther\Dao;
 
 interface HooksUpdate {
 
-    public function updateAfterExecute($obj);
+    public function triggerAfterUpdate($obj, $oldObj);
 
-    public function tableFieldsHooksUpdate($obj);
+    public function tableFieldsHooksUpdate($obj, $oldObj);
 
 }

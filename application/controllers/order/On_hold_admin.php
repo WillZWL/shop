@@ -528,19 +528,9 @@ class On_hold_admin extends MY_Controller
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $update_status = false;
-                if ($so_obj->getStatus() <> 0) {
-                    $update_status = true;
-                    $status = 0;
-                }
-
                 $so_obj->setStatus(0);
                 if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                     $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
-                }
-
-                if ($update_status) {
-                    $this->sc['So']->saveOrderStatusHistory($so_no, $status);
                 }
             }
         }
@@ -561,38 +551,12 @@ class On_hold_admin extends MY_Controller
                 if (empty($so_obj)) {
                     $_SESSION["NOTICE"] = "so_not_found";
                 } else {
-                    $update_status = false;
-                    if ($so_obj->getStatus() <> 0) {
-                        $update_status = true;
-                        $status = 0;
-                    }
-
-                    $update_hold_status = false;
-                    if ($so_obj->getHoldStatus() <> 0) {
-                        $update_hold_status = true;
-                        $holdStatus = 0;
-                    }
-
-                    $update_refund_status = false;
-                    if ($so_obj->getRefundStatus() <> 0) {
-                        $update_refund_status = true;
-                        $refundStatus = 0;
-                    }
-
                     $so_obj->setStatus(0);
                     $so_obj->setHoldStatus(0);
                     $so_obj->setRefundStatus(0);
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $_SESSION["NOTICE"] = "Line " . __LINE__ . ". ERROR - Cannot get template object. \n DB error_msg: " . $this->db->display_error();
                     } else {
-                        if ($update_status) {
-                            $this->sc['So']->saveOrderStatusHistory($so_no, $status);
-                        }
-
-                        if ($update_hold_status) {
-                            $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
-                        }
-
                         $this->_create_release_order_record($so_no, $reason = 'cancel order');
                     }
                 }
@@ -642,11 +606,6 @@ class On_hold_admin extends MY_Controller
                         $this->sc['So']->getDao('SoCreditChk')->$action($socc_obj);
 
                         $soobj = $this->sc['So']->getDao('So')->get(["so_no" => $so_no]);
-                        $update_status = false;
-                        if ($soobj->getStatus() <> 0) {
-                            $update_status = true;
-                            $status = 0;
-                        }
 
                         $soobj->setStatus(0);
 
@@ -656,9 +615,6 @@ class On_hold_admin extends MY_Controller
                         }
 
                         if ($this->sc['So']->getDao('So')->update($soobj)) {
-                            if ($update_status) {
-                                $this->sc['So']->saveOrderStatusHistory($so_no, $status);
-                            }
                             $this->_create_release_order_record($so_no, $reason_note);
                         }
                         $this->sc['So']->getDao('SoCreditChk')->db->trans_complete();
@@ -700,17 +656,8 @@ class On_hold_admin extends MY_Controller
             if (empty($so_obj)) {
                 $_SESSION["NOTICE"] = "so_not_found";
             } else {
-                $update_status = false;
                 if ($so_obj->getStatus() < 3) {
                     $so_obj->setStatus(3);
-                    $update_status = true;
-                    $status = 3;
-                }
-
-                $update_hold_status = false;
-                if ($so_obj->getHoldStatus() <> 0) {
-                    $update_hold_status = true;
-                    $holdStatus = 0;
                 }
 
                 $so_obj->setHoldStatus(0);
@@ -721,14 +668,6 @@ class On_hold_admin extends MY_Controller
                 }
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
-                    if ($update_status) {
-                        $this->sc['So']->saveOrderStatusHistory($so_no, $status);
-                    }
-
-                    if ($update_hold_status) {
-                        $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
-                    }
-
                     $this->_create_release_order_record($so_no, 'approve for fulfillment');
                 }
 
@@ -789,6 +728,15 @@ class On_hold_admin extends MY_Controller
         }
 
         $reasonObj = $this->sc['So']->getDao('HoldReason')->get(['id'=>$reason_id]);
+
+        if (! $reasonObj) {
+            if (isset($_SESSION["LISTPAGE"])) {
+                redirect($_SESSION["LISTPAGE"]);
+            } else {
+                redirect(current_url());
+            }
+        }
+
         $reason_type = $reasonObj->getReasonType();
 
         if (!$reason_type) {
@@ -804,18 +752,9 @@ class On_hold_admin extends MY_Controller
             } else {
                 $packed_item = $this->sc['So']->checkIfPacked($so_no);
 
-                $update_hold_status = false;
-                if ($so_obj->getHoldStatus() <> 1) {
-                    $update_hold_status = true;
-                    $holdStatus = 1;
-                }
-
                 $so_obj->setHoldStatus(1);
 
                 if ($this->sc['So']->getDao('So')->update($so_obj)) {
-                    if ($update_hold_status) {
-                        $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
-                    }
 
                     if (($sohr_vo = $this->sc['So']->getDao('SoHoldReason')->get()) !== FALSE) {
                         $sohr_vo->setSoNo($so_no);
