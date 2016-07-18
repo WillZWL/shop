@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class SoDao extends BaseDao
+class SoDao extends BaseDao  implements HooksUpdate, HooksInsert
 {
     private $tableName = "so";
     private $voClassName = "SoVo";
@@ -19,6 +19,63 @@ class SoDao extends BaseDao
     public function getVoClassname()
     {
         return $this->voClassName;
+    }
+
+    public function triggerAfterInsert($newObj)
+    {
+        $this->tableFieldsHooksInsert($newObj);
+    }
+
+    public function tableFieldsHooksInsert($newObj)
+    {
+        $table1 = [];
+
+        $table1 = [
+                    'table' => 'order_status_history',
+                    'keyValue'=>[
+                                    'so_no' => $newObj->getSoNo(),
+                                    'status' => $newObj->getStatus(),
+                                ]
+                  ];
+
+        $this->insertTables([$table1, ]);
+    }
+
+    public function triggerAfterUpdate($newObj, $oldObj)
+    {
+        $this->tableFieldsHooksUpdate($newObj, $oldObj);
+    }
+
+    public function tableFieldsHooksUpdate($newObj, $oldObj)
+    {
+        if (!$newObj || !$oldObj) {
+
+            return false;
+        }
+
+        $table1 = $table2 = [];
+
+        if ($newObj->getStatus() <> $oldObj->getStatus()) {
+            $table1 = [
+                        'table' => 'order_status_history',
+                        'keyValue'=>[
+                                        'so_no' => $newObj->getSoNo(),
+                                        'status' => $newObj->getStatus(),
+                                    ]
+                      ];
+        }
+
+        if ($newObj->getHoldStatus() <> $oldObj->getHoldStatus()) {
+            $table2 = [
+                        'table' => 'so_hold_status_history',
+                        'keyValue'=>[
+                                        'so_no' => $newObj->getSoNo(),
+                                        'hold_status' => $newObj->getHoldStatus(),
+                                    ]
+                      ];
+        }
+
+        $this->insertTables([$table1, $table2, ]);
     }
 
     public function get_surplus_oos($where = [], $option = [], $classname = '')

@@ -84,28 +84,12 @@ class RefundService extends BaseService
                         $history_result = $this->getDao('RefundHistory')->insert($refund_history_acc);
                         error_log(__METHOD__ . __LINE__ . $this->getDao('RefundHistory')->db->display_error());
                         if ($history_result !== FALSE) {
-                            $update_status = false;
-                            if ($so_obj->getStatus() <> 3) {
-                                $update_status = true;
-                                $status = 3;
-                            }
-
-                            $update_refund_status = false;
-                            if ($so_obj->getRefundStatus() <> 4) {
-                                $update_refund_status = true;
-                                $refundStatus = 4;
-                            }
-
                             $so_obj->setStatus(3);
                             $so_obj->setRefundStatus(4);
                             $so_result = $this->getDao('So')->update($so_obj);
                             error_log(__METHOD__ . __LINE__ . $this->getDao('So')->db->display_error());
 
                             if ($so_result !== FALSE) {
-                                if ($update_status) {
-                                    $this->sc['So']->saveOrderStatusHistory($so_no, $status);
-                                }
-
                                 $this->getDao('Refund')->db->trans_complete();
                                 $this->checkAction($refund_id, 'A');
                                 return true;
@@ -155,12 +139,6 @@ class RefundService extends BaseService
                 $so_obj = $this->getDao('So')->get(["so_no" => $refund_obj->getSoNo()]);
                 if ($so_obj === FALSE) {
                     return $so_obj;
-                }
-
-                $update_refund_status = false;
-                if ($so_obj->getRefundStatus() <> 4) {
-                    $update_refund_status = true;
-                    $refundStatus = 4;
                 }
 
                 $so_obj->setRefundStatus('4');
@@ -267,11 +245,6 @@ class RefundService extends BaseService
             }
 
             $status = ($so_obj->getStatus() > 5) ? 1 : 2;
-            $update_refund_status = false;
-            if ($so_obj->getRefundStatus() <> $status) {
-                $update_refund_status = true;
-                $refundStatus = $status;
-            }
 
             $so_obj->setRefundStatus($status);
 
@@ -367,11 +340,6 @@ class RefundService extends BaseService
             }
 
             $status = $so_obj->getStatus() > 5 ? 1 : 2;
-            $update_refund_status = false;
-            if ($so_obj->getRefundStatus() <> $status) {
-                $update_refund_status = true;
-                $refundStatus = $status;
-            }
 
             $so_obj->setRefundStatus($status);
 
