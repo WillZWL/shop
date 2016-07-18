@@ -15,9 +15,9 @@
 
     $banner_total = 2;$banner_link=array();
     if($lang_id =="nl"){
-        $banner_total = 4;
-        $banner_link[1]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM4PTNL&AF=HPNL";
-        $banner_link[2]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM3PTNL&AF=HPNL";
+        $banner_total = 5;
+        $banner_link[2]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM4PTNL&AF=HPNL";
+        $banner_link[3]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM3PTNL&AF=HPNL";
     }
 ?>
 <div class="pav-container ">
