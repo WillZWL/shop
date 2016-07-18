@@ -149,6 +149,62 @@ class SoItemDetailDao extends BaseDao
         return FALSE;
     }
 
+
+     public function getItemDetails($where = [], $option = [], $classname = "SoItemDetailVo")
+    {
+        if (!$option["show_ca"]) {
+            # don't include complementary accessories
+            $ca_catid = implode(',', $this->accessoryCatidArr);
+            $where["p.cat_id not in ($ca_catid)"] = null;
+        }
+
+        $this->db->from('so_item_detail AS soid');        
+        $this->db->join('product AS p', 'soid.item_sku = p.sku', 'LEFT');       
+        $this->db->group_by('soid.line_no');
+        $this->db->where($where);
+
+        if (empty($option["num_rows"])) {
+
+            $this->db->select('soid.*');
+
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $rs = [];
+
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
+                    $rs[] = $obj;
+                }
+                return (object)$rs;
+            }
+
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+    }
+
+
     public function getFulfil($where = [], $option = [], $classname = "FulfilListDto")
     {
         $this->db->from('so_item_detail AS soid');
