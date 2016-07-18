@@ -1027,7 +1027,7 @@ class CourierFeedService extends BaseService
 					}
 				}
 				#sbf #9993
-				$declared_value = $this->set_item_declared_value($row,$declared_value);
+				$declared_value = $this->setItemDeclaredValue($row,$declared_value);
 				#end sbf #9993
 
 				$row->setDeclaredValue(round($declared_value, 2));
@@ -1039,11 +1039,9 @@ class CourierFeedService extends BaseService
 		}
 	}
 
-	public function set_item_declared_value($so_obj, $declared_value) {
-		 # sbf #3746 don't include complementary accessory on front end
-        $ca_catid_arr = implode(',', $this->getDao('ProductComplementaryAcc')->getAccessoryCatidArr());
+	public function setItemDeclaredValue($so_obj, $declared_value) {
 		
-		$item_list = (array)$this->getDao('SoItemDetail')->getItemsWithName(['so_no' => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL]);
+		$item_list = (array)$this->getDao('SoItemDetail')->getItemDetails(['so_no' => $so_obj->getSoNo()]);
 
 		$sum = 0;
 		end($item_list);
