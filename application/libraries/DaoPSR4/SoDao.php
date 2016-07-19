@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Dao;
 
-class SoDao extends BaseDao
+class SoDao extends BaseDao  implements HooksUpdate, HooksInsert
 {
     private $tableName = "so";
     private $voClassName = "SoVo";
@@ -19,6 +19,71 @@ class SoDao extends BaseDao
     public function getVoClassname()
     {
         return $this->voClassName;
+    }
+
+    public function triggerAfterInsert($newObj)
+    {
+        $this->tableFieldsHooksInsert($newObj);
+    }
+
+    public function tableFieldsHooksInsert($newObj)
+    {
+        $table1 = $table2 = [];
+
+        $table1 = [
+                    'table' => 'order_status_history',
+                    'keyValue'=>[
+                                    'so_no' => $newObj->getSoNo(),
+                                    'status' => $newObj->getStatus(),
+                                ]
+                  ];
+
+        $table2 = [
+                    'table' => 'so_hold_status_history',
+                    'keyValue'=>[
+                                    'so_no' => $newObj->getSoNo(),
+                                    'hold_status' => $newObj->getHoldStatus(),
+                                ]
+                  ];
+
+        $this->insertTables([$table1, $table2, ]);
+    }
+
+    public function triggerAfterUpdate($newObj, $oldObj)
+    {
+        $this->tableFieldsHooksUpdate($newObj, $oldObj);
+    }
+
+    public function tableFieldsHooksUpdate($newObj, $oldObj)
+    {
+        if (!$newObj || !$oldObj) {
+
+            return false;
+        }
+
+        $table1 = $table2 = [];
+
+        if ($newObj->getStatus() <> $oldObj->getStatus()) {
+            $table1 = [
+                        'table' => 'order_status_history',
+                        'keyValue'=>[
+                                        'so_no' => $newObj->getSoNo(),
+                                        'status' => $newObj->getStatus(),
+                                    ]
+                      ];
+        }
+
+        if ($newObj->getHoldStatus() <> $oldObj->getHoldStatus()) {
+            $table2 = [
+                        'table' => 'so_hold_status_history',
+                        'keyValue'=>[
+                                        'so_no' => $newObj->getSoNo(),
+                                        'hold_status' => $newObj->getHoldStatus(),
+                                    ]
+                      ];
+        }
+
+        $this->insertTables([$table1, $table2, ]);
     }
 
     public function get_surplus_oos($where = [], $option = [], $classname = '')
@@ -2571,15 +2636,27 @@ SQL;
         # so.hold_status = 15 means this is parent of order with split. We exclude parent and use each split child with concatenated so_no with split_so_group
         $this->db->where(["so.client_id" => $client_id, "so.status >= 2" => null, "so.hold_status != 15" => null, "p.cat_id NOT IN ($ca_catid_arr)" => null]);
 
-        return $this->commonGetList($classname, $where, $option, "
+        $selectStr = "
                 pbv.platform_currency_id currency_id,
                 so.platform_id,
                 so.so_no,
                 IF(ISNULL(so.split_so_group), so.so_no, CONCAT_WS('/',so.split_so_group,so.so_no)) AS join_split_so_no,
                 so.split_so_group,
                 c.id client_id,
-                so.order_create_date, so.delivery_name, p.sku, soid.prod_name, soid.amount,
-                so.status, so.refund_status, so.hold_status, so.dispatch_date, sops.payment_gateway_id");
+                so.order_create_date,
+                so.delivery_name,
+                p.sku,
+                soid.prod_name,
+                soid.amount,
+                so.status,
+                so.refund_status,
+                so.hold_status,
+                so.hold_reason,
+                so.dispatch_date,
+                sops.payment_gateway_id
+            ";
+
+        return $this->commonGetList($classname, $where, $option, $selectStr);
     }
 
     public function getAccessoryCatidArr()
@@ -3251,7 +3328,8 @@ SQL;
             si.qty,
             si.amount,
             so.hold_status,
-            so.refund_status
+            so.refund_status,
+            si.margin
             ");
         $this->db->from("so");
         $this->db->join("so_item_detail si", "si.so_no = so.so_no", "inner");

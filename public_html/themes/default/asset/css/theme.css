@@ -739,3 +739,10 @@ input.btn-newsletter {
     #discount_code{margin-top: 50px}
     #discount_code .form-holder button{margin-top:7px;}
 }
+
+.intro_point {
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 30px;
+    color: #549B17;
+}

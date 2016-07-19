@@ -120,7 +120,7 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">Great Britain</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">0 months</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
-                        <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
+                        <td align="center" style="width:120px; height: 21px;" valign="middle">24 months</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
                         </tr>

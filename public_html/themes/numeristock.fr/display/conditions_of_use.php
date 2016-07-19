@@ -82,7 +82,7 @@
 
                     <h3 id="cancel_order"><?= _('ANNULER UNE COMMANDE') ?></h3>
                     <p>
-                        <?= _("Il est possible d’annuler une commande jusqu’à 30 jours à compter du jour suivant celui de la livraison. La demande d’annulation doit être faite par écrit – e-mail ou lettre. Les biens non-utilisés (inclus les accessoires compris dans le prix desdits produits) doivent être retournés aux frais du client sous 30 jours à compter de la réception du colis, et le client reste responsable de tout dommage intervenu durant le transit des biens (y compris s’agissant des cadeaux de noël). Nous nous réservons le droit de faire inspecter les biens par un technicien préalablement à toute réparation ou tout remboursement. Veuillez notez que les produits logiciels ne peuvent être retournés que s’ils sont toujours fermés et scellés. Une annulation intervenant durant la période de garantie dite « cooling off » de 30 jours offre droit à remboursement intégral du prix payé pour l’article. Toute annulation faite en dehors de cette période peut ne pas être acceptée.") ?>
+                        <?= _("Il est possible d’annuler une commande jusqu’à 14 jours à compter du jour suivant celui de la livraison. La demande d’annulation doit être faite par écrit – e-mail ou lettre. Les biens non-utilisés (inclus les accessoires compris dans le prix desdits produits) doivent être retournés aux frais du client sous 14 jours à compter de la réception du colis, et le client reste responsable de tout dommage intervenu durant le transit des biens (y compris s’agissant des cadeaux de noël). Nous nous réservons le droit de faire inspecter les biens par un technicien préalablement à toute réparation ou tout remboursement. Veuillez notez que les produits logiciels ne peuvent être retournés que s’ils sont toujours fermés et scellés. Une annulation intervenant durant la période de garantie dite « cooling off » de 14 jours offre droit à remboursement intégral du prix payé pour l’article. Toute annulation faite en dehors de cette période peut ne pas être acceptée.") ?>
                     </p>
                     <br /><br />
 
@@ -163,9 +163,9 @@
                     <p><?= _('Modes de paiements')?></p>
 
                     <p><?= _("Une variété de méthodes de paiement sont offerts sur le site pour la commodité des clients. Vous acceptez de payer tous les frais engagés dans le cadre de vos achats aux taux en vigueur au moment où les frais ont été engagés. Si vous payez par carte de crédit, votre carte émettrice régit votre utilisation de votre carte, et vous devez vous référer à cet accord et non à ces conditions d'utilisation afin de déterminer vos droits et obligations en tant que titulaire de la carte. VOUS, ET NON Numeristock.fr (Numeristock), ÊTES RESPONSABLE DE PAYER LES MONTANTS NON AUTORISÉ FACTURES A VOTRE CARTE DE CREDIT PAR UN TIERS.")?>
-                    </p> 
+                    </p>
 
-                    <p><?= _('Frais de paiement et frais')?></p> 
+                    <p><?= _('Frais de paiement et frais')?></p>
 
                     <p><?= _("Vous acceptez de payer tous les frais engagés dans le cadre de vos achats aux taux en vigueur au moment où les frais ont été engagés. Sauf si vous avisez Numeristock de divergence dans les soixante (60) jours après leur première apparition sur votre relevé de carte de crédit, vous acceptez qu'ils seront réputées acceptés par vous à tous égards et à toutes fins utiles. Si Numeristock ne reçoit pas le paiement de votre émetteur de carte de crédit ou son agent, vous acceptez de payer tous les montants dus à la demande par Numeristock ou de ses agents.")?>
                     </p>

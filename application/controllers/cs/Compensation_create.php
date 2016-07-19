@@ -142,19 +142,11 @@ class Compensation_create extends MY_Controller
 
                 if ($success) {
                     $so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $orderid]);
-                    $update_hold_status = false;
-                    if ($so_obj->getHoldStatus() <> 1) {
-                        $update_hold_status = true;
-                        $holdStatus = 1;
-                    }
                     $so_obj->setHoldStatus(1);
                     if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                         $success = 0;
                         $_SESSION["NOTICE"] = "ERROR: @" . __LINE__ . " " . $this->db->display_error() . "\n";
                     } else {
-                        if ($update_hold_status) {
-                            $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
-                        }
 
                         Redirect(base_url() . "cs/compensation_create/create/");
                     }
@@ -201,7 +193,7 @@ class Compensation_create extends MY_Controller
 
         $where = [];
         $option = [];
-        $where["platform_id"] = $platform_id;
+        $where["pbv.selling_platform_id"] = $platform_id;
         $submit_search = 0;
 
         if ($this->input->get("sku") != "") {
@@ -210,7 +202,7 @@ class Compensation_create extends MY_Controller
         }
 
         if ($this->input->get("name") != "") {
-            $where["prod_name LIKE "] = "%" . $this->input->get("name") . "%";
+            $where["p.name LIKE "] = "%" . $this->input->get("name") . "%";
             $submit_search = 1;
         }
 
@@ -258,7 +250,7 @@ class Compensation_create extends MY_Controller
         $option["offset"] = $offset;
 
         if (empty($sort)) {
-            $sort = "prod_name";
+            $sort = "name";
         }
 
         if (empty($order)) {

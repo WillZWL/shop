@@ -436,6 +436,7 @@ class SoFactoryService extends BaseService
             $this->sendAlert($subject, $message, "oswald-alert@eservicesgroup.com", BaseService::ALERT_HAZARD_LEVEL);
             return false;
         } else {
+
             return $soObj;
         }
     }

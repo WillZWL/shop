@@ -147,17 +147,10 @@ class Compensation extends Compensation_create
                             // update so
                             $new_so_cost = $so_obj->getCost() + $new_obj->getCost();
                             $so_obj->setCost($new_so_cost);
-                            if ($so_obj->getHoldStatus() <> 0) {
-                                $update_hold_status = true;
-                                $holdStatus = 0;
-                            }
                             $so_obj->setHoldStatus(0);
                             $ret = $this->sc['So']->getDao('So')->update($so_obj);
                             if ($ret === FALSE) {
                                 $err++;
-                            }
-                            if ($update_hold_status) {
-                                $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                             }
 
                             if (!$err) {
@@ -185,16 +178,9 @@ class Compensation extends Compensation_create
                                 }
 
                                 $so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $orderid]);
-                                if ($so_obj->getHoldStatus() <> 0) {
-                                    $update_hold_status = true;
-                                    $holdStatus = 0;
-                                }
                                 $so_obj->setHoldStatus(0);
                                 if ($this->sc['So']->getDao('So')->update($so_obj) === FALSE) {
                                     $err++;
-                                }
-                                if ($update_hold_status) {
-                                    $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                                 }
                             }
                         }
@@ -230,16 +216,9 @@ class Compensation extends Compensation_create
                     }
                     if (!$err) {
                         $so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $orderid]);
-                        if ($so_obj->getHoldStatus() <> 0) {
-                            $update_hold_status = true;
-                            $holdStatus = 0;
-                        }
                         $so_obj->setHoldStatus(0);
                         if (!$this->sc['So']->getDao('So')->update($so_obj)) {
                             $err++;
-                        }
-                        if ($update_hold_status) {
-                            $this->sc['So']->saveSoHoldStatusHistory($so_no, $holdStatus);
                         }
                     }
 

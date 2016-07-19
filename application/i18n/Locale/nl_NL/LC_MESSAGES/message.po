@@ -1,22 +1,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Panther\n"
-"POT-Creation-Date: 2016-07-11 15:38+0800\n"
-"PO-Revision-Date: 2016-07-11 15:40+0800\n"
+"POT-Creation-Date: 2016-07-15 11:51+0800\n"
+"PO-Revision-Date: 2016-07-18 11:16+0800\n"
 "Last-Translator: \n"
 "Language-Team: it@eservicesgroup.net <it@eservicesgroup.net>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Basepath: ../../../projectV2/atomv2/public_html/themes/default\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: display/conditions_of_use.php\n"
 
-#: cart/info.php:35 review.php:22 review.php:101
+#: cart/info.php:35 review.php:22 review.php:109
 msgid "Total"
 msgstr "Totaal"
 
@@ -24,7 +24,7 @@ msgstr "Totaal"
 msgid "View Cart"
 msgstr "Bekijk winkelwagen"
 
-#: cart/info.php:41 checkout/index.php:7 review.php:110
+#: cart/info.php:41 checkout/index.php:7 review.php:118
 msgid "Checkout"
 msgstr "Bestellen"
 
@@ -36,7 +36,7 @@ msgstr "Uw winkelwagen is leeg!"
 msgid "Refine Search"
 msgstr "Verfijn zoekopdracht"
 
-#: cat.php:12 category.php:7 myaccount/index.php:187 myaccount/index.php:188
+#: cat.php:12 category.php:7 myaccount/index.php:194 myaccount/index.php:195
 #: search.php:12
 msgid "Categories"
 msgstr "Categorieën"
@@ -114,13 +114,13 @@ msgstr "U betaalt"
 msgid "Save"
 msgstr "Bespaar"
 
-#: cat.php:235 cat.php:241 product/accessories.php:119
+#: cat.php:240 cat.php:250 product/accessories.php:119
 #: product/accessories.php:125 product/detail.php:123 product/grid.php:68
 #: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Voeg toe aan winkelmandje"
 
-#: cat.php:247 search.php:223 search.php:225
+#: cat.php:256 search.php:223 search.php:225
 msgid "More Info"
 msgstr "Meer informatie"
 
@@ -212,8 +212,8 @@ msgstr "Step 2: Account &amp; Factuurgegevens"
 msgid "Your Personal Details"
 msgstr "Uw persoonlijke gegevens"
 
-#: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:130
-#: myaccount/index.php:131 myaccount/index.php:316 myaccount/index.php:317
+#: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:137
+#: myaccount/index.php:138 myaccount/index.php:323 myaccount/index.php:324
 #: myaccount/login.php:97 myaccount/login.php:98
 msgid "First Name"
 msgstr "Voornaam"
@@ -226,12 +226,12 @@ msgstr "Achternaam"
 msgid "Telephone"
 msgstr "Telefoon"
 
-#: checkout/index.php:78 myaccount/index.php:361 myaccount/index.php:362
+#: checkout/index.php:78 myaccount/index.php:368 myaccount/index.php:369
 #: myaccount/login.php:70
 msgid "Country Code"
 msgstr "Landcode"
 
-#: checkout/index.php:79 myaccount/index.php:365 myaccount/index.php:366
+#: checkout/index.php:79 myaccount/index.php:372 myaccount/index.php:373
 #: myaccount/login.php:74
 msgid "Area Code"
 msgstr "Netnummer"
@@ -252,26 +252,28 @@ msgstr "Uw adres"
 msgid "Company"
 msgstr "Bedrijf"
 
-#: checkout/index.php:103 checkout/index.php:104
-msgid "Address 1"
-msgstr "Adres 1"
+#: checkout/index.php:103 checkout/index.php:104 myaccount/index.php:162
+#: myaccount/index.php:163 myaccount/index.php:357 myaccount/login.php:59
+msgid "Address Line 1"
+msgstr "Adresregel 1"
 
-#: checkout/index.php:107 checkout/index.php:108
-msgid "Address 2"
-msgstr "Adres 2"
+#: checkout/index.php:107 checkout/index.php:108 myaccount/index.php:166
+#: myaccount/index.php:167 myaccount/index.php:358 myaccount/login.php:60
+msgid "Address Line 2"
+msgstr "Adresregel 2"
 
-#: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:147
-#: myaccount/index.php:148 myaccount/index.php:341 myaccount/index.php:342
+#: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:154
+#: myaccount/index.php:155 myaccount/index.php:348 myaccount/index.php:349
 #: myaccount/login.php:50 myaccount/login.php:51
 msgid "City"
-msgstr "Strad"
+msgstr "Stad"
 
 #: checkout/index.php:115 checkout/index.php:116
 msgid "Post Code"
 msgstr "Postcode"
 
-#: checkout/index.php:119 myaccount/index.php:138 myaccount/index.php:139
-#: myaccount/index.php:333 myaccount/login.php:42
+#: checkout/index.php:119 myaccount/index.php:145 myaccount/index.php:146
+#: myaccount/index.php:340 myaccount/login.php:42
 msgid "Country"
 msgstr "Land"
 
@@ -350,8 +352,8 @@ msgid "The billing company name can only consist of alphabetical, number"
 msgstr "Bedrijfsnaam mag alleen letters van het alfabet bevatten"
 
 #: checkout/index.php:629
-msgid "The billing address 1 is required"
-msgstr "Adres 1 is vereist"
+msgid "The billing Address Line 1 is required"
+msgstr "Factuuradresregel 1 is verplicht"
 
 #: checkout/index.php:633
 msgid "The billing address1 name can only consist of alphabetical, number"
@@ -595,7 +597,7 @@ msgstr "E-mailadres"
 msgid "Order Number"
 msgstr "Ordernummer"
 
-#: contact.php:42 myaccount/index.php:279 myaccount/index.php:373
+#: contact.php:42 myaccount/index.php:286 myaccount/index.php:380
 #: myaccount/login.php:128
 msgid "Submit"
 msgstr "Bevestig"
@@ -1435,51 +1437,51 @@ msgstr ""
 "Uw bestelling is gesplitst zonder extra kosten zodat u de gekochte "
 "product(en) zo snel mogelijk kunt ontvangen."
 
-#: myaccount/index.php:43 myaccount/index.php:76
+#: myaccount/index.php:43 myaccount/index.php:83
 msgid "Order"
 msgstr "Order"
 
-#: myaccount/index.php:44 myaccount/index.php:77
+#: myaccount/index.php:44 myaccount/index.php:84
 msgid "Date"
 msgstr "Datum"
 
-#: myaccount/index.php:45 myaccount/index.php:78
+#: myaccount/index.php:45 myaccount/index.php:85
 msgid "Shipped to"
 msgstr "Verzenden naar"
 
-#: myaccount/index.php:46 myaccount/index.php:79
+#: myaccount/index.php:46 myaccount/index.php:86
 msgid "Product"
 msgstr "Product"
 
-#: myaccount/index.php:47 myaccount/index.php:80
+#: myaccount/index.php:47 myaccount/index.php:87
 msgid "Order total"
 msgstr "Order totaal"
 
-#: myaccount/index.php:48 myaccount/index.php:81
+#: myaccount/index.php:48 myaccount/index.php:88
 msgid "Status"
 msgstr "Status"
 
-#: myaccount/index.php:69
+#: myaccount/index.php:76
 msgid "Have you paid by bank transfer?<br>Contact us "
 msgstr "Hebt u betaald via bankoverschrijving? <br>Neem contact op met ons"
 
-#: myaccount/index.php:70 myaccount/index.php:114
+#: myaccount/index.php:77 myaccount/index.php:121
 msgid "here"
 msgstr "hier"
 
-#: myaccount/index.php:94
+#: myaccount/index.php:101
 msgid "Pending Payment"
 msgstr "In afwachting van uw betaling"
 
-#: myaccount/index.php:95
+#: myaccount/index.php:102
 msgid "We have not received the payment for your order."
 msgstr "We hebben de betaling van uw order nog niet ontvangen."
 
-#: myaccount/index.php:98
+#: myaccount/index.php:105
 msgid "Incomplete Payment"
 msgstr "Incomplete Betaling"
 
-#: myaccount/index.php:99
+#: myaccount/index.php:106
 msgid ""
 "The amount received in our bank account does not correspond to the total "
 "amount of your order."
@@ -1487,7 +1489,7 @@ msgstr ""
 "De ontvangen bedrag op onze bankrekening komt niet overeenmet het totale "
 "bedrag van uw bestelling."
 
-#: myaccount/index.php:112
+#: myaccount/index.php:119
 msgid ""
 "Your request has been submitted. Please kindly review the information below "
 "as your RMA confirmation."
@@ -1495,11 +1497,11 @@ msgstr ""
 "Uw aanvraag is ingediend. Controleer de onderstaande informatie van uw RMA-"
 "bevestiging."
 
-#: myaccount/index.php:113
+#: myaccount/index.php:120
 msgid "Please click"
 msgstr "Please click"
 
-#: myaccount/index.php:115
+#: myaccount/index.php:122
 msgid ""
 "to print this page and send it back to us together with the returned "
 "package. Items returned without this RMA form will not be processed."
@@ -1508,26 +1510,26 @@ msgstr ""
 "retourneren pakket. Items die zonder dit RMA-formulier worden niet in "
 "behandeling genomen."
 
-#: myaccount/index.php:119
+#: myaccount/index.php:126
 msgid "Important Notice"
 msgstr "Belangrijke Notitie"
 
-#: myaccount/index.php:121
+#: myaccount/index.php:128
 msgid "Please read the following before filling in the web form below."
 msgstr "Lees het volgende voor het invullen de onderstaande webformulier."
 
-#: myaccount/index.php:123
+#: myaccount/index.php:130
 msgid ""
 "- Any items returned without a returns form enclosed will not be entertained"
 msgstr ""
 "- Alle producten  geretourneerd zonder een retourformulier zal niet in "
 "behandeling genomen worden."
 
-#: myaccount/index.php:124
+#: myaccount/index.php:131
 msgid "- Read our returns policy that can be found at the bottom of this page"
 msgstr "- Lees onze retourbeleid die u kunt vinen onderaan deze pagina"
 
-#: myaccount/index.php:125
+#: myaccount/index.php:132
 msgid ""
 "- Kindly use our webform for &quot;Faulty goods or returned items&quot; to "
 "confirm your intention to return your goods and we will then advise you with "
@@ -1537,76 +1539,66 @@ msgstr ""
 "of geretourneerde producten&quot; om te bevestigen dat u goederen wenst te "
 "retourneren en wij zullen dan adviseren u met onze retouradres"
 
-#: myaccount/index.php:127
+#: myaccount/index.php:134
 msgid "Personal Details"
 msgstr "Persoonlijke gegevens"
 
-#: myaccount/index.php:134 myaccount/index.php:135 myaccount/index.php:320
-#: myaccount/index.php:321 myaccount/login.php:93 myaccount/login.php:94
+#: myaccount/index.php:141 myaccount/index.php:142 myaccount/index.php:327
+#: myaccount/index.php:328 myaccount/login.php:93 myaccount/login.php:94
 msgid "Surname"
 msgstr "Voornaam"
 
-#: myaccount/index.php:151 myaccount/index.php:152 myaccount/index.php:345
-#: myaccount/index.php:346 myaccount/login.php:54 myaccount/login.php:55
+#: myaccount/index.php:158 myaccount/index.php:159 myaccount/index.php:352
+#: myaccount/index.php:353 myaccount/login.php:54 myaccount/login.php:55
 msgid "State"
 msgstr "Provincie"
 
-#: myaccount/index.php:155 myaccount/index.php:156 myaccount/index.php:350
-#: myaccount/login.php:59
-msgid "Address Line 1"
-msgstr "Adres 1"
-
-#: myaccount/index.php:159 myaccount/index.php:160 myaccount/index.php:351
-#: myaccount/login.php:60
-msgid "Address Line 2"
-msgstr "Adres 2"
-
-#: myaccount/index.php:163 myaccount/index.php:164 myaccount/index.php:354
-#: myaccount/index.php:355
+#: myaccount/index.php:170 myaccount/index.php:171 myaccount/index.php:361
+#: myaccount/index.php:362
 msgid "Postcode"
 msgstr "Postcode"
 
-#: myaccount/index.php:170
+#: myaccount/index.php:177
 msgid "Order Details"
 msgstr "Orderdetails"
 
-#: myaccount/index.php:173 myaccount/index.php:174
+#: myaccount/index.php:180 myaccount/index.php:181
 msgid "Order number"
 msgstr "Ordernummer"
 
-#: myaccount/index.php:180
+#: myaccount/index.php:187
 msgid "Product Details"
 msgstr "Productdetails"
 
-#: myaccount/index.php:183 myaccount/index.php:184
+#: myaccount/index.php:190 myaccount/index.php:191
 msgid "Product Returned"
 msgstr "Product Geretourneerd"
 
-#: myaccount/index.php:198
+#: myaccount/index.php:205
 msgid "Serial No"
 msgstr "Serienummer"
 
-#: myaccount/index.php:205
+#: myaccount/index.php:212
 msgid "Returns Details"
 msgstr "Retourgegevens"
 
-#: myaccount/index.php:208 myaccount/index.php:209
+#: myaccount/index.php:215 myaccount/index.php:216
 msgid "Reasons for Returns"
 msgstr "Reden(en) voor retour"
 
-#: myaccount/index.php:222 myaccount/index.php:223
+#: myaccount/index.php:229 myaccount/index.php:230
 msgid "Action Required"
 msgstr "Actie vereist"
 
-#: myaccount/index.php:235 myaccount/index.php:236
+#: myaccount/index.php:242 myaccount/index.php:243
 msgid "Detailed Description of Fault"
 msgstr "Gedetailleerde omschrijving defect"
 
-#: myaccount/index.php:244
+#: myaccount/index.php:251
 msgid "ValueBasket Returns Policy"
 msgstr "9digital retourbeleid"
 
-#: myaccount/index.php:247
+#: myaccount/index.php:254
 msgid ""
 "Where the dispatch has been made, you may request for a refund up to 14 days "
 "after the goods are delivered."
@@ -1614,7 +1606,7 @@ msgstr ""
 "Indien de verzending is gemaakt, kunt u een verzoek om terugbetaling tot 14 "
 "dagen nadat de goederen zijn geleverd."
 
-#: myaccount/index.php:248
+#: myaccount/index.php:255
 msgid ""
 "To submit a returns request, simply email us to start the process.  Where "
 "you are eligible for a refund, Valuebasket.com will provide authorization "
@@ -1625,25 +1617,25 @@ msgstr ""
 "nl toestemming verlenen en een retouradres geven indien deze van toepassing "
 "is."
 
-#: myaccount/index.php:249
+#: myaccount/index.php:256
 msgid "Returning an order within the 14-day grace period from delivery date;"
 msgstr ""
 "Retourneren van een bestelling binnen de 14-dagen bedenktijd vanaf "
 "leveringsdatum;"
 
-#: myaccount/index.php:251
+#: myaccount/index.php:258
 msgid "that are new unopened item, will be eligible for refund"
 msgstr ""
 "de nieuwe ongeopende producten, komen in aanmerking voor een restitutie"
 
-#: myaccount/index.php:252
+#: myaccount/index.php:259
 msgid ""
 "that are found to be faulty will be eligible for replacement order or refund"
 msgstr ""
 "die een defect hebben, komen in aanmerking voor vervangingsbestelling of "
 "restitutie"
 
-#: myaccount/index.php:255
+#: myaccount/index.php:262
 msgid ""
 "Good returned for a refund must be in their original condition with all "
 "original packing, accessories and included materials."
@@ -1651,7 +1643,7 @@ msgstr ""
 "Geretourneerde goederen voor een restitutie moeten in hun originele staat "
 "met alle originele verpakkingen, accessoires en materialen bevatten."
 
-#: myaccount/index.php:256
+#: myaccount/index.php:263
 msgid ""
 "You must take all due reasonable care of the goods and return them in its "
 "original and undamaged condition."
@@ -1659,7 +1651,7 @@ msgstr ""
 "U bent verantwoordelijk voor de goederen en deze te retourneren in de "
 "originele en onbeschadigde staat."
 
-#: myaccount/index.php:257
+#: myaccount/index.php:264
 msgid ""
 "You will agree to bear the costs of returning the item(s).  The cost "
 "incurred in returning the item(s) may be eligible for reimbursement where "
@@ -1672,7 +1664,7 @@ msgstr ""
 "blijken te zijn, als de juiste toestemming van 9digital.nl wordt aangevraagd "
 "en toegekend voorafgaande het retourneren van de product(en)."
 
-#: myaccount/index.php:258
+#: myaccount/index.php:265
 msgid ""
 "Where the purchases are opened and are of usable software, consumable goods, "
 "or items impacted by hygiene, such items will be ineligible for refund."
@@ -1681,43 +1673,43 @@ msgstr ""
 "verbruiksgoederen of items beïnvloed door hygiëne, zullen dergelijke items "
 "niet in aanmerking komen voor een restitutie."
 
-#: myaccount/index.php:259
+#: myaccount/index.php:266
 msgid "A restocking fee may be applicable at the discretion of ValueBasket.com"
 msgstr ""
 "Een herbevoorraadkosten kunnen van toepassing zijn naar het oordeel van "
 "9digital.nl."
 
-#: myaccount/index.php:260
+#: myaccount/index.php:267
 msgid "An admin fee may be incurred if no fault found or fault caused by user"
 msgstr ""
 "Een administratieve vergoeding kan in rekening gebracht worden, wanneer er "
 "geen fout/defect gevonden wordt of defecten veroorzaakt zijn door de "
 "gebruiker."
 
-#: myaccount/index.php:267 myaccount/index.php:271
+#: myaccount/index.php:274 myaccount/index.php:278
 msgid "Declaration"
 msgstr "Verklaring"
 
-#: myaccount/index.php:272
+#: myaccount/index.php:279
 msgid "I declare that I have read and agree to the Returns Policy"
 msgstr ""
 "Hierbij verklaar ik het bovengenoemde te hebben gelezen, begrepen en akkoord "
 "te hebben bevonden."
 
-#: myaccount/index.php:285
+#: myaccount/index.php:292
 msgid "Profile"
 msgstr "Profiel"
 
-#: myaccount/index.php:288 myaccount/login.php:105 myaccount/login.php:108
+#: myaccount/index.php:295 myaccount/login.php:105 myaccount/login.php:108
 #: myaccount/login.php:109
 msgid "Email Address"
 msgstr "E-mailadres"
 
-#: myaccount/index.php:293 myaccount/index.php:294
+#: myaccount/index.php:300 myaccount/index.php:301
 msgid "Old Password"
 msgstr "Oud wachtwoord"
 
-#: myaccount/index.php:297 myaccount/login.php:118
+#: myaccount/index.php:304 myaccount/login.php:118
 msgid ""
 "Password must be between 6 to 20 characters in length. We recommend that you "
 "make your password secure by including a mixture of upper and lower case "
@@ -1727,39 +1719,39 @@ msgstr ""
 "wachtwoord veiliger te maken door een combinatie van hoofdletters en kleine "
 "letters, cijfers en symbolen (bijv. #, @,!)"
 
-#: myaccount/index.php:300 myaccount/index.php:301
+#: myaccount/index.php:307 myaccount/index.php:308
 msgid "Choose a New Password"
 msgstr "Kies een nieuw wachtwoord"
 
-#: myaccount/index.php:300 myaccount/index.php:304
+#: myaccount/index.php:307 myaccount/index.php:311
 msgid "(Optional)"
 msgstr "(Optioneel)"
 
-#: myaccount/index.php:304 myaccount/index.php:305
+#: myaccount/index.php:311 myaccount/index.php:312
 msgid "Re-enter New Password"
 msgstr "Nieuw wachtwoord opnieuw invoeren"
 
-#: myaccount/index.php:308 myaccount/login.php:85
+#: myaccount/index.php:315 myaccount/login.php:85
 msgid "Title"
 msgstr "Titel"
 
-#: myaccount/index.php:324 myaccount/index.php:325 myaccount/login.php:101
+#: myaccount/index.php:331 myaccount/index.php:332 myaccount/login.php:101
 msgid "Company Name"
 msgstr "Bedrijfsnaam"
 
-#: myaccount/index.php:329
+#: myaccount/index.php:336
 msgid "Billing Address"
 msgstr "Factuuradres"
 
-#: myaccount/index.php:349 myaccount/login.php:58
+#: myaccount/index.php:356 myaccount/login.php:58
 msgid "Address"
 msgstr "Adres"
 
-#: myaccount/index.php:358
+#: myaccount/index.php:365
 msgid "Phone"
 msgstr "Telefoon"
 
-#: myaccount/index.php:369 myaccount/index.php:370 myaccount/login.php:78
+#: myaccount/index.php:376 myaccount/index.php:377 myaccount/login.php:78
 msgid "Number"
 msgstr "Nummer"
 
@@ -1900,23 +1892,23 @@ msgstr "Verversen"
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: review.php:59
+#: review.php:58
 msgid "Promo code"
 msgstr "Promotiecode"
 
-#: review.php:62
+#: review.php:61
 msgid "Enter your promo code"
 msgstr "Voer uw promotiecode in"
 
-#: review.php:67
+#: review.php:66
 msgid "Remove / Edit Code"
 msgstr "Verwijder / bewerk code"
 
-#: review.php:71
+#: review.php:70
 msgid "Apply Code"
 msgstr "Code toepassen"
 
-#: review.php:76
+#: review.php:75
 msgid ""
 "Sorry, Promotion Code Invalid. Please check if the conditions and/or minimum "
 "order amount have been met."
@@ -1924,19 +1916,19 @@ msgstr ""
 "Sorry, de ingevoerde promotiecode is niet geldig. Controleer of u voldoet "
 "aan de voorwaarden en/of het totaal bedrag."
 
-#: review.php:87
+#: review.php:95
 msgid "Subtotal"
 msgstr "Subtotaal"
 
-#: review.php:91
+#: review.php:99
 msgid "Shipping"
 msgstr "Verzending"
 
-#: review.php:96
+#: review.php:104
 msgid "Promotion Discount"
 msgstr "Promotie korting"
 
-#: review.php:109 reviewEmptyCart.php:7
+#: review.php:117 reviewEmptyCart.php:7
 msgid "Continue Shopping"
 msgstr "Veder winkelen"
 
@@ -1957,6 +1949,211 @@ msgstr "Zoekresultaten voor \"%s\""
 #: search.php:162
 msgid "Display"
 msgstr "Producten per pagina"
+
+#: template_for_order_status.php:2
+msgid "Payment Confirmation"
+msgstr "Betalingsbevestiging"
+
+#: template_for_order_status.php:3
+msgid "Payment received!"
+msgstr "Betaling ontvangen!"
+
+#: template_for_order_status.php:6
+msgid "Order Review"
+msgstr "Bestellingsoverzicht"
+
+#: template_for_order_status.php:7
+msgid "Order details being confirmed"
+msgstr "Bevestiging van bestel gegevens "
+
+#: template_for_order_status.php:10
+msgid "Held for Verification"
+msgstr "Vastgehouden voor verificatie "
+
+#: template_for_order_status.php:11
+msgid ""
+"Your order is being verified and may require further details. Kindly refer "
+"to our latest email for further details or contact us directly."
+msgstr ""
+"Uw bestelling wordt geverifieerd en vereist nadere details. Raadpleeg ons "
+"via de  e-mail voor meer informatie of neem direct contact met ons op."
+
+#: template_for_order_status.php:14
+msgid "Order Held pending Feedback"
+msgstr "Bestelling vastgehouden in afwachting op uw reactie"
+
+#: template_for_order_status.php:15
+msgid ""
+"Your order was held by request or due to stock constraint. Kindly refer to "
+"our latest email for further details or contact us directly."
+msgstr ""
+"Uw bestelling is op uw verzoek vastgehouden  of  er is een beperkte voorraad "
+"voor het product. Vriendelijk verzoeken wij u om contact met ons op te nemen "
+"via de email. "
+
+#: template_for_order_status.php:18
+msgid "Order Refund Pending"
+msgstr "Restitutie van bestelling in behandeling "
+
+#: template_for_order_status.php:19
+msgid "Your refund is in progress"
+msgstr "Uw terugbetaling wordt nu verwerkt"
+
+#: template_for_order_status.php:22
+msgid "Order Refunded"
+msgstr "Bestelling gerestitueerd"
+
+#: template_for_order_status.php:23
+msgid "Your order has been refunded"
+msgstr "Uw bestelling hebben wij gerestitueerd. "
+
+#: template_for_order_status.php:26
+msgid "Order Confirmed"
+msgstr "Bestelling bevestigd"
+
+#: template_for_order_status.php:27
+msgid "Order validated! Fulfillment stage next"
+msgstr "Uw bestelling wordt klaar gemaakt"
+
+#: template_for_order_status.php:30
+msgid "Stock Review"
+msgstr "Samenstelling van u product "
+
+#: template_for_order_status.php:31
+msgid "Stock review and assignment"
+msgstr "Uw bestelling is goed gekeurd "
+
+#: template_for_order_status.php:34
+msgid "Stock Confirmed"
+msgstr "Product samengesteld bevestigd"
+
+#: template_for_order_status.php:35
+msgid "Stock inspected and verified to ship!"
+msgstr "U kunt uw bestelling binnenkort verwachten "
+
+#: template_for_order_status.php:38
+msgid "Order in Queue"
+msgstr "Bestelling in de wachtrij"
+
+#: template_for_order_status.php:39
+msgid "Order in fulfillment queue"
+msgstr "Uw bestelling staat in de wachtrij om vervuld te worden. "
+
+#: template_for_order_status.php:42 template_for_order_status.php:46
+msgid "Order Delay"
+msgstr "Bestelling vertraagd"
+
+#: template_for_order_status.php:43
+msgid "Delay in fulfillment line. Please be patient"
+msgstr ""
+"Op dit moment ondervinden wij een lichte vertraging. Graag vragen wij uw "
+"geduld hiervoor. "
+
+#: template_for_order_status.php:47
+msgid "Thanks for being so patient. Please allow an extra 2-3 working days"
+msgstr ""
+"Wij danken u voor uw geduld. Wij verwachten dat het nog  2-3 werkdagen gaat "
+"duren."
+
+#: template_for_order_status.php:50
+msgid "Order Packed!"
+msgstr "Bestelling gereed"
+
+#: template_for_order_status.php:51 template_for_order_status.php:55
+msgid "Order packed and ready to ship within 1-2 working days!"
+msgstr ""
+"Uw bestelling is gereed voor verzending en wij verwachten dat wij uw "
+"bestelling binnen 1-2 werkdagen kunnen verzenden!"
+
+#: template_for_order_status.php:54
+msgid "In Transit To Warehouse"
+msgstr "Onderweg naar het distributiecentrum"
+
+#: template_for_order_status.php:58 template_for_order_status.php:62
+#: template_for_order_status.php:66
+msgid "Shipped"
+msgstr "Verzonden"
+
+#: template_for_order_status.php:59
+msgid "Shipment picked up by delivery service"
+msgstr "Uw bestelling is opgehaald door de bezorger"
+
+#: template_for_order_status.php:63
+msgid "In-transit to warehouse for final delivery to your address"
+msgstr "Uw bestelling is verzonden van onze warenhuis en onderweg "
+
+#: template_for_order_status.php:67
+msgid "Shipment at final destination processing with delivery service."
+msgstr "Verzending in behandeling met de koerier "
+
+#: template_for_order_status.php:70
+msgid "In Transit"
+msgstr "Onderweg "
+
+#: template_for_order_status.php:71
+msgid "Parcel in transit to your address"
+msgstr "U pakket is nu onderweg naar uw adres"
+
+#: template_for_order_status.php:74
+msgid "Out for Delivery"
+msgstr "Bestelling uit voor levering "
+
+#: template_for_order_status.php:75
+msgid "Delivery man has your parcel"
+msgstr ""
+"Uw pakketje is nu bij de bezorger en u kunt uw pakketje binnenkort in "
+"ontvangst nemen "
+
+#: template_for_order_status.php:78
+msgid "Delivered"
+msgstr "Geleverd"
+
+#: template_for_order_status.php:79
+msgid "The shipment was delivered successfully."
+msgstr "Uw pakketje was succesvol afgeleverd. "
+
+#: template_for_order_status.php:82
+msgid "Failed Delivery Attempt"
+msgstr "Poging tot levering mislukt  "
+
+#: template_for_order_status.php:83
+msgid ""
+"Delivery attempt failed, contact delivery service using info on calling card "
+"to arrange collection at nearest pick-up point"
+msgstr ""
+"Poging tot levering van uw pakket is mislukt. Graag contact opnemen met de "
+"bezorger om een nieuwe afspraak te maken voor bezorging.  "
+
+#: template_for_order_status.php:86
+msgid "Exception"
+msgstr "Uitzondering "
+
+#: template_for_order_status.php:87
+msgid ""
+"Custom hold, undelivered, returned shipment to sender or any shipping "
+"exceptions."
+msgstr ""
+"Uw bestelling wordt momenteel vastgehouden bij de douane voor een routine "
+"controle. "
+
+#: template_for_order_status.php:90
+msgid "Expired"
+msgstr "Verlopen"
+
+#: template_for_order_status.php:91
+msgid "Contact us to know regarding latest update of parcel"
+msgstr ""
+"Graag verzoeken wij u om contact met ons op te nemen over de status van uw "
+"pakket "
+
+#~ msgid "Address 1"
+#~ msgstr "Adres 1"
+
+#~ msgid "Address 2"
+#~ msgstr "Adres 2"
+
+#~ msgid "The billing address 1 is required"
+#~ msgstr "Adres 1 is vereist"
 
 #~ msgid "Term and Conditions"
 #~ msgstr "Algemene voorwaarden"
@@ -2011,21 +2208,6 @@ msgstr "Producten per pagina"
 #~ "de overige beleid die staan omschreven op deze website die van tijd tot "
 #~ "tijd aangepast worden. MAAK GEEN GEBRUIK VAN DEZE WEBSITE, ALS U NIET "
 #~ "ACCOORRD GAAT MET DEZE GEBRUIKSVOORWAARDEN."
-
-#~ msgid ""
-#~ "DigitalDiscount is a trading name with registered offices in: <br><br> "
-#~ "Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place "
-#~ "Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
-#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
-#~ "SW19 2R. <br><br>Through its websites, ChatandVision (HK) Limited offers "
-#~ "consumer electronics hardware, and services."
-#~ msgstr ""
-#~ "9digital.nl is een handelsnaam met geregistreerde kantoren in: <br><br> "
-#~ "Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place "
-#~ "Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
-#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
-#~ "SW19 2R. <br><br>Through deze website, offreert ChatandVision (HK) "
-#~ "Limited consumenten electronica hardware en services."
 
 #~ msgid ""
 #~ "If you have any queries relating to our terms and conditions, please "
@@ -2520,6 +2702,21 @@ msgstr "Producten per pagina"
 
 #~ msgid "Updated: July 09, 2015 "
 #~ msgstr "Bijgewerkt: 9 juli 2015"
+
+#~ msgid ""
+#~ "DigitalDiscount is a trading name with registered offices in: <br><br> "
+#~ "Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place "
+#~ "Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br>Through its websites, ChatandVision (HK) Limited offers "
+#~ "consumer electronics hardware, and services."
+#~ msgstr ""
+#~ "9digital.nl is een handelsnaam met geregistreerde kantoren in: <br><br> "
+#~ "Hong Kong:<br>ChatandVision (HK) Limited, Flat/RM 12, 25/F Langham Place "
+#~ "Office Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br>Through deze website, offreert ChatandVision (HK) "
+#~ "Limited consumenten electronica hardware en services."
 
 #~ msgid "Unknow error: Please contact our CS!"
 #~ msgstr "Onbekende fout: Neem contact op met onze klantenservice!"

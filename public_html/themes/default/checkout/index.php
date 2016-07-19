@@ -1,7 +1,7 @@
 <?php $this->load->view('header') ?>
 <!-- header -->
 <div class="main-columns container">
-    <div class="row"> 
+    <div class="row">
     <div id="sidebar-main" class="col-md-12">
     <div id="content">
         <h1 class="page-title"><?=_("Checkout")?></h1>
@@ -41,7 +41,7 @@
                             <input type="button" class="btn btn-primary hidden" data-loading-text="<?=_("Loading...")?>" id="loggedInButton" value="<?=_("You have logged in, please click here to continue")?>">
                         </form>
                       </div>
-                    </div>            
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,18 +62,18 @@
                         <fieldset id="account">
                           <legend><?=_("Your Personal Details")?></legend>
                           <div class="form-group required">
-                              <label for="billingFirstName" class="control-label"><?=_("First Name")?></label> 
+                              <label for="billingFirstName" class="control-label"><?=_("First Name")?></label>
                               <input type="text" class="form-control" maxlength=50 id="billingFirstName" placeholder="<?=_("First Name")?>" value="" name="billingFirstName" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingLastName" class="control-label"><?=_("Last Name")?></label> 
+                              <label for="billingLastName" class="control-label"><?=_("Last Name")?></label>
                               <input type="text" class="form-control" maxlength=50 id="billingLastName" placeholder="<?=_("Last Name")?>" value="" name="billingLastName" />
                           </div>
                           <div class="form-group required">
-                          <label for="billingEmail" class="control-label"><?=_("E-Mail")?></label> 
+                          <label for="billingEmail" class="control-label"><?=_("E-Mail")?></label>
                           <input type="text" class="form-control" id="billingEmail" placeholder="<?=_("E-Mail")?>" value="" name="billingEmail" /></div>
                           <div class="form-group required">
-                              <label class="control-label"><?=_("Telephone")?></label> 
+                              <label class="control-label"><?=_("Telephone")?></label>
                               <div>
                                   <input type="text" maxlength=3 class="form-control" id="billingTelCountryCode" placeholder="<?=_("Country Code")?>" value="" name="billingTelCountryCode" />
                                   <input type="text" maxlength=3 class="form-control" id="billingTelAreaCode" placeholder="<?=_("Area Code")?>" value="" name="billingTelAreaCode" />
@@ -84,10 +84,10 @@
                         <fieldset id="passwordSection">
                           <legend><?=_("Your Password")?></legend>
                           <div class="form-group">
-                              <label for="billingPassword" class="control-label"><?=_("Password")?></label> 
+                              <label for="billingPassword" class="control-label"><?=_("Password")?></label>
                               <input type="password" class="form-control" id="billingPassword" placeholder="<?=_("Password")?>" value="" name="billingPassword" /></div>
                           <div class="form-group">
-                              <label for="billingConfirmPassword" class="control-label"><?=_("Password Confirm")?></label> 
+                              <label for="billingConfirmPassword" class="control-label"><?=_("Password Confirm")?></label>
                               <input type="password" class="form-control" id="billingConfirmPassword" placeholder="<?=_("Password Confirm")?>" value="" name="billingConfirmPassword" />
                           </div>
                         </fieldset>
@@ -96,33 +96,33 @@
                         <fieldset id="address" class="required">
                           <legend><?=_("Your Address")?></legend>
                           <div class="form-group">
-                              <label for="billingCompany" class="control-label"><?=_("Company")?></label> 
+                              <label for="billingCompany" class="control-label"><?=_("Company")?></label>
                               <input type="text" class="form-control" maxlength=50 id="billingCompany" placeholder="<?=_("Company")?>" value="" name="billingCompany" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingAddress1" class="control-label"><?=_("Address 1")?></label> 
-                              <input type="text" class="form-control" maxlength=1024 id="billingAddress1" placeholder="<?=_("Address 1")?>" value="" name="billingAddress1" />
+                              <label for="billingAddress1" class="control-label"><?=_("Address Line 1")?></label>
+                              <input type="text" class="form-control" maxlength=1024 id="billingAddress1" placeholder="<?=_("Address Line 1")?>" value="" name="billingAddress1" />
                           </div>
                           <div class="form-group">
-                              <label for="billingAddress2" class="control-label"><?=_("Address 2")?></label> 
-                              <input type="text" class="form-control" maxlength=1024 id="billingAddress2" placeholder="<?=_("Address 2")?>" value="" name="billingAddress2" />
+                              <label for="billingAddress2" class="control-label"><?=_("Address Line 2")?></label>
+                              <input type="text" class="form-control" maxlength=1024 id="billingAddress2" placeholder="<?=_("Address Line 2")?>" value="" name="billingAddress2" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingCity" class="control-label"><?=_("City")?></label> 
+                              <label for="billingCity" class="control-label"><?=_("City")?></label>
                               <input type="text" class="form-control" id="billingCity" placeholder="<?=_("City")?>" value="" name="billingCity" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingPostal" class="control-label"><?=_("Post Code")?></label> 
+                              <label for="billingPostal" class="control-label"><?=_("Post Code")?></label>
                               <input type="text" class="form-control" id="billingPostal" placeholder="<?=_("Post Code")?>" value="" name="billingPostal" />
                           </div>
                           <div class="form-group required">
-                              <label for="billingCountry" class="control-label"><?=_("Country")?></label> 
+                              <label for="billingCountry" class="control-label"><?=_("Country")?></label>
                               <select class="form-control" id="billingCountry" name="billingCountry">
                                 <option value="<?php print $billing["countryId"]?>"><?php print $billing["countryName"]?></option>
                               </select>
                           </div>
                           <div class="form-group required">
-                              <label for="billingState" class="control-label"><?=_("County / State")?></label> 
+                              <label for="billingState" class="control-label"><?=_("County / State")?></label>
                               <select class="form-control" id="billingState" name="billingState">
                                   <option value=""> -- <?=_("select County / State")?> -- </option>
                                   <?php foreach ($billingStateList as $stateObj): ?>
@@ -191,15 +191,15 @@
                       </div>
                     </div>
                     <div class="form-group required">
-                      <label for="input-shipping-address-1" class="col-sm-2 control-label">Address 1</label>
+                      <label for="input-shipping-address-1" class="col-sm-2 control-label">Address Line 1</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input-shipping-address-1" placeholder="Address 1" value="" name="address_1" />
+                        <input type="text" class="form-control" id="input-shipping-address-1" placeholder="Address Line 1" value="" name="address_1" />
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="input-shipping-address-2" class="col-sm-2 control-label">Address 2</label>
+                      <label for="input-shipping-address-2" class="col-sm-2 control-label">Address Line 2</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input-shipping-address-2" placeholder="Address 2" value="" name="address_2" />
+                        <input type="text" class="form-control" id="input-shipping-address-2" placeholder="Address Line 2" value="" name="address_2" />
                       </div>
                     </div>
                     <div class="form-group required">
@@ -291,7 +291,7 @@
         </form>
       </div>
       </div>
-   </div> 
+   </div>
 </div>
 </div>
 <script type="text/javascript">
@@ -626,7 +626,7 @@ function validateCheckout()
                 row: ".form-group",
                 validators: {
                     notEmpty: {
-                        message: "<?=_("The billing address 1 is required")?>"
+                        message: "<?=_("The billing Address Line 1 is required")?>"
                     },
                     regexp: {
                         regexp: /^([ \u00c0-\u01ffa-zA-Z0-9,'\-\/#])+$/,
@@ -651,7 +651,7 @@ function validateCheckout()
                     regexp: {
                         regexp: /^([ \u00c0-\u01ffa-zA-Z0-9,'\-\/#])+$/,
                         message: "<?=_("The billing address2 name can only consist of alphabetical, number")?>"
-                    },                    
+                    },
                     stringLength: {
                         min: 1,
                         max: 1024,
@@ -795,7 +795,7 @@ function validateCheckout()
         });
     });
 }
-</script> 
+</script>
 <script type="text/javascript" src="/themes/default/asset/formvalidation/js/formValidation.min.js"></script>
 <script type="text/javascript" src="/themes/default/asset/formvalidation/js/framework/bootstrap.min.js"></script>
 <link href="/themes/default/asset/formvalidation/css/formValidation.min.css" rel="stylesheet" />

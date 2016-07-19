@@ -93,7 +93,7 @@ class CourierFactoryService
 		$batchIds=join(',',$this->formValue);  
 		$where["batch_id in($batchIds)"]=null;
 		$where["status"]=1;
-		//$where["courier_order_status"]="success";
+		$where["courier_order_status"]="success";
 		$option["limit"]=-1;
 		$option["orderby"]=" CAST(courier_order_id AS DECIMAL) desc";
 		$courierOrderArr=$this->_courierOrderDao->getList($where,$option);
@@ -134,7 +134,7 @@ class CourierFactoryService
 		$batchIds=join(',',$this->formValue);  
 		$where["ipc.batch_id in($batchIds)"]=null;
 		$where["ic.status"]=1;
-		//$where["ic.courier_order_status"]="success";
+		$where["ic.courier_order_status"]="success";
 		$courierBatchOrderDtoArr=$this->_pengdingCourierDao->getCourierOrderByBatch($where, array("limit"=>-1));
 		if($courierBatchOrderDtoArr){
 			$reuslt["message"]=$this->runCourierApi("addManifest",$courierBatchOrderDtoArr);

@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-11 15:31+0800\n"
-"PO-Revision-Date: 2016-07-11 15:33+0800\n"
+"POT-Creation-Date: 2016-07-13 18:52+0800\n"
+"PO-Revision-Date: 2016-07-13 18:52+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 1.8.6\n"
 
-#: cart/info.php:35 review.php:22 review.php:101
+#: cart/info.php:35 review.php:22 review.php:109
 msgid "Total"
 msgstr "Total"
 
@@ -25,7 +25,7 @@ msgstr "Total"
 msgid "View Cart"
 msgstr "Ver Carrito"
 
-#: cart/info.php:41 checkout/index.php:7 review.php:110
+#: cart/info.php:41 checkout/index.php:7 review.php:118
 msgid "Checkout"
 msgstr "Ir al pago"
 
@@ -37,7 +37,7 @@ msgstr "¡No hay artículos en la cesta!"
 msgid "Refine Search"
 msgstr "Definir Búsqueda"
 
-#: cat.php:12 category.php:7 myaccount/index.php:187 myaccount/index.php:188
+#: cat.php:12 category.php:7 myaccount/index.php:194 myaccount/index.php:195
 #: search.php:12
 msgid "Categories"
 msgstr "Categorías"
@@ -115,13 +115,13 @@ msgstr "Tú pagas"
 msgid "Save"
 msgstr "Ahorro"
 
-#: cat.php:235 cat.php:241 product/accessories.php:119
+#: cat.php:240 cat.php:250 product/accessories.php:119
 #: product/accessories.php:125 product/detail.php:123 product/grid.php:68
 #: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Añadir a la cesta"
 
-#: cat.php:247 search.php:223 search.php:225
+#: cat.php:256 search.php:223 search.php:225
 msgid "More Info"
 msgstr "Más información"
 
@@ -213,8 +213,8 @@ msgstr "Paso 2: Cuenta; Detalles de Facturación"
 msgid "Your Personal Details"
 msgstr "Tus Datos Personales"
 
-#: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:130
-#: myaccount/index.php:131 myaccount/index.php:316 myaccount/index.php:317
+#: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:137
+#: myaccount/index.php:138 myaccount/index.php:323 myaccount/index.php:324
 #: myaccount/login.php:97 myaccount/login.php:98
 msgid "First Name"
 msgstr "Nombre"
@@ -227,12 +227,12 @@ msgstr "Apellidos"
 msgid "Telephone"
 msgstr "Teléfono"
 
-#: checkout/index.php:78 myaccount/index.php:361 myaccount/index.php:362
+#: checkout/index.php:78 myaccount/index.php:368 myaccount/index.php:369
 #: myaccount/login.php:70
 msgid "Country Code"
 msgstr "Código de País"
 
-#: checkout/index.php:79 myaccount/index.php:365 myaccount/index.php:366
+#: checkout/index.php:79 myaccount/index.php:372 myaccount/index.php:373
 #: myaccount/login.php:74
 msgid "Area Code"
 msgstr "Prefijo Provincia"
@@ -261,8 +261,8 @@ msgstr "Dirección 1"
 msgid "Address 2"
 msgstr "Dirección 2"
 
-#: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:147
-#: myaccount/index.php:148 myaccount/index.php:341 myaccount/index.php:342
+#: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:154
+#: myaccount/index.php:155 myaccount/index.php:348 myaccount/index.php:349
 #: myaccount/login.php:50 myaccount/login.php:51
 msgid "City"
 msgstr "Ciudad"
@@ -271,8 +271,8 @@ msgstr "Ciudad"
 msgid "Post Code"
 msgstr "Código Postal"
 
-#: checkout/index.php:119 myaccount/index.php:138 myaccount/index.php:139
-#: myaccount/index.php:333 myaccount/login.php:42
+#: checkout/index.php:119 myaccount/index.php:145 myaccount/index.php:146
+#: myaccount/index.php:340 myaccount/login.php:42
 msgid "Country"
 msgstr "País"
 
@@ -602,7 +602,7 @@ msgstr "Email"
 msgid "Order Number"
 msgstr "Número de pedido"
 
-#: contact.php:42 myaccount/index.php:279 myaccount/index.php:373
+#: contact.php:42 myaccount/index.php:286 myaccount/index.php:380
 #: myaccount/login.php:128
 msgid "Submit"
 msgstr "Enviar"
@@ -1442,58 +1442,58 @@ msgstr ""
 "Tu pedido ha sido separado sin coste alguno para asegurarnos que reciba "
 "todos los productos lo antes posible."
 
-#: myaccount/index.php:43 myaccount/index.php:76
+#: myaccount/index.php:43 myaccount/index.php:83
 msgid "Order"
 msgstr "Pedido"
 
-#: myaccount/index.php:44 myaccount/index.php:77
+#: myaccount/index.php:44 myaccount/index.php:84
 msgid "Date"
 msgstr "Fecha"
 
-#: myaccount/index.php:45 myaccount/index.php:78
+#: myaccount/index.php:45 myaccount/index.php:85
 msgid "Shipped to"
 msgstr "Enviado a"
 
-#: myaccount/index.php:46 myaccount/index.php:79
+#: myaccount/index.php:46 myaccount/index.php:86
 msgid "Product"
 msgstr "Producto"
 
-#: myaccount/index.php:47 myaccount/index.php:80
+#: myaccount/index.php:47 myaccount/index.php:87
 msgid "Order total"
 msgstr "Total de Compra"
 
-#: myaccount/index.php:48 myaccount/index.php:81
+#: myaccount/index.php:48 myaccount/index.php:88
 msgid "Status"
 msgstr "Estado"
 
-#: myaccount/index.php:69
+#: myaccount/index.php:76
 msgid "Have you paid by bank transfer?<br>Contact us "
 msgstr "¿Has pagado mediante transferencia bancaria? <br>Contáctanos"
 
-#: myaccount/index.php:70 myaccount/index.php:114
+#: myaccount/index.php:77 myaccount/index.php:121
 msgid "here"
 msgstr "aquí"
 
-#: myaccount/index.php:94
+#: myaccount/index.php:101
 msgid "Pending Payment"
 msgstr "Pago Pendiente"
 
-#: myaccount/index.php:95
+#: myaccount/index.php:102
 msgid "We have not received the payment for your order."
 msgstr "No hemos recibido el pago por tu compra"
 
-#: myaccount/index.php:98
+#: myaccount/index.php:105
 msgid "Incomplete Payment"
 msgstr "Pago Incompleto"
 
-#: myaccount/index.php:99
+#: myaccount/index.php:106
 msgid ""
 "The amount received in our bank account does not correspond to the total "
 "amount of your order."
 msgstr ""
 "El total recibido en nuestra cuenta no corresponde con el total de la compra."
 
-#: myaccount/index.php:112
+#: myaccount/index.php:119
 msgid ""
 "Your request has been submitted. Please kindly review the information below "
 "as your RMA confirmation."
@@ -1501,11 +1501,11 @@ msgstr ""
 "Su petición ha sido registrada. Por favor revise la información de su "
 "confirmación de RMA."
 
-#: myaccount/index.php:113
+#: myaccount/index.php:120
 msgid "Please click"
 msgstr "Por favor haga click"
 
-#: myaccount/index.php:115
+#: myaccount/index.php:122
 msgid ""
 "to print this page and send it back to us together with the returned "
 "package. Items returned without this RMA form will not be processed."
@@ -1513,29 +1513,29 @@ msgstr ""
 "para imprimir esta página y enviarnosla junto con el paquete devuelto. "
 "Prodcutos devueltos sin este formulario de RMA no serán procesados."
 
-#: myaccount/index.php:119
+#: myaccount/index.php:126
 msgid "Important Notice"
 msgstr "Aviso Importante"
 
-#: myaccount/index.php:121
+#: myaccount/index.php:128
 msgid "Please read the following before filling in the web form below."
 msgstr ""
 "Por favor lea lo siguiente antes de rellenar el formulaario en nuestra web."
 
-#: myaccount/index.php:123
+#: myaccount/index.php:130
 msgid ""
 "- Any items returned without a returns form enclosed will not be entertained"
 msgstr ""
 "- Cualquier producto devuelto sin el formulario de devolución no será "
 "procesado"
 
-#: myaccount/index.php:124
+#: myaccount/index.php:131
 msgid "- Read our returns policy that can be found at the bottom of this page"
 msgstr ""
 "- Lea nuestra políca de devolución que puede encontrar en la parte de abajo "
 "de esta página"
 
-#: myaccount/index.php:125
+#: myaccount/index.php:132
 msgid ""
 "- Kindly use our webform for &quot;Faulty goods or returned items&quot; to "
 "confirm your intention to return your goods and we will then advise you with "
@@ -1545,76 +1545,76 @@ msgstr ""
 "devolución&quot; para confirmar tu intención de devolver los productos y te "
 "guiaremos con nuestra dirección de devolución"
 
-#: myaccount/index.php:127
+#: myaccount/index.php:134
 msgid "Personal Details"
 msgstr "Datos Personales"
 
-#: myaccount/index.php:134 myaccount/index.php:135 myaccount/index.php:320
-#: myaccount/index.php:321 myaccount/login.php:93 myaccount/login.php:94
+#: myaccount/index.php:141 myaccount/index.php:142 myaccount/index.php:327
+#: myaccount/index.php:328 myaccount/login.php:93 myaccount/login.php:94
 msgid "Surname"
 msgstr "Apellidos"
 
-#: myaccount/index.php:151 myaccount/index.php:152 myaccount/index.php:345
-#: myaccount/index.php:346 myaccount/login.php:54 myaccount/login.php:55
+#: myaccount/index.php:158 myaccount/index.php:159 myaccount/index.php:352
+#: myaccount/index.php:353 myaccount/login.php:54 myaccount/login.php:55
 msgid "State"
 msgstr "Provincia"
 
-#: myaccount/index.php:155 myaccount/index.php:156 myaccount/index.php:350
+#: myaccount/index.php:162 myaccount/index.php:163 myaccount/index.php:357
 #: myaccount/login.php:59
 msgid "Address Line 1"
 msgstr "Dirección Línea 1"
 
-#: myaccount/index.php:159 myaccount/index.php:160 myaccount/index.php:351
+#: myaccount/index.php:166 myaccount/index.php:167 myaccount/index.php:358
 #: myaccount/login.php:60
 msgid "Address Line 2"
 msgstr "Dirección Línea 2"
 
-#: myaccount/index.php:163 myaccount/index.php:164 myaccount/index.php:354
-#: myaccount/index.php:355
+#: myaccount/index.php:170 myaccount/index.php:171 myaccount/index.php:361
+#: myaccount/index.php:362
 msgid "Postcode"
 msgstr "Código Postal"
 
-#: myaccount/index.php:170
+#: myaccount/index.php:177
 msgid "Order Details"
 msgstr "Detalles de Pedido"
 
-#: myaccount/index.php:173 myaccount/index.php:174
+#: myaccount/index.php:180 myaccount/index.php:181
 msgid "Order number"
 msgstr "Número de Pedido"
 
-#: myaccount/index.php:180
+#: myaccount/index.php:187
 msgid "Product Details"
 msgstr "Detalles de Producto"
 
-#: myaccount/index.php:183 myaccount/index.php:184
+#: myaccount/index.php:190 myaccount/index.php:191
 msgid "Product Returned"
 msgstr "Producto Devuelto"
 
-#: myaccount/index.php:198
+#: myaccount/index.php:205
 msgid "Serial No"
 msgstr "Nº de Serie"
 
-#: myaccount/index.php:205
+#: myaccount/index.php:212
 msgid "Returns Details"
 msgstr "Detalles de Devolución"
 
-#: myaccount/index.php:208 myaccount/index.php:209
+#: myaccount/index.php:215 myaccount/index.php:216
 msgid "Reasons for Returns"
 msgstr "Razón de Devolución"
 
-#: myaccount/index.php:222 myaccount/index.php:223
+#: myaccount/index.php:229 myaccount/index.php:230
 msgid "Action Required"
 msgstr "Acción Requerida"
 
-#: myaccount/index.php:235 myaccount/index.php:236
+#: myaccount/index.php:242 myaccount/index.php:243
 msgid "Detailed Description of Fault"
 msgstr "Descripción Detallada del Fallo"
 
-#: myaccount/index.php:244
+#: myaccount/index.php:251
 msgid "ValueBasket Returns Policy"
 msgstr "Política de Devolución BuhoLoco"
 
-#: myaccount/index.php:247
+#: myaccount/index.php:254
 msgid ""
 "Where the dispatch has been made, you may request for a refund up to 14 days "
 "after the goods are delivered."
@@ -1622,7 +1622,7 @@ msgstr ""
 "Desde que el envío se ha hecho, puedes hacer la petición de devolución hasta "
 "14 días después de que los productos hayan sido entregados."
 
-#: myaccount/index.php:248
+#: myaccount/index.php:255
 msgid ""
 "To submit a returns request, simply email us to start the process.  Where "
 "you are eligible for a refund, Valuebasket.com will provide authorization "
@@ -1632,23 +1632,23 @@ msgstr ""
 "empezar el proceso. Cuando sea elegible a devolución, Buholoco.es le dará "
 "autorización y una dirección de retorno si es necesario."
 
-#: myaccount/index.php:249
+#: myaccount/index.php:256
 msgid "Returning an order within the 14-day grace period from delivery date;"
 msgstr ""
 "Devolución de su compra en el periodo de gracia de 14 días desde la "
 "recepción;"
 
-#: myaccount/index.php:251
+#: myaccount/index.php:258
 msgid "that are new unopened item, will be eligible for refund"
 msgstr "que son productos nuevos y sin abrir, serán elegibles para reembolso"
 
-#: myaccount/index.php:252
+#: myaccount/index.php:259
 msgid ""
 "that are found to be faulty will be eligible for replacement order or refund"
 msgstr ""
 "que tienen fallos o defectos serán elegibles para un reemplazo o reembolso"
 
-#: myaccount/index.php:255
+#: myaccount/index.php:262
 msgid ""
 "Good returned for a refund must be in their original condition with all "
 "original packing, accessories and included materials."
@@ -1656,7 +1656,7 @@ msgstr ""
 "Los productos devueltos deben de estar en su condición original con la caja "
 "original, incluyendo accesorios y otros materiales."
 
-#: myaccount/index.php:256
+#: myaccount/index.php:263
 msgid ""
 "You must take all due reasonable care of the goods and return them in its "
 "original and undamaged condition."
@@ -1664,7 +1664,7 @@ msgstr ""
 "Debes asegurarte de ser razonablemente cuidadoso con los productos y "
 "deolverlos en su condición original y sin daños."
 
-#: myaccount/index.php:257
+#: myaccount/index.php:264
 msgid ""
 "You will agree to bear the costs of returning the item(s).  The cost "
 "incurred in returning the item(s) may be eligible for reimbursement where "
@@ -1676,7 +1676,7 @@ msgstr ""
 "producto de verdad fuera defectuoso y con la pertinente autorización de "
 "BuhoLoco.es antes de volver a enviar el producto de vuelta."
 
-#: myaccount/index.php:258
+#: myaccount/index.php:265
 msgid ""
 "Where the purchases are opened and are of usable software, consumable goods, "
 "or items impacted by hygiene, such items will be ineligible for refund."
@@ -1685,39 +1685,39 @@ msgstr ""
 "consumo, o productos afectados por la higiene, tales productos NO serán "
 "elegibles para reembolso."
 
-#: myaccount/index.php:259
+#: myaccount/index.php:266
 msgid "A restocking fee may be applicable at the discretion of ValueBasket.com"
 msgstr ""
 "Puede que se aplique un coste de reposición a discreción de BuhoLoco.es"
 
-#: myaccount/index.php:260
+#: myaccount/index.php:267
 msgid "An admin fee may be incurred if no fault found or fault caused by user"
 msgstr ""
 "Puede que incurra en un coste de administración si ningún fallo encontrado o "
 "causado por el cliente se detecta."
 
-#: myaccount/index.php:267 myaccount/index.php:271
+#: myaccount/index.php:274 myaccount/index.php:278
 msgid "Declaration"
 msgstr "Declaración"
 
-#: myaccount/index.php:272
+#: myaccount/index.php:279
 msgid "I declare that I have read and agree to the Returns Policy"
 msgstr "Declar que he leído y acepto la Política de Devolución"
 
-#: myaccount/index.php:285
+#: myaccount/index.php:292
 msgid "Profile"
 msgstr "Perfil"
 
-#: myaccount/index.php:288 myaccount/login.php:105 myaccount/login.php:108
+#: myaccount/index.php:295 myaccount/login.php:105 myaccount/login.php:108
 #: myaccount/login.php:109
 msgid "Email Address"
 msgstr "Correo eletrónico"
 
-#: myaccount/index.php:293 myaccount/index.php:294
+#: myaccount/index.php:300 myaccount/index.php:301
 msgid "Old Password"
 msgstr "Contraseña anterior"
 
-#: myaccount/index.php:297 myaccount/login.php:118
+#: myaccount/index.php:304 myaccount/login.php:118
 msgid ""
 "Password must be between 6 to 20 characters in length. We recommend that you "
 "make your password secure by including a mixture of upper and lower case "
@@ -1727,39 +1727,39 @@ msgstr ""
 "hagas tu contraseña segura mezclando mayúsuclas y minúsculas, número y "
 "símbolos (por ejemplo, #, @, !)"
 
-#: myaccount/index.php:300 myaccount/index.php:301
+#: myaccount/index.php:307 myaccount/index.php:308
 msgid "Choose a New Password"
 msgstr "Elige nueva contraseña"
 
-#: myaccount/index.php:300 myaccount/index.php:304
+#: myaccount/index.php:307 myaccount/index.php:311
 msgid "(Optional)"
 msgstr "(Opcional)"
 
-#: myaccount/index.php:304 myaccount/index.php:305
+#: myaccount/index.php:311 myaccount/index.php:312
 msgid "Re-enter New Password"
 msgstr "Escriba la Nueva Contraseña de nuevo"
 
-#: myaccount/index.php:308 myaccount/login.php:85
+#: myaccount/index.php:315 myaccount/login.php:85
 msgid "Title"
 msgstr "Título"
 
-#: myaccount/index.php:324 myaccount/index.php:325 myaccount/login.php:101
+#: myaccount/index.php:331 myaccount/index.php:332 myaccount/login.php:101
 msgid "Company Name"
 msgstr "Nombre de Empresa"
 
-#: myaccount/index.php:329
+#: myaccount/index.php:336
 msgid "Billing Address"
 msgstr "Dirección de Facturación"
 
-#: myaccount/index.php:349 myaccount/login.php:58
+#: myaccount/index.php:356 myaccount/login.php:58
 msgid "Address"
 msgstr "Dirección"
 
-#: myaccount/index.php:358
+#: myaccount/index.php:365
 msgid "Phone"
 msgstr "Teléfono"
 
-#: myaccount/index.php:369 myaccount/index.php:370 myaccount/login.php:78
+#: myaccount/index.php:376 myaccount/index.php:377 myaccount/login.php:78
 msgid "Number"
 msgstr "Número"
 
@@ -1900,23 +1900,23 @@ msgstr "Actualizar"
 msgid "Remove"
 msgstr "Eliminar"
 
-#: review.php:59
+#: review.php:58
 msgid "Promo code"
 msgstr "Código Promocional"
 
-#: review.php:62
+#: review.php:61
 msgid "Enter your promo code"
 msgstr "Introduzca su código promocional"
 
-#: review.php:67
+#: review.php:66
 msgid "Remove / Edit Code"
 msgstr "Borrar / Modificar Código"
 
-#: review.php:71
+#: review.php:70
 msgid "Apply Code"
 msgstr "Utilizar Código"
 
-#: review.php:76
+#: review.php:75
 msgid ""
 "Sorry, Promotion Code Invalid. Please check if the conditions and/or minimum "
 "order amount have been met."
@@ -1924,19 +1924,19 @@ msgstr ""
 "Lo sentimos, Código Promocional Inválido. Por favor verifique si cumple con "
 "las condiciones y/o mínimo de compra requerido. "
 
-#: review.php:87
+#: review.php:95
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: review.php:91
+#: review.php:99
 msgid "Shipping"
 msgstr "Envío"
 
-#: review.php:96
+#: review.php:104
 msgid "Promotion Discount"
 msgstr "Descuento Promocional"
 
-#: review.php:109 reviewEmptyCart.php:7
+#: review.php:117 reviewEmptyCart.php:7
 msgid "Continue Shopping"
 msgstr "Sigue comprando"
 
@@ -1958,39 +1958,210 @@ msgstr "Resultados de búsqueda para \"%s\""
 msgid "Display"
 msgstr "Precio"
 
-#~ msgid "Unknow error: Please contact our CS!"
-#~ msgstr ""
-#~ "Error desconocido: Por favor contacta con nuestra Atención al Cliente!"
+#: template_for_order_status.php:2
+msgid "Payment Confirmation"
+msgstr "Verificación de los datos del pago. "
 
-#~ msgid "%s item(s) - %s"
-#~ msgstr "%s producto(s) - %s"
+#: template_for_order_status.php:3
+msgid "Payment received!"
+msgstr "Los datos de su pago estan siendo aprobados. "
 
-#~ msgid "4-7 working days delivery"
-#~ msgstr "Expedición en 4-7 días laborables"
+#: template_for_order_status.php:6
+msgid "Order Review"
+msgstr "Datos del pago aprobados. "
 
-#~ msgid "Recommended Accessories"
-#~ msgstr "Accesorios Recomendados"
+#: template_for_order_status.php:7
+msgid "Order details being confirmed"
+msgstr "Se han aprobado los datos de su pago. "
 
-#~ msgid "Reviews %s"
-#~ msgstr "Opiniones %s"
+#: template_for_order_status.php:10
+msgid "Held for Verification"
+msgstr "Pedido en espera para ser verificado"
 
-#~ msgid "Rating (Highest)"
-#~ msgstr "Valoración (más alta primero)"
+#: template_for_order_status.php:11
+msgid ""
+"Your order is being verified and may require further details. Kindly refer "
+"to our latest email for further details or contact us directly."
+msgstr ""
+"Su pedido está en fase de verificación y puede que necesitemos información "
+"adicional. Tenga como referencia nuestro último correo electrónico o escriba "
+"un correo a nuestro departamento de atención al cliente."
 
-#~ msgid "Rating (Lowest)"
-#~ msgstr "Valoración (más baja primero)"
+#: template_for_order_status.php:14
+msgid "Order Held pending Feedback"
+msgstr "Pedido retenido a la espera de que nos contacte"
 
-#~ msgid "Model (A - Z)"
-#~ msgstr "Modelo (A - Z)"
+#: template_for_order_status.php:15
+msgid ""
+"Your order was held by request or due to stock constraint. Kindly refer to "
+"our latest email for further details or contact us directly."
+msgstr ""
+"Hemos retenido su pedido bajo su petición o por un contratiempo en el stock "
+"del producto. Tenga como referencia nuestro último correo electrónico o "
+"escriba un correo a nuestro departamento de atención al cliente."
 
-#~ msgid "Model (Z - A)"
-#~ msgstr "Modelo (Z - A)"
+#: template_for_order_status.php:18
+msgid "Order Refund Pending"
+msgstr "El reembolso se está gestionando. "
 
-#~ msgid "HELLO_WORLD"
-#~ msgstr "Hello World"
+#: template_for_order_status.php:19
+msgid "Your refund is in progress"
+msgstr "Estamos gestionando su reembolso."
 
-#~ msgid "TEST_TRANSLATION"
-#~ msgstr "Testing translation..."
+#: template_for_order_status.php:22
+msgid "Order Refunded"
+msgstr "Reembolso finalizado."
+
+#: template_for_order_status.php:23
+msgid "Your order has been refunded"
+msgstr ""
+"Su reembolso ha sido procesado. Le recomendamos que espere varios día para "
+"ver el importe en su cuenta ya que las transferencias internacioanles pueden "
+"llevar varios días en finalizarse. "
+
+#: template_for_order_status.php:26
+msgid "Order Confirmed"
+msgstr "Verificación de los datos de envío."
+
+#: template_for_order_status.php:27
+msgid "Order validated! Fulfillment stage next"
+msgstr "La dirección de envío de su pedido está siendo revisada. "
+
+#: template_for_order_status.php:30
+msgid "Stock Review"
+msgstr "Datos de envío aprobados."
+
+#: template_for_order_status.php:31
+msgid "Stock review and assignment"
+msgstr "Se ha aprobado su pedido. "
+
+#: template_for_order_status.php:34
+msgid "Stock Confirmed"
+msgstr "El pedido será gestionado pronto."
+
+#: template_for_order_status.php:35
+msgid "Stock inspected and verified to ship!"
+msgstr "Su pedido quedará aprobado pronto."
+
+#: template_for_order_status.php:38
+msgid "Order in Queue"
+msgstr "Pedido en fase de preparación. "
+
+#: template_for_order_status.php:39
+msgid "Order in fulfillment queue"
+msgstr "Su pedido se encuentra en la cola de procesamiento."
+
+#: template_for_order_status.php:42 template_for_order_status.php:46
+msgid "Order Delay"
+msgstr "Procesando pedido."
+
+#: template_for_order_status.php:43
+msgid "Delay in fulfillment line. Please be patient"
+msgstr ""
+"Ha surgido un ligero retraso en el tiempo estimado de expedición. Le "
+"agradecemos  su paciencia."
+
+#: template_for_order_status.php:47
+msgid "Thanks for being so patient. Please allow an extra 2-3 working days"
+msgstr ""
+"Hemos dado prioridad a su pedido en el almacén y se enviará próximamente. "
+"Agradecemos su continua paciencia."
+
+#: template_for_order_status.php:50
+msgid "Order Packed!"
+msgstr "Pedido preparado para el envío."
+
+#: template_for_order_status.php:51 template_for_order_status.php:55
+msgid "Order packed and ready to ship within 1-2 working days!"
+msgstr ""
+"Su pedido ya ha sido preparado y podrá ver el número de seguimiento entre 1 "
+"y 2 días laborales."
+
+#: template_for_order_status.php:54
+msgid "In Transit To Warehouse"
+msgstr "En tránsito hacia el almacén"
+
+#: template_for_order_status.php:58 template_for_order_status.php:62
+#: template_for_order_status.php:66
+msgid "Shipped"
+msgstr "Enviado."
+
+#: template_for_order_status.php:59
+msgid "Shipment picked up by delivery service"
+msgstr ""
+"Su pedido está en manos de la empresa de mensajería  y lo podrá recibir "
+"pronto."
+
+#: template_for_order_status.php:63
+msgid "In-transit to warehouse for final delivery to your address"
+msgstr ""
+"El paquete está de camino al almacén para la entrega final a su domicilio."
+
+#: template_for_order_status.php:67
+msgid "Shipment at final destination processing with delivery service."
+msgstr ""
+"Su pedido se ecuentra en la fase final de envío. El pedido le será entregado "
+"en los próximos días."
+
+#: template_for_order_status.php:70
+msgid "In Transit"
+msgstr "En tránsito."
+
+#: template_for_order_status.php:71
+msgid "Parcel in transit to your address"
+msgstr ""
+"La empresa de mensajería  ha aceptado el envío. El envío está en transito."
+
+#: template_for_order_status.php:74
+msgid "Out for Delivery"
+msgstr "En proceso de ser entregado."
+
+#: template_for_order_status.php:75
+msgid "Delivery man has your parcel"
+msgstr "Su pedido esta listo para ser entregado pronto o  para ser recogido."
+
+#: template_for_order_status.php:78
+msgid "Delivered"
+msgstr "Entregado."
+
+#: template_for_order_status.php:79
+msgid "The shipment was delivered successfully."
+msgstr "El pedido  ha sido entregado con éxito."
+
+#: template_for_order_status.php:82
+msgid "Failed Delivery Attempt"
+msgstr "Entrega sin éxito"
+
+#: template_for_order_status.php:83
+msgid ""
+"Delivery attempt failed, contact delivery service using info on calling card "
+"to arrange collection at nearest pick-up point"
+msgstr ""
+"El mensajero  ha intentado realizar la entrega pero no ha tenido éxito. "
+"Normalmente dejan una nota en su buzón e intentan entregar el pedido de "
+"nuevo en otro momento."
+
+#: template_for_order_status.php:86
+msgid "Exception"
+msgstr "Imprevisto"
+
+#: template_for_order_status.php:87
+msgid ""
+"Custom hold, undelivered, returned shipment to sender or any shipping "
+"exceptions."
+msgstr ""
+"Su pedido está siendo inspeccionado en la aduana. Este proceso puede "
+"retrasar su pedido algún día. "
+
+#: template_for_order_status.php:90
+msgid "Expired"
+msgstr "Caducado"
+
+#: template_for_order_status.php:91
+msgid "Contact us to know regarding latest update of parcel"
+msgstr ""
+"Le recomendamos que escriba un correo electrónico a nuestro departamento de "
+"atención al cliente  para tener más datos sobre el estado de su pedido."
 
 #~ msgid "Term and Conditions"
 #~ msgstr "Términos y Condiciones"
@@ -2029,63 +2200,12 @@ msgstr "Precio"
 #~ msgstr "CONDICIONES DE REVISIONES DE USO"
 
 #~ msgid ""
-#~ "DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
-#~ "ChatandVision Ltd (ChatandVision). By visiting or shopping at the "
-#~ "DigitalDiscount website, you agree to accept and be bound by these "
-#~ "conditions of use, as well as any other policies posted on the website, "
-#~ "as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS "
-#~ "THEN PLEASE DO NOT USE THE SITE."
-#~ msgstr ""
-#~ "Buholoco.es (Buholoco) está gestionado totalmente por ChatandVision Ltd "
-#~ "(ChatandVision). Al visitar o comprar en el sitio web Buholoco, usted se "
-#~ "compromete a aceptar y cumplir con estas condiciones de uso, así como "
-#~ "cualquiera otras políticas publicadas en el sitio web, junto las "
-#~ "modificaciones que suceden de vez en cuando. SI USTED NO ESTÁ DE ACUERDO "
-#~ "CON ESTAS CONDICIONES ENTONCES POR FAVOR NO UTILICE EL SITIO."
-
-#~ msgid ""
-#~ "DigitalDiscount is a trading name with registered offices in: <br><br> "
-#~ "Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office "
-#~ "Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
-#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
-#~ "SW19 2R. <br><br>Through its websites, ChatandVision Ltd offers consumer "
-#~ "electronics hardware, and services."
-#~ msgstr ""
-#~ "BuhoLoco es un nombre comercial con oficina registrada en: <br><br> Hong "
-#~ "Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 "
-#~ "Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
-#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
-#~ "SW19 2R. <br><br> A través de sus páginas, ChatandVision LTD ofrece "
-#~ "electrónica de consumo, software y servicios."
-
-#~ msgid ""
 #~ "If you have any queries relating to our terms and conditions, please "
 #~ "contact the Customer Support team or read our FAQ."
 #~ msgstr ""
 #~ "Si tiene alguna pregunta relacionada con nuestros términos y condiciones, "
 #~ "por favor póngase en contacto con el equipo de Atención al cliente o lea "
 #~ "nuestro FAQ."
-
-#~ msgid ""
-#~ "The information contained in this Site including all images, "
-#~ "illustrations, designs, photographs, video clips, writings and other "
-#~ "materials that appear herein are copyrights, trademarks, trade dress or "
-#~ "other intellectual property owned, controlled, or licensed (all of which, "
-#~ "collectively, are herein referred to as the \"Contents\") by "
-#~ "ChatandVision Ltd or its subsidiaries and affiliates (\"ChatandVision\") "
-#~ "or are the property of their respective owners. The name ChatandVision "
-#~ "and the ChatandVision logo are registered marks of ChatandVision. "
-#~ msgstr ""
-#~ "La información contenida en este Sitio incluyendo todas las imágenes, "
-#~ "ilustraciones, diseños, fotografías, video clips, escritos y otros "
-#~ "materiales que aparecen en este documento son los derechos de autor, "
-#~ "marcas registradas, imagen comercial u otra propiedad intelectual "
-#~ "propiedad, controlado o licenciado (todos los cuales, en conjunto, se "
-#~ "hace referencia en el presente documento, los \"Contenidos\") por "
-#~ "ChatandVision Ltd. o sus subsidiarias y afiliadas (\"ChatandVision\") o "
-#~ "son propiedad de sus respectivos dueños. El ChatandVision nombre y el "
-#~ "logotipo son marcas registradas de ChatandVision ChatandVision "
-#~ "registradas."
 
 #~ msgid ""
 #~ "Permission is granted to display, copy, distribute, download, and print "
@@ -2346,32 +2466,6 @@ msgstr "Precio"
 #~ "de la recepción de las mercancías."
 
 #~ msgid ""
-#~ "During the RMA process, ChatandVision Ltd will follow up with you via "
-#~ "email on issues requiring your clarification and agreement, using the "
-#~ "trading name DigitalDiscount. If no response is received from you within "
-#~ "7 days from the date of emailing, ChatandVision will follow up with a "
-#~ "kind reminder in the form of a 1st and 2nd email at 7 day intervals. In "
-#~ "the event no response is received within 7 days of the 2nd email being "
-#~ "sent, ChatandVision will send a 3rd and final reminder email together "
-#~ "with a recorded letter. Should no response be received within 2 weeks "
-#~ "from date of final reminders, ChatandVision reserves the right to dispose "
-#~ "of the RMA item(s) at its discretion in any way seen fit."
-#~ msgstr ""
-#~ "Durante el proceso de RMA, ChatandVision Ltd hará un seguimiento con "
-#~ "usted por correo electrónico sobre temas que requieren aclaración y su "
-#~ "acuerdo, con el nombre comercial Buholoco. Si no se recibe ninguna "
-#~ "respuesta de usted dentro de 7 días desde la fecha de envío por correo "
-#~ "electrónico, ChatandVision hará un seguimiento con una especie de "
-#~ "recordatorio en forma de una primera y segunda de correo electrónico a "
-#~ "intervalos de 7 días. En el evento se recibe ninguna respuesta dentro de "
-#~ "los 7 días de la segunda dirección de correo electrónico que se envían, "
-#~ "ChatandVision enviará un tercio y el correo electrónico recordatorio "
-#~ "final junto con una carta registrada. Si se recibe una respuesta dentro "
-#~ "de 2 semanas desde la fecha de recordatorios finales, ChatandVision se "
-#~ "reserva el derecho de disposición sobre los productos de RMA (s) a su "
-#~ "discreción en cualquier forma tenido a bien."
-
-#~ msgid ""
 #~ "All products, unless otherwise stated in the product listing, are "
 #~ "supplied with an in-house warranty where our facilities are able to "
 #~ "process all returns for a quick and efficient all-round service. The "
@@ -2427,13 +2521,6 @@ msgstr "Precio"
 #~ "ChatandVision de vez en cuando, hará cambios en los contenidos y en los "
 #~ "productos o servicios descritos en este Sitio."
 
-#~ msgid ""
-#~ "ChatandVision Ltd does not accept liability for any loss caused by delay "
-#~ "in the delivery of products ordered."
-#~ msgstr ""
-#~ "ChatandVision Ltd no se hace responsable de ninguna pérdida causada por "
-#~ "la demora en la entrega de los productos solicitados."
-
 #~ msgid "In using this Site you agree to the following:"
 #~ msgstr "Al utilizar este sitio usted está de acuerdo con lo siguiente:"
 
@@ -2482,6 +2569,127 @@ msgstr "Precio"
 #~ "aplicable, incluyendo pero no limitado a los reglamentos aplicables a su "
 #~ "uso de este Sitio."
 
+#~ msgid "Updated: July 09, 2015 "
+#~ msgstr "Actualizado: 09 de Julio, 2015"
+
+#~ msgid "Unknow error: Please contact our CS!"
+#~ msgstr ""
+#~ "Error desconocido: Por favor contacta con nuestra Atención al Cliente!"
+
+#~ msgid "%s item(s) - %s"
+#~ msgstr "%s producto(s) - %s"
+
+#~ msgid "4-7 working days delivery"
+#~ msgstr "Expedición en 4-7 días laborables"
+
+#~ msgid "Recommended Accessories"
+#~ msgstr "Accesorios Recomendados"
+
+#~ msgid "Reviews %s"
+#~ msgstr "Opiniones %s"
+
+#~ msgid "Rating (Highest)"
+#~ msgstr "Valoración (más alta primero)"
+
+#~ msgid "Rating (Lowest)"
+#~ msgstr "Valoración (más baja primero)"
+
+#~ msgid "Model (A - Z)"
+#~ msgstr "Modelo (A - Z)"
+
+#~ msgid "Model (Z - A)"
+#~ msgstr "Modelo (Z - A)"
+
+#~ msgid "HELLO_WORLD"
+#~ msgstr "Hello World"
+
+#~ msgid "TEST_TRANSLATION"
+#~ msgstr "Testing translation..."
+
+#~ msgid ""
+#~ "DigitalDiscount.co.uk (DigitalDiscount) is wholly owned and operated by "
+#~ "ChatandVision Ltd (ChatandVision). By visiting or shopping at the "
+#~ "DigitalDiscount website, you agree to accept and be bound by these "
+#~ "conditions of use, as well as any other policies posted on the website, "
+#~ "as modified from time to time. IF YOU DO NOT AGREE TO THESE CONDITIONS "
+#~ "THEN PLEASE DO NOT USE THE SITE."
+#~ msgstr ""
+#~ "Buholoco.es (Buholoco) está gestionado totalmente por ChatandVision Ltd "
+#~ "(ChatandVision). Al visitar o comprar en el sitio web Buholoco, usted se "
+#~ "compromete a aceptar y cumplir con estas condiciones de uso, así como "
+#~ "cualquiera otras políticas publicadas en el sitio web, junto las "
+#~ "modificaciones que suceden de vez en cuando. SI USTED NO ESTÁ DE ACUERDO "
+#~ "CON ESTAS CONDICIONES ENTONCES POR FAVOR NO UTILICE EL SITIO."
+
+#~ msgid ""
+#~ "DigitalDiscount is a trading name with registered offices in: <br><br> "
+#~ "Hong Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office "
+#~ "Tower 8 Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br>Through its websites, ChatandVision Ltd offers consumer "
+#~ "electronics hardware, and services."
+#~ msgstr ""
+#~ "BuhoLoco es un nombre comercial con oficina registrada en: <br><br> Hong "
+#~ "Kong:<br>Chatandvision Ltd, Flat/RM 12, 25/F Langham Place Office Tower 8 "
+#~ "Argyle Street, Kowloon, Hong Kong.<br><br> United Kingdom:"
+#~ "<br>Chatandvision (UK) Limited, Dalton House, 60 Windsor Avenue, London, "
+#~ "SW19 2R. <br><br> A través de sus páginas, ChatandVision LTD ofrece "
+#~ "electrónica de consumo, software y servicios."
+
+#~ msgid ""
+#~ "The information contained in this Site including all images, "
+#~ "illustrations, designs, photographs, video clips, writings and other "
+#~ "materials that appear herein are copyrights, trademarks, trade dress or "
+#~ "other intellectual property owned, controlled, or licensed (all of which, "
+#~ "collectively, are herein referred to as the \"Contents\") by "
+#~ "ChatandVision Ltd or its subsidiaries and affiliates (\"ChatandVision\") "
+#~ "or are the property of their respective owners. The name ChatandVision "
+#~ "and the ChatandVision logo are registered marks of ChatandVision. "
+#~ msgstr ""
+#~ "La información contenida en este Sitio incluyendo todas las imágenes, "
+#~ "ilustraciones, diseños, fotografías, video clips, escritos y otros "
+#~ "materiales que aparecen en este documento son los derechos de autor, "
+#~ "marcas registradas, imagen comercial u otra propiedad intelectual "
+#~ "propiedad, controlado o licenciado (todos los cuales, en conjunto, se "
+#~ "hace referencia en el presente documento, los \"Contenidos\") por "
+#~ "ChatandVision Ltd. o sus subsidiarias y afiliadas (\"ChatandVision\") o "
+#~ "son propiedad de sus respectivos dueños. El ChatandVision nombre y el "
+#~ "logotipo son marcas registradas de ChatandVision ChatandVision "
+#~ "registradas."
+
+#~ msgid ""
+#~ "During the RMA process, ChatandVision Ltd will follow up with you via "
+#~ "email on issues requiring your clarification and agreement, using the "
+#~ "trading name DigitalDiscount. If no response is received from you within "
+#~ "7 days from the date of emailing, ChatandVision will follow up with a "
+#~ "kind reminder in the form of a 1st and 2nd email at 7 day intervals. In "
+#~ "the event no response is received within 7 days of the 2nd email being "
+#~ "sent, ChatandVision will send a 3rd and final reminder email together "
+#~ "with a recorded letter. Should no response be received within 2 weeks "
+#~ "from date of final reminders, ChatandVision reserves the right to dispose "
+#~ "of the RMA item(s) at its discretion in any way seen fit."
+#~ msgstr ""
+#~ "Durante el proceso de RMA, ChatandVision Ltd hará un seguimiento con "
+#~ "usted por correo electrónico sobre temas que requieren aclaración y su "
+#~ "acuerdo, con el nombre comercial Buholoco. Si no se recibe ninguna "
+#~ "respuesta de usted dentro de 7 días desde la fecha de envío por correo "
+#~ "electrónico, ChatandVision hará un seguimiento con una especie de "
+#~ "recordatorio en forma de una primera y segunda de correo electrónico a "
+#~ "intervalos de 7 días. En el evento se recibe ninguna respuesta dentro de "
+#~ "los 7 días de la segunda dirección de correo electrónico que se envían, "
+#~ "ChatandVision enviará un tercio y el correo electrónico recordatorio "
+#~ "final junto con una carta registrada. Si se recibe una respuesta dentro "
+#~ "de 2 semanas desde la fecha de recordatorios finales, ChatandVision se "
+#~ "reserva el derecho de disposición sobre los productos de RMA (s) a su "
+#~ "discreción en cualquier forma tenido a bien."
+
+#~ msgid ""
+#~ "ChatandVision Ltd does not accept liability for any loss caused by delay "
+#~ "in the delivery of products ordered."
+#~ msgstr ""
+#~ "ChatandVision Ltd no se hace responsable de ninguna pérdida causada por "
+#~ "la demora en la entrega de los productos solicitados."
+
 #~ msgid ""
 #~ "ChatandVision Ltd may revise these conditions of use by updating this "
 #~ "posting. You agree that in the event any portion of these Site conditions "
@@ -2498,9 +2706,6 @@ msgstr "Precio"
 #~ "este sitio usted acepta que quedará vinculado por tales revisiones y por "
 #~ "lo tanto, deberá visitar periódicamente esta página para determinar las "
 #~ "condiciones actuales de uso a los que está vinculado."
-
-#~ msgid "Updated: July 09, 2015 "
-#~ msgstr "Actualizado: 09 de Julio, 2015"
 
 #~ msgid "%s item(s) - %s%s"
 #~ msgstr "%s producto(s) - %s%s"

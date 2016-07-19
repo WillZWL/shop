@@ -85,43 +85,42 @@
     <div id="main" style="width:auto; text-align:left; padding-left:4px;">
         <?php
         foreach ($objlist as $obj) {
-            if ($obj->get_id() == '17' && $obj->get_name() == 'category') {
+            if ($obj->getId() == '17' && $obj->getName() == 'category') {
                 ?>
                 <div id="main" style="width:auto; text-align:left; padding-left:0px;">
-                    <div class="level1"><a href="#" class="vlink"><?= $obj->get_display_name() ?></a></div>
+                    <div class="level1"><a href="#" class="vlink"><?= $obj->getDisplayName() ?></a></div>
                     <?php
                     foreach ($catlist as $cat_obj) {
-                        if ($cat_obj->get_count_row() > 0) {
-                            $link = "<span id=\"a" . $cat_obj->get_id() . "\"><a href=\"javascript:showNextLayer('" . $obj->get_id() . "','" . $cat_obj->get_id() . "','" . ($level + 1) . "','c" . $cat_obj->get_id() . "')\">+</a></span>&nbsp;&nbsp;";
+                        if ($cat_obj->getCountRow() > 0) {
+                            $link = "<span id=\"a" . $cat_obj->getId() . "\"><a href=\"javascript:showNextLayer('" . $obj->getId() . "','" . $cat_obj->getId() . "','" . ($level + 1) . "','c" . $cat_obj->getId() . "')\">+</a></span>&nbsp;&nbsp;";
                         } else {
                             $link = "&nbsp;&nbsp;&nbsp;";
                         }
-                        $name = "<a href=\"" . base_url() . "marketing/display_banner/view/" . $obj->get_id() . "/?catid=" . $cat_obj->get_id() . "\" target=\"cview\" class=\"vlink\">" . $cat_obj->get_name() . "</a>";
+                        $name = "<a href=\"" . base_url() . "marketing/display_banner/view/" . $obj->getId() . "/?catid=" . $cat_obj->getId() . "\" target=\"cview\" class=\"vlink\">" . $cat_obj->getName() . "</a>";
 
-                        if (!$cat_obj->get_status()) {
-
+                        if (!$cat_obj->getStatus()) {
                             $style = "inactive";
                         } else {
-                            if ($cat_obj->get_pv_cnt()) {
+                            if ($cat_obj->getPvCnt()) {
 
                                 $style = "pv";
                             }
-                            if ($cat_obj->get_pb_cnt()) {
+                            if ($cat_obj->getPbCnt()) {
 
                                 $style = "pb";
                             }
                         }
                         ?>
-                        <div id="c<?= $cat_obj->get_id() ?>" class="level1 <?= $style ?>"><?= $link . $name ?></div>
+                        <div id="c<?= $cat_obj->getId() ?>" class="level1 <?= $style ?>"><?= $link . $name ?></div>
                     <?php
                     }
                     ?>
                 </div>
             <?php
             } else {
-                $name = "<a href=\"" . base_url() . "marketing/display_banner/view/" . $obj->get_id() . "\" target=\"cview\" class=\"vlink\">" . $obj->get_display_name() . "</a>";
+                $name = "<a href=\"" . base_url() . "marketing/display_banner/view/" . $obj->getId() . "\" target=\"cview\" class=\"vlink\">" . $obj->getDisplayName() . "</a>";
                 ?>
-                <div id="c<?= $obj->get_id() ?>" class="level1 <?= $style ?>"><?= $link . $name ?></div>
+                <div id="c<?= $obj->getId() ?>" class="level1 <?= $style ?>"><?= $link . $name ?></div>
             <?php
             }
         }

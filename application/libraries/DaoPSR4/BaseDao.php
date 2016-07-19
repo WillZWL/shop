@@ -187,8 +187,8 @@ abstract class BaseDao
                     call_user_func(array($obj, "set" . underscore2camelcase($ic_field)), $this->db->insert_id());
                 }
 
-                if (($this instanceof HooksInsert) && method_exists($this, 'insertAfterExecute')) {
-                    $this->insertAfterExecute($obj);
+                if (($this instanceof HooksInsert) && method_exists($this, 'triggerAfterInsert')) {
+                    $this->triggerAfterInsert($obj);
                 }
 
                 return $obj;
@@ -204,6 +204,10 @@ abstract class BaseDao
     {
         if (isset($data_arr) && $data_arr) {
             foreach ($data_arr as $arr) {
+                if (empty($arr)) {
+                    continue;
+                }
+
                 if (isset($arr['table']) && $arr['table']) {
                     $currDao = 'ESG\Panther\Dao' . "\\" . ucfirst(underscore2camelcase($arr['table'])) . "Dao";
                     $dao = new $currDao;
@@ -216,6 +220,31 @@ abstract class BaseDao
                         }
 
                         $dao->update($obj);
+                    }
+                }
+            }
+        }
+    }
+
+    public function insertTables($data_arr)
+    {
+        if (isset($data_arr) && $data_arr) {
+            foreach ($data_arr as $arr) {
+                if (empty($arr)) {
+                    continue;
+                }
+                if (isset($arr['table']) && $arr['table']) {
+                    $currDao = 'ESG\Panther\Dao' . "\\" . ucfirst(underscore2camelcase($arr['table'])) . "Dao";
+                    $dao = new $currDao;
+
+                    if ($obj = $dao->get()) {
+                        if (isset($arr['keyValue']) && $arr['keyValue']) {
+                            foreach ($arr['keyValue'] as $rskey => $value) {
+                               call_user_func([$obj, "set" . underscore2camelcase($rskey)], $value);
+                            }
+                        }
+
+                        $dao->insert($obj);
                     }
                 }
             }
@@ -238,6 +267,8 @@ abstract class BaseDao
         if (! $class_methods) {
             return false;
         }
+
+        $oldObj = $this->getOldObj($obj);
 
         $ip = $_SERVER["REMOTE_ADDR"] ? ip2long($_SERVER["REMOTE_ADDR"]) : ip2long("127.0.0.1");
         $id = empty($_SESSION["user"]["id"]) ? "system" : $_SESSION["user"]["id"];
@@ -280,14 +311,55 @@ abstract class BaseDao
         if ($this->db->update($this->getTableName())) {
             $affected = $this->db->affected_rows();
 
-            if (($this instanceof HooksUpdate) && method_exists($this, 'updateAfterExecute')) {
-                $this->updateAfterExecute($obj);
+            if (($this instanceof HooksUpdate) && method_exists($this, 'triggerAfterUpdate')) {
+                $this->triggerAfterUpdate($obj, $oldObj);
             }
 
             return ($affected > 0) ? $affected : ture;
         } else {
             return false;
         }
+    }
+
+    public function getOldObj($obj)
+    {
+        if (! is_object($obj)) {
+            return false;
+        }
+
+        $class_methods = get_class_methods($obj);
+
+        if (! $class_methods) {
+            return false;
+        }
+
+        $primary_key = $obj->getPrimaryKey();
+
+        foreach ($class_methods as $fct_name) {
+            if (substr($fct_name, 0, 3) == "get") {
+                $rsvalue = call_user_func(array($obj, $fct_name));
+                $rskey = camelcase2underscore(substr($fct_name, 3));
+
+                if (in_array($rskey, $primary_key) || in_array($rskey, ['primary_key']) || in_array($rskey, ['increment_field'])) {
+                    if (!in_array($rskey, ['primary_key', 'increment_field'])) {
+                        $where[$rskey] = $rsvalue;
+                    }
+                    continue;
+                }
+            }
+        }
+
+        if (empty($where)) {
+            return false;
+        }
+
+        if ($query = $this->db->get_where($this->getTableName(), $where, 1, 0)) {
+            $rs = $query->result($this->getVoClassname());
+
+            return empty($rs) ? $rs : $rs[0];
+        }
+
+        return false;
     }
 
     public function qInsert($data = array())

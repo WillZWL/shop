@@ -48,13 +48,14 @@ class ProductDao extends BaseDao
         $this->db->join("supplier_prod AS sp", "sp.prod_sku=p.sku and sp.order_default=1", 'LEFT');
         $this->db->join("exchange_rate er", "er.from_currency_id=sp.currency_id and er.to_currency_id=pbv.platform_currency_id", 'INNER');
         $this->db->join("freight_category fc", "p.freight_cat_id=fc.id", 'LEFT');
+        $this->db->join("product_warranty pw", "pw.platform_id=pr.platform_id and pw.sku=p.sku", 'LEFT');
 
         $select = "pbv.dec_place as decPlace, fc.weight as unitWeight, pbv.vat_percent as vatPercent, pbv.admin_fee as adminFee
                 , er.rate as supplierProdExRate, pbv.platform_currency_id as platformCurrency
                 , p.sku, p.name, pc.prod_name as nameInLang
                 , pr.price, pr.listing_status as listingStatus
                 , p.website_status as websiteStatus, sp.currency_id as supplierCostCurrency
-                , p.warranty_in_month as warrantyInMonth
+                , ifnull(pw.warranty_in_month, p.warranty_in_month) as warrantyInMonth
                 , ROUND((sp.cost * er.rate), pbv.dec_place) as unitCost
                 , sp.cost as supplierUnitCost
                 , sp.pricehkd as supplierUnitCostInHkd
@@ -137,11 +138,43 @@ class ProductDao extends BaseDao
         }
 
         if ($select_str == '') {
-            $select_str = 'p.sku, p.name, p.status, p.prod_grp_cd, p.clearance, p.colour_id, p.surplus_quantity, p.website_quantity, p.website_status, sm.ext_sku,p.auto_restock,
-            pr.listing_status, pr.price, pr.vb_price, pr.is_advertised, pr.google_status, pr.google_update_result, pr.platform_id, pr.auto_price, pm.total_cost, pm.profit, pm.margin, sp.supplier_status,
-            p.modify_on, pbv.platform_currency_id, pbv.platform_country_id, pbv.language_id';
+            $select_str = "
+                    p.sku
+                    , p.name
+                    , p.status
+                    , p.prod_grp_cd
+                    , p.clearance
+                    , p.colour_id
+                    , p.surplus_quantity
+                    , p.website_quantity
+                    , p.website_status
+                    , sm.ext_sku,p.auto_restock
+                    , pr.listing_status
+                    , pr.price
+                    , pr.vb_price
+                    , pr.is_advertised
+                    , pr.google_status
+                    , pr.google_update_result
+                    , pr.platform_id
+                    , pr.auto_price
+                    , pm.total_cost
+                    , pm.profit
+                    , pm.margin
+                    , sp.supplier_status
+                    , p.modify_on
+                    , pbv.platform_currency_id
+                    , pbv.platform_country_id
+                    , pbv.language_id
+                ";
+
             if ($option['show_name']) {
-                $select_str .= ', p.image, c.name AS category, sc.name AS sub_category, ssc.name AS sub_sub_category, b.brand_name';
+                $select_str .= "
+                    , p.image
+                    , c.name AS category
+                    , sc.name AS sub_category
+                    , ssc.name AS sub_sub_category
+                    , b.brand_name
+                ";
             }
         }
 
@@ -568,7 +601,7 @@ class ProductDao extends BaseDao
         $where = $option = [];
         $where['p.sku'] = $sku;
         $where['pr.platform_id'] = $site;
-        
+
         $this->db->group_by('p.sku, pr.platform_id');
         $select = "p.sku AS sku,
                    p.name AS name,
@@ -580,14 +613,14 @@ class ProductDao extends BaseDao
                    p.website_status AS website_status,
                    p.status AS status,
                    p.website_quantity AS website_quantity,
-                   sum(round(((pr.price * (100 - coalesce(p.discount,0))) / 100),2)) AS price 
-                   from product AS p 
-                   LEFT JOIN bundle AS b ON b.prod_sku=p.sku 
-                   LEFT JOIN product AS pd ON b.component_sku=pd.sku 
+                   sum(round(((pr.price * (100 - coalesce(p.discount,0))) / 100),2)) AS price
+                   from product AS p
+                   LEFT JOIN bundle AS b ON b.prod_sku=p.sku
+                   LEFT JOIN product AS pd ON b.component_sku=pd.sku
                    LEFT JOIN price pr ON coalesce(pd.sku,p.sku) =pr.sku ";
 
          return $this->commonGetList($className, $where, $option, $select);
-         
+
     }
 
     public function getListWithName($where = [], $option = [], $classname = "ProductListWithNameDto")

@@ -14,6 +14,7 @@ class OrderHistoryDto
     private $status;
     private $refund_status;
     private $hold_status;
+    private $hold_reason;
     private $net_diff_status;
     private $payment_gateway_id;
     private $bill_country_id;
@@ -149,6 +150,16 @@ class OrderHistoryDto
     public function getHoldStatus()
     {
         return $this->hold_status;
+    }
+
+    public function setHoldReason($hold_reason)
+    {
+        $this->hold_reason = $hold_reason;
+    }
+
+    public function getHoldReason()
+    {
+        return $this->hold_reason;
     }
 
     public function setNetDiffStatus($net_diff_status)

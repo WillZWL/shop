@@ -76,34 +76,125 @@ class SoModel extends \CI_Model
 
     public function getOrderStatus($so_obj)
     {
+        ### Here need add 'status' & 'desc' to template_for_order_status.php, will use todo translate to local language ###
         $status_details_arr = [
-            "payment_check" => ["id" => "payment_check", "status" => "Checking Payment Details", "desc" => "Your payment details are being verified."],
-            "payment_validated" => ["id" => "payment_validated", "status" => "Payment Details Validated", "desc" => "Your payment details has been validated"],
-            "order_check" => ["id" => "order_check", "status" => "Checking Order Details", "desc" => "Your order details are being checked"],
-            "order_approved" => ["id" => "order_approved", "status" => "Order Details Approved", "desc" => "Your order has been approved"],
-            "order_handling" => ["id" => "order_handling", "status" => "Order Handling", "desc" => "Your order is being made ready"],
-            "order_picking" => ["id" => "order_picking", "status" => "Order Picking", "desc" => "Your order is in queue for dispatch"],
-            "order_in_queue" => ["id" => "order_in_queue", "status" => "Order in Queue", "desc" => "We are experiencing slight backlog at this time but anticipate dispatch in the coming days. Thank you for your patience."],
-            "order_delay" => ["id" => "order_delay", "status" => "Order Delay", "desc" => "Apologies for the inconvenience caused. We have set your order as priority and look forward to dispatching it ASAP. Your continued patience is much appreciated."],
-            "arranging_stock" => ["id" => "arranging_stock", "status" => "Arranging Stock", "desc" => "We are arranging stock for your order. Dispatch can be expected within a few days."],
-            "allocated" => ["id" => "allocated", "status" => "Allocated", "desc" => "Stock has been allocated and will ship within 1-4 days time."],
-            "shipped" => ["id" => "shipped", "status" => "Shipped", "desc" => "Your order was picked up by our couirier and will be with you soon"],
-            "order_hold" => ["id" => "order_hold", "status" => "Order Held", "desc" => "You will need to contact us for more details. Kindly refer to our Contact us page."],
-            "order_refund_pending" => ["id" => "order_refund_pending", "status" => "Order Refund Pending", "desc" => "Your refund is in progress"],
-            "order_refunded" => ["id" => "order_refunded", "status" => "Order Refunded", "desc" => "Your order has been refunded"],
-            "cancel_received" => ["id" => "cancel_received", "status" => "Cancellation Request Received", "desc" => "Your cancellation request has been received."],
-            "cancel_to_delivery" => ["id" => "cancel_to_delivery", "status" => "Order Allocated - Cancellation Request Sent", "desc" => "Your order is in our dispatch line. We have contacted our warehouse to stop its dispatch."],
-            "cancel_confirmed" => ["id" => "cancel_confirmed", "status" => "Cancellation Request Confirmed", "desc" => "Your cancellation request has been confirmed."],
-            "refund_in_process" => ["id" => "refund_in_process", "status" => "Refund Request in Process", "desc" => "Your refund request was received and will be processed."],
-            "refund_confirmed" => ["id" => "refund_confirmed", "status" => "Refund Request Initiated", "desc" => "Your refund has been processed on our side. It should be with you soon."],
-            "refund_on_pmgw" => ["id" => "refund_on_pmgw", "status" => "Refund Submitted to Payment Gateway", "desc" => "Your refund has been processed on our side. Please allow a few working days for your bank to credit the funds back."],
-
-            "refund_submitted" => ["id" => "refund_submitted", "status" => "Refund Request Submitted", "desc" => "Your order has been submitted for refund. An email notification will be sent to you when it is completed."],
-            "refund_in_priority" => ["id" => "refund_in_priority", "status" => "Refund Request on Priority", "desc" => "Your refund request has been approved and is being processed by our payment partners. We are currently working with the payment gateway to make sure you get your refund sooner."],
-            "refund_escalated" => ["id" => "refund_escalated", "status" => "Refund Request Escalated", "desc" => "Apologies for any inconvenience caused. Your refund has been escalated and is being treated with high priority. A refund confirmation email can be expected upon completion."],
-
-            "refunded" => ["id" => "refunded", "status" => "Refunded", "desc" => "Refund Done."]
+            "payment_confirmation" => [
+                "id" => "payment_confirmation",
+                "status" => "Payment Confirmation",
+                "desc" => "Payment received!"
+            ],
+            "order_review" => [
+                "id" => "order_review",
+                "status" => "Order Review",
+                "desc" => "Order details being confirmed"
+            ],
+            "cs_order_hold" => [
+                "id" => "cs_order_hold",
+                "status" => "Held for Verification",
+                "desc" => "Your order is being verified and may require further details. Kindly refer to our latest email for further details or contact us directly."
+            ],
+            "order_hold" => [
+                "id" => "order_hold",
+                "status" => "Order Held pending Feedback",
+                "desc" => "Your order was held by request or due to stock constraint. Kindly refer to our latest email for further details or contact us directly."
+            ],
+            "refund_in_process" => [
+                "id" => "refund_in_process",
+                "status" => "Order Refund Pending",
+                "desc" => "Your refund is in progress"
+            ],
+            "refunded" => [
+                "id" => "refunded",
+                "status" => "Order Refunded",
+                "desc" => "Your order has been refunded"
+            ],
+            "order_confirmed" => [
+                "id" => "order_confirmed",
+                "status" => "Order Confirmed",
+                "desc" => "Order validated! Fulfillment stage next"
+            ],
+            "stock_review" => [
+                "id" => "stock_review",
+                "status" => "Stock Review",
+                "desc" => "Stock review and assignment"
+            ],
+            "stock_confirmed" => [
+                "id" => "stock_confirmed",
+                "status" => "Stock Confirmed",
+                "desc" => "Stock inspected and verified to ship!"
+            ],
+            "order_in_queue" => [
+                "id" => "order_in_queue",
+                "status" => "Order in Queue",
+                "desc" => "Order in fulfillment queue"
+            ],
+            "delay_in_fulfillment" => [
+                "id" => "delay_in_fulfillment",
+                "status" => "Order Delay",
+                "desc" => "Delay in fulfillment line. Please be patient"
+            ],
+            "order_delay" => [
+                "id" => "order_delay",
+                "status" => "Order Delay",
+                "desc" => "Thanks for being so patient. Please allow an extra 2-3 working days"
+            ],
+            "order_packed" => [
+                "id" => "order_packed",
+                "status" => "Order Packed!",
+                "desc" => "Order packed and ready to ship within 1-2 working days!"
+            ],
+            "in_transit_warehouse" => [
+                "id" => "in_transit_warehouse",
+                "status" => "In Transit To Warehouse",
+                "desc" => "Order packed and ready to ship within 1-2 working days!"
+            ],
+            "shipped_w_tracking_1" => [
+                "id" => "shipped_w_tracking_1",
+                "status" => "Shipped",
+                "desc" => "Shipment picked up by delivery service"
+            ],
+            "shipped_w_tracking_2" => [
+                "id" => "shipped_w_tracking_2",
+                "status" => "Shipped",
+                "desc" => "In-transit to warehouse for final delivery to your address"
+            ],
+            "shipped_w_tracking_3" => [
+                "id" => "shipped_w_tracking_3",
+                "status" => "Shipped",
+                "desc" => "Shipment at final destination processing with delivery service."
+            ],
+            "shipped_w_tracking_4" => [
+                "id" => "shipped_w_tracking_4",
+                "status" => "In Transit",
+                "desc" => "Parcel in transit to your address"
+            ],
+            "shipped_w_tracking_5" => [
+                "id" => "shipped_w_tracking_5",
+                "status" => "Out for Delivery",
+                "desc" => "Delivery man has your parcel"
+            ],
+            "shipped_w_tracking_6" => [
+                "id" => "shipped_w_tracking_6",
+                "status" => "Delivered",
+                "desc" => "The shipment was delivered successfully."
+            ],
+            "shipped_w_tracking_7" => [
+                "id" => "shipped_w_tracking_7",
+                "status" => "Failed Delivery Attempt",
+                "desc" => "Delivery attempt failed, contact delivery service using info on calling card to arrange collection at nearest pick-up point"
+            ],
+            "shipped_w_tracking_8" => [
+                "id" => "shipped_w_tracking_8",
+                "status" => "Exception",
+                "desc" => "Custom hold, undelivered, returned shipment to sender or any shipping exceptions."
+            ],
+            "shipped_w_tracking_9" => [
+                "id" => "shipped_w_tracking_9",
+                "status" => "Expired",
+                "desc" => "Contact us to know regarding latest update of parcel"
+            ],
         ];
+
         $now_time = mktime();
         $status = $working_days = "";
         $time_diff = $now_time - strtotime($so_obj->getOrderCreateDate());
@@ -113,90 +204,81 @@ class SoModel extends \CI_Model
 
         # hold_status = 15 refers to parent of split orders. It will have refund status but no refund history
         if ($refund_status > 0 && $hold_status != 15) {
-            $refund_obj = $this->refundService->getDao('Refund')->get(["so_no" => $so_obj->getSoNo()]);
-            $refund_time_diff = $now_time - strtotime($refund_obj->getCreateOn());
-            $refund_working_days = $this->soService->getWorkingDays(strtotime($refund_obj->getCreateOn()), $now_time);
-            if ($refund_time_diff < 43200) {
-                $status = 'cancel_received';
-            } else {
-                switch ($refund_status) {
-                    case 1:
-                    case 2:
-                    case 3:
-                        if ($refund_item_obj = $this->refundService->getRefundItem(["refund_id" => $refund_obj->getId(), "status" => "N"])) {
-                            $status = 'cancel_to_delivery';
-                        } else {
-                            if ($refund_working_days < 3) {
-                                $status = 'cancel_confirmed';
-                            } elseif ($refund_working_days < 5) {
-                                $status = 'refund_submitted';
-                            } elseif ($refund_working_days < 7) {
-                                $status = 'refund_in_process';
-                            } elseif ($refund_working_days < 9) {
-                                $status = 'refund_in_priority';
-                            } else {
-                                $status = 'refund_escalated';
-                            }
-                        }
-                        break;
-                    case 4:
-                        if ($complete_refund_obj = $this->refundService->getDao('RefundHistory')->get(["refund_id" => $refund_obj->getId(), "status" => "C"])) {
-                            $refunded_date = $complete_refund_obj->getCreateOn();
-                            $refunded_working_days = $this->soService->getWorkingDays(strtotime($refunded_date), $now_time);
-                            if ($refunded_working_days < 2) {
-                                $status = 'refund_confirmed';
-                            } elseif ($refunded_working_days < 3) {
-                                $status = 'refund_on_pmgw';
-                            } else {
-                                $status = 'refunded';
-                            }
-                        } else {
-                            $status = 'refunded';
-                        }
-                        break;
-                }
+            switch ($refund_status) {
+                case 1:
+                case 2:
+                case 3:
+                    $status = 'refund_in_process';
+                    break;
+                case 4:
+                    $status = 'refunded';
+                    break;
             }
         } elseif ($hold_status > 0) {
-            $status = 'order_hold';
+            $hold_reason = $so_obj->getHoldReason();
+
+            switch ($hold_reason) {
+                case 'cscc':
+                case 'csvv':
+                    $status = 'cs_order_hold';
+                    break;
+
+                default:
+                    $status = 'order_hold';
+                    break;
+            }
         } else {
             switch ($order_status) {
                 case 2:
                     if ($time_diff < 43200) {
-                        $status = 'payment_check';
+                        $status = 'payment_confirmation';
                     } elseif ($time_diff < 86400) {
-                        $status = 'payment_validated';
+                        $status = 'order_review';
                     } else {
-                        $status = 'order_check';
+                        $status = 'order_review';
                     }
                     break;
                 case 3:
                     $working_days = $this->soService->getWorkingDays(strtotime($so_obj->getOrderCreateDate()), $now_time);
-                    if ($working_days < 5) {
-                        $status = 'order_approved';
+                    if ($working_days < 3) {
+                        $status = 'order_confirmed';
+                    } elseif ($working_days < 5) {
+                        $status = 'stock_review';
                     } elseif ($working_days < 7) {
-                        $status = 'order_handling';
+                        $status = 'stock_confirmed';
                     } elseif ($working_days < 9) {
-                        $status = 'order_picking';
-                    } elseif ($working_days < 11) {
                         $status = 'order_in_queue';
+                    } elseif ($working_days < 11) {
+                        $status = 'delay_in_fulfillment';
                     } else {
                         $status = 'order_delay';
                     }
                     break;
                 case 4:
                 case 5:
-                    $status = 'allocated';
+                    if ($soal_obj = $this->soService->getDao('SoAllocate')->get(['so_no'=>$so_obj->getSoNo()])) {
+                        $working_days = $this->soService->getWorkingDays(strtotime($soal_obj->getCreateOn()), $now_time);
+                        if ($working_days < 3) {
+                            $status = 'order_packed';
+                        } elseif ($working_days < 5) {
+                            $status = 'in_transit_warehouse';
+                        } else {
+                            $status = 'in_transit_warehouse';
+                        }
+                    } else {
+                        $status = 'order_delay';
+                    }
                     break;
                 case 6:
-                    $status = 'shipped';
-                    if ($so_obj->getDispatchDate()) {
+                    if ($so_obj->getDispatchDate() != '0000-00-00 00:00:00') {
                         $working_days = $this->soService->getWorkingDays(strtotime($so_obj->getDispatchDate()), $now_time);
 
                         //SBF #5275 dynamic status based on aftership status
                         $shipment_obj = $this->soService->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
+
                         $aftership = $shipment_obj->getAftershipStatus();
 
-                        if ($aftership == '') {
+                        if ($aftership == 0) {
                             if ($working_days < 1) {
                                 $status = 'shipped_w_tracking_1';
                             } elseif ($working_days < 3) {
@@ -217,8 +299,6 @@ class SoModel extends \CI_Model
                                 $status = 'shipped_w_tracking_3';
                             } elseif (($aftership == 3) && ($working_days < 9)) {
                                 $status = 'shipped_w_tracking_4';
-                            } elseif (($aftership == 3) && ($working_days >= 9)) {
-                                $status = 'shipped_w_tracking_4_postal';
                             } elseif ($aftership == 4) {
                                 $status = 'shipped_w_tracking_5';
                             } elseif ($aftership == 5) {
@@ -249,6 +329,8 @@ class SoModel extends \CI_Model
                             }
 
                         }
+                    } else {
+                        $status = 'shipped_w_tracking_1';
                     }
                     break;
             }
