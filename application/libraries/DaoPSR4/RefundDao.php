@@ -284,6 +284,11 @@ class RefundDao extends BaseDao implements HooksInsert
         $this->db->join("category AS cat", "p.cat_id = cat.id", "INNER");
         $this->db->join("refund_item AS ri", "ri.refund_id = r.id AND ri.item_sku = soid.item_sku", "INNER");
         $this->db->join("refund_history AS rh", "r.id = rh.refund_id", "INNER");
+        $this->db->join("(
+                            SELECT refund_id, max(id) max_id
+                            FROM refund_history
+                            GROUP BY refund_id
+                        ) AS a", "a.refund_id = rh.refund_id AND a.max_id = rh.id", "INNER");
         $this->db->join("refund_reason AS rr", "rr.id = r.reason", "INNER");
         $this->db->join("payment_gateway AS pmgw", "so.payment_gateway_id = pmgw.payment_gateway_id", "LEFT");
         $this->db->join("refund_history AS rh2", "r.id = rh2.refund_id and rh2.app_status='A' and rh2.status = 'CS'", "LEFT");

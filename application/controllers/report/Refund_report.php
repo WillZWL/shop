@@ -34,34 +34,20 @@ class Refund_report extends MY_Controller
     public function export_csv()
     {
         if ($_POST["check"]["order_create"]) {
-            if ($_POST["start_date"]["order_create"]) {
-                $where["so.order_create_date >="] = $_POST["start_date"]["order_create"] . " 00:00:00";
-            }
-            if ($_POST["end_date"]["order_create"]) {
-                $where["so.order_create_date <="] = $_POST["end_date"]["order_create"] . " 23:59:59";
-            }
+            $where["so.order_create_date >="] = $_POST["start_date"]["order_create"] . " 00:00:00";
+            $where["so.order_create_date <="] = $_POST["end_date"]["order_create"] . " 23:59:59";
         }
 
         if ($_POST["check"]["cs_request"]) {
-            if ($_POST["start_date"]["cs_request"]) {
-                $where["r.create_on >="] = $_POST["start_date"]["cs_request"] . " 00:00:00";
-            }
-            if ($_POST["end_date"]["cs_request"]) {
-                $where["r.create_on <="] = $_POST["end_date"]["cs_request"] . " 23:59:59";
-            }
+            $where["r.create_on >="] = $_POST["start_date"]["cs_request"] . " 00:00:00";
+            $where["r.create_on <="] = $_POST["end_date"]["cs_request"] . " 23:59:59";
         }
 
         if ($_POST["check"]["refund"]) {
-            if ($_POST["start_date"]["refund"] || $_POST["end_date"]["refund"]) {
-                $where["rh.app_status"] = 'A';
-                $where["rh.status"] = 'C';
-            }
-            if ($_POST["start_date"]["refund"]) {
-                $where["rh.modify_on >="] = $_POST["start_date"]["refund"] . " 00:00:00";
-            }
-            if ($_POST["end_date"]["refund"]) {
-                $where["rh.modify_on <="] = $_POST["end_date"]["refund"] . " 23:59:59";
-            }
+            $where["rh.app_status"] = 'A';
+            $where["rh.status"] = 'C';
+            $where["rh.modify_on >="] = $_POST["start_date"]["refund"] . " 00:00:00";
+            $where["rh.modify_on <="] = $_POST["end_date"]["refund"] . " 23:59:59";
         }
 
         $data['lang'] = $this->_load_parent_lang();
