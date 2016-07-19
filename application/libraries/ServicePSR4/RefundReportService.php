@@ -73,6 +73,16 @@ class RefundReportService extends ReportService
     {
         set_time_limit(300);
         $res = $this->getDao('Refund')->getRefundReportContent($where, array("limit" => -1));
+        $modify_on = [$where["rh.modify_on >="],$where["rh.modify_on <="]];
+        $history = $this->getDao('RefundHistory')->getHistoryByModifyOn($modify_on);
+
+        foreach ($res as $val){
+            if($history[$val->getRefundId()]){
+                $hObj = $history[$val->getRefundId()];
+                $val->setCsApprovalDate($hObj->getModifyOn());
+                $val->setCsApprovedBy($hObj->getCreateBy());
+            }
+        }
 
         return $res;
     }
