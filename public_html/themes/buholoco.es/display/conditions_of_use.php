@@ -124,8 +124,9 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 meses</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 meses</td>
                         </tr>
-                        </table>
+                        </table><br/>
                         <?= _('Producto principal: incluidos productos que no sean resistentes al agua, al polvo, de diseño robusto o resistentes. Por ejemplo DSRL (cámaras digitales), compactas, objetivos, móviles, tablets y accesorios relacionados.') ?><br/>
+                        <br/>
                         <?= _('Esta garantía no cubre:') ?><br />
                                 <?= _('- El daño o avería debido a la alteración o reparaciones hechas por personas ajenas a nosotros') ?><br />
                                 <?= _('- Abolladuras, arañazos y otras condiciones para el producto que se producen con el tiempo considerado como desgaste normal.') ?><br />
