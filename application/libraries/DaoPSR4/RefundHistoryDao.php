@@ -51,4 +51,27 @@ class RefundHistoryDao extends BaseDao
 
         return FALSE;
     }
+
+    public function getHistoryByModifyOn($modify_on)
+    {
+        $sql = "SELECT *
+                FROM refund_history 
+                WHERE refund_id IN (
+                    SELECT refund_id 
+                    FROM refund_history
+                    WHERE modify_on >= ? and modify_on <= ?
+                )
+                and status='CS' and app_status='A'";
+
+        $rs = [];
+
+        if ($query = $this->db->query($sql, $modify_on)) {
+            foreach ($query->result($this->getVoClassname()) as $obj) {
+                $rs[$obj->getRefundId()] = $obj;
+            }
+            return $rs;
+        }
+
+        return FALSE;
+    }
 }
