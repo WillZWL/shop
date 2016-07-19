@@ -22,7 +22,7 @@
     <td height="2" bgcolor="#000033"></td>
 </tr>
 </table>
-<form name="fm" action='<?=base_url()."account/flex/riaControlReport";?>' method="post" onSubmit="return verfiy_date(this)">
+<form name="fm" action='<?=base_url()."account/flex/riaControlReport";?>' method="post">
 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">
 <tr height="80">
     <td align="right">
@@ -31,10 +31,10 @@
             <tr>
                 <td></td>
                 <td><b>From</b></td>
-                <td><input id="oc_start_date" name="start_date" value='<?=htmlspecialchars($start_date)?>'><img src="/images/cal_icon.gif" class="pointer" onclick="showcalendar(event, document.getElementById('oc_start_date'), false, false, false, '2010-01-01')" align="absmiddle"></td>
+                <td><input id="oc_start_date" name="start_date" value='<?=htmlspecialchars($start_date)?>' class="pointer" onclick="showcalendar(event, document.getElementById('oc_start_date'), false, false, false, '2010-01-01')"><img src="/images/cal_icon.gif" class="pointer" onclick="showcalendar(event, document.getElementById('oc_start_date'), false, false, false, '2010-01-01')" align="absmiddle"></td>
                 <td></td>
                 <td><b>To</b></td>
-                <td><input id="oc_end_date" name="end_date" value='<?=htmlspecialchars($end_date)?>'><img src="/images/cal_icon.gif" class="pointer" onclick="showcalendar(event, document.getElementById('oc_end_date'), false, false, false, '2010-01-01')" align="absmiddle"></td>
+                <td><input id="oc_end_date" name="end_date" value='<?=htmlspecialchars($end_date)?>' class="pointer" onclick="showcalendar(event, document.getElementById('oc_end_date'), false, false, false, '2010-01-01')"><img src="/images/cal_icon.gif" class="pointer" onclick="showcalendar(event, document.getElementById('oc_end_date'), false, false, false, '2010-01-01')" align="absmiddle"></td>
                 <td></td>
             </tr>
             <tr>
@@ -51,29 +51,5 @@
 <?=$notice["js"]?>
 </div>
 <?php print $content; ?>
-<script>
-    function getDateInfo(fm_2)
-    {
-        var start_date = document.getElementById("oc_start_date").value.trim();
-        var end_date = document.getElementById("oc_end_date").value.trim();
-        fm_2.expect_delivery_date_approve_start_date.value= start_date;
-        fm_2.expect_delivery_date_approve_end_date.value= end_date;
-        if(!start_date.match(/^\d{4}-\d{2}-\d{2}$/) || !end_date.match(/^\d{4}-\d{2}-\d{2}$/))
-        {
-            alert("please input the correct date");
-            return false;
-        }
-    }
-    function verfiy_date()
-    {
-        var start_date = document.getElementById("oc_start_date").value.trim();
-        var end_date = document.getElementById("oc_end_date").value.trim();
-        if(!start_date.match(/^\d{4}-\d{2}-\d{2}$/) || !end_date.match(/^\d{4}-\d{2}-\d{2}$/))
-        {
-            alert("please input the correct date");
-            return false;
-        }
-    }
-</script>
 </body>
 </html>

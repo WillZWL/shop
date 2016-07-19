@@ -518,12 +518,15 @@ class Flex extends MY_Controller
 
         if ($this->input->post('is_query')) {
             $where = array();
-            $where['fri.txn_time >= '] = $this->input->post('start_date') . ' 00:00:00';
+            if ($this->input->post('start_date')) {
+                $where['fri.txn_time >= '] = $this->input->post('start_date') . ' 00:00:00';
+            }
             $where['fri.txn_time <= '] = $this->input->post('end_date') . ' 23:59:59';
             $data['output'] = $this->sc['Flex']->getRiaControlReport($where);
             $data['filename'] = 'ria_control.csv';
             $this->load->view('output_csv.php', $data);
         } else {
+            $data['end_date'] = date('Y-m-d');
             $this->load->view('account/flex/ria_control_report_v', $data);
         }
     }
