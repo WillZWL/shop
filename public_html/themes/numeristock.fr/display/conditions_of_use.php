@@ -121,6 +121,7 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 mois</td>
                         </tr>
                         </table>
+                        <?= _('Produit principal: Comprend les produits qui ne sont pas résistant à l\'eau, résistant aux chutes, de conception robuste et tactile. Tels que les reflex, appareils photos compact, objectifs, Mobile, tablette et accessoires.') ?><br/>
                         <?= _('Cette offre de garantie ne couvre pas :') ?><br />
                                 <?= _('-   Les dommages, pannes ou défauts dus à des manipulations ou réparations effectuées par tout autre acteur que nous') ?><br />
                                 <?= _('-   Les rayures, impacts et autres détériorations tombant dus à une utilisation normale') ?><br />
