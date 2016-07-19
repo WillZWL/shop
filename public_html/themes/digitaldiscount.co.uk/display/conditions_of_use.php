@@ -124,8 +124,9 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 months</td>
                         </tr>
-                        </table>
+                        </table><br/>
                         <?= _('Main Item: Including product that is not water proof, drop proof, rugged design and tough proof. Such as DSLR, compact DC, Lens, Mobile, tablet and related accessories') ?><br/>
+                        <br/>
                         <?= _('This warranty does not cover:') ?><br />
                                 <?= _('- Damage, fault or failure due to alteration or repairs made by anyone other than us') ?><br />
                                 <?= _('- Dents, scratches, and other conditions to the product that occur over time considered as normal wear and tear') ?><br />

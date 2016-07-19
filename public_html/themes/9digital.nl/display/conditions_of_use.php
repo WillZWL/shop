@@ -128,8 +128,9 @@
                         <td>12 maanden</td>
                         <td>12 maanden</td>
                         </tr>
-                        </table>
+                        </table><br/>
                         <?= _('Hoofdproducten: Inclusief producten die niet waterdicht, valbestendig, rugged ontworpen en touchproof zijn. Zoals DSLR, compacte DC, Lenzen, mobiele telefoons, tablets en aanverwante accessoires') ?><br/>
+                        <br/>
                         <?= _('Deze garantie geldt niet voor::
                                 - Schade, fouten of defecten als gevolg van wijziging of reparatie door iemand anders dan ons.
                                 - Deuken, krassen en andere voorwaarden om het product dat na verloop van tijd beschouwd als normale slijtage
