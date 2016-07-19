@@ -284,24 +284,9 @@ class RefundDao extends BaseDao implements HooksInsert
         $this->db->join("category AS cat", "p.cat_id = cat.id", "INNER");
         $this->db->join("refund_item AS ri", "ri.refund_id = r.id AND ri.item_sku = soid.item_sku", "INNER");
         $this->db->join("refund_history AS rh", "r.id = rh.refund_id", "INNER");
-        $this->db->join("(
-                            SELECT refund_id, max(id) max_id
-                            FROM refund_history
-                            GROUP BY refund_id
-                        ) AS a", "a.refund_id = rh.refund_id AND a.max_id = rh.id", "INNER");
         $this->db->join("refund_reason AS rr", "rr.id = r.reason", "INNER");
-        $this->db->join("(
-                             SELECT refund_id, modify_on as cs_approval_date, create_by as cs_approved_by
-                             FROM refund_history
-                             WHERE status='CS' and app_status='A'
-                        ) AS approve_data", "approve_data.refund_id = rh.refund_id", "LEFT");
-        $this->db->join("(
-                            SELECT sops.so_no, pm.name
-                            FROM so_payment_status sops
-                            JOIN payment_gateway pm
-                                ON sops.payment_gateway_id = pm.payment_gateway_id
-                        ) AS pmgw", "pmgw.so_no = so.so_no", "LEFT");
-        return $this->commonGetList($classname, $where, $option, "r.id refund_id, so.biz_type, so.platform_id, pmgw.name pmgw_name, so.bill_country_id, so.txn_id, so.client_id, so.so_no, p.name prod_name, cat.name cat_name, soid.item_sku, so.dispatch_date, so.order_create_date, so.amount, so.delivery_type_id, r.create_on request_date, if(rh.app_status = 'A', rh.modify_on, null)approve_date, if(rh.app_status = 'A' AND rh.status = 'C', rh.modify_on, null) refund_date, ri.refund_type, so.currency_id, ri.refund_amount, r.create_by request_by, rr.reason_cat, rr.description, rh.notes, rh.status refund_status, cs_approval_date, cs_approved_by");
+        $this->db->join("payment_gateway AS pmgw", "so.payment_gateway_id = pmgw.payment_gateway_id", "LEFT");
+        return $this->commonGetList($classname, $where, $option, "r.id refund_id, so.biz_type, so.platform_id, pmgw.name pmgw_name, so.bill_country_id, so.txn_id, so.client_id, so.so_no, p.name prod_name, cat.name cat_name, soid.item_sku, so.dispatch_date, so.order_create_date, so.amount, so.delivery_type_id, r.create_on request_date, if(rh.app_status = 'A', rh.modify_on, null)approve_date, if(rh.app_status = 'A' AND rh.status = 'C', rh.modify_on, null) refund_date, ri.refund_type, so.currency_id, ri.refund_amount, r.create_by request_by, rr.reason_cat, rr.description, rh.notes, rh.status refund_status");
     }
 
     public function getRefundAmountByPmgwCurrency($where = [], $option = [], $classname = "RefundAmountByPmgwCurrencyDto")
