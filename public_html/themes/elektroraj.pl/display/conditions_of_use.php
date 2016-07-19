@@ -116,8 +116,9 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 miesięcy</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 miesięcy</td>
                         </tr>
-                        </table>
+                        </table><br/>
                         <?= _('Zawiera produkt ktory nie jest wodoodporny, nie jest odporny na upadki, nie jest wytrzymalej ani odpornej budowy. Taki jak DSLR, aparat cyfrowy, obiektyw, telefon i podobne akcesoria.') ?><br/>
+                        <br/>
                         <?= _('Niniejsza gwarancja nie obejmuje:') ?><br />
                                   <?= _('- Szkoda, usterki lub awarii w wyniku przeróbki lub naprawy wykonane przez kogokolwiek innego niż nasz sklep') ?><br />
                                   <?= _('- Wgniecenia, zadrapania i inne, które występują w czasie uważane za normalne zużycie') ?><br />

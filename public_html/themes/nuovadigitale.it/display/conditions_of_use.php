@@ -118,8 +118,9 @@
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 mesi</td>
                         <td align="center" style="width:120px; height: 21px;" valign="middle">12 mesi</td>
                         </tr>
-                        </table>
+                        </table><br/>
                         <?= _('Prodotto principale: include un prodotto che non è a prova d\'acqua, di goccia, con design rigido e a prova di tocco. Come ad esempio DSLR, DC compatto, obiettivo, cellulare, tablet e relativi accessori.') ?><br />
+                        <br/>
                         <?= _('Questa garanzia non copre:') ?><br />
                                 <?= _('- Danni dovuti a modifiche o riparazioni non effettuate da noi') ?><br />
                                 <?= _('- Ammaccature, graffi e condizioni derivanti dall’ uso del prodotto per un certo periodo') ?><br />
