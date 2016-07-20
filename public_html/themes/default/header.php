@@ -110,7 +110,7 @@ $(document).ready(function() {
                                        <span style="margin-left: 10px;">
                                           <?=_("We won't be beaten on electronics!")?>
                                        </span>
-                                       <img src="/themes/default/asset/image/icon-bag.png">
+                                       <i class="home-icon icon-bag"></i>
                                     </div>
                                     <div class="pull-right header-links col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <!--<a href="/warranty"><span class=""><?= _('Warranty') ?></span></a>&nbsp;&nbsp;&nbsp;-->
@@ -140,18 +140,18 @@ $(document).ready(function() {
                                                 //var_dump($siteobj);
                                                 if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD"))) {
                                             ?>
-                                                <img src=<?= '/themes/default/asset/image/icon-refund_' . strtolower($currencyId) . ".png" ?>>
+                                                <i class="home-icon icon-refund_<?=strtolower($currencyId)?>"></i>
                                             <?php } else {  ?>
-                                                <img src="/themes/default/asset/image/icon-refund.png">
+                                                <i class="home-icon icon-refund"></i>
                                             <?php } ?>
                                                 <span><?= sprintf(_("%s Days Money Back Guarantee"), $guaranteedays) ?></span>
                                             </li>
                                             <li >
-                                                <img src="/themes/default/asset/image/icon-truck.png">
+                                                <i class="home-icon icon-truck"></i>
                                                 <span><?= _("Free Delivery For All Orders") ?></span>
                                             </li>
                                             <li >
-                                                <img src="/themes/default/asset/image/icon-win.png">
+                                                <i class="home-icon icon-win"></i>
                                                 <span><?= _("Up to 2 Years Warranty") ?></span>
                                             </li>
                                         </ul>
@@ -161,7 +161,7 @@ $(document).ready(function() {
                                             <div id="cart" class="pull-right clearfix">
                                                 <div class="cart-inner media-body">
                                                     <a href="/review-order">
-                                                        <img src="/themes/default/asset/image/icon-cart.png">
+                                                        <i class="home-icon icon-cart"></i>
                                                         <span id="cart-total" class="cart-total"></span>
                                                         <i class="fa fa-angle-down"></i>
                                                     </a>
@@ -222,7 +222,7 @@ $(document).ready(function() {
                                         <div id="cart" class="pull-right clearfix">
                                             <div class="cart-inner media-body">
                                                 <a href="/review-order">
-                                                    <img src="/themes/default/asset/image/icon-cart.png">
+                                                    <i class="home-icon icon-cart"></i>
                                                     <span id="cart-total" class="cart-total"></span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>

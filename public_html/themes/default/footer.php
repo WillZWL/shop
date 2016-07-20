@@ -208,7 +208,7 @@
                                             <ul class="list-inline guarantee">
                                                 <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <img src="/themes/default/asset/image/ssl.jpg" class="img-footer">
+                                                        <i class="guar guar-ssl"></i>
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('100% Secure ') ?><br /> <?= _('with SSL encryption') ?>
@@ -216,7 +216,7 @@
                                                 </li>
                                                 <li style="vertical-align: top;">
                                                     <div class="image-wrap">
-                                                        <img src="/themes/default/asset/image/shipping.jpg" class="img-footer">
+                                                        <i class="guar guar-shipping"></i>
                                                     </div>
                                                     <p class="desc-sm">
                                                         <?= _('Free Delivery') ?><br /><?= _('For All Orders*') ?><br /><?= _('Shipping:') ?><br /><?= _('3-5 Working Days') ?>
@@ -233,9 +233,9 @@
                                                                 $guaranteedays = "30";
                                                             if (in_array($currencyId, array("GBP", "AUD", "EUR", "NZD", "PLN"))) {
                                                         ?>
-                                                            <img src=<?= '/themes/default/asset/image/moneyback_' . strtolower($currencyId) . ".jpg" ?>>
+                                                            <i class="guar guar-moneyback_<?=strtolower($currencyId)?>"></i>
                                                         <?php } else {  ?>
-                                                            <img src="/themes/default/asset/image/moneyback.jpg" class="img-footer">
+                                                            <i class="guar guar-moneyback"></i>
                                                         <?php } ?>
                                                     </div>
                                                     <p class="desc-sm">
@@ -249,9 +249,9 @@
                                                         $countryid = $siteobj->getPlatformCountryId();
 
                                                         if (file_exists(FCPATH.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg' )){
-                                                            echo '<img src="'.$imgdir.'2year_'.strtolower($countryid).'_v2.jpg">';
+                                                            echo '<i class="guar guar-2year_<?=strtolower($countryid)?>_v2"></i>';
                                                         }else{
-                                                            echo '<img src="'.$imgdir.'2year_es_v2.jpg">';
+                                                            echo '<i class="guar guar-2year_es_v2"></i>';
                                                         }
                                                     ?>
                                                     </div>
