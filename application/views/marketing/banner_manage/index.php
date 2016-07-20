@@ -20,6 +20,7 @@
 }
 .content h2 {
     padding-left: 40px;
+    font-size: 12px;
 }
 #image {
     padding-left: 40px;
@@ -41,9 +42,9 @@
         <td height="2" class="line"></td>
     </tr>
 </table>
-<table border="0" cellpadding="0" cellspacing="0" height="70" class="page_header" width="100%">
+<table border="0" cellpadding="0" cellspacing="0" height="100" class="page_header" width="100%">
     <tr>
-        <td height="70" style="padding-left:8px">
+        <td height="70" style="padding-left:8px;line-height:16px;">
             <b style="font-size:14px"><?=$lang["header"]?></b><br>
             <?=$lang["header_message"]?><br>
             </td>
@@ -128,9 +129,15 @@
 </form>
     <div class="content">
         <h2>Upload Image For: &nbsp;&nbsp;<?=$breadcrumb?></h2>
-        <div id="image">
 
+        <?php
+        if ($location) {
+        ?>
+        <div id="image">
         </div>
+        <?php
+        }
+        ?>
         <?php
         if ($nums > 0) {
         ?>
@@ -221,7 +228,7 @@ $(function() {
         error:function( err ) {
             console.info( err );
         },
-        fileNumLimit:7-<?=$nums?>,
+        fileNumLimit:<?=$img_limit?>-<?=$nums?>,
         thumb:{
             width:550,
             height:131,
