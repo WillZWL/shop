@@ -180,7 +180,7 @@ class AsendiaApiService extends CourierApiService implements CourierApiInterface
 			if($maxIncrementNum) { 
 				$this->setAutoIncrementNum($maxIncrementNum); 
 			}
-			$i = $this->getAutoIncrementNum() > 1 ? $this->getAutoIncrementNum() : 0;
+			$i = $this->getAutoIncrementNum() > 1 ? $this->getAutoIncrementNum() : 200;
 			$totalOrderNum=count((array)$courierBatchOrderDtoArr);
 			foreach($courierBatchOrderDtoArr as $key=> $courierBatchOrderDto){
 				$courierRequestData["Parcels"][]=array(

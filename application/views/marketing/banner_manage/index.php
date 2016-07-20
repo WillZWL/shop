@@ -136,7 +136,9 @@
             <h2>Notice when Upload</h2>
             <ul>
                 <li><b>File Limit:</b>  <?=$config['limit']?></li>
-                <li><b>Filesize:</b>  <?php echo (int)($config['filesize']/1024/1024)?>M</li>
+                <li><b>Filesize Limit:</b>  <?php echo (int)($config['filesize']/1024/1024)?>M
+                &nbsp;&nbsp;&nbsp;<b>Ideal Size</b>:<?php echo ($config['filesize']/1024/1024*100)?>K
+                </li>
                 <li><b>Suggest Image Size:</b>  <?=$config['size']?></li>
             </ul>
         </div>
