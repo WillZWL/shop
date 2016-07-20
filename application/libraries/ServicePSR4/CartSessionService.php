@@ -212,7 +212,7 @@ class CartSessionService extends BaseService
         }
     }
 
-    public function manualAddItemsToCart($skuList = [], $platformId, $platformBizObj, $deliveryCharge = null) {
+    public function manualAddItemsToCart($skuList = [], $platformId, $platformBizObj, $deliveryCharge = null, $relaxCriteria = false) {
         if (!$this->_cart) {
             $this->_cart = [];
             $this->_cart = new \CartDto();
@@ -226,7 +226,7 @@ class CartSessionService extends BaseService
             $this->_cart->items = [];
         }
         foreach($skuList as $sku => $item) {
-            $productDetails = $this->_createCartItem($sku, $platformBizObj->getLanguageId(), $platformId);
+            $productDetails = $this->_createCartItem($sku, $platformBizObj->getLanguageId(), $platformId, $relaxCriteria);
             $productDetails->setQty($item["qty"]);
             $productDetails->setPrice($item["unitPrice"]);
             $this->_cart->items[$sku] = $productDetails;
@@ -251,9 +251,9 @@ class CartSessionService extends BaseService
         }
     }
 
-    private function _createCartItem($sku, $lang, $platformId) {
+    private function _createCartItem($sku, $lang, $platformId, $relaxCriteria = false) {
         if ($this->_rebuildCartNoSessionMode || $this->getCartDetailInfo())
-            return $this->getCartItemInDetail($sku, $lang, $platformId);
+            return $this->getCartItemInDetail($sku, $lang, $platformId, $relaxCriteria);
         else
             return $this->getCartItemInfoLite($sku, $lang, $platformId);
     }
@@ -268,13 +268,28 @@ class CartSessionService extends BaseService
         $options["limit"] = 1;
         return ["where" => $where, "options" => $options];
     }
-
-    public function getCartItemInDetail($sku, $lang, $platformId) {
+/********************************
+**  function _getRelaxCartParameter
+**  this is only for speical order, we can remove more criteria if needed
+*********************************/
+    private function _getRelaxCartParameter($sku, $lang, $platformId) {
         $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
+        unset($para["where"]["pc.lang_id"]);
+        return $para;
+    }
+
+    public function getCartItemInDetail($sku, $lang, $platformId, $relaxCriteria = false) {
+        if ($relaxCriteria) {
+            $para = $this->_getRelaxCartParameter($sku, $lang, $platformId);
+        } else {
+            $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
+        }
         $productInfo = $this->getDao('Product')->getCartDataDetail($para["where"], $para["options"]);
-//        print $this->getDao('Product')->db->last_query();
-//        var_dump($productInfo);
-//        exit;
+/*
+        print $this->getDao('Product')->db->last_query();
+        var_dump($productInfo);
+        exit;
+*/
         if ($productInfo) {
             return $productInfo;
         }
