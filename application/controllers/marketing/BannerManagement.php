@@ -36,7 +36,13 @@ class BannerManagement extends MY_Controller
 
         $data['banner_list'] = $banner_list;
 
-        $data['img_limit'] = $this->getImageLimit($platform_id, $type, $location);
+        $config = $this->getUploadConfig();
+        if ($type == 1) {
+            $data['config'] = $config[$type][$location];
+        } else {
+            $data['config'] = $config[$type];
+        }
+        $data['img_limit'] = $data['config']['limit'];
         $data["notice"] = notice($lang);
         $this->load->view('marketing/banner_manage/index', $data);
     }
@@ -87,10 +93,8 @@ class BannerManagement extends MY_Controller
 
         $uploadDir = $bannerDir .DIRECTORY_SEPARATOR. $platform_id .DIRECTORY_SEPARATOR. $banner_type .DIRECTORY_SEPARATOR. $location;
 
-        // var_dump($uploadDir);
-        // Get a file name
         if (isset($_REQUEST["name"])) {
-            $fileName = $_REQUEST["name"];
+            $fileName = date('').$_REQUEST["name"];
         } elseif (!empty($_FILES)) {
             $fileName = $_FILES["file"]["name"];
         } else {
@@ -329,26 +333,43 @@ class BannerManagement extends MY_Controller
         }
     }
 
-    public function getImageLimit($platform_id = '', $type = '', $location = '')
+    public function getUploadConfig()
     {
-        $limit = 3;
-        switch ($type) {
-            case '1':
-                switch ($location) {
-                    case '1':
-                        $limit = 5;
-                        break;
-                    case '2':
-                        $limit = 1;
-                        break;
-                    case '3':
-                        $limit = 1;
-                        break;
-                }
-                break;
-        }
+        // 1 => 'Home Page', 2 => 'Category Page', 3 => 'Product Page'
+        $config = [
+                //type
+                1 => [
+                    //location
+                    1 => [
+                        'limit' => 5,
+                        'filesize' => 1*1024*1024,
+                        'size' => '1170*300',
+                    ],
 
-        return $limit;
+                    2 => [
+                        'limit' => 1,
+                        'filesize' => 1*1024*1024,
+                        'size' => '567*315',
+                    ],
+
+                    3 => [
+                        'limit' => 1,
+                        'filesize' => 1*1024*1024,
+                        'size' => '567*315',
+                    ]
+                ],
+                2 => [
+                    'limit' => 1,
+                    'filesize' => 1*1024*1024,
+                    'size' => '800*600',
+                ],
+                3 => [
+                    'limit' => 1,
+                    'filesize' => 1*1024*1024,
+                    'size' => '800*600',
+                ],
+            ];
+        return $config;
     }
 
     public function getAppId()
