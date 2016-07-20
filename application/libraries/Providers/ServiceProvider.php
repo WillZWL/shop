@@ -590,12 +590,8 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\ProductWarrantyService();
         };
 
-        $serviceContainer['DisplayCategoryBanner'] = function () {
-            return new S\DisplayCategoryBannerService();
-        };
-
-        $serviceContainer['DisplayBanner'] = function () {
-            return new S\DisplayBannerService();
+        $serviceContainer['Banner'] = function () {
+            return new S\BannerService();
         };
 
     }
