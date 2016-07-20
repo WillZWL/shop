@@ -1,0 +1,212 @@
+@charset "utf-8";
+/* CSS Document*/
+.webuploader-container {
+	position: relative;
+}
+.webuploader-element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	background: #00b7ee;
+	padding: 10px 15px;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+}
+.webuploader-pick-hover {
+	background: #00a2d4;
+}
+
+.webuploader-pick-disable {
+	opacity: 0.6;
+	pointer-events:none;
+}
+.parentFileBox, .banners {
+	width:1000px;
+	height:auto;
+	overflow:hidden;
+	position:relative;
+}
+
+.parentFileBox>.fileBoxUl, .banners>.fileBoxUl, {
+	position:relative;
+	padding:0;
+	width:100%;
+	height:auto;
+	overflow:hidden;
+	padding-bottom:5px;
+}
+.parentFileBox>.fileBoxUl>li, .banners>.fileBoxUl>li {
+	border:1px solid #09F;
+	border-radius:5px;
+	height:150px;
+	margin-top:5px;
+	overflow:hidden;
+	position:relative;
+}
+.parentFileBox>.fileBoxUl>li>.viewThumb, .banners>.fileBoxUl>li>.viewThumb {
+	position:absolute;
+	top:0;
+	left:0;
+	width:550px;
+	height:150px;
+	overflow:hidden;
+}
+.parentFileBox>.fileBoxUl>li>.viewThumb>img, .banners>.fileBoxUl>li>.viewThumb>img{
+	width:100%;
+	height:100%;
+}
+.parentFileBox>.fileBoxUl>li>.imgCancel,.parentFileBox>.fileBoxUl>li>.imgSuccess {
+	position:absolute;
+	width:32px;
+	height:32px;
+	top:2px;
+	right:2px;
+	cursor:pointer;
+	display:none;
+}
+.parentFileBox>.fileBoxUl>li>.imgCancel {
+	background:url(../images/x_alt.png) no-repeat;
+}
+.parentFileBox>.fileBoxUl>li>.imgSuccess {
+	background:url(../images/check_alt.png) no-repeat;
+	cursor:default;
+}
+.parentFileBox>.fileBoxUl>li>.imgFileName {
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	width:100%;
+	height:20px;
+	line-height:20px;
+	text-align:center;
+	color:#fff;
+	font-size:12px;
+	display:none;
+	background:url(../images/bgblack.png);
+}
+.parentFileBox>.fileBoxUl>li>.imgBar {
+	top:0;
+	left:0;
+	position: absolute;
+	width: 170px;
+	height: 150px;
+	line-height:150px;
+	background:url(../images/bgblack.png);
+	display:none;
+}
+
+.parentFileBox>.fileBoxUl>li>.imgInfo {
+	position: absolute;
+	width: 360px;
+    float: right;
+    padding-top: 10px;
+    left: 570px;
+}
+.banners>.fileBoxUl>li>.imgInfo {
+    position: absolute;
+    width: 280px;
+    padding-top: 10px;
+    left: 570px;
+}
+
+.banners>.fileBoxUl>li>.delete_banner {
+    position: absolute;
+    width: 80px;
+    padding-top: 60px;
+    left: 850px;
+}
+.parentFileBox>.fileBoxUl>li>.imgBar>.imgProgressText {
+	font-size:14px;
+	text-align:center;
+	color:#FFF;
+	position:relative;
+	z-index:99;
+}
+.parentFileBox>.fileBoxUl>li>.imgBar>.imgProgress {
+	position:absolute;
+	left:0;
+	top:42%;
+	height:24px;
+	width:100%;
+	background-color:#09F;
+	filter:alpha(opacity=70);
+	-moz-opacity:0.7;
+	opacity:0.7;
+	z-index:97;
+}
+.parentFileBox>.imgButton {
+	width:100%;
+	margin-top:5px;
+	margin-bottom:5px;
+	height:20px;
+	line-height:20px;
+	text-align:center;
+}
+.parentFileBox>.imgButton>a {
+	padding:5px 10px 5px 10px;
+	background-color:#09C;
+	color:#FFF;
+	font-size:12px;
+	text-decoration:none;
+	border-radius:3px;
+}
+.parentFileBox>.imgButton>a:hover {
+	background-color:#0CC;
+	color:#F30;
+}
+.parentFileBox>.fileBoxUl>li:hover {
+	-moz-box-shadow: 3px 3px 4px #FF0;
+	-webkit-box-shadow: 3px 3px 4px #FF0;
+	box-shadow: 3px 3px 4px #FF0;
+}
+.parentFileBox>.fileBoxUl>.imgUploadHover:hover .imgCancel {
+	display:block;
+}
+.parentFileBox>.fileBoxUl>li:hover .imgFileName {
+	display:block;
+}
+.banner_btn {
+	width:100px;
+	cursor: pointer;
+	background: #00b7ee;
+	padding: 10px 15px;
+	color: #fff;
+	text-align: center;
+	border-width: 0;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.cloneBanner {
+	margin-left:40px;
+	border: 1px solid #f00;
+    border-radius: 5px;
+    height: 100px;
+    margin-top: 5px;
+    overflow: hidden;
+    position: relative;
+}
+.cloneBanner h2 {
+	font-size:14px;
+}
+.cloneBanner ul {
+	list-style-type:none;
+	// width:300px;
+}
+.cloneBanner .clone_right {
+	margin: 0 auto;
+}
+
+.cloneBanner ul li{
+	padding:2px 0;
+	width: 70px;
+    float: left;
+    padding:10px;
+}

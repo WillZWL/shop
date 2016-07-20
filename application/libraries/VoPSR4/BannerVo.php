@@ -2,28 +2,31 @@
 
 class BannerVo extends \BaseVo
 {
-    private $cat_id;
-    private $type = '0';
-    private $usage = 'PV';
-    private $image_file;
-    private $flash_file;
-    private $link;
-    private $link_type = 'E';
-    private $status = 'A';
+    private $id;
+    private $type = '1';
+    private $location = '0';
+    private $platform_id = '';
+    private $image = '';
+    private $image_name = '';
+    private $image_alt = '';
+    private $link = '';
+    private $target_type = '1';
+    private $priority = '1';
+    private $status = '1';
 
-    protected $primary_key = ['cat_id', 'type', 'usage'];
-    protected $increment_field = '';
+    protected $primary_key = ['id'];
+    protected $increment_field = 'id';
 
-    public function setCatId($cat_id)
+    public function setId($id)
     {
-        if ($cat_id !== null) {
-            $this->cat_id = $cat_id;
+        if ($id !== null) {
+            $this->id = $id;
         }
     }
 
-    public function getCatId()
+    public function getId()
     {
-        return $this->cat_id;
+        return $this->id;
     }
 
     public function setType($type)
@@ -38,40 +41,64 @@ class BannerVo extends \BaseVo
         return $this->type;
     }
 
-    public function setUsage($usage)
+    public function setLocation($location)
     {
-        if ($usage !== null) {
-            $this->usage = $usage;
+        if ($location !== null) {
+            $this->location = $location;
         }
     }
 
-    public function getUsage()
+    public function getLocation()
     {
-        return $this->usage;
+        return $this->location;
     }
 
-    public function setImageFile($image_file)
+    public function setPlatformId($platform_id)
     {
-        if ($image_file !== null) {
-            $this->image_file = $image_file;
+        if ($platform_id !== null) {
+            $this->platform_id = $platform_id;
         }
     }
 
-    public function getImageFile()
+    public function getPlatformId()
     {
-        return $this->image_file;
+        return $this->platform_id;
     }
 
-    public function setFlashFile($flash_file)
+    public function setImage($image)
     {
-        if ($flash_file !== null) {
-            $this->flash_file = $flash_file;
+        if ($image !== null) {
+            $this->image = $image;
         }
     }
 
-    public function getFlashFile()
+    public function getImage()
     {
-        return $this->flash_file;
+        return $this->image;
+    }
+
+    public function setImageName($image_name)
+    {
+        if ($image_name !== null) {
+            $this->image_name = $image_name;
+        }
+    }
+
+    public function getImageName()
+    {
+        return $this->image_name;
+    }
+
+    public function setImageAlt($image_alt)
+    {
+        if ($image_alt !== null) {
+            $this->image_alt = $image_alt;
+        }
+    }
+
+    public function getImageAlt()
+    {
+        return $this->image_alt;
     }
 
     public function setLink($link)
@@ -86,16 +113,28 @@ class BannerVo extends \BaseVo
         return $this->link;
     }
 
-    public function setLinkType($link_type)
+    public function setTargetType($target_type)
     {
-        if ($link_type !== null) {
-            $this->link_type = $link_type;
+        if ($target_type !== null) {
+            $this->target_type = $target_type;
         }
     }
 
-    public function getLinkType()
+    public function getTargetType()
     {
-        return $this->link_type;
+        return $this->target_type;
+    }
+
+    public function setPriority($priority)
+    {
+        if ($priority !== null) {
+            $this->priority = $priority;
+        }
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
     }
 
     public function setStatus($status)
