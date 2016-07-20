@@ -182,7 +182,7 @@
                         </p>
                     </div>
                     <div class='delete_banner'>
-                        <input type="button" name="delete" value="Delete" class="banner_btn" style="background: #ee0027;" onclick="Redirect('<?=base_url()?>marketing/BannerManagement/delete/<?=$banner_obj->getId()?>')">
+                        <input type="button" name="delete" value="Delete" class="banner_btn" style="background: #ee0027;" onclick="delete_confirm()">
                     </div>
                 </li>
                 <?php
@@ -252,6 +252,14 @@ $(function() {
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
 });
+
+function delete_confirm()
+{
+    var r=confirm("Delete This Banner");
+    if (r==true) {
+        Redirect('<?=base_url()?>marketing/BannerManagement/delete/<?=$banner_obj->getId()?>');
+    }
+}
 
 <?php
 if ($type == 2) {
