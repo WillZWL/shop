@@ -18,8 +18,11 @@
     padding: 10px;
     text-align: left;
 }
-.image {
-    width: 980px;
+.content h2 {
+    padding-left: 40px;
+}
+#image {
+    padding-left: 40px;
 }
 
 </style>
@@ -48,7 +51,6 @@
 </table>
 <form name="fm" method="get">
     <table cellpadding="0" cellspacing="0" width="100%" class="page_header" border="0">
-        <!-- <col width="100"><col width="100"><col width="500"> -->
         <tr>
             <td class="" align="center" style="margin: 10px; padding: 10px 0px; width:180px; ">
                 <b><?=$lang['platform']?>:</b> &nbsp;&nbsp;
@@ -126,49 +128,87 @@
 </form>
     <div class="content">
         <h2>Upload Image For: &nbsp;&nbsp;<?=$breadcrumb?></h2>
-        <?php
-            if ($banner_list) {
-                foreach ($banner_list as $banner_obj) {
-                    $image = $banner_obj->getImage();
-        ?>
-        <div class="parentFileBox">
-            <ul class="fileBoxUl" id="sortable">
-                <li id="fileBox_WU_FILE_0" class="imgUploadHover">
-                    <div class="viewThumb">
-                        <img src="<?=base_url($image)?>">
-                    </div>
-                    <div class="imgCancel"></div>
-                    <div class="imgSuccess"></div>
-                    <div class="imgFileName">en_banner2 copy.jpg</div>
-                    <div class="imgBar">
-                        <div class="imgProgress"></div>
-                        <div class="imgProgressText">0%</div>
-                    </div>
-                    <div class="imgInfo">
-                        <p><b>Target Url:</b>
-                            <input type="text" name="link" class="input">
-                        </p>
-                        <p><b>Target Type: </b>
-                            <select name="target_type" class="target_type">
-                                <option value="2">open in same window</option>
-                                <option value="1">open in new window</option>
-                            </select>
-                        </p>
-                        <p><b>Image Alt: </b>
-                            <input type="text" name="image_alt" class="input">
-                        </p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <?php
-                }
-            }
-        ?>
-
         <div id="image">
 
         </div>
+        <?php
+        if ($nums > 0) {
+        ?>
+        <form action="/marketing/BannerManagement/update" method="post">
+        <input type="hidden" name="platform_id" value="<?=$platform_id?>">
+        <input type="hidden" name="type" value="<?=$type?>">
+        <input type="hidden" name="location" value="<?=$location?>">
+        <div class="banners">
+            <ul class="fileBoxUl" id="sortable">
+                <?php
+                    if ($banner_list) {
+                        foreach ($banner_list as $banner_obj) {
+                            $image = $banner_obj->getImage();
+                ?>
+                <li>
+                    <input type="hidden" name="id[]" value="<?=$banner_obj->getId()?>">
+                    <div class="viewThumb">
+                        <img src="<?=base_url($image)?>">
+                    </div>
+                    <div class="imgInfo">
+                        <p><b>Target Url:</b>
+                            <input type="text" name="link[]" class="input" value="<?=$banner_obj->getLink()?>">
+                        </p>
+                        <p><b>Target Type: </b>
+                            <select name="target_type[]" class="target_type">
+                                <?php
+                                    $tty_selected[$banner_obj->getTargetType()] = " SELECTED";
+                                ?>
+                                <option value="2" <?=$tty_selected[2]?>>open in same window</option>
+                                <option value="1" <?=$tty_selected[1]?>>open in new window</option>
+                            </select>
+                        </p>
+                        <p><b>Image Alt: </b>
+                            <input type="text" name="image_alt[]" class="input" value="<?=$banner_obj->getImageAlt()?>">
+                        </p>
+                    </div>
+                    <div class='delete_banner'>
+                        <input type="button" name="delete" value="Delete" class="banner_btn" style="background: #ee0027;" onclick="Redirect('<?=base_url()?>marketing/BannerManagement/delete/<?=$banner_obj->getId()?>')">
+                    </div>
+                </li>
+                <?php
+                        }
+                    }
+                ?>
+            </ul>
+        </div>
+        <p>
+        <input type="submit" name="submit" value="Update" class='banner_btn' style="margin-left:40px;">
+        </p>
+        </form>
+
+        <div class="cloneBanner">
+        <h2><?=$lang['clone_msg']?></h2>
+
+        <form action="/marketing/BannerManagement/cloneBanner" method="post">
+        <input type="hidden" name="platform_id" value="<?=$platform_id?>">
+        <input type="hidden" name="type" value="<?=$type?>">
+        <input type="hidden" name="location" value="<?=$location?>">
+            <ul>
+                <?php
+                foreach ($platform_list as $platform) {
+                    $id = $platform->getSellingPlatformId();
+                    if ($id != $platform_id) {
+                ?>
+                <li><input type="checkbox" name='platforms[]' value="<?=$id?>"><?=$id?></li>
+                <?php
+                    }
+                }
+                ?>
+            </ul>
+            <div class="clone_right">
+                <input type="submit" name="submit" value="Clone" class="banner_btn">
+            </div>
+        </form>
+        </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 <script language='javascript'>
@@ -181,7 +221,7 @@ $(function() {
         error:function( err ) {
             console.info( err );
         },
-        fileNumLimit:5-<?=$nums?>,
+        fileNumLimit:7-<?=$nums?>,
         thumb:{
             width:550,
             height:131,
@@ -192,6 +232,9 @@ $(function() {
             location:'<?=$location?>'
         },
     });
+
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
 });
 
 <?php
@@ -207,5 +250,6 @@ if ($type == 2) {
 }
 ?>
 </script>
+<?= $notice["js"] ?>
 </body>
 </html>

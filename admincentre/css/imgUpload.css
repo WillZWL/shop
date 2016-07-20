@@ -27,13 +27,14 @@
 	opacity: 0.6;
 	pointer-events:none;
 }
-.parentFileBox {
+.parentFileBox, .banners {
 	width:1000px;
 	height:auto;
 	overflow:hidden;
 	position:relative;
 }
-.parentFileBox>.fileBoxUl {
+
+.parentFileBox>.fileBoxUl, .banners>.fileBoxUl, {
 	position:relative;
 	padding:0;
 	width:100%;
@@ -41,19 +42,15 @@
 	overflow:hidden;
 	padding-bottom:5px;
 }
-.parentFileBox>.fileBoxUl>li {
-	// float:left;
+.parentFileBox>.fileBoxUl>li, .banners>.fileBoxUl>li {
 	border:1px solid #09F;
 	border-radius:5px;
-	// width:550px;
 	height:150px;
 	margin-top:5px;
-	margin-left:5px;
 	overflow:hidden;
 	position:relative;
-	// background-color:#099;
 }
-.parentFileBox>.fileBoxUl>li>.viewThumb {
+.parentFileBox>.fileBoxUl>li>.viewThumb, .banners>.fileBoxUl>li>.viewThumb {
 	position:absolute;
 	top:0;
 	left:0;
@@ -61,7 +58,7 @@
 	height:150px;
 	overflow:hidden;
 }
-.parentFileBox>.fileBoxUl>li>.viewThumb>img {
+.parentFileBox>.fileBoxUl>li>.viewThumb>img, .banners>.fileBoxUl>li>.viewThumb>img{
 	width:100%;
 	height:100%;
 }
@@ -106,9 +103,24 @@
 }
 
 .parentFileBox>.fileBoxUl>li>.imgInfo {
+	position: absolute;
 	width: 360px;
     float: right;
     padding-top: 10px;
+    left: 570px;
+}
+.banners>.fileBoxUl>li>.imgInfo {
+    position: absolute;
+    width: 280px;
+    padding-top: 10px;
+    left: 570px;
+}
+
+.banners>.fileBoxUl>li>.delete_banner {
+    position: absolute;
+    width: 80px;
+    padding-top: 60px;
+    left: 850px;
 }
 .parentFileBox>.fileBoxUl>li>.imgBar>.imgProgressText {
 	font-size:14px;
@@ -159,4 +171,42 @@
 }
 .parentFileBox>.fileBoxUl>li:hover .imgFileName {
 	display:block;
+}
+.banner_btn {
+	width:100px;
+	cursor: pointer;
+	background: #00b7ee;
+	padding: 10px 15px;
+	color: #fff;
+	text-align: center;
+	border-width: 0;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.cloneBanner {
+	margin-left:40px;
+	border: 1px solid #f00;
+    border-radius: 5px;
+    height: 100px;
+    margin-top: 5px;
+    overflow: hidden;
+    position: relative;
+}
+.cloneBanner h2 {
+	font-size:14px;
+}
+.cloneBanner ul {
+	list-style-type:none;
+	// width:300px;
+}
+.cloneBanner .clone_right {
+	margin: 0 auto;
+}
+
+.cloneBanner ul li{
+	padding:2px 0;
+	width: 70px;
+    float: left;
+    padding:10px;
 }

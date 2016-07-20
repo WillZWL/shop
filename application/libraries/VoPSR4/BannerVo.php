@@ -7,10 +7,10 @@ class BannerVo extends \BaseVo
     private $location = '0';
     private $platform_id = '';
     private $image = '';
+    private $image_name = '';
     private $image_alt = '';
     private $link = '';
     private $target_type = '1';
-    private $line_no = '1';
     private $priority = '1';
     private $status = '1';
 
@@ -77,6 +77,18 @@ class BannerVo extends \BaseVo
         return $this->image;
     }
 
+    public function setImageName($image_name)
+    {
+        if ($image_name !== null) {
+            $this->image_name = $image_name;
+        }
+    }
+
+    public function getImageName()
+    {
+        return $this->image_name;
+    }
+
     public function setImageAlt($image_alt)
     {
         if ($image_alt !== null) {
@@ -111,18 +123,6 @@ class BannerVo extends \BaseVo
     public function getTargetType()
     {
         return $this->target_type;
-    }
-
-    public function setLineNo($line_no)
-    {
-        if ($line_no !== null) {
-            $this->line_no = $line_no;
-        }
-    }
-
-    public function getLineNo()
-    {
-        return $this->line_no;
     }
 
     public function setPriority($priority)
