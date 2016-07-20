@@ -129,19 +129,17 @@
 </form>
     <div class="content">
         <h2>Upload Image For: &nbsp;&nbsp;<?=$breadcrumb?></h2>
-
+        <?php
+        if ($location) {
+        ?>
         <div class="noticeBox">
             <h2>Notice when Upload</h2>
             <ul>
                 <li><b>File Limit:</b>  <?=$config['limit']?></li>
-                <li><b>Filesize:</b>  <?php echo (int)($config['filesize']/1024/1024)?> M</li>
-                <li><b>Suggest Size:</b>  <?=$config['size']?></li>
+                <li><b>Filesize:</b>  <?php echo (int)($config['filesize']/1024/1024)?>M</li>
+                <li><b>Suggest Image Size:</b>  <?=$config['size']?></li>
             </ul>
         </div>
-
-        <?php
-        if ($location) {
-        ?>
         <div id="image">
         </div>
         <?php
