@@ -18,7 +18,7 @@ CREATE TABLE `banner` (
   `modify_at` varchar(16) NOT NULL DEFAULT '127.0.0.1' COMMENT 'IP address',
   `modify_by` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `config` (`variable`, `value`, `description`, `create_on`, `create_at`, `create_by`, `modify_on`, `modify_at`, `modify_by`)
