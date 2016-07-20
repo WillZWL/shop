@@ -9,7 +9,7 @@ class OrderCreationService extends BaseService
         parent::__construct();
         $this->checkoutFormData = $formValue;
     }
-
+/*
     protected function buildCart() {
         $cartSessionService = new CartSessionService(TRUE);
         $skuList = [];
@@ -33,4 +33,5 @@ class OrderCreationService extends BaseService
         }
         return false;
     }
+*/
 }
