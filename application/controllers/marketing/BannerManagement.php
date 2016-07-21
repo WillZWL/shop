@@ -340,9 +340,14 @@ class BannerManagement extends MY_Controller
         $where['modify_on <='] = date('Y-m-d H:i:s',strtotime('-2 month'));
         $where['status'] = 0;
         $list = $this->sc['Banner']->getDao('Banner')->getList($where, ['limit' => -1]);
-        foreach ($list as $obj) {
-           $img_link = $obj->getImage();
-           unlink($img_link);
+        if ($list) {
+            $i = 0;
+            foreach ($list as $obj) {
+               $img_link = $obj->getImage();
+               unlink($img_link);
+               $i++;
+            }
+            echo $i." Images Removed";
         }
     }
 

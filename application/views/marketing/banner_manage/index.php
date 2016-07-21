@@ -136,7 +136,9 @@
             <h2>Notice when Upload</h2>
             <ul>
                 <li><b>File Limit:</b>  <?=$config['limit']?></li>
-                <li><b>Filesize:</b>  <?php echo (int)($config['filesize']/1024/1024)?>M</li>
+                <li><b>Filesize Limit:</b>  <?php echo (int)($config['filesize']/1024/1024)?>M
+                &nbsp;&nbsp;&nbsp;<b>Ideal Size</b>:<?php echo ($config['filesize']/1024/1024*100)?>K
+                </li>
                 <li><b>Suggest Image Size:</b>  <?=$config['size']?></li>
             </ul>
         </div>
@@ -182,7 +184,7 @@
                         </p>
                     </div>
                     <div class='delete_banner'>
-                        <input type="button" name="delete" value="Delete" class="banner_btn" style="background: #ee0027;" onclick="Redirect('<?=base_url()?>marketing/BannerManagement/delete/<?=$banner_obj->getId()?>')">
+                        <input type="button" name="delete" value="Delete" class="banner_btn" style="background: #ee0027;" onclick="delete_confirm(<?=$banner_obj->getId()?>)">
                     </div>
                 </li>
                 <?php
@@ -252,6 +254,14 @@ $(function() {
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
 });
+
+function delete_confirm( id )
+{
+    var r=confirm("Delete This Banner");
+    if (r==true) {
+        Redirect('<?=base_url()?>marketing/BannerManagement/delete/'+id);
+    }
+}
 
 <?php
 if ($type == 2) {

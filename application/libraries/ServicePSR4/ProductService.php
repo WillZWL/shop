@@ -233,4 +233,17 @@ class ProductService extends BaseProductService
     {
         return $this->getDao('Product')->isClearance($sku);
     }
+
+    public function getProductCategoryReport($where, $option)
+    {
+        //include_once(APPPATH . "libraries/service/Data_exchange_service.php");
+        $dex = new DataExchangeService();
+
+        $report_list = $this->getDao('Product')->getProductCategoryList($where, $option);
+        
+        $out_xml = new VoToXml($report_list, APPPATH . 'data/product_category_report_vo2xml.txt');
+        $out_csv = new XmlToCsv("", APPPATH . 'data/product_category_report_xml2csv.txt', TRUE, ',');
+
+        return $dex->convert($out_xml, $out_csv);
+    }
 }

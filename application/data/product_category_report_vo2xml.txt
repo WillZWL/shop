@@ -1,0 +1,10 @@
+#Table name
+data
+
+#Input column name	Output column name
+ExtSku	ext_sku
+Name	name
+BrandName	brand_name
+CatName	cat_name
+SubCatName	sub_cat_name
+SubSubCatName	sub_sub_cat_name
