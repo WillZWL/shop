@@ -3984,6 +3984,8 @@ SQL;
     public function getRiaOrder($where = array(), $option = array(), $classname = 'riaControlDto')
     {
         $option['limit'] = -1;
+        $end_date = $option['end_date'];
+        $where["((rf.create_on <= '$end_date') OR (rf.status is NUll))"] = NULL;
         $this->db->from('flex_ria fri');
         $this->db->join('so', 'so.so_no = fri.so_no', 'LEFT');
         $this->db->join('refund rf', "rf.so_no = so.so_no and rf.status = 'C'", 'LEFT');
@@ -4000,7 +4002,6 @@ SQL;
         $this->db->from('flex_refund fre');
         $this->db->join('flex_ria fri', 'fre.so_no = fri.so_no', 'LEFT');
         $this->db->join('so', 'fri.so_no = so.so_no', 'LEFT');
-        $this->db->join('refund rf', "rf.so_no = so.so_no and rf.status = 'C'", 'LEFT');
         $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'LEFT');
         $this->db->where("fre.status = 'R'");
         $this->db->order_by('so.so_no, fre.txn_time');
