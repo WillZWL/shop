@@ -49,7 +49,7 @@ class CsvToXml implements inConverter
     private $delimiter;
     private $checkQuote;
 
-    function CsvToXml($input = "", $map_file = "", $first_line_heading = TRUE, $delimiter = ",", $checkQuote = TRUE)
+    function __construct($input = "", $map_file = "", $first_line_heading = TRUE, $delimiter = ",", $checkQuote = TRUE)
     {
         $CI =& get_instance();
         $this->load = $CI->load;
@@ -162,7 +162,7 @@ class XmlToXml implements inConverter, outConverter
     private $map_file;
     private $basetag;
 
-    function XmlToXml($input = "", $map_file = "", $basetag = "entity")
+    function __construct($input = "", $map_file = "", $basetag = "entity")
     {
         $CI =& get_instance();
         $this->load = $CI->load;
@@ -258,7 +258,7 @@ class VoToXml implements inConverter
     private $input;
     private $map_file;
 
-    public function VoToXml($input = "", $map_file = "")
+    public function __construct($input = "", $map_file = "")
     {
         $CI =& get_instance();
         $this->load = $CI->load;
@@ -383,7 +383,7 @@ class XmlToCsv implements outConverter
     private $first_line_heading;
     private $delimiter;
 
-    function XmlToCsv($input = "", $map_file = "", $first_line_heading = TRUE, $delimiter = ",")
+    function __construct($input = "", $map_file = "", $first_line_heading = TRUE, $delimiter = ",")
     {
         $CI =& get_instance();
         $this->load = $CI->load;
@@ -507,7 +507,7 @@ class XmlToXls implements outConverter
     private $input;
     private $map_file;
 
-    function XmlToXls($input = "", $map_file = "", $first_line_heading = TRUE, $sheet_map_file = "", $display_sheet_key = TRUE)
+    function __construct($input = "", $map_file = "", $first_line_heading = TRUE, $sheet_map_file = "", $display_sheet_key = TRUE)
     {
         $CI =& get_instance();
         $this->load = $CI->load;
@@ -717,7 +717,7 @@ class XmlToVo implements outConverter
     private $input;
     private $map_file;
 
-    function XmlToVo($input = "", $map_file = "")
+    function __construct($input = "", $map_file = "")
     {
         $CI =& get_instance();
         $this->load = $CI->load;
