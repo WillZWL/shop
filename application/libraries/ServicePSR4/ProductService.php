@@ -243,9 +243,9 @@ class ProductService extends BaseProductService
         $this->voToXml = new VoToXml;
         $this->xmlToCsv = new XmlToCsv;
         
-        $out_xml = $this->voToXml->VoToXml($report_list, APPPATH . 'data/product_category_report_vo2xml.txt');
-        $out_csv = $this->xmlToCsv->XmlToCsv("", APPPATH . 'data/product_category_report_xml2csv.txt', TRUE, ',');
+        $this->voToXml->VoToXml($report_list, APPPATH . 'data/product_category_report_vo2xml.txt');
+        $this->xmlToCsv->XmlToCsv("", APPPATH . 'data/product_category_report_xml2csv.txt', TRUE, ',');
 
-        return $dex->convert($out_xml, $out_csv);
+        return $dex->convert($this->voToXml, $this->xmlToCsv);
     }
 }
