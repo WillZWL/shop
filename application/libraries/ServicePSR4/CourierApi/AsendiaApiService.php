@@ -91,7 +91,7 @@ class AsendiaApiService extends CourierApiService implements CourierApiInterface
 	 			break;
 	 	}
     	if(!empty($courierRequestData)){
-		    return json_encode($courierRequestData);;
+		    return json_encode($courierRequestData);
 		}
     }
 	/******************************************
@@ -110,8 +110,8 @@ class AsendiaApiService extends CourierApiService implements CourierApiInterface
 					//渠道代码 REG,PROAM,ECONAM,AU
 					"Consignee" =>$pendingData->getDeliveryName(), //收件人名
 					"Address1" => $pendingData->getDeliveryAddress1(),//地址第一行
-					"Address2" => $pendingData->getDeliveryAddress2(), //地址第二行
-					"Address3" =>$pendingData->getDeliveryAddress3(),//地址第三行
+					"Address2" => $pendingData->getDeliveryAddress2() ? $pendingData->getDeliveryAddress2() : "", //地址第二行
+					"Address3" =>$pendingData->getDeliveryAddress3() ? $pendingData->getDeliveryAddress3() : "",//地址第三行
 					"City" => $pendingData->getDeliveryCity(), //城市
 					"State" => $pendingData->getDeliveryState(), //州
 					"CountryCode" => $pendingData->getDeliveryCountryId(), // 国家简码

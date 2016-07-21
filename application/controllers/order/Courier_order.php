@@ -396,7 +396,7 @@ class Courier_order extends MY_Controller
 			if($currentSoNo!=$row->getSoNo() ){
 				$currentSoNo=$row->getSoNo();
 				$declaredValue=$this->getPostDeclaredValue($row,$courierObj);
-				$address= @explode("|", $row->getDeliveryAddress());
+				$address= @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($address[0]);
 				if (!empty($address[1])){
 					$row->setDeliveryAddress2($address[1]);
