@@ -184,7 +184,7 @@
 	overflow: hidden;
 }
 
-.cloneBanner {
+.cloneBanner, .noticeBox {
 	margin-left:40px;
 	border: 1px solid #f00;
     border-radius: 5px;
@@ -193,10 +193,24 @@
     overflow: hidden;
     position: relative;
 }
+.noticeBox {
+	border: 2px solid #f00;
+	height: 80px;
+	margin-bottom:10px;
+}
+.noticeBox h2 {
+	margin: 5px 0;
+}
+.noticeBox ul {
+	margin: 0;
+}
+.noticeBox ul li{
+	line-height:16px;
+}
 .cloneBanner h2 {
 	font-size:14px;
 }
-.cloneBanner ul {
+.cloneBanner ul, .noticeBox ul {
 	list-style-type:none;
 	// width:300px;
 }

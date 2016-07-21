@@ -36,7 +36,13 @@ class BannerManagement extends MY_Controller
 
         $data['banner_list'] = $banner_list;
 
-        $data['img_limit'] = $this->getImageLimit($platform_id, $type, $location);
+        $config = $this->getUploadConfig();
+        if ($type == 1) {
+            $data['config'] = $config[$type][$location];
+        } else {
+            $data['config'] = $config[$type];
+        }
+        $data['img_limit'] = $data['config']['limit'];
         $data["notice"] = notice($lang);
         $this->load->view('marketing/banner_manage/index', $data);
     }
@@ -87,12 +93,10 @@ class BannerManagement extends MY_Controller
 
         $uploadDir = $bannerDir .DIRECTORY_SEPARATOR. $platform_id .DIRECTORY_SEPARATOR. $banner_type .DIRECTORY_SEPARATOR. $location;
 
-        // var_dump($uploadDir);
-        // Get a file name
         if (isset($_REQUEST["name"])) {
-            $fileName = $_REQUEST["name"];
+            $fileName = date('YmdHi').$_REQUEST["name"];
         } elseif (!empty($_FILES)) {
-            $fileName = $_FILES["file"]["name"];
+            $fileName = date('YmdHi').$_FILES["file"]["name"];
         } else {
             $fileName = uniqid("file_");
         }
@@ -270,7 +274,13 @@ class BannerManagement extends MY_Controller
         $platforms = $this->input->post('platforms');
 
         $msg = '';
+
         foreach ($platforms as $clone_platform_id) {
+            $exist_list = $this->sc['Banner']->getDao('Banner')->getList(['type' => $type, 'location' => $location, 'platform_id' => $clone_platform_id, 'status' => 1]);
+            foreach ($exist_list as $exist_obj) {
+                $exist_obj->setStatus(0);
+                $this->sc['Banner']->getDao('Banner')->update($exist_obj);
+            }
             foreach ($current_banner_list as $banner_obj) {
                 $current_banner_image = $banner_obj->getImage();
                 $current_banner_image_name = $banner_obj->getImageName();
@@ -281,30 +291,26 @@ class BannerManagement extends MY_Controller
 
                 //copy the image file to clone platform
 
-                $is_exist = $this->sc['Banner']->getDao('Banner')->get(['type' => $type, 'location' => $location, 'platform_id' => $clone_platform_id, 'image_name' => $current_banner_image_name, 'status' => 1]);
-                if (!$is_exist) {
-                    $this->mkBannerDir($bannerDir, $clone_platform_id, $type, $location);
-                    $uploadDir = $bannerDir .DIRECTORY_SEPARATOR. $clone_platform_id .DIRECTORY_SEPARATOR. $type .DIRECTORY_SEPARATOR. $location;
-                    $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $current_banner_image_name;
+                $this->mkBannerDir($bannerDir, $clone_platform_id, $type, $location);
+                $uploadDir = $bannerDir .DIRECTORY_SEPARATOR. $clone_platform_id .DIRECTORY_SEPARATOR. $type .DIRECTORY_SEPARATOR. $location;
+                $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $current_banner_image_name;
 
-                    $clone_banner_image = $banner_img_path.DIRECTORY_SEPARATOR. $clone_platform_id .DIRECTORY_SEPARATOR. $type .DIRECTORY_SEPARATOR. $location .DIRECTORY_SEPARATOR. $current_banner_image_name;
+                $clone_banner_image = $banner_img_path.DIRECTORY_SEPARATOR. $clone_platform_id .DIRECTORY_SEPARATOR. $type .DIRECTORY_SEPARATOR. $location .DIRECTORY_SEPARATOR. $current_banner_image_name;
 
-                    copy($current_banner_image, $uploadPath);
-
-                    $clone_banner_obj = $this->sc['Banner']->getDao('Banner')->get();
-                    $clone_banner_obj->setType($type);
-                    $clone_banner_obj->setLocation($location);
-                    $clone_banner_obj->setPlatformId($clone_platform_id);
-                    $clone_banner_obj->setImage($clone_banner_image);
-                    $clone_banner_obj->setImageName($current_banner_image_name);
-                    $clone_banner_obj->setImageAlt($current_banner_image_alt);
-                    $clone_banner_obj->setLink($current_banner_link);
-                    $clone_banner_obj->setTargetType($current_banner_target_type);
-                    $clone_banner_obj->setPriority($current_banner_priority);
-                    $this->sc['Banner']->getDao('Banner')->insert($clone_banner_obj);
-                    $msg .= $clone_platform_id.',';
-                }
+                copy($current_banner_image, $uploadPath);
+                $clone_banner_obj = $this->sc['Banner']->getDao('Banner')->get();
+                $clone_banner_obj->setType($type);
+                $clone_banner_obj->setLocation($location);
+                $clone_banner_obj->setPlatformId($clone_platform_id);
+                $clone_banner_obj->setImage($clone_banner_image);
+                $clone_banner_obj->setImageName($current_banner_image_name);
+                $clone_banner_obj->setImageAlt($current_banner_image_alt);
+                $clone_banner_obj->setLink($current_banner_link);
+                $clone_banner_obj->setTargetType($current_banner_target_type);
+                $clone_banner_obj->setPriority($current_banner_priority);
+                $this->sc['Banner']->getDao('Banner')->insert($clone_banner_obj);
             }
+            $msg .= $clone_platform_id.',';
         }
         $_SESSION["NOTICE"] = 'Clone Success, You can switch to Platform '. $msg .'for check';
         redirect(base_url()."marketing/BannerManagement/index/".$platform_id.'/'.$type.'/'.$location);
@@ -329,26 +335,59 @@ class BannerManagement extends MY_Controller
         }
     }
 
-    public function getImageLimit($platform_id = '', $type = '', $location = '')
+    public function removeUseLessImage()
     {
-        $limit = 3;
-        switch ($type) {
-            case '1':
-                switch ($location) {
-                    case '1':
-                        $limit = 5;
-                        break;
-                    case '2':
-                        $limit = 1;
-                        break;
-                    case '3':
-                        $limit = 1;
-                        break;
-                }
-                break;
+        $where['modify_on <='] = date('Y-m-d H:i:s',strtotime('-2 month'));
+        $where['status'] = 0;
+        $list = $this->sc['Banner']->getDao('Banner')->getList($where, ['limit' => -1]);
+        if ($list) {
+            $i = 0;
+            foreach ($list as $obj) {
+               $img_link = $obj->getImage();
+               unlink($img_link);
+               $i++;
+            }
+            echo $i." Images Removed";
         }
+    }
 
-        return $limit;
+    public function getUploadConfig()
+    {
+        // 1 => 'Home Page', 2 => 'Category Page', 3 => 'Product Page'
+        $config = [
+                //type
+                1 => [
+                    //location
+                    1 => [
+                        'limit' => 5,
+                        'filesize' => 1*1024*1024,
+                        'size' => '1170*300',
+                    ],
+
+                    2 => [
+                        'limit' => 1,
+                        'filesize' => 1*1024*1024,
+                        'size' => '567*315',
+                    ],
+
+                    3 => [
+                        'limit' => 1,
+                        'filesize' => 1*1024*1024,
+                        'size' => '567*315',
+                    ]
+                ],
+                2 => [
+                    'limit' => 1,
+                    'filesize' => 1*1024*1024,
+                    'size' => '800*600',
+                ],
+                3 => [
+                    'limit' => 1,
+                    'filesize' => 1*1024*1024,
+                    'size' => '800*600',
+                ],
+            ];
+        return $config;
     }
 
     public function getAppId()
