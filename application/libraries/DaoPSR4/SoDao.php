@@ -3985,7 +3985,7 @@ SQL;
     {
         $option['limit'] = -1;
         $end_date = $option['end_date'];
-        $where["((rf.create_on <= '$end_date') OR (rf.status is NUll))"] = NULL;
+        $where["((rf.create_on >= '$end_date') OR (rf.status is NUll))"] = NULL;
         $this->db->from('flex_ria fri');
         $this->db->join('so', 'so.so_no = fri.so_no', 'LEFT');
         $this->db->join('refund rf', "rf.so_no = so.so_no and rf.status = 'C'", 'LEFT');
