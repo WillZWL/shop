@@ -240,9 +240,11 @@ class ProductService extends BaseProductService
         $dex = new DataExchangeService();
 
         $report_list = $this->getDao('Product')->getProductCategoryList($where, $option);
+        $this->voToXml = new VoToXml;
+        $this->xmlToCsv = new XmlToCsv;
         
-        $out_xml = new VoToXml($report_list, APPPATH . 'data/product_category_report_vo2xml.txt');
-        $out_csv = new XmlToCsv("", APPPATH . 'data/product_category_report_xml2csv.txt', TRUE, ',');
+        $out_xml = $this->voToXml->VoToXml($report_list, APPPATH . 'data/product_category_report_vo2xml.txt');
+        $out_csv = $this->xmlToCsv->XmlToCsv("", APPPATH . 'data/product_category_report_xml2csv.txt', TRUE, ',');
 
         return $dex->convert($out_xml, $out_csv);
     }
