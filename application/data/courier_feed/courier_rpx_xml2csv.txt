@@ -12,10 +12,10 @@ delivery_address_2	receiver_address2
 delivery_city	receiver_city
 delivery_country_id	receiver_country
 delivery_postcode	receiver_Zip
-	declare_currency	USD
+	declare_currency	EUR
 declared_value	declare_value
 weight	weight
-	DDP/DDU	1
+	DDP/DDU	DDP
 cc_desc	item description
 cc_code	HS code
 weight	Weight of the item
