@@ -696,8 +696,8 @@ class CourierFeedService extends BaseService
 					$file_content = $this->getService('DataExchange')->convert($this->voToXml, $this->xmlToCsv);
 					break;
 
-				$i++;
 			}
+			$i++;
 		}
 
 		if ($file_content) {
@@ -996,6 +996,8 @@ class CourierFeedService extends BaseService
 				}
 				$row->setDeclaredValue(round($declared_value, 2));
 				$row->setCategoryName('Refurbished mobile phone');
+				$so_no = "*".$barcode."*";
+				$row->setSoNo($so_no);
 				$data_out = $row;
 				$counter++;
 			}
@@ -1013,7 +1015,7 @@ class CourierFeedService extends BaseService
 				$row->setDeliveryAddress2($ar_address[1]);
 				$barcode = 'PT'.$row->getSoNo();
 				$row->setBarcode($barcode);
-				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);				
+				$prod_obj = $this->getDao('Product')->get(["sku" => $row->getProdSku()]);
 				$declared_value = $this->soService->getDeclaredValue($prod_obj, $row->getDeliveryCountryId(), $row->getPrice());
 				$declared_value = $declared_value * $row->getRate();
 				$declared_value1 = $row->getAmount() * $row->getRef1();
@@ -1040,7 +1042,7 @@ class CourierFeedService extends BaseService
 	}
 
 	public function setItemDeclaredValue($so_obj, $declared_value) {
-		
+
 		$item_list = (array)$this->getDao('SoItemDetail')->getItemDetails(['so_no' => $so_obj->getSoNo()]);
 
 		$sum = 0;
@@ -1053,7 +1055,7 @@ class CourierFeedService extends BaseService
 				$item_declared_value = $declared_value * ($item->getAmount()/$so_obj->getAmount());
 				$item_declared_value = round($item_declared_value / $item->getQty() , 2) * $item->getQty();
 			}
-			
+
 			$item->setItemDeclaredValue( $item_declared_value );
 			$this->getDao('SoItemDetail')->update($item);
 			$sum+= $item_declared_value;
