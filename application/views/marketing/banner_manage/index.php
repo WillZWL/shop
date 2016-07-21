@@ -184,7 +184,7 @@
                         </p>
                     </div>
                     <div class='delete_banner'>
-                        <input type="button" name="delete" value="Delete" class="banner_btn" style="background: #ee0027;" onclick="delete_confirm()">
+                        <input type="button" name="delete" value="Delete" class="banner_btn" style="background: #ee0027;" onclick="delete_confirm(<?=$banner_obj->getId()?>)">
                     </div>
                 </li>
                 <?php
@@ -255,11 +255,11 @@ $(function() {
     $( "#sortable" ).disableSelection();
 });
 
-function delete_confirm()
+function delete_confirm( id )
 {
     var r=confirm("Delete This Banner");
     if (r==true) {
-        Redirect('<?=base_url()?>marketing/BannerManagement/delete/<?=$banner_obj->getId()?>');
+        Redirect('<?=base_url()?>marketing/BannerManagement/delete/'+id);
     }
 }
 
