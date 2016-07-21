@@ -8,7 +8,6 @@ class Product_category_report extends MY_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->model('marketing/product_model');
     }
 
     public function index()
@@ -33,8 +32,19 @@ class Product_category_report extends MY_Controller
     public function get_csv()
     {
         if ($this->input->post("search") == 1) {
-            $data = $this->product_model->get_product_category_report();
-            $this->load->view('output_csv.php', $data);
+
+            $where = array();
+            $where['m.ext_sku is not null'] = NULL;
+
+            $option = array();
+            $option['limit'] = -1;
+            $option['orderby'] = 'm.ext_sku';
+
+            $result = array();
+            $result['filename'] = 'product_category_report.csv';
+            $result['output'] = $this->sc['Product']->getProductCategoryReport($where, $option);
+
+            $this->load->view('output_csv.php', $result);
         }
     }
 

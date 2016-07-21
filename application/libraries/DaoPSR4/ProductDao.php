@@ -1092,4 +1092,16 @@ class ProductDao extends BaseDao
         $this->db->join("sku_mapping as sm", "sm.sku = p.sku and sm.status = 1 and sm.ext_sys = 'WMS'", 'INNER');
         return $this->commonGetList($classname, $where, $option, "p.sku, p.name as prod_name, p.website_quantity, p.display_quantity, p.auto_restock, sp.pricehkd as item_cost, p.sourcing_status as supply_status, sm.vb_sku, sm.ext_sku as master_sku");
     }
+
+
+    public function getProductCategoryList($where, $option, $classname = "ProductCategoryDto")
+    {
+        $this->db->from("product AS p");
+        $this->db->join("brand AS b", "p.brand_id = b.id", "LEFT");
+        $this->db->join("category AS c", "p.cat_id = c.id", "LEFT");
+        $this->db->join("category AS sc", "p.sub_cat_id = sc.id", "LEFT");
+        $this->db->join("category AS ssc", "p.sub_sub_cat_id = ssc.id", "LEFT");
+        $this->db->join("sku_mapping AS m", "p.sku = m.sku and m.ext_sys = 'WMS' and m.status = 1", "LEFT");
+        return $this->commonGetList($classname, $where, $option, "m.ext_sku, p.name, b.brand_name, c.name as cat_name, sc.name as sub_cat_name, ssc.name as sub_sub_cat_name");
+    }
 }
