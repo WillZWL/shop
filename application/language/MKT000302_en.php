@@ -151,5 +151,6 @@
 			"stop_sync" => "stop sync from VB",
 			"tip_stop_sync"=>"(tick before make changes in VB)",
 			"accelerator_salesrpt_bd" => "Accelerator sales report for BD",
+			"accelerator" => "Accelerator",
 			);
 ?>
