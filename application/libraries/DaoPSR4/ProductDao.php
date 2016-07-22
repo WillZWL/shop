@@ -1102,6 +1102,6 @@ class ProductDao extends BaseDao
         $this->db->join("category AS sc", "p.sub_cat_id = sc.id", "LEFT");
         $this->db->join("category AS ssc", "p.sub_sub_cat_id = ssc.id", "LEFT");
         $this->db->join("sku_mapping AS m", "p.sku = m.sku and m.ext_sys = 'WMS' and m.status = 1", "LEFT");
-        return $this->commonGetList($classname, $where, $option, "m.ext_sku, p.name, b.brand_name, c.name as cat_name, sc.name as sub_cat_name, ssc.name as sub_sub_cat_name");
+        return $this->commonGetList($classname, $where, $option, "m.ext_sku, p.name, b.brand_name, c.name as cat_name, sc.name as sub_cat_name, ssc.name as sub_sub_cat_name, if(p.accelerator<>1, '', if((b.customer_code='' or b.customer_code is null), 'missing', b.customer_code)) as customer_code");
     }
 }
