@@ -22,7 +22,7 @@
 			"our_return_policy"=>"Return Enquiries",
 			"return_policy_part1"=>"Should you be in anyway unsatisfied with your purchase, we offer a 14 day cooling off period (from time of receipt), during which you have the right to return the product to us. <br />Terms and conditions may apply.<br />For return instructions, please contact us at",
 			"return_policy_part2"=>" and we will be happy to assist you further.",
-			"thank_you"=>"Thank you for shopping with ValueBasket.com",
+			"thank_you"=>"Thank you for shopping with",
 			"sales"=>"Sales Enquiries:",
 			"customer_service"=>"Customer Services:",
 			"ship_to"=>"Ship To",

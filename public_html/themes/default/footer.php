@@ -1,4 +1,5 @@
             </div>
+            <?php if(!$quickview){?>
             <footer id="footer" class="nostylingboxs">
                 <div class="footer-middle " id="pavo-footer-middle">
                     <div class="container">
@@ -18,37 +19,37 @@
 
                                                         if ($countryid == "IT") {  ?>
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/postepay.png">
+                                                            <i class="payicon payicon-postepay"></i>
                                                         </li>
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/cartasi.png">
+                                                            <i class="payicon payicon-cartasi"></i>
                                                         </li>
                                                     <?php } elseif ($countryid == "FR") {  ?>
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/carte-bleue.png">
+                                                            <i class="payicon payicon-carte-bleue"></i>
                                                         </li>
                                                     <?php } elseif ($countryid == "ES") {  ?>
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/maestro.png">
+                                                            <i class="payicon payicon-maestro"></i>
                                                         </li>
                                                     <?php } elseif ($countryid == "PL") {  ?>
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/Przelewy24.png">
+                                                            <i class="payicon payicon-Przelewy24"></i>
                                                         </li>
                                                     <?php } else if ($countryid == 'NL') { ?>
                                                         <li class="footer-fieldsetitem">
-                                                            <img width='45px' src="/themes/default/asset/image/ideal_logo.png">
+                                                            <i class="payicon payicon-ideal_logo"></i>
                                                         </li>
                                                     <?php } ?>
 
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/visa.png">
+                                                            <i class="payicon payicon-visa"></i>
                                                         </li>
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/visa-debit.png">
+                                                            <i class="payicon payicon-visa-debit"></i>
                                                         </li>
                                                         <li class="footer-fieldsetitem">
-                                                            <img src="/themes/default/asset/image/mastercard.png">
+                                                            <i class="payicon payicon-mastercard"></i>
                                                         </li>
                                                         <!-- <li class="footer-fieldsetitem">
                                                             <img src="/themes/default/asset/image/paypal.png">
@@ -101,39 +102,39 @@
                                                         </div>
                                                     </li>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/ssl_en.jpg">
+                                                        <i class="pavoen pavoen-ssl"></i>
                                                     </li>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/chat_en.jpg">
+                                                        <i class="pavoen pavoen-chat"></i>
                                                     </li>
                                                     <li class="footer-fieldsetitem">
-                                                        <img src="/themes/default/asset/image/data_en.jpg">
+                                                        <i class="pavoen pavoen-data"></i>
                                                     </li>
                                                 <?php } else { ?>
                                                     <li class="footer-fieldsetitem">
                                                     <?php
                                                         if (file_exists(FCPATH.$imgdir.'ssl_'.strtolower($countryid).'.jpg' )){
-                                                            echo '<img src="'.$imgdir.'ssl_'.strtolower($countryid).'.jpg">';
+                                                            echo '<i class="pavo'.strtolower($countryid).' pavo'.strtolower($countryid).'-ssl"></i>';
                                                         }else{
-                                                            echo '<img src="'.$imgdir.'ssl_en.jpg">';
+                                                            echo '<i class="pavoen pavoen-ssl"></i>';
                                                         }
                                                     ?>
                                                     </li>
                                                     <li class="footer-fieldsetitem">
                                                     <?php
                                                         if (file_exists(FCPATH.$imgdir.'chat_'.strtolower($countryid).'.jpg' )){
-                                                            echo '<img src="'.$imgdir.'chat_'.strtolower($countryid).'.jpg">';
+                                                            echo '<i class="pavo'.strtolower($countryid).' pavo'.strtolower($countryid).'-chat"></i>';
                                                         }else{
-                                                            echo '<img src="'.$imgdir.'chat_en.jpg">';
+                                                            echo '<i class="pavoen pavoen-chat"></i>';
                                                         }
                                                     ?>
                                                     </li>
                                                     <li class="footer-fieldsetitem">
                                                     <?php
                                                         if (file_exists(FCPATH.$imgdir.'data_'.strtolower($countryid).'.jpg' )){
-                                                            echo '<img src="'.$imgdir.'data_'.strtolower($countryid).'.jpg">';
+                                                            echo '<i class="pavo'.strtolower($countryid).' pavo'.strtolower($countryid).'-data"></i>';
                                                         }else{
-                                                            echo '<img src="'.$imgdir.'data_en.jpg">';
+                                                            echo '<i class="pavoen pavoen-data"></i>';
                                                         }
                                                     ?>
                                                     </li>
@@ -295,6 +296,7 @@
                     </div>
                 </div>
             </footer>
+            <?php } ?>
         </div>
         <div class="sidebar-offcanvas sidebar  visible-xs visible-sm">
             <div class="offcanvas-inner panel panel-offcanvas">

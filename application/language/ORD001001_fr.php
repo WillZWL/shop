@@ -22,7 +22,7 @@
 			"our_return_policy"=>"Demande de retour",
 			"return_policy_part1"=>"En cas d'insatisfaction avec votre achat, nous vous offrons la possibilit de nous le retourner dans les 14 jours qui suivent ( partir de la date de reception). <br />Les termes et les conditions peuvent tre appliquer.<br /><br />Pour les instructions de retour, veuillez aller sur la page 'Contactez-nous' en vous connectant sur notre site http://www.valuebasket.com/contact",
 			"return_policy_part2"=>" et soumettez votre requte en utilisant l'option 'Sur les produits dfectueux ou le retour des articles.",
-			"thank_you"=>"Merci de votre achat sur notre site ValueBasket.com",
+			"thank_you"=>"Merci de votre achat sur notre site",
 			"sales"=>"Demande de renseignements:",
 			"customer_service"=>"Service client:",
 			"ship_to"=>"Expdier",
