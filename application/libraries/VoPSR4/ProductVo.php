@@ -40,7 +40,7 @@ class ProductVo extends \BaseVo
     private $auto_restock = '0';
     private $accelerator_salesrpt_bd;
     private $product_warranty_type = '0';
-    private $accelerator;
+    private $accelerator = '0';
 
 
     public function setId($id)
