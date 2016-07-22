@@ -121,7 +121,7 @@
                           <th style="width: 120px;">Drones</th>
                         </tr>
                         <tr>
-                        <td>Netherlands</td>
+                        <td>Nederland</td>
                         <td>6 maanden</td>
                         <td>12 maanden</td>
                         <td>24 maanden</td>
