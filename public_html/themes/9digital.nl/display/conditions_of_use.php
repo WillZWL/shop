@@ -121,10 +121,10 @@
                           <th>Drones</th>
                         </tr>
                         <tr>
-                        <td>Groot-Brittannië</td>
-                        <td>0 maanden</td>
+                        <td>Netherlands</td>
+                        <td>6 maanden</td>
                         <td>12 maanden</td>
-                        <td>12 maanden</td>
+                        <td>24 maanden</td>
                         <td>12 maanden</td>
                         <td>12 maanden</td>
                         </tr>
@@ -174,9 +174,9 @@
                     <p><?= _('Betaalmethoden')?></p>
 
                     <p><?= _('Een verscheidenheid aan betaalmethoden worden aangeboden op de webpagina voor het gemak van de klanten. U stemt ermee in om alle kosten gemaakt zijn in verband met uw aankopen te betalen, wanneer de kosten worden gemaakt. Wanneer u betaalt met een creditcard, geldt de overeenkomst met uw kaartuitgever op het gebruik van uw kaart. U moet verwijzen naar deze overeenkomst en niet deze Gebruiksvoorwaarden om uw rechten en verplichtingen als een kaarthouder te bepalen. U, en niet 9digital.nl, BENT VERANTWOORDELIJK VOOR HET BETALEN VAN ONBEVOEGDE GEFACTUREERDE BEDRAGEN DOOR EEN DERDE OP UW CREDITCARD.')?>
-                    </p> 
+                    </p>
 
-                    <p><?= _('Betalingsvergoedingen en heffingen')?></p> 
+                    <p><?= _('Betalingsvergoedingen en heffingen')?></p>
 
                     <p><?= _('U stemt ermee in om alle vergoedingen en kosten, gemaakt in verband met uw aankopen, te betalen wanneer de kosten worden gemaakt. Tenzij u 9digital.nl de eventuele afwijkingen meldt binnen zestig (60) dagen nadat ze voor het eerst verschijnen op uw credit card statement, gaat u ermee akkoord dat zij geacht door u wordt geaccepteerd in alle opzichten en voor alle doeleinden. Als 9digital.nl geen betaling heeft ontvangen van uw creditcardmaatschappij of haar gemachtigde, gaat u ermee akkoord om alle verschuldigde bedragen op aanvraag aan 9digital of haar agenten te betalen.')?>
                     </p>
