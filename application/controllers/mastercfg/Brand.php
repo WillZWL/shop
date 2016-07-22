@@ -129,10 +129,14 @@ class Brand extends MY_Controller
                             $_SESSION["NOTICE"] = "brand_existed";
                         }
                     } else {
+                        if ($_POST['accelerator'] == "") {
+                            $_POST['accelerator'] = 0;
+                        }
                         set_value($data["brand"], $_POST);
 
                         if ($this->sc['brandModel']->updateBrand($data["brand"])) {
                             unset($_SESSION["brand_vo"]);
+                            $_SESSION["NOTICE"] = "Success";
                             redirect(base_url() . "mastercfg/brand/view/" . $id);
                         } else {
                             $_SESSION["NOTICE"] = $this->db->error();

@@ -46,6 +46,7 @@ class Product_vo extends Base_vo
     private $surplus_quantity = 0;
     private $slow_move_7_days;
     private $accelerator_salesrpt_bd;
+    private $accelerator;
     //primary key
     private $primary_key = array("sku");
 
@@ -512,6 +513,17 @@ class Product_vo extends Base_vo
     public function set_accelerator_salesrpt_bd($value)
     {
         $this->accelerator_salesrpt_bd = $value;
+        return $this;
+    }
+
+    public function get_accelerator()
+    {
+        return $this->accelerator;
+    }
+
+    public function set_accelerator($value)
+    {
+        $this->accelerator = $value;
         return $this;
     }
 

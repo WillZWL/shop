@@ -71,6 +71,12 @@
                 <td class="value" colspan="3"><input name="description" class="input"
                                                      value="<?= htmlspecialchars($brand->getDescription()) ?>"></td>
             </tr>
+            <tr>
+                <td class="field"><?=$lang["accelerator"]?></td>
+                <td class="value"><input type="checkbox" name="accelerator" value="1" <?=$brand->getAccelerator()?"CHECKED":""?>></td>
+                <td class="field"><?=$lang["customer_code"]?></td>
+                <td class="value"><input name="customer_code" class="input" value="<?=htmlspecialchars($brand->getCustomerCode())?>"></td>
+             </tr>
             <?php
             if ($cmd != "add") :
                 ?>
