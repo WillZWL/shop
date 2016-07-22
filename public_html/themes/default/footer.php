@@ -1,4 +1,5 @@
             </div>
+            <?php if(!$quickview){?>
             <footer id="footer" class="nostylingboxs">
                 <div class="footer-middle " id="pavo-footer-middle">
                     <div class="container">
@@ -295,6 +296,7 @@
                     </div>
                 </div>
             </footer>
+            <?php } ?>
         </div>
         <div class="sidebar-offcanvas sidebar  visible-xs visible-sm">
             <div class="offcanvas-inner panel panel-offcanvas">
