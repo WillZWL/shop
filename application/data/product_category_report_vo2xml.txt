@@ -8,3 +8,4 @@ BrandName	brand_name
 CatName	cat_name
 SubCatName	sub_cat_name
 SubSubCatName	sub_sub_cat_name
+CustomerCode	customer_code
