@@ -9,18 +9,7 @@
         <div id="notification"></div>
     </div>
 </div>
-<?php
-    $siteobj = \PUB_Controller::$siteInfo;
-    $lang_id = $siteobj->getLangId();
-    $platform= $siteobj->getPlatform();
 
-    $banner_total = 2;$banner_link=array();
-    if($platform =="WEBNL"){
-        $banner_total = 5;
-        $banner_link[2]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM4PTNL&AF=HPNL";
-        $banner_link[3]="https://www.9digital.nl/search/search-by-ss?q=DJIPHANTOM3PTNL&AF=HPNL";
-    }
-?>
 <div class="pav-container ">
     <div class="pav-inner ">
         <div class="row row-level-1 ">
@@ -40,18 +29,20 @@
                             </ol>
                             <div class="carousel-inner" role="listbox" style="width:100%;max-height:300px; ">
                             <?php
-                                for ($i=1; $i <= $banner_total; $i++) :
+                                foreach ($banners as $key => $banner_obj) {
+                                    $i = $key+1;
                                     $active = $i == 1 ? ' active' : "";
+                                    $image = $banner_obj->getImage();
                             ?>
                                 <div class="item<?= $active ?>">
-                                    <a href="<?php echo $banner_link[$i];  ?>">
-                                    <img data-src="<?= base_url('/images/banner/'. $platform .'_banner'.$i.'.jpg') ?>"
-                                    src="<?= base_url('/images/banner/'. $platform .'_banner'.$i.'.jpg') ?>"
+                                    <a href="<?=$banner_obj->getLink()?>">
+                                    <img data-src="<?=base_url($image)?>"
+                                    src="<?=base_url($image)?>"
                                     data-holder-rendered="true">
                                     </a>
                                 </div>
                             <?php
-                                endfor;
+                                }
                             ?>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
