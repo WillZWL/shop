@@ -113,12 +113,12 @@
                           <th colspan="5">Type product</th>
                         </tr>
                         <tr>
-                          <th>Land</th>
-                          <th>Accessoires</th>
-                          <th>Waterdicht</th>
-                          <th>Hoofdproducten</th>
-                          <th>Actiecamera</th>
-                          <th>Drones</th>
+                          <th style="width: 120px;">Land</th>
+                          <th style="width: 120px;">Accessoires</th>
+                          <th style="width: 120px;">Waterdicht</th>
+                          <th style="width: 120px;">Hoofdproducten</th>
+                          <th style="width: 120px;">Actiecamera</th>
+                          <th style="width: 120px;">Drones</th>
                         </tr>
                         <tr>
                         <td>Netherlands</td>
