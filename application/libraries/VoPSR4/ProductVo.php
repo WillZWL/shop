@@ -40,6 +40,7 @@ class ProductVo extends \BaseVo
     private $auto_restock = '0';
     private $accelerator_salesrpt_bd;
     private $product_warranty_type = '0';
+    private $accelerator = '0';
 
 
     public function setId($id)
@@ -508,6 +509,18 @@ class ProductVo extends \BaseVo
     public function getAcceleratorSalesrptBd()
     {
         return $this->accelerator_salesrpt_bd;
+    }
+
+    public function setAccelerator($accelerator)
+    {
+        if ($accelerator !== null) {
+            $this->accelerator = $accelerator;
+        }
+    }
+
+    public function getAccelerator()
+    {
+        return $this->accelerator;
     }
 
 }

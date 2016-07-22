@@ -1223,6 +1223,10 @@ html;
                         $_POST['accelerator_salesrpt_bd'] = 0;
                     }
 
+                    if ($_POST['accelerator'] == "") {
+                        $_POST['accelerator'] = 0;
+                    }
+
 
                     $update_bundle = 0;
 

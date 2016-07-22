@@ -47,6 +47,7 @@ class ProductService extends BaseProductService
         $newObj->setLangRestricted((string)$oldObj->lang_restricted);
         $newObj->setShipmentRestrictedType((string)$oldObj->shipment_restricted_type);
         $newObj->setProductWarrantyType((string)$oldObj->product_warranty_type);
+        $newObj->setAccelerator((string)$oldObj->accelerator);
         $newObj->setStatus((string)$oldObj->status);
     }
 
@@ -242,7 +243,7 @@ class ProductService extends BaseProductService
         $report_list = $this->getDao('Product')->getProductCategoryList($where, $option);
         $this->voToXml = new VoToXml;
         $this->xmlToCsv = new XmlToCsv;
-        
+
         $this->voToXml->VoToXml($report_list, APPPATH . 'data/product_category_report_vo2xml.txt');
         $this->xmlToCsv->XmlToCsv("", APPPATH . 'data/product_category_report_xml2csv.txt', TRUE, ',');
 

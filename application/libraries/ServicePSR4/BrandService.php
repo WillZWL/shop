@@ -19,6 +19,8 @@ class BrandService extends BaseService
     {
         $newObj->setBrandName((string) $oldObj->brand_name);
         $newObj->setDescription((string) $oldObj->description);
+        $newObj->setAccelerator((string) $oldObj->accelerator);
+        $newObj->setCustomerCode((string) $oldObj->customer_code);
         $newObj->setStatus((string) $oldObj->status);
     }
 

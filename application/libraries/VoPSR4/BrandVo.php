@@ -5,6 +5,8 @@ class BrandVo extends \BaseVo
     private $id;
     private $brand_name;
     private $description = '';
+    private $accelerator = '0';
+    private $customer_code = '';
     private $status = '1';
 
     protected $primary_key = ['id'];
@@ -44,6 +46,30 @@ class BrandVo extends \BaseVo
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function setAccelerator($accelerator)
+    {
+        if ($accelerator !== null) {
+            $this->accelerator = $accelerator;
+        }
+    }
+
+    public function getAccelerator()
+    {
+        return $this->accelerator;
+    }
+
+    public function setCustomerCode($customer_code)
+    {
+        if ($customer_code !== null) {
+            $this->customer_code = $customer_code;
+        }
+    }
+
+    public function getCustomerCode()
+    {
+        return $this->customer_code;
     }
 
     public function setStatus($status)

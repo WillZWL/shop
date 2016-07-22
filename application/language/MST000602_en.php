@@ -16,6 +16,8 @@
 			"add_regions" => "Add Regions",
 			"delete_regions" => "Delete Regions",
 			"status" => "Status",
+			"accelerator" => "Accelerator",
+			"customer_code" => "Customer Code",
 			"inactive" => "Inactive",
 			"active" => "Active",
 			"create_on" => "Create On",
