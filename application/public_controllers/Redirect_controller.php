@@ -18,7 +18,7 @@ class Redirect_controller extends PUB_Controller
 
         $data['product'] = $this->home_model->getContent();
 
-        $data['banners'] = $banners = $this->sc['Banner']->getDao('Banner')->getList(['platform_id' => PLATFORM, 'type'=> 1, 'location' => 1, 'status' => 1], ['limit' => 5]);
+        $data['banners'] = $banners = $this->sc['Banner']->getDao('Banner')->getList(['platform_id' => PLATFORM, 'type'=> 1, 'location' => 1, 'status' => 1], ['limit' => 5, 'orderby' => 'priority desc']);
         $data['banner_total'] = count((array) $banners);
         $this->load->view('index', $data);
     }
