@@ -252,7 +252,7 @@ $(function() {
     });
 
     $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
+    // $( "#sortable" ).disableSelection();
 });
 
 function delete_confirm( id )
