@@ -7,6 +7,7 @@ class ProductCategoryDto
     private $cat_name;
     private $sub_cat_name;
     private $sub_sub_cat_name;
+    private $customer_code;
 
     public function setExtSku($ext_sku)
     {
@@ -68,4 +69,14 @@ class ProductCategoryDto
         return $this->sub_sub_cat_name;
     }
 
+
+    public function setCustomerCode($customer_code)
+    {
+        $this->customer_code = $customer_code;
+    }
+
+    public function getCustomerCode()
+    {
+        return $this->customer_code;
+    }
 }
