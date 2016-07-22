@@ -16,17 +16,17 @@
 
     <link rel="icon" type="image/png" href="/themes/default/asset/image/favicon_<?= strtolower(PLATFORM) ?>.png" />
 
-    <link href="/themes/default/asset/css/bootstrap.css" rel="stylesheet" />
-    <link href="/themes/default/asset/css/stylesheet.css" rel="stylesheet" />
+    <link href="/themes/default/asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/themes/default/asset/css/stylesheet.min.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="/themes/default/asset/css/animate.css" rel="stylesheet" />
-    <link href="/themes/default/asset/css/magnific-popup.css" rel="stylesheet" />
+    <link href="/themes/default/asset/css/animate.min.css" rel="stylesheet" />
+    <link href="/themes/default/asset/css/magnific-popup.min.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/fonts.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/homebuilder.css" rel="stylesheet" />
-    <link href="/themes/default/asset/css/typo.css" rel="stylesheet" />
+    <link href="/themes/default/asset/css/typo.min.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/pavnewsletter.css" rel="stylesheet" />
     <link href="/themes/default/asset/css/owl.carousel.css" rel="stylesheet" />
-    <link href="/themes/default/asset/css/theme.css" rel="stylesheet" />
+    <link href="/themes/default/asset/css/theme.min.css" rel="stylesheet" />
     <script type="text/javascript" src="/themes/default/asset/js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/bootstrap.min.js"></script>
@@ -38,7 +38,7 @@
     <script type="text/javascript" src="/themes/default/asset/js/jquery.easing.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/checkform.js"></script>
     <script type="text/javascript" src="/themes/default/asset/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="/themes/default/asset/js/iview.js"></script>
+    <script type="text/javascript" src="/themes/default/asset/js/iview.min.js"></script>
 </head>
 <body class="common-home page-common-home layout-fullwidth ">
 
@@ -93,6 +93,7 @@ $(document).ready(function() {
     <div class="row-offcanvas row-offcanvas-left">
         <div id="page">
             <!-- header -->
+            <?php if(!$quickview){ ?>
             <header id="header-layout" class="header-v1">
                 <div id="header-main">
                     <div class="container">
@@ -235,10 +236,13 @@ $(document).ready(function() {
                     </div>
                 </div>
             </header>
+            <?php } ?>
             <!-- /header -->
             <div class="main-columns container">
+                <?php if(!$quickview){ ?>
                 <div class="bottom-offcanvas">
                     <div class="container">
                         <button data-toggle="offcanvas" class="btn btn-primary visible-xs visible-sm" type="button"><i class="fa fa-bars"></i></button>
                     </div>
                 </div>
+                <?php }?>

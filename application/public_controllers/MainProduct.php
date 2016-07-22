@@ -27,6 +27,9 @@ class MainProduct extends PUB_Controller
                       "category_name"=>$data["listing_info"]->getCatId(),
                       "price"=>$data["prod_price"],
                     );
+                if(isset($_GET['quickview'])){
+                    $data['quickview'] = true;
+                }
                 $this->load->view('product', $data);
 
             } else {
