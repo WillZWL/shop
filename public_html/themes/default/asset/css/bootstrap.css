@@ -369,10 +369,16 @@ th {
     border: 1px solid #ddd !important;
   }
 }
+/* font src url 404
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url("../fonts/bootstrap/FontAwesome.eot");
   src: url("../fonts/bootstrap/FontAwesome.eot?#iefix") format("embedded-opentype"), url("../fonts/bootstrap/FontAwesome.woff") format("woff"), url("../fonts/bootstrap/FontAwesome.ttf") format("truetype"), url("../fonts/bootstrap/FontAwesome.svg#glyphicons_halflingsregular") format("svg");
+}*/
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../font/fontawesome-webfont.eot?v=3.2.1');
+  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../font/fontawesome-webfont2.woff?v=3.2.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
 }
 /* line 21, ../development/scss/bootstrap/_glyphicons.scss */
 .glyphicon {
