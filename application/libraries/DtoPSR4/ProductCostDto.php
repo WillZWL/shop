@@ -4,6 +4,7 @@ class ProductCostDto
     private $platform_id;
     private $vat;
     private $vat_percent;
+    private $pricehkd;
     private $duty;
     private $cc_code;
     private $cc_desc;
@@ -11,6 +12,7 @@ class ProductCostDto
     private $declared_pcent;
     private $payment_charge;
     private $admin_fee;
+    private $supplier_status;
     private $supplier_cost;
     private $item_cost;
     private $purchaser_updated_date;
@@ -157,6 +159,16 @@ class ProductCostDto
         $this->vat_percent = $value;
     }
 
+    public function getPriceHkd()
+    {
+        return $this->pricehkd;
+    }
+
+    public function setPriceHkd($value)
+    {
+        $this->pricehkd = $value;
+    }
+
     public function getPlatformId()
     {
         return $this->platform_id;
@@ -245,6 +257,16 @@ class ProductCostDto
     public function setSupplierCost($value)
     {
         $this->supplier_cost = $value;
+    }
+
+    public function getSupplierStatus()
+    {
+        return $this->supplier_status;
+    }
+
+    public function setSupplierStatus($value)
+    {
+        $this->supplier_status = $value;
     }
 
     public function getItemCost()

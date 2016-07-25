@@ -15,7 +15,7 @@
             document.getElementById("tb_add_item").style.display = "none";
             document.getElementById("tb_list_item").style.display = "";
             document.getElementById("csku").innerHTML = prod["sku"];
-            document.getElementById("cname").innerHTML = prod["prod_name"];
+            document.getElementById("cname").innerHTML = prod["name"];
             document.getElementById("cprice").innerHTML = prod["platform_currency_id"] + " " + prod["price"];
             document.getElementById("cqty").innerHTML = 1;
             document.getElementById("compensate_sku").disabled = false;

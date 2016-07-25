@@ -10,7 +10,7 @@ class Compensation_create extends MY_Controller
         parent::__construct();
     }
 
-    public function create($offset = 0)
+    public function create()
     {
         $where = [];
         $option = [];
@@ -45,9 +45,10 @@ class Compensation_create extends MY_Controller
             if (empty($order)) {
                 $order = "asc";
             }
-            $limit = 20;
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
+
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
+
 
             $_SESSION["LISTPAGE"] = base_url() . "cs/compensation/create?" . $_SERVER['QUERY_STRING'];
 
@@ -62,8 +63,9 @@ class Compensation_create extends MY_Controller
 
             $config['base_url'] = base_url("cs/compensation/create/");
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
         }
@@ -182,7 +184,7 @@ class Compensation_create extends MY_Controller
         $this->load->view('cs/compensation/view_create', $data);
     }
 
-    public function prod_list($line = "", $platform_id = "", $offset = 0)
+    public function prod_list($line = "", $platform_id = "")
     {
         if ($platform_id == "") {
             show_404();
@@ -197,7 +199,7 @@ class Compensation_create extends MY_Controller
         $submit_search = 0;
 
         if ($this->input->get("sku") != "") {
-            $where["sku LIKE "] = "%" . $this->input->get("sku") . "%";
+            $where["p.sku LIKE "] = "%" . $this->input->get("sku") . "%";
             $submit_search = 1;
         }
 
@@ -243,11 +245,10 @@ class Compensation_create extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '20';
-
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
+
 
         if (empty($sort)) {
             $sort = "name";
@@ -271,7 +272,9 @@ class Compensation_create extends MY_Controller
 
         $config['base_url'] = base_url("cs/compensation_create/prod_list/$line/$platform_id");
         $config['total_rows'] = $data["total"];
-        $config['per_page'] = $limit;
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
+        $config['per_page'] = $option['limit'];
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
 

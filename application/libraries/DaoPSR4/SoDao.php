@@ -1727,7 +1727,7 @@ SQL;
                 ) ON (
                     p.sku = dp.sku
                     AND dp.platform_id = cf.value
-                    AND er.from_currency_id = 'HKD'
+                    AND er.from_currency_id = 'GBP'
                     AND er.to_currency_id = pbv.platform_currency_id
                 )
                 LEFT JOIN so_extend soe
@@ -1814,7 +1814,7 @@ SQL;
                 ) ON (
                     p.sku = dp.sku
                     AND dp.platform_id = cf.value
-                    AND er.from_currency_id = 'HKD'
+                    AND er.from_currency_id = 'GBP'
                     AND er.to_currency_id = pbv.platform_currency_id
                 )
                 INNER JOIN category cat ON(cat.id = p.cat_id)
@@ -1890,7 +1890,7 @@ SQL;
                 ) ON (
                     p.sku = dp.sku
                     AND dp.platform_id = cf.value
-                    AND er.from_currency_id = 'HKD'
+                    AND er.from_currency_id = 'GBP'
                     AND er.to_currency_id = pbv.platform_currency_id
                 )
                 WHERE so.so_no = ? and isnull(b.prod_sku)
@@ -1965,7 +1965,7 @@ SQL;
                 ) ON (
                     p.sku = dp.sku
                     AND dp.platform_id = cf.value
-                    AND er.from_currency_id = 'HKD'
+                    AND er.from_currency_id = 'GBP'
                     AND er.to_currency_id = pbv.platform_currency_id
                 )
                 WHERE so.so_no = ? and isnull(b.prod_sku)

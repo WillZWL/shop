@@ -970,7 +970,7 @@ class ProductDao extends BaseDao
         $this->db->join("bundle b", "p.sku = b.prod_sku", 'LEFT');
         $this->db->join("price pr", "pr.sku = p.sku AND pr.platform_id = pbv.selling_platform_id", 'LEFT');
         $this->db->join("price pr1", "p.sku = pr1.sku", 'LEFT');
-        $this->db->join("(platform_biz_var pbv1 JOIN exchange_rate er)", "er.from_currency_id = 'HKD'
+        $this->db->join("(platform_biz_var pbv1 JOIN exchange_rate er)", "er.from_currency_id = 'GBP'
                                                                           AND er.to_currency_id = pbv1.platform_currency_id
                                                                           AND pbv1.selling_platform_id = pbv.selling_platform_id", 'LEFT');
         $this->db->join("config c", "c.variable = 'default_platform_id' AND pr1.platform_id = c.value", 'INNER');
