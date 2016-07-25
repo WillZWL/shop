@@ -28,7 +28,7 @@ class Compensation extends Compensation_create
         return $this->appId;
     }
 
-    public function manager_approval($offset = 0)
+    public function manager_approval()
     {
         if (check_app_feature_access_right($this->getAppId(), "CS000400_man_approve_btn")) {
             $sub_app_id = $this->getAppId() . "05";
@@ -60,9 +60,8 @@ class Compensation extends Compensation_create
                 $order = "asc";
             }
 
-            $limit = 20;
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             $_SESSION["LISTPAGE"] = base_url() . "cs/compensation/manager_approval?" . $_SERVER['QUERY_STRING'];
             $_SESSION["QUERY_STRING"] = $_SERVER['QUERY_STRING'];
@@ -81,7 +80,9 @@ class Compensation extends Compensation_create
 
             $config['base_url'] = base_url('cs/compensation/manager_approval');
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
 
@@ -109,90 +110,9 @@ class Compensation extends Compensation_create
 
             if ($this->input->post('posted')) {
                 if ($this->input->post('action') == 'A') {
-                    $so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $orderid]);
-                    $cp_obj = $this->sc['So']->getDao('SoCompensation')->get(["id" => $compensation_id]);
-                    $cp_sku = $cp_obj->getItemSku();
+                    $cnotes = $this->input->post('cnotes');
 
-                    $err = 0;
-
-                    $pobj = $this->sc['Price']->getDao('Price')->getListWithBundleChecking($cp_sku, $so_obj->getPlatformId(), $so_obj->getLangId());
-                    foreach ($pobj as $new_obj) {
-                        $this->sc['Price']->calcLogisticCost($new_obj);
-                        $this->sc['Price']->calculateProfit($new_obj);
-
-                        // update_so_item_detail
-                        $soi_num_rows = $this->sc['So']->getDao('SoItemDetail')->getNumRows(["so_no" => $orderid]);
-                        $new_soid_obj = $this->sc['So']->getDao('SoItemDetail')->get();
-                        $new_soid_obj->setSoNo($orderid);
-                        $new_soid_obj->setLineNo($soi_num_rows + 1);
-                        $new_soid_obj->setItemSku($new_obj->getSku());
-                        $new_soid_obj->setQty(1);
-                        $new_soid_obj->setOutstandingQty(1);
-                        $new_soid_obj->setUnitPrice($new_obj->getPrice());
-                        $new_soid_obj->setVatTotal($new_obj->getVat());
-                        $new_soid_obj->setAmount(0);
-                        $new_soid_obj->setCost($new_obj->getCost());
-                        $new_soid_obj->setProfit(0 - $new_obj->getCost());
-                        $new_soid_obj->setMargin(0); // margin is set to zero as requested in sbf #1381
-                        $new_soid_obj->setStatus(0);
-                        $new_soid_obj->setGstTotal(0);
-
-                        $this->sc['So']->getDao('SoCompensation')->db->trans_start();
-
-                        if ($this->sc['So']->getDao('SoItemDetail')->insert($new_soid_obj) === FALSE) {
-                            $err++;
-                        }
-
-                        if (!$err) {
-                            // update so
-                            $new_so_cost = $so_obj->getCost() + $new_obj->getCost();
-                            $so_obj->setCost($new_so_cost);
-                            $so_obj->setHoldStatus(0);
-                            $ret = $this->sc['So']->getDao('So')->update($so_obj);
-                            if ($ret === FALSE) {
-                                $err++;
-                            }
-
-                            if (!$err) {
-                                $cp_obj = $this->sc['So']->getDao('SoCompensation')->get(["id" => $compensation_id]);
-                                $cp_obj->setStatus(2);
-                                if ($this->sc['So']->getDao('SoCompensation')->update($cp_obj) === FALSE) {
-                                    $err++;
-                                }
-                                $cph_obj = $this->sc['So']->getDao('SoCompensationHistory')->get();
-                                $cph_obj->setCompensationId($cp_obj->getId());
-                                $cph_obj->setSoNo($orderid);
-                                $cph_obj->setItemSku($cp_obj->getItemSku());
-                                $cph_obj->setNote($this->input->post('cnotes'));
-                                $cph_obj->setStatus(2);
-                                if ($this->sc['So']->getDao('SoCompensationHistory')->insert($cph_obj) === FALSE) {
-                                    $err++;
-                                }
-
-                                $note_obj = $this->sc['So']->getDao('OrderNotes')->get();
-                                $note_obj->setSoNo($orderid);
-                                $note_obj->setType("O");
-                                $note_obj->setNote("Compensation Approved - Added " . $new_obj->getSku());
-                                if ($this->sc['So']->getDao('OrderNotes')->insert($note_obj) === FALSE) {
-                                    $err++;
-                                }
-
-                                $so_obj = $this->sc['So']->getDao('So')->get(["so_no" => $orderid]);
-                                $so_obj->setHoldStatus(0);
-                                if ($this->sc['So']->getDao('So')->update($so_obj) === FALSE) {
-                                    $err++;
-                                }
-                            }
-                        }
-
-                        if ($err) {
-                            $this->sc['So']->getDao('SoCompensation')->db->trans_rollback();
-                            $this->sc['So']->getDao('SoCompensation')->db->trans_complete();
-                            $_SESSION["NOTICE"] = "update_fail";
-                        } else {
-                            $this->sc['So']->getDao('SoCompensation')->db->trans_complete();
-                        }
-                    }
+                    $this->sc['SoFactory']->compensationTransferToSoItemDetail($orderid, $compensation_id, $cnotes);
 
                     Redirect(base_url() . "cs/compensation/manager_approval/");
                 }

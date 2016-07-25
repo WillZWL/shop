@@ -639,4 +639,132 @@ class SoFactoryService extends BaseService
         }
         return $data;
     }
+
+    public function compensationTransferToSoItemDetail($orderid = '', $compensation_id = '', $cnotes = '')
+    {
+        if (!$orderid || !$compensation_id) {
+            return false;
+        }
+
+        $soObj = $this->getDao('So')->get(["so_no" => $orderid]);
+        $cpObj = $this->getDao('SoCompensation')->get(["id" => $compensation_id]);
+        $compItem = $cpObj->getItemSku();
+
+        $err = 0;
+        $prodObj = $this->getDao('Price')->getListWithBundleChecking($compItem, $soObj->getPlatformId(), $soObj->getLangId());
+        if ($prodObj) {
+            foreach ($prodObj as $newObj) {
+                $this->getDao('SoCompensation')->db->trans_start();
+
+                $soidInsert = $this->compTransferIntoSoItemDtail($newObj, $soObj, $orderid);
+                if ($soidInsert === FALSE) {
+                    $err++;
+                }
+
+                if (!$err) {
+                    // update so
+                    $new_so_cost = $soObj->getCost() + $newObj->getCost();
+                    $soObj->setCost($new_so_cost);
+                    $soObj->setHoldStatus(0);
+                    $ret = $this->getDao('So')->update($soObj);
+                    if ($ret === FALSE) {
+                        $err++;
+                    }
+
+                    if (!$err) {
+                        $cpObj = $this->getDao('SoCompensation')->get(["id" => $compensation_id]);
+                        $cpObj->setStatus(2);
+                        if ($this->getDao('SoCompensation')->update($cpObj) === FALSE) {
+                            $err++;
+                        }
+
+                        $compHistoryInsert = $this->insertCompHistory($orderid, $cpObj->getId(), $cpObj->getItemSku(), $cnotes);
+
+                        if ($compHistoryInsert === FALSE) {
+                            $err++;
+                        }
+
+                        $noteInsert = $this->insertCompensationOrderNotes($orderid, $newObj->getSku());
+                        if ($noteInsert === FALSE) {
+                            $err++;
+                        }
+
+                        $soObj = $this->getDao('So')->get(["so_no" => $orderid]);
+                        $soObj->setHoldStatus(0);
+                        if ($this->getDao('So')->update($soObj) === FALSE) {
+                            $err++;
+                        }
+                    }
+                }
+
+                if ($err) {
+                    $this->getDao('SoCompensation')->db->trans_rollback();
+                    $this->getDao('SoCompensation')->db->trans_complete();
+                    $_SESSION["NOTICE"] = "update_fail";
+                } else {
+                    $this->getDao('SoCompensation')->db->trans_complete();
+                }
+            }
+        }
+    }
+
+    public function compTransferIntoSoItemDtail($newObj, $soObj, $orderid)
+    {
+        $this->getService("PlatformBizVar")->calculateDeclaredValue($newObj);
+        $totalVat = round(($newObj->getDeclaredValue() * $newObj->getVatPercent() / 100), 2);
+
+        $soiNumRows = $this->getDao('SoItemDetail')->getNumRows(["so_no" => $orderid]);
+
+        $soidVo = $this->getDao('SoItemDetail')->get();
+        $soidObj = clone $soidVo;
+
+        $soidObj->setSoNo($orderid);
+        $newLineNo = $soiNumRows + 1;
+        $soidObj->setLineNo($newLineNo);
+        $soidObj->setItemSku($newObj->getSku());
+        $soidObj->setProdName($newObj->getBundleName());
+        $soidObj->setQty(1);
+        $soidObj->setOutstandingQty(1);
+        $soidObj->setUnitPrice($newObj->getPrice());
+        $soidObj->setVatTotal($totalVat);
+        $soidObj->setAmount($newObj->getPrice() * 1);
+        $soidObj->setItemUnitCost($newObj->getPriceHkd());
+        $soidObj->setWarrantyInMonth($newObj->getWarrantyInMonth());
+        $soidObj->setSupplierStatus($newObj->getSupplierStatus());
+        $soidObj->setBundleLevel(0);
+        $soidObj->setStatus(0);
+        $soidObj->setWebsiteStatus($newObj->getWebsiteStatus());
+
+        $this->_setProfitInfo($soidObj, $newObj->getPlatformId(), 2);
+
+        $res = $this->getDao('SoItemDetail')->insert($soidObj);
+
+        // $this->_addComplementaryAccessory($soObj, $newLineNo);
+
+        return $res;
+    }
+
+    public function insertCompensationOrderNotes($orderid, $sku)
+    {
+        $noteObj = $this->getDao('OrderNotes')->get();
+        $noteObj->setSoNo($orderid);
+        $noteObj->setType("O");
+        $noteObj->setNote("Compensation Approved - Added " . $sku);
+
+        $res = $this->getDao('OrderNotes')->insert($noteObj);
+
+        return $res;
+    }
+
+    public function insertCompHistory($orderid, $compensationId, $sku, $cnotes = '')
+    {
+        $cphObj = $this->getDao('SoCompensationHistory')->get();
+        $cphObj->setCompensationId($compensationId);
+        $cphObj->setSoNo($orderid);
+        $cphObj->setItemSku($sku);
+        $cphObj->setNote($cnotes);
+        $cphObj->setStatus(2);
+
+        $this->getDao('SoCompensationHistory')->insert($cphObj);
+    }
 }

@@ -37,8 +37,12 @@ class PriceDao extends BaseDao
 
     public function getItemsWithPrice($where = [], $classname = "ItemWithPriceDto")
     {
-        $this->db->from('v_prod_items AS vpi');
-        $this->db->join('price AS p', 'vpi.item_sku = p.sku', 'LEFT');
+        $this->db->from('product p');
+        $this->db->join('bundle b', 'p.sku = b.prod_sku', 'LEFT');
+        $this->db->join('product pd', 'pd.sku = b.component_sku', 'LEFT');
+        $this->db->join('price AS pr', 'coalesce(pd.sku, p.sku) = pr.sku', 'LEFT');
+
+        $this->db->select('p.sku AS prod_sku, coalesce(pd.sku, p.sku) AS item_sku, coalesce(p.discount,0) AS discount, pr.price, pr.listing_status');
 
         if ($where) {
             $this->db->where($where);
@@ -114,7 +118,7 @@ class PriceDao extends BaseDao
     public function getDefaultConvertedPrice($where = [], $option = [], $classname = "PriceWithCostDto")
     {
         $this->db->from('price pr');
-        $this->db->join("(platform_biz_var pbv INNER JOIN exchange_rate er)", "er.from_currency_id = 'HKD' AND er.to_currency_id = pbv.platform_currency_id", "INNER");
+        $this->db->join("(platform_biz_var pbv INNER JOIN exchange_rate er)", "er.from_currency_id = 'GBP' AND er.to_currency_id = pbv.platform_currency_id", "INNER");
         $this->db->join("config c", "c.variable = 'default_platform_id' AND pr.platform_id = c.value", "INNER");
 
         $select_str = "
@@ -178,24 +182,119 @@ class PriceDao extends BaseDao
         }
     }
 
-    public function getListWithBundleChecking($sku, $platform = 'WEBHK', $lang_id = 'en', $classname = 'ProductCostDto')
+    public function getListWithBundleChecking($sku, $platform = 'WEBUK', $lang_id = 'en', $classname = 'ProductCostDto')
     {
-        $sql = "SELECT p.expected_delivery_date,COALESCE(pw.warranty_in_month, p.warranty_in_month) AS warranty_in_month, a.discount, COALESCE(pc.prod_name, p.name) AS bundle_name, a.component_order, b.*
-                FROM v_prod_items a
-                JOIN v_prod_overview_wo_shiptype b
-                    ON a.item_sku = b.sku
-                INNER JOIN product AS p
-                    ON a.prod_sku = p.sku
+
+
+        $sql = "SELECT
+                    sp.cost,
+                    if((pr.price > 0),pr.price,round((dp.price * er.rate),2)) AS price,
+                    p.sku,
+                    pbv.platform_country_id AS platform_country_id,
+                    pbv.vat_percent AS vat_percent,
+                    COALESCE(pc.prod_name, p.name) AS bundle_name,
+                    sp.pricehkd,
+                    p.expected_delivery_date,
+                    COALESCE(pw.warranty_in_month, p.warranty_in_month) AS warranty_in_month,
+                    coalesce(p.discount,0) discount,
+                    coalesce(b.component_order,-(1)) component_order,
+                    prod.sku AS sku,
+                    prod.prod_grp_cd AS prod_grp_cd,
+                    prod.version_id AS version_id,
+                    prod.colour_id AS colour_id,
+                    prod.name AS prod_name,
+                    pbv.selling_platform_id AS platform_id,
+                    pbv.platform_region_id AS platform_region_id,
+                    pbv.vat_percent AS vat_percent,
+                    pbv.payment_charge_percent AS payment_charge_percent,
+                    coalesce(fc.declared_pcent,100) AS declared_pcent,
+                    coalesce(cc.duty_pcent,0) AS duty_pcent,
+                    cc.code AS cc_code,
+                    cc.description AS cc_desc,
+                    coalesce(pbv.admin_fee,0) AS admin_fee,
+                    0 AS freight_cost,
+                    0 AS delivery_cost,
+                    coalesce((sp.cost * sper.rate),0) AS supplier_cost,
+                    sp.cost AS item_cost,
+                    sp.modify_on AS purchaser_updated_date,
+                    0 AS delivery_charge,
+                    fc.weight AS prod_weight,
+                    pbv.free_delivery_limit AS free_delivery_limit,
+                    prod.quantity AS quantity,
+                    prod.clearance AS clearance,
+                    prod.website_quantity AS website_quantity,
+                    px.ext_qty AS ext_qty,
+                    prod.proc_status AS proc_status,
+                    prod.website_status AS website_status,
+                    prod.sourcing_status AS sourcing_status,
+                    prod.cat_id AS cat_id,
+                    prod.sub_cat_id AS sub_cat_id,
+                    prod.sub_sub_cat_id AS sub_sub_cat_id,
+                    prod.brand_id AS brand_id,
+                    prod.image AS image,
+                    sp.supplier_id AS supplier_id,
+                    sp.supplier_status,
+                    prod.freight_cat_id AS freight_cat_id,
+                    prod.ean AS ean,
+                    prod.mpn AS mpn,
+                    prod.upc AS upc,
+                    prod.status AS prod_status,
+                    prod.display_quantity AS display_quantity,
+                    prod.youtube_id AS youtube_id,
+                    prod.ex_demo AS ex_demo,
+                    scpv.platform_commission_percent AS platform_commission,
+                    scpv.fixed_fee AS listing_fee,
+                    scpv.profit_margin AS sub_cat_margin,
+                    pbv.platform_currency_id AS platform_currency_id,
+                    pbv.language_id AS language_id,
+                    pbv.forex_fee_percent AS forex_fee_percent,
+                    px.ext_item_id AS ext_item_id,
+                    px.handling_time AS handling_time,
+
+                    pr.price AS current_platform_price,
+                    round((dp.price * er.rate),2) AS default_platform_converted_price,
+                    pr.platform_code AS platform_code,
+                    pr.listing_status AS listing_status,
+                    pr.auto_price AS auto_price
+                FROM product p
+                LEFT JOIN bundle b ON p.sku = b.prod_sku
+                LEFT JOIN product pd ON pd.sku = b.component_sku
+                INNER JOIN  product prod on coalesce(pd.sku, p.sku) = prod.sku
+                LEFT JOIN freight_category fc ON fc.id = prod.freight_cat_id
+                LEFT JOIN (
+                   supplier_prod sp
+                   JOIN supplier s
+                   JOIN exchange_rate sper
+                   JOIN platform_biz_var pbv
+                ) ON prod.sku = sp.prod_sku
+                   AND sp.supplier_id = s.id
+                   AND sp.currency_id = sper.from_currency_id
+                   AND pbv.platform_currency_id = sper.to_currency_id
+                   AND sp.order_default = 1
+                LEFT JOIN sub_cat_platform_var scpv ON prod.sub_cat_id = scpv.sub_cat_id AND pbv.selling_platform_id = scpv.platform_id
+                LEFT JOIN product_custom_classification cc ON cc.sku = prod.sku AND cc.country_id = pbv.platform_country_id
+                LEFT JOIN price_extend px ON px.sku = prod.sku AND px.platform_id = pbv.selling_platform_id
+                LEFT JOIN price pr on pr.sku = prod.sku AND pbv.selling_platform_id = pr.platform_id
+                LEFT JOIN (
+                   price dp
+                   JOIN exchange_rate er
+                   JOIN config cf on cf.variable = 'default_platform_id'
+                ) on prod.sku = dp.sku
+                   AND dp.platform_id = cf.value
+                   AND er.from_currency_id = 'GBP'
+                   AND er.to_currency_id = pbv.platform_currency_id
                 LEFT JOIN product_warranty pw
-                    ON pw.sku = p.sku and pw.platform_id = ?
+                    ON pw.sku = p.sku and pw.platform_id = pbv.selling_platform_id
                 LEFT JOIN product_content pc
-                    ON a.prod_sku = pc.prod_sku AND pc.lang_id = ?
-                WHERE a.prod_sku = ?
-                AND b.platform_id= ?
-                ORDER BY a.component_order";
+                    ON p.sku = pc.prod_sku AND pc.lang_id = ?
+                WHERE p.sku = ?
+                AND pbv.selling_platform_id = ?
+                AND isnull(b.prod_sku)
+                ORDER BY coalesce(b.component_order,-(1))
+        ";
 
         $rs = [];
-        if ($query = $this->db->query($sql, [$platform, $lang_id, $sku, $platform])) {
+        if ($query = $this->db->query($sql, [$lang_id, $sku, $platform])) {
             foreach ($query->result($classname) as $obj) {
                 $rs[] = $obj;
             }
