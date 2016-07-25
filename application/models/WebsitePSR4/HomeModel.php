@@ -12,13 +12,6 @@ class HomeModel extends \CI_Model
         parent::__construct();
 
         $this->website_service = new WebsiteService;
-
-        // $this->load->library('service/language_service');
-        // $this->load->library('service/country_service');
-        // $this->load->library('service/selling_platform_service');
-        // $this->load->library('service/display_banner_service');
-        // $this->load->library('service/platform_biz_var_service');
-        // $this->load->library('service/customer_service_info_service');
     }
 
     public function getContent()
