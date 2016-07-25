@@ -2162,28 +2162,10 @@ html;
                         $data = array_merge($data, $site_config_arr);
                     }
 
-                    switch ($cur_platform_id) {
-                        case "AMUS":
-                            $data["isAmazon"] = 1;
-                            $data["sales_email"] = "amazoncentral@valuebasket.com";
-                            $data["csemail"] = "amazoncentral@valuebasket.com";
-                            $data["return_email"] = "returns@valuebasket.com";
-                            break;
-                        case "AMDE":
-                        case "AMFR":
-                        case "AMUK":
-                            $data["isAmazon"] = 1;
-                            $data["sales_email"] = "amazoncentral@valuebasket.com";
-                            $data["csemail"] = "amazoncentral@valuebasket.com";
-                            $data["return_email"] = "returns@valuebasket.com";
-                            break;
-                        default:
-                            $data["isAmazon"] = 0;
-                            $data["sales_email"] = $this->getSalesEmail($cur_platform_id);
-                            $data["csemail"] = $this->getCsSupportEmail($cur_platform_id);
-                            $data["return_email"] = $this->getReturnEmail($cur_platform_id);
-                            break;
-                    }
+                    $data["isAmazon"] = 0;
+                    $data["sales_email"] = $this->getSalesEmail($cur_platform_id);
+                    $data["csemail"] = $this->getCsSupportEmail($cur_platform_id);
+                    $data["return_email"] = $this->getReturnEmail($cur_platform_id);
 
                     $itemlist = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $obj, "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
                     $so_ext_obj = $this->getDao('SoExtend')->get(["so_no" => $obj]);
