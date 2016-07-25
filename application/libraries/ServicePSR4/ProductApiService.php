@@ -450,8 +450,8 @@ class ProductApiService extends BaseService
         if (count($arr) > 0) {
             $data = json_encode($arr);
             $res = $this->curlPost($data, $url);
-            if ($res['error']) {
-                mail("will.zhang@eservicesgroup.com", "Push SKU Mapping to CPS Wrong", "ERROR:\r\n".$res['error']);
+            if ($res['xml']) {
+                mail("will.zhang@eservicesgroup.com", "Push SKU Mapping to CPS Wrong", "ERROR:\r\n".$res['xml']);
             }
         }
         $this->updatLastTime($id, $current_time);
