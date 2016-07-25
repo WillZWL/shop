@@ -1021,7 +1021,7 @@ class CourierFeedService extends BaseService
 				$declared_value1 = $row->getAmount() * $row->getRef1();
 				$category_name = $row->getCcDesc();
 				$weight = $row->getWeight();
-				if (in_array($category_name, array('Lenses', 'Laptops', 'Tablets', 'Digital Cameras', 'Electronics Toys')) && $declared_value1 > 1000 && $weight > 2) {
+				if (in_array($category_name, array('Lenses', 'Laptops', 'Tablets', 'Digital Cameras', 'Digital Camera', 'Electronics Toys')) && $declared_value1 > 1000 && $weight > 2) {
 					$declared_value = 70;
 				} else {
 					if ($declared_value < 40 or $declared_value > 49) {
