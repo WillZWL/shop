@@ -174,7 +174,7 @@ class Credit_check extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['base_url'] = $_SESSION["CCLISTPAGE"];
+        $config['base_url'] = base_url('order/credit_check/index/'.$pagetype);
         $config['total_rows'] = $data["total"];
         $config['page_query_string'] = true;
         $config['reuse_query_string'] = true;
@@ -237,7 +237,7 @@ class Credit_check extends MY_Controller
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
             $data["lang"] = $lang;
 
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
+            $config['base_url'] = base_url('order/credit_check/chk_pw');
             $config['total_rows'] = $data["total"];
             $config['page_query_string'] = true;
             $config['reuse_query_string'] = true;
