@@ -5,6 +5,7 @@ class SupplierProdWithNameDto
     private $prod_sku;
     private $currency_id;
     private $cost;
+    private $pricehkd;
     private $moq;
     private $order_default;
     private $region_default;
@@ -60,6 +61,16 @@ class SupplierProdWithNameDto
     public function getCost()
     {
         return $this->cost;
+    }
+
+    public function setPricehkd($pricehkd)
+    {
+        $this->pricehkd = $pricehkd;
+    }
+
+    public function getPricehkd()
+    {
+        return $this->pricehkd;
     }
 
     public function setMoq($moq)

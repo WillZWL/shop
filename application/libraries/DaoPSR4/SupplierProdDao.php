@@ -44,4 +44,60 @@ class SupplierProdDao extends BaseDao
         }
         return false;
     }
+
+    public function getSupplierProdListWithName($where = array(), $option = array(), $classname = "SupplierProdWithNameDto")
+    {
+
+        $this->db->from('supplier_prod AS sp');
+        $this->db->join('(supplier AS s)', 'sp.supplier_id = s.id', 'LEFT');
+
+        if (isset($option["to_currency"])) {
+            $this->db->join('exchange_rate er', 'sp.currency_id = er.from_currency_id AND er.to_currency_id = "' . $option["to_currency"] . '"', 'LEFT');
+        }
+        $this->db->where("s.status = 1");
+        $this->db->where($where);
+
+        if (empty($option["num_rows"])) {
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $rs = array();
+
+            if (isset($option["to_currency"])) {
+                $this->db->select('sp.*, s.name AS supplier_name, s.origin_country, sp.cost*er.rate AS total_cost', FALSE);
+            } else {
+                $this->db->select('sp.*, s.name AS supplier_name, s.origin_country, sp.cost AS total_cost');
+            }
+
+            if ($query = $this->db->get()) {
+                foreach ($query->result($classname) as $obj) {
+                    $rs[] = $obj;
+                }
+                return (object)$rs;
+            }
+
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+    }
 }

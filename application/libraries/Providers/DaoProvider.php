@@ -692,5 +692,10 @@ class DaoProvider implements ServiceProviderInterface
         $daoContainer['Banner'] = function () {
             return new D\BannerDao();
         };
+
+        $daoContainer['Inventory'] = function () {
+            return new D\InventoryDao();
+        };
+
     }
 }

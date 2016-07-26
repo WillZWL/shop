@@ -25,8 +25,8 @@
             if ($objlist) {
                 foreach ($objlist as $obj) {
                     $prod_grp_cd = $version = $colour = $region_code = null;
-                    if ($obj->get_master_sku()) {
-                        list($prod_grp_cd, $version, $colour) = explode("-", $obj->get_master_sku());
+                    if ($obj->getMasterSku()) {
+                        list($prod_grp_cd, $version, $colour) = explode("-", $obj->getMasterSku());
                         if ($version) {
                             $region_code = "<span style='color:#0072E3'>(" . $version . ")</span> ";
                         }
@@ -35,9 +35,9 @@
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick="top.window.location.hash = '<?= $obj->get_sku() ?>';parent.frames['pview'].document.location.href = '<?= site_url('supply/purchaser/view/' . $obj->get_sku()) ?>'">
-                        <td nowrap style="white-space:nowrap;"><?= $obj->get_sku() ?></td>
-                        <td><?= $region_code . $obj->get_name() ?></td>
+                        onClick="top.window.location.hash = '<?= $obj->getSku() ?>';parent.frames['pview'].document.location.href = '<?= site_url('supply/purchaser/view/' . $obj->getSku()) ?>'">
+                        <td nowrap style="white-space:nowrap;"><?= $obj->getSku() ?></td>
+                        <td><?= $region_code . $obj->getName() ?></td>
                     </tr>
                     <?php
                     $i++;
@@ -50,13 +50,13 @@
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?php
     if ($i == 1) {
         ?>
         <script>
-            top.window.location.hash = '<?=$obj->get_sku()?>';
-            parent.frames['pview'].document.location.href = '<?=site_url('supply/purchaser/view/'.$obj->get_sku())?>';
+            top.window.location.hash = '<?=$obj->getSku()?>';
+            parent.frames['pview'].document.location.href = '<?=site_url('supply/purchaser/view/'.$obj->getSku())?>';
         </script>
     <?php
     }

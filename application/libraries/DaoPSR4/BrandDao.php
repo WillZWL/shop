@@ -66,7 +66,7 @@ class BrandDao extends BaseDao
     }
 
 
-    public function getBrandListWSrcReg($where = [], $option = [], $classname = "BrandWRegionDto")
+    public function getBrandListWithSrcReg($where = [], $option = [], $classname = "BrandWRegionDto")
     {
 
         $this->db->from('brand AS b');
