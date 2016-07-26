@@ -7,6 +7,7 @@ class SiteConfigVo extends \BaseVo
     private $lang = '';
     private $logo = '';
     private $email = '';
+    private $sales_email = '';
     private $platform;
     private $domain_type = '1';
     private $api_implemented = '0';
@@ -85,6 +86,18 @@ class SiteConfigVo extends \BaseVo
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function setSalesEmail($sales_email)
+    {
+        if ($sales_email !== null) {
+            $this->sales_email = $sales_email;
+        }
+    }
+
+    public function getSalesEmail()
+    {
+        return $this->sales_email;
     }
 
     public function setPlatform($platform)
