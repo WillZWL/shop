@@ -1707,6 +1707,7 @@ html;
         $replace["so_no"] = $so_obj->getSoNo();
 
         $split_so_group = $so_obj->getSplitSoGroup();
+        $parent_so_no = $so_obj->getParentSoNo();
         if (isset($split_so_group) && $split_so_group != $so_obj->getSoNo()) {
             $replace["so_no"] = $split_so_group . '/' . $so_obj->getSoNo();
         }
@@ -1746,7 +1747,7 @@ html;
 
         // show text only if it is split order
         $replace["partial_ship_text"] = "";
-        if (isset($split_so_group) && $split_so_group != $so_obj->getSoNo()) {
+        if ($parent_so_no) {
             switch ($lang_id) {
                 case 'en':
                     $replace["partial_ship_text"] = 'Your order was partially split at no extra cost to ensure all item(s) purchased are received at the soonest available opportunity. The remaining items of your order will ship soon. You may refer to "Useful Information" section below to review /track your order progress.';
