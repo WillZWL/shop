@@ -36,13 +36,13 @@ class Refund_report extends MY_Controller
         if ($_POST["check"]["order_create"]) {
             $where["so.order_create_date >="] = $_POST["start_date"]["order_create"] . " 00:00:00";
             $where["so.order_create_date <="] = $_POST["end_date"]["order_create"] . " 23:59:59";
-            $filename = "Panther Refund Report create--{$_POST["start_date"]["order_create"]}_to_{$_POST["end_date"]["order_create"] }";
+            $filename = "Panther_Refund_Report_create--{$_POST["start_date"]["order_create"]}_to_{$_POST["end_date"]["order_create"] }";
         }
 
         if ($_POST["check"]["cs_request"]) {
             $where["r.create_on >="] = $_POST["start_date"]["cs_request"] . " 00:00:00";
             $where["r.create_on <="] = $_POST["end_date"]["cs_request"] . " 23:59:59";
-            $filename = "Panther Refund Report Req--{$_POST["start_date"]["cs_request"]}_to_{$_POST["end_date"]["cs_request"]}";
+            $filename = "Panther_Refund_Report_Req--{$_POST["start_date"]["cs_request"]}_to_{$_POST["end_date"]["cs_request"]}";
         }
 
         if ($_POST["check"]["refund"]) {
@@ -50,7 +50,7 @@ class Refund_report extends MY_Controller
             $where["rh.status"] = 'C';
             $where["rh.modify_on >="] = $_POST["start_date"]["refund"] . " 00:00:00";
             $where["rh.modify_on <="] = $_POST["end_date"]["refund"] . " 23:59:59";
-            $filename = "Panther Refund Report Account--{$_POST["start_date"]["refund"]}_to_{$_POST["end_date"]["refund"]}";
+            $filename = "Panther_Refund_Report_Account--{$_POST["start_date"]["refund"]}_to_{$_POST["end_date"]["refund"]}";
         }
 
         $data['lang'] = $this->_load_parent_lang();
