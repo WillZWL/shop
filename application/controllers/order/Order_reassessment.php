@@ -104,7 +104,7 @@ class Order_reassessment extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['base_url'] = base_url('order/order_reassessment');
+        $config['base_url'] = base_url('order/order_reassessment');
         $config['total_rows'] = $data["total"];
         $config['page_query_string'] = true;
         $config['reuse_query_string'] = true;
@@ -164,7 +164,7 @@ class Order_reassessment extends MY_Controller
             include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
             $data["lang"] = $lang;
 
-            $pconfig['base_url'] = $_SESSION["LISTPAGE"];
+            $config['base_url'] = base_url('order/order_reassessment/chk_pw');
             $config['total_rows'] = $data["total"];
             $config['page_query_string'] = true;
             $config['reuse_query_string'] = true;
