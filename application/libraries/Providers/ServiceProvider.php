@@ -594,5 +594,21 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\BannerService();
         };
 
+        $serviceContainer['Purchaser'] = function () {
+            return new S\PurchaserService();
+        };
+
+        $serviceContainer['Shiptype'] = function () {
+            return new S\ShiptypeService();
+        };
+
+        $serviceContainer['ClassFactory'] = function () {
+            return new S\ClassFactoryService();
+        };
+
+        $serviceContainer['Inventory'] = function () {
+            return new S\InventoryService();
+        };
+
     }
 }

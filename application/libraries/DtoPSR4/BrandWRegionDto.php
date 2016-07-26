@@ -53,12 +53,12 @@ class BrandWRegionDto
         $this->status = $value;
     }
 
-    public function get_regions()
+    public function getRegions()
     {
         return $this->regions;
     }
 
-    public function set_regions($value)
+    public function setRegions($value)
     {
         $this->regions = $value;
     }

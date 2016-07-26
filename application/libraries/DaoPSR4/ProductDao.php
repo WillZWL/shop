@@ -881,7 +881,7 @@ class ProductDao extends BaseDao
 
             $classname = $this->getVoClassname();
 
-            foreach ($result->result("object", $classname) as $obj) {
+            foreach ($result->result($classname) as $obj) {
                 $result_arr[] = $obj;
             }
         }
@@ -987,7 +987,7 @@ class ProductDao extends BaseDao
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
 
-    public function getAdminProductFeedDto($where = array(), $option = array(), $classname = "AdminProductFeedDto")
+    public function getAdminProductFeedDto($where = [], $option = [], $classname = "AdminProductFeedDto")
     {
         $this->db->from("product p");
         $this->db->join("sku_mapping map", "map.sku = p.sku and map.ext_sys = 'WMS'", "LEFT");
@@ -1017,7 +1017,7 @@ class ProductDao extends BaseDao
                     GROUP_CONCAT(CAST(CONCAT(' ', (CONCAT_WS('-', dt.ship_min_day, dt.ship_max_day))) AS CHAR)) as ship_day,
                     GROUP_CONCAT(CAST(CONCAT(' ', (CONCAT_WS('-', dt.del_min_day, dt.del_max_day))) AS CHAR)) as delivery_day
                 ", false);
-        $rs = array();
+        $rs = [];
         if ($query = $this->db->get()) {
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $row) {
@@ -1103,5 +1103,105 @@ class ProductDao extends BaseDao
         $this->db->join("category AS ssc", "p.sub_sub_cat_id = ssc.id", "LEFT");
         $this->db->join("sku_mapping AS m", "p.sku = m.sku and m.ext_sys = 'WMS' and m.status = 1", "LEFT");
         return $this->commonGetList($classname, $where, $option, "m.ext_sku, p.name, b.brand_name, c.name as cat_name, sc.name as sub_cat_name, ssc.name as sub_sub_cat_name, if(p.accelerator<>1, '', if((b.customer_code='' or b.customer_code is null), 'missing', b.customer_code)) as customer_code");
+    }
+
+    public function getListWithNameForPurchaserList($where=[], $option=[], $classname="ProductListWithNameDto")
+    {
+        $this->db->from('product AS p');
+        $this->db->join('bundle AS bd', 'p.sku = bd.prod_sku', 'LEFT');
+        $this->db->join('sku_mapping AS map', 'map.sku = p.sku AND map.ext_sys = \'WMS\' AND map.status = 1', 'LEFT');
+        $this->db->where('bd.prod_sku IS NULL', null);
+
+        if ($where["keywords"] != "")
+        {
+            $name_list = explode(' ', $where['keywords']);
+
+            foreach($name_list as $name)
+            {
+                if (!empty($name))
+                {
+                    $this->db->like('p.name', $name);
+                }
+            }
+        }
+
+        if ($where["sku"] != "")
+        {
+            $this->db->like('p.sku', $where["sku"]);
+        }
+
+        if ($where['master_sku'] != "")
+        {
+            $this->db->like('map.ext_sku', $where['master_sku']);
+        }
+
+        if (empty($option["num_rows"]))
+        {
+            $this->db->select('
+                p.sku,
+                p.name,
+                p.proc_status,
+                p.website_status,
+                p.website_quantity,
+                p.image AS image_file,
+                p.status,
+                p.create_on,
+                p.create_at,
+                p.create_by,
+                p.modify_on,
+                p.modify_at,
+                p.modify_by,
+                map.ext_sku master_sku
+            ');
+
+            if (isset($option["orderby"]))
+            {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"]))
+            {
+                $option["limit"] = $this->rows_limit;
+            }
+
+            elseif ($option["limit"] == -1)
+            {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"]))
+            {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "")
+            {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $rs = [];
+
+            if ($query = $this->db->get())
+            {
+
+                foreach ($query->result($classname) as $obj)
+                {
+                    $rs[] = $obj;
+                }
+                return (object) $rs;
+            }
+
+        }
+        else
+        {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get())
+            {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+
     }
 }

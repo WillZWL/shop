@@ -1,9 +1,6 @@
 <?php
 namespace ESG\Panther\Service;
 
-use ESG\Panther\Service\SellingPlatformService;
-// use ESG\Panther\Service\PriceWebsiteService;
-
 class ClassFactoryService extends BaseService
 {
     public function __construct()
@@ -41,8 +38,8 @@ class ClassFactoryService extends BaseService
     {
         $this->sellingPlatformService = new SellingPlatformService;
 
-        if ($sp_obj = $this->sellingPlatformService->getDao()->get(["id" => $platform_id])) {
-            $paltform_type = $sp_obj->get_type();
+        if ($sp_obj = $this->getService('SellingPlatform')->getDao('SellingPlatform')->get(["selling_platform_id" => $platform_id])) {
+            $paltform_type = $sp_obj->getType();
 
             $p_srv_name = "\ESG\Panther\Service\Price" . ucwords(strtolower($paltform_type)) . "Service";
 
