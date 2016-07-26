@@ -27,8 +27,8 @@ class RegionHelper extends MY_Controller
         header($ExpStr);
         $objlist = $this->regionModel->regionService->getList(["type" => "C"], ["orderby" => "region_name ASC", "limit" => -1]);
         foreach ($objlist as $obj) {
-            $sid = str_replace("'", "\'", $obj->get_id());
-            $name = str_replace("'", "\'", $obj->get_region_name());
+            $sid = str_replace("'", "\'", $obj->getId());
+            $name = str_replace("'", "\'", $obj->getRegionName());
             $slist[] = "'" . $sid . "':'" . $name . "'";
         }
         $js = "courier_region_list = {" . implode(", ", $slist) . "};";
@@ -54,10 +54,10 @@ class RegionHelper extends MY_Controller
         $offset = 60 * 60 * 24;
         $ExpStr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
         header($ExpStr);
-        $objlist = $this->regionModel->regionService->getList(["type" => "S"], ["orderby" => "region_name ASC", "limit" => -1]);
+        $objlist = $this->sc['Region']->getList(["type" => "S"], ["orderby" => "region_name ASC", "limit" => -1]);
         foreach ($objlist as $obj) {
-            $sid = str_replace("'", "\'", $obj->get_id());
-            $name = str_replace("'", "\'", $obj->get_region_name());
+            $sid = str_replace("'", "\'", $obj->getId());
+            $name = str_replace("'", "\'", $obj->getRegionName());
             $slist[] = "'" . $sid . "':'" . $name . "'";
         }
         $js = "src_region_list = {" . implode(", ", $slist) . "};";

@@ -3,7 +3,7 @@ class SupplierVo extends \BaseVo
 {
     private $id;
     private $name;
-    private $origin_country;
+    private $origin_country='';
     private $currency_id;
     private $creditor = '0';
     private $address_1;

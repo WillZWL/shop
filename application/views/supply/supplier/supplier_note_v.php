@@ -23,7 +23,7 @@
         <tr>
             <td height="70" style="padding-left:8px"><b
                     style="font-size:14px"><?= $lang["supplier_note"] ?></b><br><?= $lang["id"] ?>:
-                <b><?= $supplier->get_id() ?></b><br><?= $lang["supplier_name"] ?>: <b><?= $supplier->get_name() ?></b>
+                <b><?= $supplier->getId() ?></b><br><?= $lang["supplier_name"] ?>: <b><?= $supplier->getName() ?></b>
             </td>
         </tr>
     </table>
@@ -34,7 +34,7 @@
             </tr>
             <tr>
                 <td class="value"><textarea class="input" name="note"
-                                            rows="6"><?= htmlspecialchars($supplier->get_note()) ?></textarea></td>
+                                            rows="6"><?= htmlspecialchars($supplier->getNote()) ?></textarea></td>
             </tr>
             <tr>
                 <td height="40" align="right" class="tb_detail" style="padding-right:8px;">
@@ -42,7 +42,7 @@
                 </td>
             </tr>
         </table>
-        <input name="id" type="hidden" value="<?= $supplier->get_id() ?>">
+        <input name="id" type="hidden" value="<?= $supplier->getId() ?>">
         <input type="hidden" name="posted" value="1">
     </form>
 </div>

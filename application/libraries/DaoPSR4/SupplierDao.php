@@ -77,6 +77,73 @@ class SupplierDao extends BaseDao
 
         return FALSE;
     }
+
+
+    public function getListWithName($where = [], $option = [])
+    {
+
+        $this->db->from('supplier AS s');
+        $this->db->join('region AS sur', 's.supplier_reg = sur.id', 'LEFT');
+        $this->db->join('region AS scr', 's.sourcing_reg = scr.id', 'LEFT');
+
+        if ($where["id"] != "") {
+            $this->db->operator_where('s.id', $where["id"]);
+        }
+
+        if ($where["name"] != "") {
+            $this->db->like('s.name', $where["name"]);
+        }
+
+        if ($where["supplier_reg"] != "") {
+            $this->db->like('sur.region_name', $where["supplier_reg"]);
+        }
+
+        if ($where["sourcing_reg"] != "") {
+            $this->db->like('scr.region_name', $where["sourcing_reg"]);
+        }
+
+        if ($where["status"] != "") {
+            $this->db->like('s.status', $where["status"]);
+        }
+
+        if (empty($option["num_rows"])) {
+            $this->db->select('s.*, sur.region_name AS supplier_reg, scr.region_name AS sourcing_reg');
+
+            if (isset($option["orderby"])) {
+                $this->db->order_by($option["orderby"]);
+            }
+
+            if (empty($option["limit"])) {
+                $option["limit"] = $this->rows_limit;
+            } elseif ($option["limit"] == -1) {
+                $option["limit"] = "";
+            }
+
+            if (!isset($option["offset"])) {
+                $option["offset"] = 0;
+            }
+
+            if ($this->rows_limit != "") {
+                $this->db->limit($option["limit"], $option["offset"]);
+            }
+
+            $rs = [];
+
+            if ($query = $this->db->get()) {
+                foreach ($query->result($this->getVoClassname()) as $obj) {
+                    $rs[] = $obj;
+                }
+                return (object)$rs;
+            }
+        } else {
+            $this->db->select('COUNT(*) AS total');
+            if ($query = $this->db->get()) {
+                return $query->row()->total;
+            }
+        }
+
+        return FALSE;
+    }
 }
 
 /* End of file supplier_dao.php */
