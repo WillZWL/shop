@@ -99,17 +99,17 @@
 
                     <tr class="row<?= $i % 2 ?> pointer" onMouseOver="AddClassName(this, 'highlight')"
                         onMouseOut="RemoveClassName(this, 'highlight')"
-                        onClick="Redirect('<?= site_url('supply/supplier/view/' . $obj->get_id()) ?>')">
+                        onClick="Redirect('<?= site_url('supply/supplier/view/' . $obj->getId()) ?>')">
                         <td height="20"><img src="<?= base_url() ?>images/info.gif"
-                                             title='<?= $lang["create_on"] ?>:<?= $obj->get_create_on() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->get_create_at() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->get_create_by() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->get_modify_on() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->get_modify_at() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->get_modify_by() ?>'>
+                                             title='<?= $lang["create_on"] ?>:<?= $obj->getCreateOn() ?>&#13;<?= $lang["create_at"] ?>:<?= $obj->getCreateAt() ?>&#13;<?= $lang["create_by"] ?>:<?= $obj->getCreateBy() ?>&#13;<?= $lang["modify_on"] ?>:<?= $obj->getModifyOn() ?>&#13;<?= $lang["modify_at"] ?>:<?= $obj->getModifyAt() ?>&#13;<?= $lang["modify_by"] ?>:<?= $obj->getModifyBy() ?>'>
                         </td>
-                        <td><?= $obj->get_id() ?></td>
-                        <td><?= $obj->get_name() ?></td>
-                        <td><?= $obj->get_currency_id() ?></td>
-                        <td><?= $obj->get_supplier_reg() ?></td>
-                        <td><?= $obj->get_sourcing_reg() ?></td>
-                        <td><?= $obj->get_fc_id() ?></td>
-                        <td><?= $ar_status[$obj->get_status()] ?></td>
+                        <td><?= $obj->getId() ?></td>
+                        <td><?= $obj->getName() ?></td>
+                        <td><?= $obj->getCurrencyId() ?></td>
+                        <td><?= $obj->getSupplierReg() ?></td>
+                        <td><?= $obj->getSourcingReg() ?></td>
+                        <td><?= $obj->getFcId() ?></td>
+                        <td><?= $ar_status[$obj->getStatus()] ?></td>
                         <td></td>
                     </tr>
                     <?php
@@ -122,7 +122,7 @@
         <input type="hidden" name="sort" value='<?= $this->input->get("sort") ?>'>
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 </body>

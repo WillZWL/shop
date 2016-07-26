@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>supply/supplier_helper/js_currency"></script>
-    <script type="text/javascript" src="<?= base_url() ?>mastercfg/region_helper/js_sourcing_region"></script>
+    <script type="text/javascript" src="<?= base_url() ?>supply/supplierHelper/js_currency"></script>
+    <script type="text/javascript" src="<?= base_url() ?>mastercfg/regionHelper/js_sourcing_region"></script>
 </head>
 <body>
 <div id="main">
@@ -42,13 +42,13 @@
             </tr>
             <tr>
                 <td class="field"><?= $lang["id"] ?></td>
-                <td class="value"><?= htmlspecialchars($supplier->get_id()) ?></td>
+                <td class="value"><?= htmlspecialchars($supplier->getId()) ?></td>
                 <td class="field"><?= $lang["status"] ?> <font color="red">*</font></td>
                 <td class="value">
                     <select name="status" notEmpty>
                         <?php
-                        if ($supplier->get_status() != "") {
-                            $selected_ar[$supplier->get_status()] = "SELECTED";
+                        if ($supplier->getStatus() != "") {
+                            $selected_ar[$supplier->getStatus()] = "SELECTED";
                         } else {
                             $selected_ar[1] = "SELECTED";
                         }
@@ -61,7 +61,7 @@
             <tr>
                 <td class="field"><?= $lang["supplier_name"] ?> <font color="red">*</font></td>
                 <td class="value"><input name="name" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_name()) ?>" notEmpty></td>
+                                         value="<?= htmlspecialchars($supplier->getName()) ?>" notEmpty></td>
                 <td class="field"><?= $lang["currency"] ?> <font color="red">*</font></td>
                 <td class="value">
                     <select name="currency_id" notEmpty>
@@ -78,8 +78,8 @@
                 <td class="value">
                     <select name="creditor" notEmpty>
                         <?php
-                        if ($supplier->get_creditor() != "") {
-                            $selected_c[$supplier->get_creditor()] = "SELECTED";
+                        if ($supplier->getCreditor() != "") {
+                            $selected_c[$supplier->getCreditor()] = "SELECTED";
                         }
                         ?>
                         <option value="0" <?= $selected_c[0] ?>><?= $lang["no"] ?>
@@ -95,11 +95,11 @@
                 </td>
                 <td class="field"><?= $lang["email"] ?></td>
                 <td class="value"><input name="email" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_email()) ?>" validEmail></td>
+                                         value="<?= htmlspecialchars($supplier->getEmail()) ?>" validEmail></td>
             </tr>
             <?php
             $select = array();
-            $select[$supplier->get_fc_id()] = "SELECTED";
+            $select[$supplier->getFcId()] = "SELECTED";
             ?>
             <tr>
                 <td class="field"><?= $lang["fulfillment_centre"] ?></td>
@@ -107,9 +107,9 @@
                         <?php
                         if ($fc_list) {
                             foreach ($fc_list as $fc_obj) {
-                                $fc_id = $fc_obj->get_id();
+                                $fc_id = $fc_obj->getId();
                                 ?>
-                                <option value="<?= $fc_id ?>" <?= $select[$fc_id] ?>><?= $fc_obj->get_name() ?></option>
+                                <option value="<?= $fc_id ?>" <?= $select[$fc_id] ?>><?= $fc_obj->getName() ?></option>
                             <?php
                             }
                         }
@@ -119,46 +119,46 @@
             <tr>
                 <td class="field"><?= $lang["address"] ?> 1</td>
                 <td class="value" colspan="3"><input name="address1" class="input"
-                                                     value="<?= htmlspecialchars($supplier->get_address1()) ?>"></td>
+                                                     value="<?= htmlspecialchars($supplier->getAddress1()) ?>"></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["address"] ?> 2</td>
                 <td class="value" colspan="3"><input name="address2" class="input"
-                                                     value="<?= htmlspecialchars($supplier->get_address2()) ?>"></td>
+                                                     value="<?= htmlspecialchars($supplier->getAddress2()) ?>"></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["address"] ?> 3</td>
                 <td class="value" colspan="3"><input name="address3" class="input"
-                                                     value="<?= htmlspecialchars($supplier->get_address3()) ?>"></td>
+                                                     value="<?= htmlspecialchars($supplier->getAddress3()) ?>"></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["phone"] ?> 1</td>
                 <td class="value"><input name="phone1" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_phone1()) ?>"></td>
+                                         value="<?= htmlspecialchars($supplier->getPhone1()) ?>"></td>
                 <td class="field"><?= $lang["fax"] ?> 1</td>
                 <td class="value"><input name="fax1" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_fax1()) ?>"></td>
+                                         value="<?= htmlspecialchars($supplier->getFax1()) ?>"></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["phone"] ?> 2</td>
                 <td class="value"><input name="phone2" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_phone2()) ?>"></td>
+                                         value="<?= htmlspecialchars($supplier->getPhone2()) ?>"></td>
                 <td class="field"><?= $lang["fax"] ?> 2</td>
                 <td class="value"><input name="fax2" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_fax2()) ?>"></td>
+                                         value="<?= htmlspecialchars($supplier->getFax2()) ?>"></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["phone"] ?> 3</td>
                 <td class="value"><input name="phone3" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_phone3()) ?>"></td>
+                                         value="<?= htmlspecialchars($supplier->getPhone3()) ?>"></td>
                 <td class="field"><?= $lang["fax"] ?> 3</td>
                 <td class="value"><input name="fax3" class="input"
-                                         value="<?= htmlspecialchars($supplier->get_fax3()) ?>"></td>
+                                         value="<?= htmlspecialchars($supplier->getFax3()) ?>"></td>
             </tr>
             <tr>
                 <td class="field"><?= $lang["supplier_note"] ?></td>
                 <td class="value" colspan="3"><textarea class="input" name="note"
-                                                        rows="6"><?= htmlspecialchars($supplier->get_note()) ?></textarea>
+                                                        rows="6"><?= htmlspecialchars($supplier->getNote()) ?></textarea>
                 </td>
             </tr>
             <?php
@@ -166,21 +166,21 @@
                 ?>
                 <tr>
                     <td class="field"><?= $lang["create_on"] ?></td>
-                    <td class="value"><?= $supplier->get_create_on() ?></td>
+                    <td class="value"><?= $supplier->getCreateOn() ?></td>
                     <td class="field"><?= $lang["modify_on"] ?></td>
-                    <td class="value"><?= $supplier->get_modify_on() ?></td>
+                    <td class="value"><?= $supplier->getModifyOn() ?></td>
                 </tr>
                 <tr>
                     <td class="field"><?= $lang["create_at"] ?></td>
-                    <td class="value"><?= $supplier->get_create_at() ?></td>
+                    <td class="value"><?= $supplier->getCreateAt() ?></td>
                     <td class="field"><?= $lang["modify_at"] ?></td>
-                    <td class="value"><?= $supplier->get_modify_at() ?></td>
+                    <td class="value"><?= $supplier->getModifyAt() ?></td>
                 </tr>
                 <tr>
                     <td class="field"><?= $lang["create_by"] ?></td>
-                    <td class="value"><?= $supplier->get_create_by() ?></td>
+                    <td class="value"><?= $supplier->getCreateBy() ?></td>
                     <td class="field"><?= $lang["modify_by"] ?></td>
-                    <td class="value"><?= $supplier->get_modify_by() ?></td>
+                    <td class="value"><?= $supplier->getModifyBy() ?></td>
                 </tr>
             <?php
             }
@@ -204,19 +204,18 @@
                 </td>
             </tr>
         </table>
-        <input name="id" type="hidden" value="<?= $supplier->get_id() ?>">
+        <input name="id" type="hidden" value="<?= $supplier->getId() ?>">
         <input type="hidden" name="posted" value="1">
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
     <?= $notice["js"] ?>
 </div>
 <script>
     InitCurr(document.fm.currency_id);
-    ChangeCurr('<?=$supplier->get_currency_id()?>', document.fm.currency_id);
+    ChangeCurr('<?=$supplier->getCurrencyId()?>', document.fm.currency_id);
     InitSrcReg(document.fm.supplier_reg);
-    ChangeSrcReg('<?=$supplier->get_supplier_reg()?>', document.fm.supplier_reg);
+    ChangeSrcReg('<?=$supplier->getSupplierReg()?>', document.fm.supplier_reg);
     InitSrcReg(document.fm.sourcing_reg);
-    ChangeSrcReg('<?=$supplier->get_sourcing_reg()?>', document.fm.sourcing_reg);
+    ChangeSrcReg('<?=$supplier->getSourcingReg()?>', document.fm.sourcing_reg);
 </script>
 </body>
 </html>

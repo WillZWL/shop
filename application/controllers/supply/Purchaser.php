@@ -64,7 +64,6 @@ class Purchaser extends MY_Controller
 
                 $data["objlist"] = $this->sc['Product']->getDao('Product')->getListWithNameForPurchaserList($where, $option);
                 $data["total"] = $this->sc['Product']->getDao('Product')->getListWithNameForPurchaserList($where, ["num_rows" => 1]);
-                $pconfig['total_rows'] = $data['total'];
 
                 $config['base_url'] = base_url('supply/purchaser/index/');
                 $config['total_rows'] = $data["total"];

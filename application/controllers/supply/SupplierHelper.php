@@ -1,6 +1,6 @@
 <?php
 
-class Supplier_helper extends MY_Controller
+class SupplierHelper extends MY_Controller
 {
     private $appId = "SUP0001";
 
