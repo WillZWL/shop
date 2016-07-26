@@ -700,7 +700,7 @@ html;
             $arr['lang'] = $obj->getLang();
             $arr['logo'] = $obj->getLogo();
             $arr['email'] = $obj->getEmail();
-
+            $arr['sales_email'] = $obj->getSalesEmail();
             return $arr;
         }
         return false;
@@ -708,7 +708,9 @@ html;
     public function getSalesEmail($platform_id)
     {
         $site = $this->getSiteConfig($platform_id);
-        if ($site['email']) {
+        if ($site['sales_email']) {
+            $email = $site['sales_email'];
+        } else {
             $email = $site['email'];
         }
 
@@ -992,7 +994,6 @@ html;
 
     public function getCustomInvoiceContent($so_no_list = [], $new_shipper_name = "", $currency = "")
     {
-        $so_lang_arr = ["AMUK" => "en", "WSGB" => "en", "AMFR" => "en", "AMDE" => "en", "AMUS" => "en"];
         $run = 0;
         $website_domain = $this->getDao('Config')->valueOf('website_domain');
         $total_cnt = count($so_no_list);
