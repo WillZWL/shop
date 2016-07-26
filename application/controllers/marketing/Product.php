@@ -535,115 +535,6 @@ html;
 
             $prod_grp_cd = $this->testAdd($_POST);
             redirect(base_url() . "marketing/product/index/" . $prod_grp_cd);
-
-            // if (isset($_SESSION["product_vo"])) {
-            //     $this->product_model->include_vo("product");
-            //     $data["product"] = unserialize($_SESSION["product_vo"]);
-            //     $_POST["status"] = 1;
-            //     $_POST["rrp"] = $_POST["archive"] = $_POST["clearance"] = 0;
-            //     $_POST["website_status"] = 'I';
-            //     $_POST["sourcing_status"] = 'A';
-            //     $_POST["website_quantity"] = $_POST["quantity"] = 0;
-            //     if ($_POST["sub_sub_cat_id"] == NULL) {
-            //         $_POST["sub_sub_cat_id"] = '0';
-            //     }
-            //     set_value($data["product"], $_POST);
-
-            //     $data["supp_prod"] = $this->product_model->get_supplier_prod();
-            //     $prod_custom_class_vo = $this->product_model->get_product_custom_classification();
-
-            //     $prod_grp_cd = $this->product_model->seq_next_val();
-
-            //     $sub_cat_id = $this->input->post("sub_cat_id");
-            //     $sub_cat_obj = $this->product_model->get("category", array("id" => $sub_cat_id));
-
-            //     if (is_array($this->input->post("joined_vlist"))) {
-            //         $version_list = $this->input->post("joined_vlist");
-            //     } else {
-            //         $version_list = array("AA::All Version");
-            //     }
-
-            //     $this->product_model->product_service->get_dao()->trans_start();
-
-            //     foreach ($this->input->post("joined_list") as $colour) {
-            //         list($colour_id, $colour_name) = explode("::", $colour);
-            //         foreach ($version_list as $version) {
-            //             list($version_id, $version_name) = explode("::", $version);
-            //             $sku = str_pad($prod_grp_cd . "-" . $version_id . "-" . $colour_id, 11, "0", STR_PAD_LEFT);
-            //             $data["product"]->set_sku($sku)->set_prod_grp_cd($prod_grp_cd)->set_colour_id($colour_id)->set_version_id($version_id)->set_proc_status('0')->set_name($_POST["name"] . (($sub_cat_obj->get_add_colour_name() && $colour_id != "NA") ? " ({$colour_name})" : ""));
-
-            //             // default supp_id to 4
-            //             $data["supp_prod"]->set_supplier_id(4);
-            //             $data["supp_prod"]->set_prod_sku($sku);
-            //             $data["supp_prod"]->set_cost($_POST["cost"]);
-            //             $data["supp_prod"]->set_currency_id("HKD");
-            //             $data["supp_prod"]->set_order_default("1");
-            //             $data["supp_prod"]->set_moq("1");
-            //             $data["supp_prod"]->set_supplier_status("O");
-
-            //             if ($cc_list = $this->product_model->get_custom_class_mapping_by_sub_cat_id($sub_cat_id)) {
-            //                 foreach ($cc_list as $country_id => $cc_obj) {
-            //                     if (empty($cc_obj)) {
-            //                         $_SESSION["NOTICE"] = "Custom Classification Code for Sub-Category '" . $sub_cat_obj->get_name() . "' is missing.";
-            //                         break 2;
-            //                     }
-            //                     $tmp = clone $prod_custom_class_vo;
-            //                     $tmp->set_sku($sku);
-            //                     $tmp->set_country_id($country_id);
-            //                     $tmp->set_code($cc_obj->get_code());
-            //                     $tmp->set_description($cc_obj->get_description());
-            //                     $tmp->set_duty_pcent($cc_obj->get_duty_pcent());
-            //                     $data["prod_custom_class"][$country_id] = $tmp;
-            //                 }
-            //             }
-
-            //             if ($new_obj = $this->product_model->add("product", $data["product"])) {
-            //                 $this->product_model->update_seq($prod_grp_cd);
-            //                 if (!($new_obj = $this->product_model->add_supplier_prod($data["supp_prod"]))) {
-            //                     $_SESSION["NOTICE"] = "__FILE__:__LINE__" . $this->db->_error_message();
-            //                     break;
-            //                 }
-
-            //                 foreach ($data["prod_custom_class"] as $prod_custom_class_obj) {
-            //                     if (!($new_cc_obj = $this->product_model->add_product_custom_class($prod_custom_class_obj))) {
-            //                         $_SESSION["NOTICE"] = __FILE__ . ":" . __LINE__ . ", " . $this->db->_error_message();
-            //                         break;
-            //                     }
-            //                 }
-            //             } else {
-            //                 $_SESSION["NOTICE"] = __FILE__ . ":" . __LINE__ . ", " . $this->db->_error_message();
-            //                 break;
-            //             }
-            //         }
-            //     }
-
-            //     // if ($this->input->post("prod_type")) {
-            //     //     if ($this->product_model->get_product_type(array("sku" => $sku))) {
-            //     //         $this->product_model->del_product_type(array("sku" => $sku));
-            //     //     }
-            //     //     foreach ($this->input->post("prod_type") as $prod_type) {
-            //     //         $prod_type_obj = $this->product_model->get_product_type();
-            //     //         $prod_type_obj->set_sku($sku);
-            //     //         $prod_type_obj->set_type_id($prod_type);
-            //     //         $prod_type_obj->set_status(1);
-            //     //         if (!$this->product_model->add_product_type($prod_type_obj)) {
-            //     //             $_SESSION["NOTICE"] = __FILE__ . ":" . __LINE__ . ", " . $this->db->_error_message();
-            //     //         }
-            //     //     }
-            //     // }
-            //     $this->product_model->product_service->get_dao()->trans_complete();
-            //     if (empty($_SESSION["NOTICE"])) {
-            //         unset($_SESSION["product_vo"]);
-            //         unset($_SESSION["NOTICE"]);
-            //         redirect(base_url() . "marketing/product/index/" . $prod_grp_cd);
-            //     } else {
-            //         $data["product"]->set_sku("");
-            //         $data["product"]->set_prod_grp_cd("");
-            //         $data["product"]->set_colour_id("");
-            //         $data["product"]->set_proc_status('0');
-            //         $data["product"]->set_name($_POST["name"]);
-            //     }
-            // }
         }
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
@@ -669,19 +560,6 @@ html;
         $data["type_list"] = $this->subject_domain_service->get_subj_list_w_subj_lang("MKT.PROD_TYPE.PROD_TYPE_ID", "en");
         $data["joined_list"] = array();
         $data["joined_vlist"] = array();
-
-
-        // if ($this->input->post("joined_list")) {
-        //     $inc_list = $this->input->post("joined_list");
-        //     $data["joined_list"] = get_inclusion($data["colour_list"], $inc_list, array("id", "name"));
-        //     $data["colour_list"] = get_exclusion($data["colour_list"], $inc_list, array("id", "name"));
-        // }
-        // if ($this->input->post("joined_vlist")) {
-        //     $inc_list = $this->input->post("joined_vlist");
-        //     $data["joined_vlist"] = get_inclusion($data["version_list"], $inc_list, array("id", "desc"));
-        //     $data["version_list"] = get_exclusion($data["version_list"], $inc_list, array("id", "desc"));
-        // }
-
         $data["notice"] = notice($lang);
         $data["cmd"] = "add";
         $this->load->view('marketing/product/product_detail_v', $data);
@@ -874,12 +752,6 @@ html;
         $data["brand_list"] = $this->product_model->get_list("brand", array(), array("orderby" => "brand_name ASC", "limit" => "-1"));
         $data["colour_list"] = $this->product_model->get_remain_colour_list($prod_grp_cd);
         $data["joined_list"] = array();
-
-        // if ($this->input->post("joined_list")) {
-        //     $inc_list = $this->input->post("joined_list");
-        //     $data["joined_list"] = get_inclusion($data["colour_list"], $inc_list, array("id", "name"));
-        //     $data["colour_list"] = get_exclusion($data["colour_list"], $inc_list, array("id", "name"));
-        // }
 
         $data["notice"] = notice($lang);
         $data["cmd"] = "add";
