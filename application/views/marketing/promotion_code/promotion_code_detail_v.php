@@ -8,7 +8,7 @@
     <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
     <script type="text/javascript" src="<?= base_url() ?>mastercfg/brand/js_brandlist"></script>
     <!--<script type="text/javascript" src="<?= base_url() ?>mastercfg/region/js_courier_region"></script>-->
-    <script type="text/javascript" src="<?= base_url() ?>supply/supplier_helper/js_currency"></script>
+    <script type="text/javascript" src="<?= base_url() ?>supply/supplier-helper/js_currency"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/calendar.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>css/calendar.css" type="text/css" media="all"/>
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>js/ext-js/resources/css/ext-all.css"/>

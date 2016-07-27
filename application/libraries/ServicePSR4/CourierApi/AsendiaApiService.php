@@ -121,6 +121,7 @@ class AsendiaApiService extends CourierApiService implements CourierApiInterface
 					"HsCode"=> $pendingData->getDeclaredHsCode(), //海关编码 专线时需要填写
 					"Description" => $pendingData->getDeclaredDesc(), //申报内容
 					"Value" => $pendingData->getDeclaredValue(), // 申报价值
+					"Currency" => $pendingData->getDeclaredCurrency(),
 					"CustomsType" => $pendingData->getDeclaredType(), //申报类型
 					"Weight" => "0.5", //包裹实际重量
 					"BoxId" => "", //专线时需要填写
