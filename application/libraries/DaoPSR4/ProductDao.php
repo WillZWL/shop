@@ -126,7 +126,7 @@ class ProductDao extends BaseDao
         $this->db->from('product as p');
         $this->db->join('sku_mapping sm', 'p.sku = sm.sku', 'inner');
         $this->db->join('price as pr', 'p.sku = pr.sku', 'inner');
-        $this->db->join('price_margin pm', 'pr.sku = pm.sku and pr.platform_id = pm.platform_id', 'inner');
+        $this->db->join('price_margin pm', 'pr.sku = pm.sku and pr.platform_id = pm.platform_id', 'left');
         $this->db->join('supplier_prod sp', 'p.sku = sp.prod_sku and sp.order_default = 1', 'inner');
         $this->db->join('platform_biz_var pbv', 'pr.platform_id = pbv.selling_platform_id', 'inner');
 
