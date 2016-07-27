@@ -103,7 +103,7 @@ class CartDto
     }
 
     public function getGrandTotal() {
-        return ($this->subtotal + $this->deliveryCharge + $this->offlineFee - $this->promoDiscTotal);
+        return ($this->subtotal + $this->deliveryCharge + $this->offlineFee);
     }
 
     public function setGrandTotal($grandTotal) {

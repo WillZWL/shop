@@ -22,7 +22,21 @@ class PromotionFactoryService extends BaseService
     public function getPromotionCart()
     {   
         if($this->validatePromotionCode()){
-            return $this->_discountTypeInterface->getPromotionCart();
+            $cart=$this->_discountTypeInterface->getPromotionCart();
+
+            if($cart){
+                foreach($cart->items as $sku => $item){
+                    $unitPrice = $item->getPrice();
+                    $itemSubTotal = $unitPrice * $item->getQty()-$item->getPromoDiscAmt();
+                    $cart->items[$sku]->setAmount($itemSubTotal);
+                    $totalItems += $item->getQty();
+                    $totalAmount += $itemSubTotal;
+                }
+                $cart->setTotalNumberOfItems($totalItems);
+                $cart->setSubTotal($totalAmount);
+                return $cart;  
+            }
+            return null;
         }
     }
 
