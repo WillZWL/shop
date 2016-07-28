@@ -45,10 +45,6 @@ class Country extends MY_Controller
             $where['fc_id'] = $this->input->get('fc_id');
         }
 
-        // if ($this->input->get('rma_fc') != '') {
-        //     $where['rma_fc'] = $this->input->get('rma_fc');
-        // }
-
         if ($this->input->get('allow_sell')) {
             $where['allow_sell'] = $this->input->get('allow_sell');
         }

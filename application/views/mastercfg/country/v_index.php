@@ -37,15 +37,6 @@
     </table>
     <form name="fm" method="get">
         <table border="0" cellpadding="0" cellspacing="0" bgcolor="#000000" width="100%" class="tb_list">
-            <col width="20">
-            <col width="50">
-            <col width="60">
-            <col>
-            <col width="70">
-            <col width="100">
-            <col width="70">
-            <col width="70">
-            <col width="26">
             <tr class="header">
                 <td height="20"><img src="<?= base_url() ?>images/expand.png" class="pointer"
                                      onClick="Expand(document.getElementById('tr_search'));"></td>

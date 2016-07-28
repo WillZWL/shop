@@ -63,7 +63,7 @@ class Bundle_dao extends Base_dao
         }
 
         if ($where["colour"] != "") {
-            $this->db->like('cl.name', $where["colour"]);
+            $this->db->like('cl.colour_name', $where["colour"]);
         }
 
         if ($where["category"] != "") {
@@ -90,7 +90,7 @@ class Bundle_dao extends Base_dao
 
             $this->include_dto($classname);
 
-            $this->db->select('p.sku, vb.bundle_name AS name, c.name AS category, sc.name AS sub_cat, cl.name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by');
+            $this->db->select('p.sku, vb.bundle_name AS name, c.name AS category, sc.name AS sub_cat, cl.colour_name AS colour, ssc.name AS sub_sub_cat, b.brand_name AS brand, p.status, p.create_on, p.create_at, p.create_by, p.modify_on, p.modify_at, p.modify_by');
 
             $this->db->order_by($option["orderby"]);
 

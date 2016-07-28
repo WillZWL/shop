@@ -135,7 +135,7 @@
         </tr>
     </table>
     <?= $notice["js"] ?>
-    <table cellpadding='3' cellspacing='0' border='1' width="100%" style="border-collapse:collapse;">
+    <table cellpadding='3' cellspacing='0' border='1' width="100%" style="border-collapse:collapse;" class="tb_list">
         <?php
         $total_number_of_records = "";
         //print heading
