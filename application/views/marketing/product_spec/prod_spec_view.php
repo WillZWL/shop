@@ -100,7 +100,7 @@
             <input type="hidden" name="cmd" value="add">
         </form>
 
-        <table border="0" cellpadding="0" cellspacing="1" height="20" class="page_header" width="100%">
+        <table border="0" cellpadding="0" cellspacing="1" height="20" class="tb_list" width="100%">
             <col width="20">
             <col width="120">
             <col width="200">

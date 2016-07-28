@@ -3,6 +3,7 @@
     <title><?= $lang["title"] ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="<?= base_url() ?>css/bootstrap.min.css" type="text/css" media="all" />
     <script type="text/javascript" src="<?= base_url() ?>js/common.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>marketing/category/js_catlist"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/checkform.js"></script>
@@ -16,7 +17,7 @@
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
-            <td width="600" align="right" class="title">
+            <td width="800" align="right" class="title">
                 <input type="button" value="<?= $lang["list_button"] ?>" class="button"
                        onClick="Redirect('<?= site_url('marketing/product/') ?>')">
                 &nbsp; <input type="button" value="<?= $lang["add_button"] ?>" class="button"
@@ -195,7 +196,7 @@
         <input type="hidden" name="order" value='<?= $this->input->get("order") ?>'>
         <input type="hidden" name="search" value="1">
     </form>
-    <?= $this->pagination_service->create_links_with_style() ?>
+    <?= $links ?>
     <?= $notice["js"] ?>
 </div>
 <script language='javascript'>

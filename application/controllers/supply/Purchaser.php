@@ -10,10 +10,6 @@ class Purchaser extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->load->model('supply/purchaser_model');
-        // $this->load->helper(array('url', 'notice', 'object', 'image'));
-        // $this->load->library('service/pagination_service');
-        // $this->load->library('service/context_config_service');
     }
 
     public function index($frame = "top")

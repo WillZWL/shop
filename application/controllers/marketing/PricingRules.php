@@ -15,12 +15,6 @@ class PricingRules extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        /*$this->load->helper(array('url', 'notice', 'object', 'operator'));
-        $this->load->library('service/pagination_service');
-        $this->load->library('service/context_config_service');
-        $this->load->library('service/pricing_rules_service');*/
-
-        //$this->pricingRulesModel = new PricingRulesModel;
     }
 
     public function getAppId()

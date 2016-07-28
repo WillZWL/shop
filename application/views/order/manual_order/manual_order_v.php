@@ -53,9 +53,9 @@
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td width="650" align="right" class="title">
-        <span style="background-color:#000000;color:#FFFFFF;font-size:18px;padding-right:20px;">
 <?php if ((isset($soObj)) && $soObj)
       {
+            print "<span style='background-color:#000000;color:#FFFFFF;font-size:18px;padding-right:20px;'>";
             print "Order Number:" . $soObj->getSoNo() . " Created";
       } elseif (isset($soObj)) {
             print "Fail to create SO!!";
