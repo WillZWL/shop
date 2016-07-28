@@ -230,7 +230,7 @@ class CategoryDao extends BaseDao
             $this->db->like('level', $where["level"]);
         }
 
-        if (!empty($where["status"])) {
+        if ($where["status"] != '') {
             $this->db->where('status', $where["status"]);
         }
 
@@ -264,7 +264,7 @@ class CategoryDao extends BaseDao
             $rs = [];
 
             if ($query = $this->db->get()) {
-
+echo $this->db->last_query();//die();
                 foreach ($query->result($classname) as $obj) {
                     $rs[] = $obj;
                 }

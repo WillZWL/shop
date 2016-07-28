@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use ESG\Panther\Models\Order\CourierFactoryModel;
 use ESG\Panther\Service\CourierService;
@@ -7,7 +7,7 @@ use ESG\Panther\Service\CustomClassService;
 use ESG\Panther\Service\RptCourierTrackingnoReportService;
 
 class Courier_order extends MY_Controller
-{	
+{
 	private $appId="ORD0033";
 	private $_courierFactoryModel;
 
@@ -22,7 +22,7 @@ class Courier_order extends MY_Controller
 	}
 
 	public function index()
-	{	
+	{
 		$subAppId = $this->getAppId() . "01";
 		include_once(APPPATH . "language/" . $subAppId . "_" . $this->getLangId() . ".php");
         $_SESSION["LISTPAGE"] = $_SESSION["CCLISTPAGE"] = base_url() . "order/courier_order/" . ($pagetype ? "index/" . $pagetype : "") . "?" . $_SERVER['QUERY_STRING'];
@@ -82,7 +82,7 @@ class Courier_order extends MY_Controller
 				$where["so.delivery_country_id"] = $this->input->get("delivery_country_id");
 			}
 			$where['sosh.courier_id']=$this->input->get("courier_id");
-			$where['so.status !="6" ']=null;	
+			$where['so.status !="6" ']=null;
 			$tempArr = $this->soService->getDao('SoShipment')->getEnableApiCourierOrderList($where, $option);
 			$counter = 1;
 
@@ -162,7 +162,7 @@ class Courier_order extends MY_Controller
 			}
 
 			if($_POST["dispatch_type"]=="pm" && $this->input->post("check")){
-				$batchIds=join(',',$this->input->post("check"));  
+				$batchIds=join(',',$this->input->post("check"));
 				$where["courier_batch_id in($batchIds)"]=null;
 				$courierManifestObj = $this->courierService->getInterfaceCourierManifestDao()->getList($where, array('limit'=>-1));
 				foreach($courierManifestObj as $manifestObj){
@@ -182,7 +182,7 @@ class Courier_order extends MY_Controller
 		if($this->input->post("courier_id") || $courierId)
 		{
 			if($this->input->post("courier_id")){
-				$where["ic.courier_id"]=$data["selectedCourierId"]=$this->input->post("courier_id");	
+				$where["ic.courier_id"]=$data["selectedCourierId"]=$this->input->post("courier_id");
 			}else{
 				$where["ic.courier_id"]=$data["selectedCourierId"]=$courierId;
 			}
@@ -212,7 +212,7 @@ class Courier_order extends MY_Controller
 			$data["objlist"]=$this->courierService->getInterfacePendingCourierDao()->getCourierOrderByBatch($where, array("limit"=>"500","orderby"=>"ic.batch_id desc"));
 			$data["totalOrder"]=$this->courierService->getInterfacePendingCourierDao()->getCourierOrderByBatch($where, array("num_rows"=>1,"limit"=>"500","orderby"=>"ic.batch_id desc"));
 		}
-		
+
 		if($_POST["dispatch_type"]=="s" && $this->input->post("so_no")){
 			$searchWhere=null;
 			$searchWhere["ic.courier_order_id"]= $this->input->post("so_no");
@@ -255,11 +255,11 @@ class Courier_order extends MY_Controller
 							"delivery_phone"=>$row->getDeliveryPhone(),
 							"declared_desc"=>$row->getDeclaredDesc(),
 							"declared_value"=>$row->getDeclaredValue(),
-							"declared_type"=>"O", 
+							"declared_type"=>"O",
 							"weight"=>$row->getWeight(),
 						);
 				}
-				$result=$this->_courierFactoryModel->addCourierOrder($courierId,$formValue);	
+				$result=$this->_courierFactoryModel->addCourierOrder($courierId,$formValue);
 			}
 			//update so order delivery infomation
 			if($_POST["dispatch_type"]=="u"){
@@ -275,13 +275,13 @@ class Courier_order extends MY_Controller
 		$data["objlist"]=$this->courierService->getInterfacePendingCourierDao()->getCourierOrderByBatch($where, array("limit"=>-1));
 		$data["batchId"]=$batchId;
 		$data["lang"] = $lang;
-			
-		$this->load->view('order/courier/courier_batch_order_v', $data); 
+
+		$this->load->view('order/courier/courier_batch_order_v', $data);
 	}
 
 
 	private function getConditionDeclaredValue($row,$courierObj)
-	{	
+	{
 		$declaredValue=null;$insideCategory=false;
 		$amount=round($this->soService->convertCurrency($row->getCurrencyId(), $courierObj->getApiCurrency(), $row->getAmount()), 2);
 		$ruleCategory=array("1","6","5","3","2");
@@ -379,7 +379,7 @@ class Courier_order extends MY_Controller
                }
             }
         }
-        return $result;    
+        return $result;
     }
 
 	private function getSubCatHsDetails($subCatId,$courtryId)
@@ -433,7 +433,7 @@ class Courier_order extends MY_Controller
 					"declared_desc"=>$declaredDesc,
 					"declared_hs_code"=>$row->getDeclaredHsCode(),
 					"declared_value"=>floor($declaredValue),
-					"declared_type"=>"O", 
+					"declared_type"=>"O",
 					"weight"=>$row->getWeight(),
 					"declared_currency"=>$courierObj->getApiCurrency(),
 					"master_sku"=>$row->getSku(),

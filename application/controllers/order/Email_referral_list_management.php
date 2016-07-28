@@ -58,7 +58,7 @@ class Email_referral_list_management extends MY_Controller
         $option = [];
 
 
-        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '1000';
+        $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
         $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         $data['total_rows'] = $this->sc['EmailReferralList']->getAllEmailReferralList($where, ['num_rows' => 1]);
