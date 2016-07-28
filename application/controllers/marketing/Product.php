@@ -409,19 +409,16 @@ html;
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
-
+        $config['base_url'] = base_url('marketing/product/index');
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
         $data["notice"] = notice($lang);
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
         $data["xsort"][$sort] = $order == "asc" ? "desc" : "asc";
-//      $data["searchdisplay"] = ($submit_search)?"":'style="display:none"';
         $data["searchdisplay"] = "";
         $data["prod_grp_cd"] = $prod_grp_cd;
-
-        #http://sbf.eservicesgroup.net/issues/2707
-
         $this->load->view('marketing/product/product_index_v', $data);
     }
 

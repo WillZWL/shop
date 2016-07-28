@@ -126,7 +126,7 @@ class Warranty extends MY_Controller
         $limit = '20';
 
         $pconfig['base_url'] = $_SESSION["LISTPAGE"];
-        $option["limit"] = $pconfig['per_page'] = $limit;
+        $option["limit"] = $config['per_page'] = $limit;
         if ($option["limit"]) {
             $option["offset"] = $this->input->get("per_page");
         }
@@ -148,9 +148,11 @@ class Warranty extends MY_Controller
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
         $data["lang"] = $lang;
 
-        $pconfig['total_rows'] = $data['total'];
-        $this->pagination_service->set_show_count_tag(TRUE);
-        $this->pagination_service->initialize($pconfig);
+        $config['base_url'] = $_SESSION["LISTPAGE"];
+        $config['total_rows'] = $data["total"];
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";
