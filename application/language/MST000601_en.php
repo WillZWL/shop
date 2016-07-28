@@ -18,5 +18,7 @@
 			"submit_error" => "Submit Error",
 			"sql_error" => "SQL Error",
 			"brand_existed" => "Brand Existed!",
+			"accelerator" => "Accelerator",
+			"customer_code" => "Customer Code",
 			);
 ?>
