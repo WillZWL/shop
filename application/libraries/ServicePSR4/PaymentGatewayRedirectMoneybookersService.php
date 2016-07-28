@@ -73,7 +73,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
     }
 /***********************************
 **  interface function getPaymentGatewayName
-************************************/    
+************************************/
     public function getPaymentGatewayName()
     {
         return "moneybookers";
@@ -209,7 +209,7 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
         } else {
             $subject = "[Panther] " . $this->getPaymentGatewayName() . " no currency return, " . "Line:" .__LINE__;
             $this->sendAlert($subject, @http_build_query($data), $this->getTechnicalSupportEmail(), BaseService::ALERT_GENERAL_LEVEL);
-            return PaymentGatewayRedirectService::PAYMENT_WITH_INVALID_RESPONSE;        
+            return PaymentGatewayRedirectService::PAYMENT_WITH_INVALID_RESPONSE;
         }
         return PaymentGatewayRedirectService::PAYMENT_STATUS_FAIL;
     }

@@ -12,7 +12,7 @@ use Zend\Validator\EmailAddress;
 *****************/
 abstract class InputFilter {
     public $validInput = true;
-    public $gatewayList = ["paypal", "moneybookers"];
+    public $gatewayList = ["paypal", "moneybookers", "global_collect"];
 
     public function __construct() {
     }
@@ -82,7 +82,7 @@ abstract class InputFilter {
         }
         return $this->validInput = false;
     }
-    
+
     public function isValidAddress2($address)
     {
         if (trim($address) == "")
@@ -100,7 +100,7 @@ abstract class InputFilter {
     {
         return $this->isValidEuropean($city, 80);
     }
-    
+
     public function isValidPostCode($billPostal, $langId, $countryId)
     {
         $validator = new PostCode();
@@ -109,7 +109,7 @@ abstract class InputFilter {
         (!$result) ? ($this->validInput = false) : "";
         return $result;
     }
-    
+
     public function isValidStateId($state)
     {
 //we only verify the format of the stateId
@@ -190,12 +190,12 @@ abstract class InputFilter {
         (!$result) ? ($this->validInput = false) : "";
         return $result;
     }
-    
+
     public function isPoBox($address)
     {
         $validator = new Regex("/\bP(ost|ostal)?([ \.]*O(ffice)?)?([ \.]*Box)?\b/i");
         $result = $validator->isValid($address);
-        return $result;    
+        return $result;
     }
 
     public function isValidSku($sku)
@@ -205,7 +205,7 @@ abstract class InputFilter {
         (!$result) ? ($this->validInput = false) : "";
         return $result;
     }
-    
+
     public function isValidQty($qty)
     {
         $validator = new Digits();
