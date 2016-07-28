@@ -23,11 +23,7 @@ class Checkout extends PUB_Controller
     public function __construct($allow_force_https = true) {
         parent::__construct();
         $this->checkoutModel = new CheckoutModel();
-        if ((!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
-            && $_SERVER['HTTP_HOST'] != "dduk.dev"
-            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk"
-            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk:8000"
-        ) {
+        if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
             $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             if ($_SERVER['QUERY_STRING'] != "") {
                 $httpsUrl .= "?" . $_SERVER['QUERY_STRING'];
@@ -114,7 +110,7 @@ class Checkout extends PUB_Controller
         $filterResult = $filter->isValidForm($this->input, $this->getSiteInfo(), ["loggedIn" => (($client)?true:false), "email" => (($client)?$client["Email"]:""), "poBoxLimit" => $poBoxLimit, "cart" => $cart]);
         if ($filterResult["validInput"]) {
             $filterResult["value"]["debug"] = $debug;
-            $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);
+            $redirectUrl = $this->checkoutModel->createSaleOrder($filterResult["value"]);       
             echo json_encode($redirectUrl);
         }
         else
@@ -135,7 +131,7 @@ class Checkout extends PUB_Controller
 
     public function paymentResult($result, $soNo = "")
     {
-
+        
         $pagePar = [1 => //success
                         ["option1" => "soItemDetail"
                          ,  "view" => "paymentSuccess"
@@ -149,7 +145,7 @@ class Checkout extends PUB_Controller
                         ,  "view" => "paymentFail"
                         ,  "status" => "0"]];
         $data = [];
-        if (($result == 1)
+        if (($result == 1) 
             || ($result == 4)
             || ($result == 0)) {
 //Success
@@ -159,7 +155,7 @@ class Checkout extends PUB_Controller
             } elseif ($soNo) {
 
                 $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo, [$pagePar[$result]["option1"] => true, "status" => $pagePar[$result]["status"]]);
-
+                 
                  $afInfo = $this->affiliateService->getAfRecord();
 
                 if ($verifyData["valid"]) {
@@ -172,7 +168,7 @@ class Checkout extends PUB_Controller
                         $data["tracking_data"]["soi"] = $verifyData["soItemDetail"];
                         $data["tracking_data"]["sops"] = $verifyData["soPaymentStatus"];
                         $data["tracking_data"]["client_email"] = $verifyData["client"]->getEmail();
-
+                    
                     $this->affiliateService->removeAfRecord();
                     $this->load->view("checkout/" . $pagePar[$result]["view"], $data);
                 } else {
@@ -197,7 +193,7 @@ class Checkout extends PUB_Controller
             $data = $_POST;
         }
         else
-            $data = file_get_contents("php://input");
+            $data = file_get_contents("php://input");           
         $this->checkoutModel->notification($gatewayId, $data, $debug);
     }
 //    public function js_credit_card($platform_curr, $total_amount, $seq = 1)

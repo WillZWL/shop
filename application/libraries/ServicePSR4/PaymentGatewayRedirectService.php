@@ -124,12 +124,6 @@ implements PaymentGatewayRedirectServiceInterface
             $callResult = $this->getRedirectUrl($urlRequest, $responseData);
 
             $redirectUrl = $callResult["url"];
-            if ($this->getPaymentGatewayName() == 'global_collect') {
-                print_r($urlRequest);
-                print_r($callResult);
-                print_r($redirectUrl);
-                die;
-            }
             if (($responseData != null) && (!empty($responseData)))
                 $this->getService("SoPaymentLog")->addLog($this->so->getSoNo(), "I", str_replace("&", "\n&", $responseData));
             if (!$callResult["result"]) {

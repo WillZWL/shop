@@ -203,8 +203,8 @@ class CheckoutModel extends \CI_Model
     }
 
     private function _createPaymentGatewayRedirectService($paymentGatewayId, $soObj, $debug = 0) {
-        $classname = "ESG\Panther\Service\PaymentGatewayRedirect" . ucfirst(underscore2camelcase($paymentGatewayId)) . "Service";
-        if (file_exists(APPPATH . "/libraries/ServicePSR4/PaymentGatewayRedirect" . ucfirst(underscore2camelcase($paymentGatewayId)) . "Service.php")) {
+        $classname = "ESG\Panther\Service\PaymentGatewayRedirect" . ucfirst(strtolower($paymentGatewayId)) . "Service";
+        if (file_exists(APPPATH . "/libraries/ServicePSR4/PaymentGatewayRedirect" . ucfirst(strtolower($paymentGatewayId)) . "Service.php")) {
             $gatewayRedirectService = new $classname($soObj, $debug);
             return $gatewayRedirectService;
         }
