@@ -24,7 +24,7 @@ class CronUpdateAutoPrice extends MY_Controller
     {
         set_time_limit(1800);
         ini_set('memory_limit', '1024M');
-        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'listing_status' => 'L', 'platform_id' => $platform_id], ['orderby'=>'modify_on asc', 'limit' => '1000']);
+        $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'listing_status' => 'L', 'platform_id' => $platform_id], ['orderby'=>'modify_on asc', 'limit' => '500']);
         foreach ($price_obj_list as $price_obj) {
             // $time_start = microtime();
             $resutl = json_decode($this->sc['Price']->getProfitMarginJson($price_obj->getPlatformId(), $price_obj->getSku()));
