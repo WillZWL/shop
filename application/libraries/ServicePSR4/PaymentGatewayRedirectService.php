@@ -41,9 +41,9 @@ implements PaymentGatewayRedirectServiceInterface
     {
         parent::__construct();
         if ($debug == 1) {
-            if ((getenv("APPLICATION_ENV") == "dev") || (php_sapi_name() === 'cli')) {
+            // if ((getenv("APPLICATION_ENV") == "dev") || (php_sapi_name() === 'cli')) {
                 $this->debug = $debug;
-            }
+            // }
         }
         if ($soObj != null)
             $this->so = $soObj;
