@@ -44,7 +44,7 @@
                                 <?php }?>
                             </td>
                             <td class="text-right"><?= platform_curr_format($item->getPrice()) ?></td>
-                            <td class="text-right"><?= platform_curr_format($item->getAmount()) ?></td>
+                            <td class="text-right"><?= platform_curr_format($item->getPrice()*$item->getQty()) ?></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -93,7 +93,7 @@
                     <tbody>
                         <tr>
                             <td class="text-right"><strong><?=_('Subtotal').':' ?></strong></td>
-                            <td class="text-right"><?= platform_curr_format($cartInfo->getSubtotal()) ?></td>
+                            <td class="text-right"><?= platform_curr_format($cartInfo->getSubtotal()+$cartInfo->getPromoDiscTotal()) ?></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong><?=_('Shipping').':' ?></strong></td>
