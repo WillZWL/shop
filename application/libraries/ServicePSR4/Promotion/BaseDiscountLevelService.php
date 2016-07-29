@@ -94,11 +94,14 @@ class BaseDiscountLevelService
   			}
   		}
   		//set order first item add remain discount value
-  		if($remainDiscount=$discountAmount-$totalDiscount > 0){
-  			$i==1;
+    
+  		if($discountAmount!=$totalDiscount){
+
+        $remainDiscount=$discountAmount-$totalDiscount;
+  			$i=1;
   			foreach($this->_cart->items as $key=>$cartItem){
 	  			if($cartItem->getAmount() > 0 && $i==1){
-	  				$cartItem->setPromoDiscAmt($cartItem->getPromoDiscAmt()+$remainDiscount);
+            $cartItem->setPromoDiscAmt($cartItem->getPromoDiscAmt()+$remainDiscount);
 	  				$i++;
 	  				$this->_cart->items[$key]=$cartItem;
 	  				break;
