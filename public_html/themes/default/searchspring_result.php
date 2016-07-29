@@ -80,7 +80,7 @@
       return d;
     },
     afterResultsChange: function() {
-      
+
       SearchSpring.jQuery("#searchspring .panther-item .name").each(function() {
         var desc = SearchSpring.jQuery(this).text()
         if(desc.length > 300) {
@@ -105,12 +105,6 @@
                 SearchSpring.jQuery('#price_'+sku).text(price[1]);
                 SearchSpring.jQuery('#discount_'+sku).text(price[2]);
                 SearchSpring.jQuery('#stock_'+sku).text(price[3]);
-                if (price[4] == 'O' || price[4] == 'A') {
-                  //set product outstock
-                  SearchSpring.jQuery('.add_'+sku).css("cursor","not-allowed");
-                  SearchSpring.jQuery('.add_'+sku).removeAttr("onclick");
-                  SearchSpring.jQuery('#'+sku+" a").removeAttr("href");
-                }
               }
             }
           }
@@ -119,11 +113,11 @@
       var list_layout=SearchSpring.jQuery("#searchspring-list_result_layout");
       if(gird_layout.has("i").length ==0){
         gird_layout.append('<i class="fa fa-th"></i>');
-      } 
+      }
       if(list_layout.has("i").length ==0){
         list_layout.append('<i class="fa fa-th-list"></i>');
-      } 
-      
+      }
+
      /* SearchSpring.jQuery('.panther-item a').each(function() {
         var a = SearchSpring.jQuery(this).attr("href");
         SearchSpring.jQuery(this).attr("href", a.replace(/www.valuebasket\.(.+?)(\/<?=str_replace('/', '', $lang_country_pair)?>)?\//, 'm.valuebasket.com<?=($lang_country_pair == '' ? '/' : $lang_country_pair)?>'));
