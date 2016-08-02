@@ -163,7 +163,8 @@ class CheckoutModel extends \CI_Model
             $soObj = $this->_soFactoryService->getDao("So")->get(["so_no" => $soNo]);
 
             if ($soObj->getStatus() >= $option["status"]) {
-                if (($soObj->getCreateAt() == $_SERVER["REMOTE_ADDR"]) || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
+                if (($soObj->getCreateAt() == $_SERVER["REMOTE_ADDR"]) || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) 
+                {
                     if (isset($option["soItemDetail"])){
 
                         $soItemDetail = $this->_soFactoryService->getDao("SoItemDetail")->getItemsWithName(["so_no" => $soNo], ["limit" => -1]);

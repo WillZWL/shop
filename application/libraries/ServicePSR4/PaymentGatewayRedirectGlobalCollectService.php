@@ -10,15 +10,15 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
 
     private $_gcRequest;
 
-    public function __construct($debug = 0)
+    public function __construct($soObj = null, $debug = 0)
     {
-        parent::__construct($debug);
+        parent::__construct($soObj, $debug);
         $this->_gcRequest = new GlobalCollectRequest($debug);
     }
 
     private $_creditCheckAmountByCurrency = [
         "EUR" => 1500
-        , "USD" => 1500
+        , "GBP" => 1500
     ];
 
     public function getPaymentGatewayName()
@@ -28,7 +28,7 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
 
     public function getTechnicalSupportEmail()
     {
-        return "brave.liu@eservicesgroup.com";
+        return "oswald-alert@eservicesgroup.com,brave.liu@eservicesgroup.com";
     }
 
     public function prepareGetUrlRequest($paymentInfo = [], &$requestData)
@@ -36,7 +36,7 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
         $orderObj = $this->so;
         $this->client = $this->getClient();
         $soiList = $this->getDao('SoItemDetail')->getList(["so_no" => $orderObj->getSoNo()], ["limit" => -1]);
-
+        $this->_gcRequest->setMerchantId($this->so->getBillCountryId());
         $requestData = $this->_gcRequest->formPaymentXml(
                                                 $this->so,
                                                 $soiList,
@@ -78,33 +78,31 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
 
     public function getRedirectUrl($requestData, &$responseData)
     {
+        $redirectUrl = "";
         $errorMessage = "";
         $callResult = false;
         $siteDown = false;
 
         $trycount = 0;
-
         do {
             $output = $this->_gcRequest->submitRequest($requestData);
             $trycount++;
         } while (($trycount < 2) && (!empty($output["error"])));
 
         $this->sops = $this->getSoPaymentStatus();
-
         $extractedData = $this->xmlResponse($output["result"]);
         $this->sops->setMacToken($extractedData["mac_token"]);
         $this->so->setTxnId($extractedData["txn_id"] );
         $this->getDao('So')->update($this->so);
 
-        if (($output != "") && ($output["error"] == "")) {
+        if (($output != "") && ($output["error"] == "") && isset($extractedData["response_result"]) && $extractedData["response_result"] == "OK") {
             $responseData = $output["result"];
-            // $callResult = true;
-        } else if($output["result"] != "OK") {
+            $callResult = true;
+        } elseif (isset($extractedData["response_result"]) && $extractedData["response_result"] != "OK") {
             $errorMessage = "response result:" . $output["result"] . $output["error"] . " "
                             . $this->arrayImplode('=', ',', $output["info"]);
-
-            $responseData = $errorMessage;
             $siteDownErrorMessage = $errorMessage;
+            $responseData = $errorMessage;
             $siteDown = true;
         } else {
             $responseData = $output["error"] . " " . $this->arrayImplode('=', ',', $output["info"]);
@@ -115,13 +113,6 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
         }
 
         $redirectUrl = $extractedData["redirectUrl"];
-
-
-                print_r($requestData);
-                print_r($output);
-                print_r($extractedData);
-                die;
-
         return ["result" => $callResult
                 ,"errorMessageToClient" => $errorMessage
                 , "siteDown" => $siteDown
@@ -137,8 +128,8 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
 
     public function updatePendingList()
     {
-        $schedule_id = $this->getPendingScheduleId();
-        $sjobObj = $this->getDao('ScheduleJob')->get(["id" => $schedule_id, "status" => "1"]);
+        $scheduleId = $this->getPendingScheduleId();
+        $sjobObj = $this->getDao("ScheduleJob")->get(["schedule_job_id" => $scheduleId, "status" => "1"]);
         if ($sjobObj)
         {
             $last_access = $sjobObj->getLastAccessTime();
@@ -146,32 +137,36 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
             $timeShift = 60 * 30;
             $additionalShift = 60 * 90;
 //we need the additionalShift=90mins because we need to query last 2 hours pending orders
-            $start_time = strtotime($last_access) - $timeShift - $additionalShift;
-            $end_time = date('Y-m-d H:i:s');
-            $shiftedEndTime = date("Y-m-d H:i:s", (strtotime($end_time) - $timeShift));
+            $startTime = strtotime($last_access) - $timeShift - $additionalShift;
+            $endTime = date('Y-m-d H:i:s');
+            $shiftedEndTime = date("Y-m-d H:i:s", (strtotime($endTime) - $timeShift));
 
-            $sops_list = $this->getDao('SoPaymentStatus')->getList([
+//$shiftedEndTime = date("Y-m-d H:i:s");
+            $sopsList = $this->getDao("SoPaymentStatus")->getList([
                                         "payment_gateway_id" => $this->getPaymentGatewayName()
                                         , "payment_status" => "P"
                                         , "payment_status <> 'NA'" => null
-                                        , "create_on >" => date("Y-m-d H:i:s", $start_time)
+                                        , "create_on >" => date("Y-m-d H:i:s", $startTime)
                                         , "create_on <=" => $shiftedEndTime
                                     ],
                                     [
                                         "limit" => -1
                                     ]);
 
-            foreach($sops_list as $sops)
+            foreach($sopsList as $sops)
             {
+//                var_dump($sops->getSoNo());
                 $this->queryPaymentStatusInGeneral($sops->getSoNo());
             }
-            $sjobObj->setLastAccessTime($end_time);
-            $this->getDao('ScheduleJob')->update($sjobObj);
+            $sjobObj->setLastAccessTime($endTime);
+            $this->getDao("ScheduleJob")->update($sjobObj);
         }
     }
 
     private function _commonProcessStatus($soNumber, &$sops, &$socc)
     {
+        $this->so = $this->getSo($soNumber);
+        $this->_gcRequest->setMerchantId($this->so->getBillCountryId());
         $requestXml = $this->_gcRequest->formOrderStatusXml($soNumber);
         $this->getService("SoPaymentQueryLog")->addLog($soNumber, "O", $requestXml);
         $orderReuslt = $this->_gcRequest->submitRequest($requestXml);
@@ -229,8 +224,7 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
     public function queryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData) {
         return $this->processPaymentStatus(
             []
-            , ["transaction_id" => $inputParameters["transaction_id"]
-            , "soNo" => $inputParameters["so_no"]]
+            , ["transaction_id" => $inputParameters["transaction_id"], "soNo" => $inputParameters["so_no"]]
             , $soNo
             , $noUse
             , $noUse
@@ -245,21 +239,21 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
     {
         $txn_id = $getData["REF"];
         $mac = $getData["RETURNMAC"];
-        $this->so = $this->getDao('So')->getSoWithPmgw(["so.txn_id" => $txn_id, "sops.mac_token" => $mac], ["limit"=>1]);
+        if ($getData["transaction_id"]) {
+            $this->so = $this->getSo($getData["soNo"]);
+        } else {
+            $this->so = $this->getDao('So')->getSoWithPmgw(["so.txn_id" => $txn_id, "sops.mac_token" => $mac], ["limit"=>1]);
+        }
 
         $dataFromPmgw = $this->arrayImplode('=', ',', $getData);
         if ($this->so) {
             $soNumber = $this->so->getSoNo();
-
             return $this->_commonProcessStatus($soNumber, $sopsData, $soccData);
         } else {
             $message = $dataFromPmgw;
-
             $subject = $this->getPaymentGatewayName() . " Cannot get so_no";
-
             $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_GENERAL_LEVEL);
         }
-
         return PaymentGatewayRedirectService::PAYMENT_STATUS_FAIL;
     }
 
@@ -292,13 +286,13 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
             } else {
                 return false;
             }
-        } else if ($this->isEciLevelTwo($eci)) {
+        } else if ($this->isEciLevelTwo($eci) || $this->isEciLevelThree($eci)) {
             return true;
         }
 
-        return false;
+        return true;
     }
-
+/*
     public function isEciLevelOne($eci)
     {
         $eciArr = ['2', '02', '5', '05'];
@@ -320,10 +314,10 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
 
         return false;
     }
-
+*/
     public function isPaymentNeedCreditCheck($isFraud = false)
     {
-        return parent::isPaymentNeedCreditCheck3D($isFraud);
+        return $this->isPaymentNeedCreditCheck3D($isFraud);
     }
 
     public function isNeedDmService($isFraud = false)

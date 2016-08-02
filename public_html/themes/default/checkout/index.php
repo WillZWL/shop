@@ -268,7 +268,7 @@
             <div class="panel-body">
                 <div class="form-group required">
 <?php foreach ($paymentOption as $card):
-
+/*
       # debug
       if (
           ($_SERVER['HTTP_HOST'] != "dduk.dev"
@@ -280,6 +280,7 @@
         ) {
         continue;
       }
+*/
 ?>
                 <div style="float:left;padding-right:2px;">
                     <input id="<?=$card->getCardCode()?>" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">

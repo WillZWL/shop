@@ -26,8 +26,8 @@ class Checkout extends PUB_Controller
         if ((!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
             && $_SERVER['HTTP_HOST'] != "dduk.dev"
             && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk"
-            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk:8000"
-        ) {
+            && $_SERVER['HTTP_HOST'] != "os.digitaldiscount.co.uk"
+            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk:8000") {
             $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             if ($_SERVER['QUERY_STRING'] != "") {
                 $httpsUrl .= "?" . $_SERVER['QUERY_STRING'];
@@ -160,18 +160,16 @@ class Checkout extends PUB_Controller
 
                 $verifyData = $this->checkoutModel->verifyAndGetOrderDetails($result, $soNo, [$pagePar[$result]["option1"] => true, "status" => $pagePar[$result]["status"]]);
 
-                 $afInfo = $this->affiliateService->getAfRecord();
-
                 if ($verifyData["valid"]) {
                     $data["so"] = $verifyData["so"];
                     $data[$pagePar[$result]["option1"]] = $verifyData[$pagePar[$result]["option1"]];
-
-                        $data["tracking_data"]["affiliate_name"] = $afInfo["af"];
-                        $data["tracking_data"]["total_amount"] = $data["so"]->getAmount();
-                        $data["tracking_data"]["so"] = $data["so"];
-                        $data["tracking_data"]["soi"] = $verifyData["soItemDetail"];
-                        $data["tracking_data"]["sops"] = $verifyData["soPaymentStatus"];
-                        $data["tracking_data"]["client_email"] = $verifyData["client"]->getEmail();
+                    $afInfo = $this->affiliateService->getAfRecord();
+                    $data["tracking_data"]["affiliate_name"] = $afInfo["af"];
+                    $data["tracking_data"]["total_amount"] = $data["so"]->getAmount();
+                    $data["tracking_data"]["so"] = $data["so"];
+                    $data["tracking_data"]["soi"] = $verifyData["soItemDetail"];
+                    $data["tracking_data"]["sops"] = $verifyData["soPaymentStatus"];
+                    $data["tracking_data"]["client_email"] = $verifyData["client"]->getEmail();
 
                     $this->affiliateService->removeAfRecord();
                     $this->load->view("checkout/" . $pagePar[$result]["view"], $data);

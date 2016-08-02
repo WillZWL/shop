@@ -3,13 +3,16 @@ namespace ESG\Panther\Service\GlobalCollect;
 
 class GlobalCollectRequest
 {
-    const MERCHANTID = "8364";
-    const MOTO_MERCHANTID = "8365";
+//    const MERCHANTID = "8364";
+//    const MOTO_MERCHANTID = "8365";
     const OURSERVERIP = "78.136.35.99";
     const DEBUG_OURSERVERIP = "219.76.190.140";
     const PAYMENT_SERVER = "ps.gcsip.com/wdl/wdl";
     const DEBUG_PAYMENT_SERVER = "ps.gcsip.nl/wdl/wdl";
 
+    public $_acct = ["GB" => "510"
+                    , "ES" => "509"
+                    , "FR" => "511"];
     public $debug;
     public $_merchantId;
     public $_ourServerIp;
@@ -22,7 +25,6 @@ class GlobalCollectRequest
     public function __construct($debug = 0)
     {
         $this->debug = $debug;
-        $this->_merchantId = self::MERCHANTID;
 
         if ($this->debug)
         {
@@ -38,17 +40,19 @@ class GlobalCollectRequest
 //      $this->_ourServerIp = self::OURSERVERIP;
 //error_log($this->_ourServerIp);
 //error_log($this->_server);
-
     }
-
+/*
     public function useMotoMerchantId()
     {
         $this->_merchantId = self::MOTO_MERCHANTID;
     }
-
-    public function setMerchantId($merchantId)
+*/
+    public function setMerchantId($countryId)
     {
-        $this->_merchantId = $merchantId;
+        if ($this->debug)
+            $this->_merchantId = $this->_acct["ES"];
+        else
+            $this->_merchantId = $this->_acct[$countryId];
     }
 
     public function submitRequest($data)
@@ -76,7 +80,6 @@ class GlobalCollectRequest
         $this->_curlError = curl_error($ch);
         $this->_curlInfo = curl_getinfo($ch);
         curl_close($ch);
-
         return ["error" => $this->_curlError, "info" => $this->_curlInfo, "result" => $this->curlResult];
     }
 
@@ -119,8 +122,7 @@ class GlobalCollectRequest
             }
         }
 
-$xml  = "
-<XML>
+$xml  = "<XML>
     <REQUEST>
         <ACTION>INSERT_ORDERWITHPAYMENT</ACTION>
         <META>
@@ -189,7 +191,7 @@ $xml  = "
 ";
 
         return $xml;
-
+/*
         $xml = new \SimpleXMLElement('<XML/>');
 
         $request = $xml->addChild('REQUEST');
@@ -250,6 +252,7 @@ $xml  = "
         $payment->addChild('HOSTEDINDICATOR', 1);
 
         return $xml->asXML();
+*/
     }
 
     public function formOrderStatusXml($soNo)
