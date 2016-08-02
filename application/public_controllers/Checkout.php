@@ -133,6 +133,17 @@ class Checkout extends PUB_Controller
         mail("oswald-alert@eservicesgroup.com", $subject, $message, "From: website@digitaldiscount.co.uk\r\n");
     }
 
+	public function paymentResultTop($result, $soNo = "")
+	{
+		if ($_SERVER["QUERY_STRING"])
+			$queryString = "?" . $_SERVER["QUERY_STRING"];
+		else
+			$queryString = "";
+
+		$data["url"] = "/checkout/payment-result/" . $result . "/" . $soNo . $queryString;
+        $this->load->view('checkout/paymentResultTop', $data);
+	}
+
     public function paymentResult($result, $soNo = "")
     {
 

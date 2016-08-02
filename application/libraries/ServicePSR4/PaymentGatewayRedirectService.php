@@ -555,6 +555,18 @@ implements PaymentGatewayRedirectServiceInterface
             }
         }
     }
+
+    public function sendInternalPaymentSuccessEmail($soObj)
+    {
+        if ($soObj->getPaymentGatewayId() == "global_collect") {
+            $email = "globalcollect@chatandvision.com, oswald-alert@eservicesgroup.com";
+            $subject = "GlobalCollect Payment received";
+            $content = "Gateway:" . $soObj->getPaymentGatewayName . "\r\n";
+            $content .= "Amount:" . $soObj->getAmount() . " " . $soObj->getCurrencyId() . "\r\n";
+            mail($email, $subject, $content, "From: website@digitaldiscount.co.uk");
+        }
+    }
+
     public function sendConfirmationEmail($soObj = null, $getEmailHtml = FALSE)
     {
         $eventService = new EventService();
@@ -563,7 +575,7 @@ implements PaymentGatewayRedirectServiceInterface
         {
             $soObj = $this->so;
         }
-
+        $this->sendInternalPaymentSuccessEmail($soObj);
         $platformId = $soObj->getPlatformId();
 //        $pbvObj = $this->platformBizVarService->get(array("selling_platform_id" => $platformId));
         $soSrv = $this->getService("SoFactory");
@@ -715,6 +727,14 @@ implements PaymentGatewayRedirectServiceInterface
 		return implode($separator, $string);
 	}
 
+    protected function getSuccessfulUrlTop($soNo = null)
+    {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result-top/1/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        return $url;
+    }
+
     protected function getSuccessfulUrl($soNo = null)
     {
         if ((!$soNo) && ($this->so))
@@ -731,11 +751,27 @@ implements PaymentGatewayRedirectServiceInterface
         return $url;
     }
 
+    protected function getFailUrlTop($soNo = null)
+    {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result-top/0/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        return $url;
+    }
+
     protected function getFailUrl($soNo = null)
     {
         if ((!$soNo) && ($this->so))
             $soNo = $this->so->getSoNo();
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/0/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        return $url;
+    }
+
+    protected function getCancelUrlTop($soNo = null)
+    {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout" . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 
