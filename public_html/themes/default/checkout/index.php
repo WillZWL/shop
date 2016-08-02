@@ -295,7 +295,9 @@
                     <div class="pull-right">
                         <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
                         <input type="hidden" name="cybersourceFingerprint" id='cybersourceFingerprint' value="<?=$cybersourceFingerprint;?>">
+<?php if ($paymentOption): ?>
                         <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" name="checkoutNow" id="checkoutNow" value="<?=_("Continue")?>" />
+<?php endif; ?>
                     </div>
                 </div>
                 </div>
