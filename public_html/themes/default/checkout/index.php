@@ -267,39 +267,32 @@
           <div class="panel-collapse collapse" id="collapse-payment-method">
             <div class="panel-body">
                 <div class="form-group required">
+                    <div id="paymentOptionRow">
 <?php foreach ($paymentOption as $card):
-/*
-      # debug
-      if (
-          ($_SERVER['HTTP_HOST'] != "dduk.dev"
-            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk"
-            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk:8000"
-          ) && (
-            $card->getPaymentGatewayId() == 'global_collect'
-          )
-        ) {
-        continue;
-      }
-*/
 ?>
-                <div style="float:left;padding-right:2px;">
-                    <input id="<?=$card->getCardCode()?>" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">
-                    <?php print "<img alt='" . $card->getCardName() . "' title='" . $card->getCardName() . "' src='" . $card->getCardImage() . "'/>"; ?>
-                </div>
+                        <div style="float:left;padding-right:2px;">
+                            <input id="<?=$card->getCardCode()?>" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">
+                            <?php print "<img alt='" . $card->getCardName() . "' title='" . $card->getCardName() . "' src='" . $card->getCardImage() . "'/>"; ?>
+                        </div>
 <?php endforeach ?>
 <?php if (!$paymentOption): ?>
 <?php print _("Please contact our CS!")?>
 <?php endif; ?>
-                <div class="clearfix" />
-                <div class="buttons">
-                    <div class="pull-right">
-                        <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
-                        <input type="hidden" name="cybersourceFingerprint" id='cybersourceFingerprint' value="<?=$cybersourceFingerprint;?>">
-<?php if ($paymentOption): ?>
-                        <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" name="checkoutNow" id="checkoutNow" value="<?=_("Continue")?>" />
-<?php endif; ?>
+                        <div class="clearfix" />
+                        <div class="buttons">
+                            <div class="pull-right">
+                                <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
+                                <input type="hidden" name="cybersourceFingerprint" id='cybersourceFingerprint' value="<?=$cybersourceFingerprint;?>">
+        <?php if ($paymentOption): ?>
+                                <input type="submit" class="btn btn-primary" data-loading-text="<?=_("Loading...")?>" name="checkoutNow" id="checkoutNow" value="<?=_("Continue")?>" />
+        <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div id="paymentGatewayBlock">
+                    <iframe id="paymentFrame" name="paymentFrame" style="position:relative;width:100%;height:100%" src="about:blank" frameborder="0" scrolling="auto" />
+                    </iframe>
                 </div>
             </div>
           </div>
@@ -408,10 +401,17 @@ function checkRemoteSurcharge()
     });
 }
 
+function displayPaymentOptionCard()
+{
+    $("#paymentOptionRow").show();
+    $("#paymentFrame").hide();
+}
+
 function activatedBlock(obj, hideBlock)
 {
     if (obj.attr("id") == "payment-method-header") {
         checkRemoteSurcharge();
+        displayPaymentOptionCard();
     }
     $(".accordion-toggle").addClass("collapsed");
     $(".in").removeClass("in");
@@ -566,6 +566,14 @@ function validateLogin()
             displayLoginButton(1);
         });
     });
+}
+
+function loadPaymentGatewayFrame(url)
+{
+    $("#paymentOptionRow").hide();
+    $("#paymentFrame").attr("src", url);
+    $("#paymentFrame").show();
+    $("#paymentFrame").attr("style", "position:relative;width:500px;height:600px");
 }
 
 function poBoxValidate(value, validator) {
@@ -784,8 +792,8 @@ function validateCheckout()
         })
         .done(function(data) {
             standardWaitingScreen.hidePleaseWait();
-            displayCheckoutNowButton(1);
             if (data.hasOwnProperty("error") && (data.error < 0)) {
+                displayCheckoutNowButton(1);
                 errorMessage = "";
                 if (data.hasOwnProperty("validInput") && !data.validInput) {
                     jQuery.each(data.errorMessage, function(i, val) {
@@ -800,9 +808,15 @@ function validateCheckout()
                 }
                 if (errorMessage != "")
                     alert(errorMessage);
+            } else {
+                if (data.useIframe) {
+                    loadPaymentGatewayFrame(data.url)
+                    displayCheckoutNowButton(0);
+                } else {
+                    displayCheckoutNowButton(1);
+                    location.href = data.url;
+                }
             }
-            else
-                location.href = data.url;
         })
         .fail(function(data) {
             displayCheckoutNowButton(1);

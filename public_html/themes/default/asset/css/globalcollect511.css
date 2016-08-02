@@ -61,3 +61,8 @@ td
 	color: #FFFFFF;
 	border-color: #00AFF0;
 }
+
+#btnCancel
+{
+	display: none;
+}

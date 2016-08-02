@@ -457,6 +457,10 @@ class PaymentGatewayRedirectMoneybookersService extends PaymentGatewayRedirectSe
         ];
         return $reason[$code];
     }
+
+    public function useIframe() {
+        return false;
+    }
 }
 
 
