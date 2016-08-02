@@ -153,7 +153,7 @@ implements PaymentGatewayRedirectServiceInterface
                     $this->sendAlert($subject, $message, $this->getTechnicalSupportEmail(), BaseService::ALERT_HAZARD_LEVEL);
                     return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
                 }
-                return ["url" => $redirectUrl, "error" => 0];
+                return ["url" => $redirectUrl, "error" => 0, "useIframe" => $this->useIframe()];
             }
         }
         return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
