@@ -5,7 +5,7 @@ use ESG\Panther\Service\GlobalCollect\GlobalCollectRequest;
 
 class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectService
 {
-    const PAYMENT_PENDING = 600
+    const PAYMENT_PENDING = 600;
     const PAYMENT_CAPTURE = 800;
     const PAYMENT_CANCEL = 99999;
 
