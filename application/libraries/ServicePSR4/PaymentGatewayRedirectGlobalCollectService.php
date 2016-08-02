@@ -201,7 +201,7 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
                 if ($resp_ccno != "")
                     $socc["card_last4"] = ltrim($resp_ccno, "*");
 
-                if (($resp_statusid >= self::PAYMENT_PENDING) && ($resp_statusid != self::PAYMENT_CANCEL)) {
+                if (($resp_statusid >= self::PAYMENT_CAPTURE) && ($resp_statusid != self::PAYMENT_CANCEL)) {
                     $sops["pending_action"] = "NA";
                     $sops["remark"] = "status:processed";
 
@@ -260,7 +260,7 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
 
     public function processFailureAction()
     {
-        header("Location:" . $this->getFailUrl());
+        header("Location:" . $this->getFailUrlTop());
         exit;
     }
 
@@ -328,6 +328,11 @@ class PaymentGatewayRedirectGlobalCollectService extends PaymentGatewayRedirectS
 
     public function useIframe() {
         return true;
+    }
+
+    public function processSuccessAction() {
+        header("Location:" . $this->getSuccessfulUrlTop($this->so->getSoNo()));
+        exit;
     }
 }
 
