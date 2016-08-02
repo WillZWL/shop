@@ -255,6 +255,29 @@ $xml  = "<XML>
 */
     }
 
+    public function formSetPaymentXml($soNo, $cardId)
+    {
+        $xml =
+"<XML>
+	<REQUEST>
+		<ACTION>SET_PAYMENT</ACTION>
+		<META>
+			<MERCHANTID>{$this->_merchantId}</MERCHANTID>
+			<IPADDRESS>{$this->_ourServerIp}</IPADDRESS>
+			<VERSION>1.0</VERSION>
+		</META>
+		<PARAMS>
+			<PAYMENT>
+				<ORDERID>" . $soNo . "</ORDERID>
+				<PAYMENTPRODUCTID>" . $cardId . "</PAYMENTPRODUCTID>
+				<EFFORTID>1</EFFORTID>
+			</PAYMENT>
+		</PARAMS>
+	</REQUEST>
+</XML>";
+        return $xml;
+    }
+
     public function formOrderStatusXml($soNo)
     {
         $xml =
