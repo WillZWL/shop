@@ -561,7 +561,8 @@ implements PaymentGatewayRedirectServiceInterface
         if ($soObj->getPaymentGatewayId() == "global_collect") {
             $email = "globalcollect@chatandvision.com, oswald-alert@eservicesgroup.com";
             $subject = "GlobalCollect Payment received";
-            $content = "Gateway:" . $soObj->getPaymentGatewayName . "\r\n";
+            $content = "PlatformId:" . $soObj->getPlatformId() . "\r\n";
+            $content = "Gateway:" . $soObj->getPaymentGatewayId() . "\r\n";
             $content .= "Amount:" . $soObj->getAmount() . " " . $soObj->getCurrencyId() . "\r\n";
             mail($email, $subject, $content, "From: website@digitaldiscount.co.uk");
         }
