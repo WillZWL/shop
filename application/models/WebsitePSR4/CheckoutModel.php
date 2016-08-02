@@ -163,7 +163,8 @@ class CheckoutModel extends \CI_Model
             $soObj = $this->_soFactoryService->getDao("So")->get(["so_no" => $soNo]);
 
             if ($soObj->getStatus() >= $option["status"]) {
-                if (($soObj->getCreateAt() == $_SERVER["REMOTE_ADDR"]) || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) {
+                if (($soObj->getCreateAt() == $_SERVER["REMOTE_ADDR"]) || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) 
+                {
                     if (isset($option["soItemDetail"])){
 
                         $soItemDetail = $this->_soFactoryService->getDao("SoItemDetail")->getItemsWithName(["so_no" => $soNo], ["limit" => -1]);
@@ -203,8 +204,8 @@ class CheckoutModel extends \CI_Model
     }
 
     private function _createPaymentGatewayRedirectService($paymentGatewayId, $soObj, $debug = 0) {
-        $classname = "ESG\Panther\Service\PaymentGatewayRedirect" . ucfirst(strtolower($paymentGatewayId)) . "Service";
-        if (file_exists(APPPATH . "/libraries/ServicePSR4/PaymentGatewayRedirect" . ucfirst(strtolower($paymentGatewayId)) . "Service.php")) {
+        $classname = "ESG\Panther\Service\PaymentGatewayRedirect" . ucfirst(underscore2camelcase($paymentGatewayId)) . "Service";
+        if (file_exists(APPPATH . "/libraries/ServicePSR4/PaymentGatewayRedirect" . ucfirst(underscore2camelcase($paymentGatewayId)) . "Service.php")) {
             $gatewayRedirectService = new $classname($soObj, $debug);
             return $gatewayRedirectService;
         }

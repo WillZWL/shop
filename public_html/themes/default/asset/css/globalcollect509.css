@@ -1,0 +1,63 @@
+#pageGetMissingData
+{
+	font-family:arial,sans-serif;
+	margin: 10px;
+}
+
+.ORB_INSTRUCTIONS
+{
+	display: none;
+}
+
+#MANDATORY_F1009, #MANDATORY_F1010, #MANDATORY_F1136
+{
+	color: #FF0000;
+}
+
+.Normal
+{
+	float:right;
+	margin-left: 4px;
+}
+
+.ORB_INPUT, .ORB_SELECT
+{
+	background: #FFFFFF;
+}
+
+input:focus
+{
+	border: 1px groove #3D7BAD;
+}
+
+td
+{
+	padding:4px;
+}
+
+#F1010_MM, #F1136
+{
+	margin-right:4px;
+}
+
+#F1010_MM, #F1010_YY
+{
+	width: 60px;
+}
+
+#F1136, #F1011
+{
+	width: 40px;
+}
+
+.ORB_BUTTONELEMENT
+{
+	margin-left:4px;
+}
+
+.ORB_BUTTON
+{
+	background: #34BFF3;
+	color: #FFFFFF;
+	border-color: #00AFF0;
+}

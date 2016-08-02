@@ -932,7 +932,6 @@ SQL;
         $this->db->join('so_payment_status AS sops', 'so.so_no = sops.so_no', 'INNER');
         $this->db->where($where);
         if (empty($option["num_rows"])) {
-            $this->include_vo();
             $this->db->select('so.*');
             if (isset($option["orderby"])) {
                 $this->db->order_by($option["orderby"]);
@@ -2697,7 +2696,7 @@ SQL;
         $this->db->from("so");
         $this->db->join("so_extend soex", "so.so_no = soex.so_no", "INNER");
         $this->db->where(["so.status" => 1, "soex.acked" => "Y"]);
-        $this->include_vo();
+
         return $this->common_get_list($where, $option, $this->getVoClassname(), "so.*");
     }
 
@@ -3483,7 +3482,6 @@ SQL;
     public function get_no_finance_dispatch_order($where, $option)
     {
         $this->db->from("so");
-        $this->include_vo();
 
         return $this->common_get_list($where, $option, "so_vo", "so.so_no, so.platform_id, so.create_on, so.dispatch_date");
     }
