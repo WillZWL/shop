@@ -89,4 +89,9 @@ interface PaymentGatewayRedirectServiceInterface
     public function isNeedDmService($isFraud = false);
     
     public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw);
+    /***********************************
+    *   useIframe
+    *   return true or false
+    ************************************/
+    public function useIframe();
 }

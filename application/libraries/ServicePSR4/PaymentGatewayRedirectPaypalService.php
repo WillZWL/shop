@@ -441,6 +441,10 @@ class PaymentGatewayRedirectPaypalService extends PaymentGatewayRedirectService
             return $this->_ppAcct["paypalUrl"];
         }    
     }
+
+    public function useIframe() {
+        return false;
+    }
 }
 
 

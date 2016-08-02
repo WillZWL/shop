@@ -28,4 +28,7 @@ class PaymentGatewayRedirectAdapter extends PaymentGatewayRedirectService {
     }
     public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw) {
     }
+    public function useIframe() {
+        return false;
+    }
 }
