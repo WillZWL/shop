@@ -9,7 +9,7 @@ class CronUpdatePendingList extends MY_Controller
         parent::__construct();
     }
 
-    public function index($pmgw = "globalCollect", $debug = 0)
+    public function index($pmgw = "GlobalCollect", $debug = 0)
     {
         $gatewayServieName = "\ESG\Panther\Service\PaymentGatewayRedirect" . ucfirst($pmgw) . "Service";
         $gatewayObj = new $gatewayServieName(null, $debug);

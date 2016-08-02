@@ -140,10 +140,10 @@ implements PaymentGatewayRedirectServiceInterface
                 return $this->checkoutFailureHandler($messageToUser, $callResult["siteDown"]);
             } else {
                 $this->sops = $this->getSoPaymentStatus();
-                if ($orderFormInfo["paymentGatewayId"] == 'w_bank_transfer') {
-                    $this->sops->setPaymentStatus('N');
+                if ($orderFormInfo["paymentGatewayId"] == "w_bank_transfer") {
+                    $this->sops->setPaymentStatus("N");
                 } else {
-                    $this->sops->setPaymentStatus('P');
+                    $this->sops->setPaymentStatus("P");
                 }
 
                 $updateResult = $this->getService("SoFactory")->getDao("SoPaymentStatus")->update($this->sops);
@@ -364,6 +364,31 @@ implements PaymentGatewayRedirectServiceInterface
         $this->_unsetVariable();
 //debug
 //    print $this->sendConfirmationEmail($this->so, true);
+    }
+
+    public function isEciLevelOne($eci)
+    {
+        if (($eci == "05") || ($eci == "02") 
+            || ($eci == "5") || ($eci == "2"))
+            return true;
+        return false;
+    }
+
+    public function isEciLevelTwo($eci)
+    {
+        if (($eci == "06")	|| ($eci == "01")
+            || ($eci == "6")	|| ($eci == "1")) 
+            return true;
+        return false;
+    }
+
+    public function isEciLevelThree($eci)
+    {
+        if (($eci == "07")	|| ($eci == "00") 
+            || ($eci == "7") || ($eci == "0")
+            || is_null($eci) || ($eci == ""))
+            return true;
+        return false;
     }
 
     private function _unsetVariable()

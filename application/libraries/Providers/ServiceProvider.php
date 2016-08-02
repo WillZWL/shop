@@ -610,5 +610,9 @@ class ServiceProvider implements ServiceProviderInterface
             return new S\InventoryService();
         };
 
+        $serviceContainer['PaymentGatewayRedirectGlobalCollect'] = function () {
+            return new S\PaymentGatewayRedirectGlobalCollectService();
+        };
+
     }
 }

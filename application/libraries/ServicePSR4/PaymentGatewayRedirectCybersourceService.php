@@ -109,7 +109,7 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
                         $this->getService("SoFactory")->getDao("So")->update($this->so);
                         mail("compliance@digitaldiscount.co.uk", 'DM REJECT [Panther]:' . $soNo, $saveText, 'From: website@digitaldiscount.co.uk');
                     } else {
-                        $needCreditChecks = $this->_needCreditCheckAfterDm($paymentResult['decision'], $afsReply['afsResult']);
+                        $needCreditChecks = $this->_needCreditCheckAfterDm($this->so, $paymentResult['decision'], $afsReply['afsResult']);
                     }
                     if ($needCreditChecks === FALSE) {
                         $this->so->setStatus(3);
@@ -139,8 +139,21 @@ class PaymentGatewayRedirectCybersourceService extends PaymentGatewayRedirectAda
         mail($this->getTechnicalSupportEmail(), $subject, $message, 'From: website@valuebasket.com');
     }
 
-    private function _needCreditCheckAfterDm($decision, $score)
+    private function _needCreditCheckAfterDm($soObj, $decision, $score)
     {
+        if ($soObj && ($soObj->getPaymentGatewayId() == "global_collect")) {
+            $this->sops = $this->getService("SoFactory")->getDao("SoPaymentStatus")->get(["so_no" => $soObj->getSoNo()]);
+            if ($this->sops) {
+                return $this->_needCreditCheckAfterDmGlobalCollect($soObj, $this->sops, $decision, $score);
+            }
+        }
+        return true;
+    }
+
+    private function _needCreditCheckAfterDmGlobalCollect($soObj, $sopsObj, $decision, $score)
+    {
+        if ($this->isEciLevelOne($sopsObj->getRiskRef4()) && $score < 20)
+            return false;
         return true;
     }
 

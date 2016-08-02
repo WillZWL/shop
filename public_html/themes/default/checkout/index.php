@@ -267,7 +267,21 @@
           <div class="panel-collapse collapse" id="collapse-payment-method">
             <div class="panel-body">
                 <div class="form-group required">
-<?php foreach ($paymentOption as $card): ?>
+<?php foreach ($paymentOption as $card):
+/*
+      # debug
+      if (
+          ($_SERVER['HTTP_HOST'] != "dduk.dev"
+            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk"
+            && $_SERVER['HTTP_HOST'] != "dev.digitaldiscount.co.uk:8000"
+          ) && (
+            $card->getPaymentGatewayId() == 'global_collect'
+          )
+        ) {
+        continue;
+      }
+*/
+?>
                 <div style="float:left;padding-right:2px;">
                     <input id="<?=$card->getCardCode()?>" type="radio" name="paymentCard" value="<?php print $card->getCardCode() . "%%" . $card->getCardId() . "%%" . $card->getPaymentGatewayId()?>">
                     <?php print "<img alt='" . $card->getCardName() . "' title='" . $card->getCardName() . "' src='" . $card->getCardImage() . "'/>"; ?>
