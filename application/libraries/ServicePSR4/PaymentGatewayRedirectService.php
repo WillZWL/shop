@@ -559,12 +559,13 @@ implements PaymentGatewayRedirectServiceInterface
     public function sendInternalPaymentSuccessEmail($soObj)
     {
         if ($soObj->getPaymentGatewayId() == "global_collect") {
-            $email = "globalcollect@chatandvision.com, oswald-alert@eservicesgroup.com";
+            $email = "globalcollect@chatandvision.com";
             $subject = "GlobalCollect Payment received";
-            $content = "PlatformId:" . $soObj->getPlatformId() . "\r\n";
-            $content = "Gateway:" . $soObj->getPaymentGatewayId() . "\r\n";
+            $content = "Platform Id:" . $soObj->getPlatformId() . "\r\n";
+            $content .= "Order number:" . $soObj->getSoNo() . "\r\n";
+            $content .= "Gateway:" . $soObj->getPaymentGatewayId() . "\r\n";
             $content .= "Amount:" . $soObj->getAmount() . " " . $soObj->getCurrencyId() . "\r\n";
-            mail($email, $subject, $content, "From: website@digitaldiscount.co.uk");
+            mail($email, $subject, $content, "From: website@digitaldiscount.co.uk\r\n");
         }
     }
 
