@@ -10,8 +10,8 @@ class GoogleConnectService extends BaseService
 */
     const PRODUCT_SHOPPING_CHANNEL = "online";
 //    private $clientId = '110619035985876631175'; //Client ID, no use
-    private $_serviceAccountName = "account-2@ethereal-terra-114508.iam.gserviceaccount.com"; //Email Address
-    private $_keyFileLocation = "/var/www/html/key/GoogleContentApi-a0754173747d.p12"; //key.p12
+    private $_serviceAccountName = "panther-content-api@tribal-terra-139205.iam.gserviceaccount.com"; //Email Address
+    private $_keyFileLocation = "/var/www/html/key/GoogleContentAPI-d2e7b03d252e.p12"; //key.p12
 
     public function __construct() {
 		if (getenv("APPLICATION_ENV") == "dev") {
