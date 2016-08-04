@@ -14,6 +14,7 @@ class ClwmsService extends BaseService
         set_time_limit(0);
 
         $where['pt.type_id is NUll'] = null;
+        $where["so.payment_gateway_id <> 'moneybookers'"] = null;
         $so_list = $this->getDao('So')->getSalesOrder($where, $option);
 
         if ($so_list !== FALSE) {
@@ -49,6 +50,7 @@ class ClwmsService extends BaseService
                     $xml[] = '<retailer_order_reference>' . $so['so_no'] . '</retailer_order_reference>';
                     $xml[] = '<biz_type>' . $so['biz_type'] . '</biz_type>';
                     $xml[] = '<platform_id>' . $so['platform_id'] . '</platform_id>';
+                    $xml[] = '<payment_gateway_id>' . $so['payment_gateway_id'] . '</payment_gateway_id>';
                     $xml[] = '<purchased_date>' . $so['order_create_date'] . '</purchased_date>';
                     $xml[] = '<name><![CDATA[' . $so['name'] . ']]></name>';
                     $xml[] = '<address><![CDATA[' . $so['delivery_address'] . ']]></address>';
