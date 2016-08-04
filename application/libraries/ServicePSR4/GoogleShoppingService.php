@@ -66,7 +66,7 @@ class GoogleShoppingService extends BaseService
 //get the product from google to modify
                 $getProductResult = $googleConnect->getProduct($accountId, $requestData["productId"]);
                 if ($getProductResult["status"] == TRUE) {
-                    $getProductResult["gscDataObj"]->setTitle($input["item_title"]);                  
+                    $getProductResult["gscDataObj"]->setTitle($input["item_title"]);
                     return $googleConnect->insertProduct($accountId, $getProductResult["gscDataObj"]);
                 }
             }
@@ -349,9 +349,9 @@ class GoogleShoppingService extends BaseService
         $this->updateGoogleShoppingItem($platformId, $sku);
     }
 /***************************************************************
-**  updateGoogleShoppingItem 
+**  updateGoogleShoppingItem
 **  This function will insert record into pending_google_api_request
-**  Another process(CronUpdatePriceMargin/processGoogleApiRequest) = GoogleShoppingService->sendBatchRequestToGoogle will get all the data inside and send to google 
+**  Another process(CronUpdatePriceMargin/processGoogleApiRequest) = GoogleShoppingService->sendBatchRequestToGoogle will get all the data inside and send to google
 ****************************************************************/
     public function updateGoogleShoppingItem($platformId = "", $sku = "") {
         $this->getService("PendingGoogleApiRequest")->getDao("PendingGoogleApiRequest")->insertGoogleShoppingDataForBatch($platformId, $sku);
@@ -405,7 +405,13 @@ class GoogleShoppingService extends BaseService
         $processingList = $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->getList($where, ["limit" => -1]);
         if (($processingList) && !is_array($processingList))
             $processingList = [$processingList];
-        $googleConnect = $this->getService("GoogleConnect");
+
+        try {
+            $googleConnect = $this->getService("GoogleConnect");
+        } catch (Exception $e) {
+             $this->_sendAlert("[Panther] Cannot get GoogleConnect", $e->getMessage());
+        }
+
         if ($processingList) {
             $i = 0; //will be the entry ID
             do {
@@ -429,7 +435,7 @@ class GoogleShoppingService extends BaseService
             if ($updateToPriceResult === false) {
                 $this->_sendAlert("[Panther] cannot update price", $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
             }
-            
+
             $this->sendRequestResultToUser($batchId);
         } else {
             $this->_sendAlert("[Panther] batch has no data, batch_id:" . $batchId, $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->last_query() . ", error:". $this->getService("GoogleApiRequest")->getDao("GoogleApiRequest")->db->error()["message"]);
