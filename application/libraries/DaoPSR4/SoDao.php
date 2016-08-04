@@ -3552,6 +3552,7 @@ SQL;
                        so.refund_status,
                        so.status,
                        so.rec_courier,
+                       so.payment_gateway_id,
                        sps.score
                        ';
 
