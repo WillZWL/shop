@@ -163,7 +163,7 @@ class CheckoutModel extends \CI_Model
             $soObj = $this->_soFactoryService->getDao("So")->get(["so_no" => $soNo]);
 
             if ($soObj->getStatus() >= $option["status"]) {
-                if (($soObj->getCreateAt() == $_SERVER["REMOTE_ADDR"]) || (isset($_GET["debug"]) && ($_GET["debug"] == 1))) 
+                if (($soObj->getCreateAt() == $_SERVER["REMOTE_ADDR"]) || (isset($_GET["debug"]) && ($_GET["debug"] == 1)))
                 {
                     if (isset($option["soItemDetail"])){
 
@@ -187,6 +187,10 @@ class CheckoutModel extends \CI_Model
     }
 
     public function getPaymentOption($platformId, $cartAmount) {
+        return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId, $cartAmount);
+    }
+
+    public function getBankTransferOption($platformId, $cartAmount) {
         return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId, $cartAmount);
     }
 

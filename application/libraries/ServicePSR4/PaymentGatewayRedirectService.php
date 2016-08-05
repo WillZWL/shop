@@ -368,7 +368,7 @@ implements PaymentGatewayRedirectServiceInterface
 
     public function isEciLevelOne($eci)
     {
-        if (($eci == "05") || ($eci == "02") 
+        if (($eci == "05") || ($eci == "02")
             || ($eci == "5") || ($eci == "2"))
             return true;
         return false;
@@ -377,14 +377,14 @@ implements PaymentGatewayRedirectServiceInterface
     public function isEciLevelTwo($eci)
     {
         if (($eci == "06")	|| ($eci == "01")
-            || ($eci == "6")	|| ($eci == "1")) 
+            || ($eci == "6")	|| ($eci == "1"))
             return true;
         return false;
     }
 
     public function isEciLevelThree($eci)
     {
-        if (($eci == "07")	|| ($eci == "00") 
+        if (($eci == "07")	|| ($eci == "00")
             || ($eci == "7") || ($eci == "0")
             || is_null($eci) || ($eci == ""))
             return true;
@@ -766,6 +766,14 @@ implements PaymentGatewayRedirectServiceInterface
         if ((!$soNo) && ($this->so))
             $soNo = $this->so->getSoNo();
         $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/0/" . $soNo . (($this->debug) ? "?debug=1" : "");
+        return $url;
+    }
+
+    protected function getBankTransferUrl($soNo = null)
+    {
+        if ((!$soNo) && ($this->so))
+            $soNo = $this->so->getSoNo();
+        $url = "https://" . $_SERVER['HTTP_HOST'] . "/checkout/payment-result/5/" . $soNo . (($this->debug) ? "?debug=1" : "");
         return $url;
     }
 

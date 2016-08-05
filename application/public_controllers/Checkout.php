@@ -155,6 +155,10 @@ class Checkout extends PUB_Controller
                         ["option1" => "soPaymentStatus"
                         ,  "view" => "paymentReview"
                         ,  "status" => "1"]
+                    , 5 => //review
+                        ["option1" => "BankTransfer"
+                        ,  "view" => "paymentBankTransfer"
+                        ,  "status" => "1"]
                     , 0 => //fail
                         ["option1" => ""
                         ,  "view" => "paymentFail"
@@ -162,6 +166,7 @@ class Checkout extends PUB_Controller
         $data = [];
         if (($result == 1)
             || ($result == 4)
+            || ($result == 5)
             || ($result == 0)) {
 //Success
             if ($soNo == "") {
