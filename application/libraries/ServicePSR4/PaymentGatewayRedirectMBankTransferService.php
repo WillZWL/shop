@@ -1,6 +1,5 @@
 <?php
 namespace ESG\Panther\Service;
-use ESG\Panther\Service\Paypal\PaypalRequest;
 
 class PaymentGatewayRedirectMBankTransferService extends PaymentGatewayRedirectService
 {
