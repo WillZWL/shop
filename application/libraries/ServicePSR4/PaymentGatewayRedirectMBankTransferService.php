@@ -33,11 +33,13 @@ class PaymentGatewayRedirectMBankTransferService extends PaymentGatewayRedirectS
         return $this->checkoutFailureHandler(_("Please contact our CS") . ", err:" . __LINE__);
     }
 
-    public function prepareGetUrlRequest($paymentInfo = [], &$requestData){
+    public function prepareGetUrlRequest($paymentInfo = [], &$requestData)
+    {
 
     }
 
-    public function getRedirectUrl($requestData, &$responseData){
+    public function getRedirectUrl($requestData, &$responseData)
+    {
 
     }
 
@@ -46,11 +48,13 @@ class PaymentGatewayRedirectMBankTransferService extends PaymentGatewayRedirectS
         return "m_bank_transfer";
     }
 
-    public function processPaymentStatus($generalData = [], $getData = [], &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData){
+    public function processPaymentStatus($generalData = [], $getData = [], &$soNumber, &$dataFromPmgw, &$dataToPmgw, &$soData, &$sopsData, &$soccData, &$sorData)
+    {
 
     }
 
-    public function getReprocessPaymentStatusdirectUrl(){
+    public function getReprocessPaymentStatusdirectUrl()
+    {
 
     }
 
@@ -59,39 +63,48 @@ class PaymentGatewayRedirectMBankTransferService extends PaymentGatewayRedirectS
         return "feeling.liu@eservicesgroup.com";
     }
 
-    public function processFailureAction(){
+    public function processFailureAction()
+    {
 
     }
 
-    public function processCancelAction(){
+    public function processCancelAction()
+    {
 
     }
 
-    public function processSuccessAction(){
+    public function processSuccessAction()
+    {
 
     }
 
-    public function processReviewAction(){
+    public function processReviewAction()
+    {
 
     }
 
-    public function isPaymentNeedCreditCheck($isFraud = false){
+    public function isPaymentNeedCreditCheck($isFraud = false)
+    {
 
     }
 
-    public function queryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData){
+    public function queryTransaction($inputParameters = [], &$dataFromPmgw, &$dataToPmgw, &$soData, &$soccData, &$sopsData)
+    {
 
     }
 
-    public function isNeedDmService($isFraud = false){
+    public function isNeedDmService($isFraud = false)
+    {
 
     }
 
-    public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw){
+    public function processNotification($data, &$soNo, &$soPara = [], &$sopsPara = [], &$soccPara = [], &$sorData = [], &$dataToPmgw, &$dataFromPmgw)
+    {
 
     }
 
-    public function useIframe(){
+    public function useIframe()
+    {
 
     }
 }

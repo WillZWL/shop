@@ -190,10 +190,6 @@ class CheckoutModel extends \CI_Model
         return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId, $cartAmount);
     }
 
-    public function getBankTransferOption($platformId, $cartAmount) {
-        return $this->getPaymentOptionService()->getPaymentOptionByPlatformId($platformId, $cartAmount);
-    }
-
     public function getCheckoutFormCountryList($platformCountryId, $type = self::BILLING_COUNTRY) {
         $data = array();
         $countryExtObj = $this->_countryService->getCountryExtDao()->get(["cid" => $platformCountryId, "lang_id" => LANG_ID]);
