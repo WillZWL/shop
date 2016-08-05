@@ -6,7 +6,7 @@
             <?= _("Thank you for your purchase!") ?>
             <br><br>
             <p>
-                <?=_('For enquiries, please contact us at sales@digitaldiscount.co.uk with the following information and we will capture your order:')?>
+                <?=_('For enquiries, please contact us at <a href="mailto:sales@digitaldiscount.co.uk">sales@digitaldiscount.co.uk</a> with the following information and we will capture your order:')?>
             </p>
             <p>
                 <?=_('1. Name')?> <br>
