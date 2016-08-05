@@ -113,6 +113,13 @@
                 </table>
             </div>
         </div>
+        <div class="row" style="position: absolute;bottom: 65px; width:100%;">
+            <div class="col-sm-6">
+                <p style="font-size: 13px;padding: 0;margin: 0;line-height: 18px;">
+                    <b><?= _('We only accept Bank Transfer payments for orders exceeding 2000 GBP') ?></b>
+                </p>
+            </div>
+        </div>
         <div class="buttons">
             <div class="pull-left"><a href="/" class="btn btn-default"><?= _('Continue Shopping') ?></a></div>
             <div class="pull-right"><a href="/checkout" class="btn btn-primary"><?= _('Checkout') ?></a></div>
