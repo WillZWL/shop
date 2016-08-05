@@ -23,7 +23,7 @@ class CronUpdateAutoPrice extends MY_Controller
     public function updatePlatformAutoPrice($platform_id = '')
     {
         set_time_limit(1800);
-        ini_set('memory_limit', '1024M');
+        ini_set('memory_limit', '1536M');
         $price_obj_list = $this->sc['Price']->getDao('Price')->getList(['auto_price' => 'Y', 'listing_status' => 'L', 'platform_id' => $platform_id], ['orderby'=>'modify_on asc', 'limit' => '500']);
         foreach ($price_obj_list as $price_obj) {
             // $time_start = microtime();

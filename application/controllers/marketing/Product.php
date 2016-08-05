@@ -1188,7 +1188,7 @@ html;
                                     $country_warranty_obj->set_sku($sku);
                                     $country_warranty_obj->set_platform_id($warranty_platform_id);
                                     $country_warranty_obj->set_warranty_in_month($warranty_in_month);
-                                    $this->warranty_model->add_country_warranty($country_warranty_obj);
+                                    // $this->warranty_model->add_country_warranty($country_warranty_obj);
                                 }
                             }
                             $warranty_country_counter++;
@@ -1692,6 +1692,7 @@ html;
                         {
                             $lang_id_temp = $platform_biz_var_obj->getLanguageId();
                             $google_product_name = $this->input->post("google_product_name_{$cid}");
+                            $this->sc['CategoryMapping']->updateOrInsertMapping($sku, $lang_id_temp, $cid, $google_cat_id, $google_product_name);
                         }
                     }
                 }
