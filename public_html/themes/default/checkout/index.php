@@ -278,7 +278,18 @@
 <?php if (!$paymentOption): ?>
 <?php print _("Please contact our CS!")?>
 <?php endif; ?>
-                        <div class="clearfix" />
+                        <div class="clearfix"></div>
+                        <div id="BankTransferText" style="display:none">
+                            <p>
+                                <?=_('For enquiries, please contact us at sales@digitaldiscount.co.uk with the following information and we will capture your order:')?>
+                            </p>
+                            <p>
+                                <?=_('1. Name')?> <br>
+                                <?=_('2. Delivery Address')?> <br>
+                                <?=_('3. Phone Number')?> <br>
+                                <?=_('4. Full Name of Item(s)')?>
+                            </p>
+                        </div>
                         <div class="buttons">
                             <div class="pull-right">
                                 <input type="hidden" name="formSalt" id='formSalt' value="<?=$formSalt;?>">
@@ -336,6 +347,14 @@ $(document).ready(function() {
     $("#payment-method-header").attr("data-toggle", "");
     $("#payment-address-header").attr("data-toggle", "");
     $("#shipping-address-header").attr("data-toggle", "");
+    $("#paymentOptionRow").on('change blur', 'input:radio', function(){
+        if($('#Bank_Transfer').is(':checked')) {
+            $("#BankTransferText").show();
+        } else {
+            $("#BankTransferText").hide();
+        }
+    })
+
     validateCheckout();
     validateLogin();
 <?php if ($client): ?>
