@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-11 16:11+0800\n"
-"PO-Revision-Date: 2016-07-11 16:12+0800\n"
+"POT-Creation-Date: 2016-08-05 10:13+0800\n"
+"PO-Revision-Date: 2016-08-05 10:14+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.2\n"
@@ -49,7 +49,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: cart/info.php:35 review.php:22 review.php:101
+#: cart/info.php:35 review.php:22 review.php:109
 msgid "Total"
 msgstr "Całkowita"
 
@@ -57,7 +57,7 @@ msgstr "Całkowita"
 msgid "View Cart"
 msgstr "Zobacz kartę"
 
-#: cart/info.php:41 checkout/index.php:7 review.php:110
+#: cart/info.php:41 checkout/index.php:7 review.php:125
 msgid "Checkout"
 msgstr "Podsumuj"
 
@@ -69,7 +69,7 @@ msgstr "Twój koszyk jest pusty!"
 msgid "Refine Search"
 msgstr "Zawęż wyszukiwanie"
 
-#: cat.php:12 category.php:7 myaccount/index.php:187 myaccount/index.php:188
+#: cat.php:12 category.php:7 myaccount/index.php:194 myaccount/index.php:195
 #: search.php:12
 msgid "Categories"
 msgstr "Kategorie"
@@ -147,13 +147,13 @@ msgstr "Płacisz"
 msgid "Save"
 msgstr "Zachowaj"
 
-#: cat.php:235 cat.php:241 product/accessories.php:119
+#: cat.php:240 cat.php:250 product/accessories.php:119
 #: product/accessories.php:125 product/detail.php:123 product/grid.php:68
 #: product/grid.php:74 product/related_product.php:49 search.php:219
 msgid "Add to Cart"
 msgstr "Dodaj do koszyka"
 
-#: cat.php:247 search.php:223 search.php:225
+#: cat.php:256 search.php:223 search.php:225
 msgid "More Info"
 msgstr "Więcej informacji"
 
@@ -198,12 +198,12 @@ msgid "Guest Checkout"
 msgstr "Zamówienie Gościnne"
 
 #: checkout/index.php:26 checkout/index.php:40 checkout/index.php:41
-#: checkout/index.php:146 checkout/index.php:237 checkout/index.php:284
+#: checkout/index.php:146 checkout/index.php:237 checkout/index.php:298
 msgid "Loading..."
 msgstr "Ładowanie..."
 
 #: checkout/index.php:26 checkout/index.php:146 checkout/index.php:237
-#: checkout/index.php:284
+#: checkout/index.php:298
 msgid "Continue"
 msgstr "Kontynuuj"
 
@@ -245,8 +245,8 @@ msgstr "Krok 2: Konto & amp; Szczegóły Płatności"
 msgid "Your Personal Details"
 msgstr "Twoje dane osobowe"
 
-#: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:130
-#: myaccount/index.php:131 myaccount/index.php:316 myaccount/index.php:317
+#: checkout/index.php:65 checkout/index.php:66 myaccount/index.php:137
+#: myaccount/index.php:138 myaccount/index.php:323 myaccount/index.php:324
 #: myaccount/login.php:97 myaccount/login.php:98
 msgid "First Name"
 msgstr "Imię"
@@ -259,12 +259,12 @@ msgstr "Nazwisko"
 msgid "Telephone"
 msgstr "Telefon"
 
-#: checkout/index.php:78 myaccount/index.php:361 myaccount/index.php:362
+#: checkout/index.php:78 myaccount/index.php:368 myaccount/index.php:369
 #: myaccount/login.php:70
 msgid "Country Code"
 msgstr "Numer kierunkowy kraju"
 
-#: checkout/index.php:79 myaccount/index.php:365 myaccount/index.php:366
+#: checkout/index.php:79 myaccount/index.php:372 myaccount/index.php:373
 #: myaccount/login.php:74
 msgid "Area Code"
 msgstr "Numer kierunkowy obszaru"
@@ -285,16 +285,18 @@ msgstr "Twój adres"
 msgid "Company"
 msgstr "Firma"
 
-#: checkout/index.php:103 checkout/index.php:104
-msgid "Address 1"
-msgstr "Adres 1"
+#: checkout/index.php:103 checkout/index.php:104 myaccount/index.php:162
+#: myaccount/index.php:163 myaccount/index.php:357 myaccount/login.php:59
+msgid "Address Line 1"
+msgstr "Adres Linia 1"
 
-#: checkout/index.php:107 checkout/index.php:108
-msgid "Address 2"
-msgstr "Adres 2"
+#: checkout/index.php:107 checkout/index.php:108 myaccount/index.php:166
+#: myaccount/index.php:167 myaccount/index.php:358 myaccount/login.php:60
+msgid "Address Line 2"
+msgstr "Adres Linia 2"
 
-#: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:147
-#: myaccount/index.php:148 myaccount/index.php:341 myaccount/index.php:342
+#: checkout/index.php:111 checkout/index.php:112 myaccount/index.php:154
+#: myaccount/index.php:155 myaccount/index.php:348 myaccount/index.php:349
 #: myaccount/login.php:50 myaccount/login.php:51
 msgid "City"
 msgstr "Miasto"
@@ -303,8 +305,8 @@ msgstr "Miasto"
 msgid "Post Code"
 msgstr "Kod pocztowy"
 
-#: checkout/index.php:119 myaccount/index.php:138 myaccount/index.php:139
-#: myaccount/index.php:333 myaccount/login.php:42
+#: checkout/index.php:119 myaccount/index.php:145 myaccount/index.php:146
+#: myaccount/index.php:340 myaccount/login.php:42
 msgid "Country"
 msgstr "Państwo"
 
@@ -328,131 +330,168 @@ msgstr "Możemy tylko wysłać na adres rozliczeniowy!"
 msgid "Step 4: Payment Method"
 msgstr "Krok 4: Metoda płatności"
 
-#: checkout/index.php:277
+#: checkout/index.php:279
 msgid "Please contact our CS!"
 msgstr "Prosimy o kontakt z naszą Obsługa Klienta!"
 
-#: checkout/index.php:381
+#: checkout/index.php:284 checkout/paymentBankTransfer.php:9
+msgid ""
+"For enquiries, please contact us at <a href=\"mailto:sales@digitaldiscount."
+"co.uk\">sales@digitaldiscount.co.uk</a> with the following information and "
+"we will capture your order:"
+msgstr ""
+"Nous n'acceptons les paiements que via le virement bancaire pour les "
+"commandes au-delà de 2000 EUR. Pour quelconque demande, veuillez nous "
+"contacter au <a href=\"mailto:ventes@numeristock.be\">ventes@numeristock.be</"
+"a> en nous fournissant les informations suivantes et nous allons enregistrer "
+"votre commande:"
+
+#: checkout/index.php:287 checkout/paymentBankTransfer.php:12
+msgid "1. Name"
+msgstr "1. Nom"
+
+#: checkout/index.php:288 checkout/paymentBankTransfer.php:13
+msgid "2. Delivery Address"
+msgstr "2. adresse de livraison"
+
+#: checkout/index.php:289 checkout/paymentBankTransfer.php:14
+msgid "3. Phone Number"
+msgstr "3. numero de telephone"
+
+#: checkout/index.php:290 checkout/paymentBankTransfer.php:15
+msgid "4. Full Name of Item(s)"
+msgstr "4. le nom complet du produit"
+
+#: checkout/index.php:409
 msgid "Please note: remote surcharge has been applied to your basket!"
 msgstr "Proszę zauważyć: Dodatkowa opłata została dodana do Twojego koszyka"
 
-#: checkout/index.php:502 checkout/index.php:713
+#: checkout/index.php:537 checkout/index.php:756
 msgid "The email is required"
 msgstr "Wymagany jest email"
 
-#: checkout/index.php:505 checkout/index.php:721
+#: checkout/index.php:540 checkout/index.php:764
 msgid "The value is not a valid email address"
 msgstr "Nie jest to prawidłowy adres email."
 
-#: checkout/index.php:513
+#: checkout/index.php:548
 msgid "Please input a password"
 msgstr "Proszę wprowadzić hasło"
 
-#: checkout/index.php:582
+#: checkout/index.php:625
 msgid "The billing first name is required"
 msgstr "Wymagana jest pierwsza nazwa rozliczeniowa"
 
-#: checkout/index.php:587
+#: checkout/index.php:630
 msgid ""
 "The billing first name must be more than 1 and less than 50 characters long"
 msgstr ""
 "Pierwsza nazwa rozliczeniowa musi mieć więcej niż 1 i mniej niż 50 znaków"
 
-#: checkout/index.php:591
+#: checkout/index.php:634
 msgid "The billing first name can only consist of alphabetical, number"
 msgstr "Pierwsza nazwa rozliczeniowa może tylko zawierać litery alfabetu"
 
-#: checkout/index.php:599
+#: checkout/index.php:642
 msgid "The billing last name is required"
 msgstr "Ostatnia nazwa rozliczeniowa jest wymagana"
 
-#: checkout/index.php:604
+#: checkout/index.php:647
 msgid ""
 "The billing last name must be more than 1 and less than 50 characters long"
 msgstr ""
 "Ostatnia nazwa rozliczeniowa musi mieć więcej niż 1 i mniej niż 50 znaków"
 
-#: checkout/index.php:608
+#: checkout/index.php:651
 msgid "The billing last name can only consist of alphabetical, number"
 msgstr "Ostatnia nazwa rozliczeniowa może tylko zawierać litery alfabetu"
 
-#: checkout/index.php:617
+#: checkout/index.php:660
 msgid "The billing company name cannot be longer than 50 characters"
 msgstr "Nazwa firmy rozliczeniowej nie może być dłuższa niż 50 znaków"
 
-#: checkout/index.php:621
+#: checkout/index.php:664
 msgid "The billing company name can only consist of alphabetical, number"
 msgstr "Firma rozliczeniowa może tylko zawierać litery alfabetu"
 
-#: checkout/index.php:629
-msgid "The billing address 1 is required"
-msgstr "Pierwszy adres rozliczeniowy jest wymagany"
+#: checkout/index.php:672
+msgid "The billing Address Line 1 is required"
+msgstr ""
 
-#: checkout/index.php:633
+#: checkout/index.php:676
 msgid "The billing address1 name can only consist of alphabetical, number"
 msgstr "Pierwszy adres rozliczeniowwy może tylko zawierać litery alfabetu"
 
-#: checkout/index.php:638 checkout/index.php:658
+#: checkout/index.php:681 checkout/index.php:701
 msgid ""
 "The billing address must be more than 1 and less than 1024 characters long"
 msgstr "Adres rozliczeniowy musi mieć więcej niż 1 i mniej niż 1024 znaków."
 
-#: checkout/index.php:641 checkout/index.php:661
+#: checkout/index.php:684 checkout/index.php:704
 msgid "POBox Address is not allowed"
 msgstr "POBox adres nie jest dozwolony."
 
-#: checkout/index.php:653
+#: checkout/index.php:696
 msgid "The billing address2 name can only consist of alphabetical, number"
 msgstr "Drugi adres rozliczeniowy może tylko zawierać litery alfabetu"
 
-#: checkout/index.php:672
+#: checkout/index.php:715
 msgid "The billing city is required"
 msgstr "Miasto rozliczeniowe jest wymagane"
 
-#: checkout/index.php:677
+#: checkout/index.php:720
 msgid "The billing city must be more than 1 and less than 128 characters long"
 msgstr "Miasto rozliczeniowe musi mieć od 1 do 128 znaków"
 
-#: checkout/index.php:681
+#: checkout/index.php:724
 msgid "The billing city can only consist of alphabetical, number"
 msgstr "Miasto rozliczeniowe może tylko zawierać litery alfabetu"
 
-#: checkout/index.php:689
+#: checkout/index.php:732
 msgid "The Zip/Postal Code is required"
 msgstr "Kod pocztowy jest wymagany"
 
-#: checkout/index.php:693
+#: checkout/index.php:736
 #, php-format
 msgid "The value is not valid %s Zip/Postal Code"
 msgstr "Wartość nie jest ważna %s Kod pocztowy"
 
-#: checkout/index.php:701
+#: checkout/index.php:744
 msgid "The billing telephone number is required"
 msgstr "Numer telefonu jest wymagany"
 
-#: checkout/index.php:705
+#: checkout/index.php:748
 msgid "The billing telephone is not valid"
 msgstr "Telefon nie jest ważny"
 
-#: checkout/index.php:718
+#: checkout/index.php:761
 msgid "Email must be more than 3 and less than 256 characters long"
 msgstr "Adres email musi mieć od 3 do 256 znaków"
 
-#: checkout/index.php:730
+#: checkout/index.php:773
 msgid "The password and its confirm are not the same"
 msgstr "Hasło i jego potwierdzenie nie sa takie same"
 
-#: checkout/index.php:739
+#: checkout/index.php:782
 msgid "Please Select a state"
 msgstr "Prosze wybrać stan"
 
-#: checkout/index.php:748
+#: checkout/index.php:791
 msgid "Please select a card"
 msgstr "Prosze wybrać kartę"
 
-#: checkout/index.php:794
+#: checkout/index.php:843
 msgid "Unknown error: Please contact our CS!"
 msgstr "Nieznany błąd: Proszę o kontakt z Działem Obsługi Klienta!"
+
+#: checkout/paymentBankTransfer.php:4 checkout/paymentReview.php:4
+msgid "Payment Review"
+msgstr "Przegląd płatności"
+
+#: checkout/paymentBankTransfer.php:6 checkout/paymentReview.php:6
+#: checkout/paymentSuccess.php:10
+msgid "Thank you for your purchase!"
+msgstr "Dziękujemy za Twój zakup!"
 
 #: checkout/paymentFail.php:4
 msgid "Payment Fail"
@@ -499,14 +538,6 @@ msgstr "Skontaktuj się z nami"
 #: checkout/paymentFail.php:13
 msgid " via email"
 msgstr "przez email"
-
-#: checkout/paymentReview.php:4
-msgid "Payment Review"
-msgstr "Przegląd płatności"
-
-#: checkout/paymentReview.php:6 checkout/paymentSuccess.php:10
-msgid "Thank you for your purchase!"
-msgstr "Dziękujemy za Twój zakup!"
 
 #: checkout/paymentReview.php:8
 #, php-format
@@ -629,7 +660,7 @@ msgstr "Email"
 msgid "Order Number"
 msgstr "Numer zamówienia"
 
-#: contact.php:42 myaccount/index.php:279 myaccount/index.php:373
+#: contact.php:42 myaccount/index.php:286 myaccount/index.php:380
 #: myaccount/login.php:128
 msgid "Submit"
 msgstr "Wyślij"
@@ -778,7 +809,7 @@ msgstr ""
 "Jeśli w dalszym ciągu nie możesz znaleźć odpowiedzi, sprawdź %s Kontakt %s "
 "na stronie i skontaktuj się z nami. Dziękujemy."
 
-#: display/privacy_policy.php:2 footer.php:276
+#: display/privacy_policy.php:2 footer.php:277
 msgid "Privacy Policy"
 msgstr "Polityka Prywatności"
 
@@ -1084,7 +1115,7 @@ msgstr ""
 "Jeśli mają Państwo jakiekolwiek pytania, proszę wysłać do nas maila poprzez "
 "stronę internetową w zakładce"
 
-#: display/privacy_policy.php:90 header.php:117
+#: display/privacy_policy.php:90 header.php:118
 msgid "Contact Us"
 msgstr "Kontakt"
 
@@ -1213,132 +1244,132 @@ msgstr ""
 "ze względu na wiele różnorakich czynników (na przykład konkretny adres, "
 "opóźnienie w związku z odprawą celną) na które nie mamy wpływu."
 
-#: footer.php:10
+#: footer.php:11
 msgid " PAY WITH CONFIDENCE "
 msgstr "PŁAĆ Z ZAUFANIEM"
 
-#: footer.php:72
+#: footer.php:73
 msgid " SHOP WITH CONFIDENCE "
 msgstr "KUPUJ Z ZAUFANIEM"
 
-#: footer.php:158
+#: footer.php:159
 msgid "About Us"
 msgstr "O nas"
 
-#: footer.php:161
+#: footer.php:162
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr "% s szczyci się wspaniałymi ofertami bez kompromisów!"
 
-#: footer.php:161
+#: footer.php:162
 msgid "Feel free to contact us anytime for more information"
 msgstr ""
 "Zapraszamy do kontaktu z nami w każdej chwili, aby uzyskać więcej informacji"
 
-#: footer.php:169 footer.php:181
+#: footer.php:170 footer.php:182
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr ""
 "Subskrybuj regularnie, aby otrzymywać od nas najświeższe informacje o "
 "nowościach i promocjach."
 
-#: footer.php:180
+#: footer.php:181
 msgid "Sign up for Newsletter"
 msgstr "Zarejestruj się, aby otrzymać Newsletter"
 
-#: footer.php:185
+#: footer.php:186
 msgid "Enter you email address"
 msgstr "Wpisz swój adres email"
 
-#: footer.php:195
+#: footer.php:196
 msgid "Subscribe"
 msgstr "Subskrybuj"
 
-#: footer.php:199
+#: footer.php:200
 msgid "indicates required"
 msgstr "Oznaczenia wymagane"
 
-#: footer.php:214
+#: footer.php:215
 msgid "100% Secure "
 msgstr "100% Bezpieczeństwo"
 
-#: footer.php:214
+#: footer.php:215
 msgid "with SSL encryption"
 msgstr "z szyfrowaniem SSL"
 
-#: footer.php:222
+#: footer.php:223
 msgid "Free Delivery"
 msgstr "Darmowa Dostawa"
 
-#: footer.php:222
+#: footer.php:223
 msgid "For All Orders*"
 msgstr "Na Wszystkie Zamówienia*"
 
-#: footer.php:222
+#: footer.php:223
 msgid "Shipping:"
 msgstr "Dostawa:"
 
-#: footer.php:222
+#: footer.php:223
 msgid "3-5 Working Days"
 msgstr "3-5 dni roboczych"
 
-#: footer.php:242 header.php:147
+#: footer.php:243 header.php:148
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s Dni Gwarancja Zwrotu Pieniędzy"
 
-#: footer.php:259
+#: footer.php:260
 msgid "Warranty "
 msgstr "Gwarancja"
 
-#: footer.php:259
+#: footer.php:260
 msgid "Up to 2 Years"
 msgstr "Do 2 lat"
 
-#: footer.php:271
+#: footer.php:272
 msgid "2015 All Right reserved"
 msgstr "2015 Wszelkie prawa zastrzeżone"
 
-#: footer.php:272
+#: footer.php:273
 msgid "Conditions of Use"
 msgstr "Warunki korzystania"
 
-#: footer.php:273
+#: footer.php:274
 msgid "Shipping Policy"
 msgstr "Zasady Wysyłki"
 
-#: footer.php:274
+#: footer.php:275
 msgid "Return and Refund Policy"
 msgstr "Zasady Zwrotów i Refundacji"
 
-#: footer.php:275
+#: footer.php:276
 msgid "Billing Terms and Conditions"
 msgstr "Regulamin i Zasady Płatności"
 
-#: footer.php:281
+#: footer.php:282
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "WYBIERZ KRAJ DOSTAWY"
 
-#: footer.php:284
+#: footer.php:285
 msgid "Australia"
 msgstr "Australia"
 
-#: footer.php:285
+#: footer.php:286
 msgid "Belgium"
 msgstr "Belgia"
 
-#: footer.php:286
+#: footer.php:287
 msgid "Finland"
 msgstr "Finlandia"
 
-#: footer.php:287
+#: footer.php:288
 msgid "France"
 msgstr "Francja"
 
-#: footer.php:288
+#: footer.php:289
 msgid "Great Britain"
 msgstr "Wielka Brytania"
 
-#: footer.php:289
+#: footer.php:290
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
@@ -1347,47 +1378,47 @@ msgstr "Hong Kong"
 msgid "%s item(s) - "
 msgstr "%s Sztuk -"
 
-#: header.php:111
+#: header.php:112
 msgid "We won't be beaten on electronics!"
 msgstr "Nie zostaniemy pobici na elektronice!"
 
-#: header.php:116
+#: header.php:117
 msgid "Warranty"
 msgstr "Gwarancja"
 
-#: header.php:118
+#: header.php:119
 msgid "Help"
 msgstr "Pomoc"
 
-#: header.php:119
+#: header.php:120
 msgid "Clearance"
 msgstr "Clearance"
 
-#: header.php:121 myaccount/index.php:4
+#: header.php:122 myaccount/index.php:4
 msgid "My Account"
 msgstr "Moje konto"
 
-#: header.php:122
+#: header.php:123
 msgid "Log Out"
 msgstr "Wyloguj"
 
-#: header.php:125
+#: header.php:126
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: header.php:151
+#: header.php:152
 msgid "Free Delivery For All Orders"
 msgstr "Darmowa Dostawa na Wszystkie Zamówienia"
 
-#: header.php:155
+#: header.php:156
 msgid "Up to 2 Years Warranty"
 msgstr "Do 2 lat Gwarancja"
 
-#: header.php:199
+#: header.php:200
 msgid "Find your product"
 msgstr "Znajdź swój produkt"
 
-#: header.php:217
+#: header.php:218
 msgid "Top search"
 msgstr "Najlepsze wyszukiwania"
 
@@ -1399,19 +1430,19 @@ msgstr "bestseller"
 msgid "latest arrival"
 msgstr "Najnowsze produkty"
 
-#: index.php:81
+#: index.php:80
 msgid "Collections"
 msgstr "Zbiór"
 
-#: index.php:102
+#: index.php:101
 msgid "camera collection"
 msgstr "Zbiór kamer"
 
-#: index.php:106 index.php:126
+#: index.php:105 index.php:125
 msgid "Shop now"
 msgstr "Kupuj teraz"
 
-#: index.php:122
+#: index.php:121
 msgid "mobile collection"
 msgstr "Zbiór telefonów"
 
@@ -1464,58 +1495,58 @@ msgstr ""
 "że wszystkie zakupione pozycje są odbierane w najwcześniej nadarzającej się "
 "okazji."
 
-#: myaccount/index.php:43 myaccount/index.php:76
+#: myaccount/index.php:43 myaccount/index.php:83
 msgid "Order"
 msgstr "Zamówienie"
 
-#: myaccount/index.php:44 myaccount/index.php:77
+#: myaccount/index.php:44 myaccount/index.php:84
 msgid "Date"
 msgstr "Data"
 
-#: myaccount/index.php:45 myaccount/index.php:78
+#: myaccount/index.php:45 myaccount/index.php:85
 msgid "Shipped to"
 msgstr "Dostawa do"
 
-#: myaccount/index.php:46 myaccount/index.php:79
+#: myaccount/index.php:46 myaccount/index.php:86
 msgid "Product"
 msgstr "Produkt"
 
-#: myaccount/index.php:47 myaccount/index.php:80
+#: myaccount/index.php:47 myaccount/index.php:87
 msgid "Order total"
 msgstr "Suma zamówienia"
 
-#: myaccount/index.php:48 myaccount/index.php:81
+#: myaccount/index.php:48 myaccount/index.php:88
 msgid "Status"
 msgstr "Status"
 
-#: myaccount/index.php:69
+#: myaccount/index.php:76
 msgid "Have you paid by bank transfer?<br>Contact us "
 msgstr "Czy zapłaciłeś przelewem bankowym? Skontaktuj się z nami"
 
-#: myaccount/index.php:70 myaccount/index.php:114
+#: myaccount/index.php:77 myaccount/index.php:121
 msgid "here"
 msgstr "tutaj"
 
-#: myaccount/index.php:94
+#: myaccount/index.php:101
 msgid "Pending Payment"
 msgstr "Oczekująca płatność"
 
-#: myaccount/index.php:95
+#: myaccount/index.php:102
 msgid "We have not received the payment for your order."
 msgstr "Nie otrzymaliśmy płatności za Twoje zamówienie."
 
-#: myaccount/index.php:98
+#: myaccount/index.php:105
 msgid "Incomplete Payment"
 msgstr "Niezakończona Płatność"
 
-#: myaccount/index.php:99
+#: myaccount/index.php:106
 msgid ""
 "The amount received in our bank account does not correspond to the total "
 "amount of your order."
 msgstr ""
 "Kwota zaksięgowana na szym koncie nie odpowiada całkowitej kwocie zamówienia."
 
-#: myaccount/index.php:112
+#: myaccount/index.php:119
 msgid ""
 "Your request has been submitted. Please kindly review the information below "
 "as your RMA confirmation."
@@ -1523,11 +1554,11 @@ msgstr ""
 "Twój wniosek został złożony. Uprzejmie proszę o przejrzenie poniższych "
 "informacji, jako potwierdzenie zwrotu towaru."
 
-#: myaccount/index.php:113
+#: myaccount/index.php:120
 msgid "Please click"
 msgstr "Proszę kliknąć"
 
-#: myaccount/index.php:115
+#: myaccount/index.php:122
 msgid ""
 "to print this page and send it back to us together with the returned "
 "package. Items returned without this RMA form will not be processed."
@@ -1535,28 +1566,28 @@ msgstr ""
 "drukuj tę stronę i wyślij ją do nas wraz z przesyłką zwrotną. Produkty "
 "zwrócone bez tego formularza nie będą rozpatrywane."
 
-#: myaccount/index.php:119
+#: myaccount/index.php:126
 msgid "Important Notice"
 msgstr "Ważna Uwaga"
 
-#: myaccount/index.php:121
+#: myaccount/index.php:128
 msgid "Please read the following before filling in the web form below."
 msgstr ""
 "Prosimy o zapoznanie się przed wypełnieniem formularza internetowego poniżej."
 
-#: myaccount/index.php:123
+#: myaccount/index.php:130
 msgid ""
 "- Any items returned without a returns form enclosed will not be entertained"
 msgstr ""
 "- Wszystkie rzeczy zwrócone bez załączonego formularza zwrotnego nie będą "
 "rozpatrywane"
 
-#: myaccount/index.php:124
+#: myaccount/index.php:131
 msgid "- Read our returns policy that can be found at the bottom of this page"
 msgstr ""
 "- Przeczytaj naszą politykę zwrotów, którą można znaleźć na dole tej strony"
 
-#: myaccount/index.php:125
+#: myaccount/index.php:132
 msgid ""
 "- Kindly use our webform for &quot;Faulty goods or returned items&quot; to "
 "confirm your intention to return your goods and we will then advise you with "
@@ -1566,76 +1597,66 @@ msgstr ""
 "uszkodzony lub zwrócone rzeczy & quot; aby potwierdzić zamiar, aby zwrócić "
 "towar, a my następnie prześlemy adres zwrotów"
 
-#: myaccount/index.php:127
+#: myaccount/index.php:134
 msgid "Personal Details"
 msgstr "Dane osobowe"
 
-#: myaccount/index.php:134 myaccount/index.php:135 myaccount/index.php:320
-#: myaccount/index.php:321 myaccount/login.php:93 myaccount/login.php:94
+#: myaccount/index.php:141 myaccount/index.php:142 myaccount/index.php:327
+#: myaccount/index.php:328 myaccount/login.php:93 myaccount/login.php:94
 msgid "Surname"
 msgstr "Nazwisko"
 
-#: myaccount/index.php:151 myaccount/index.php:152 myaccount/index.php:345
-#: myaccount/index.php:346 myaccount/login.php:54 myaccount/login.php:55
+#: myaccount/index.php:158 myaccount/index.php:159 myaccount/index.php:352
+#: myaccount/index.php:353 myaccount/login.php:54 myaccount/login.php:55
 msgid "State"
 msgstr "Stan"
 
-#: myaccount/index.php:155 myaccount/index.php:156 myaccount/index.php:350
-#: myaccount/login.php:59
-msgid "Address Line 1"
-msgstr "Adres Linia 1"
-
-#: myaccount/index.php:159 myaccount/index.php:160 myaccount/index.php:351
-#: myaccount/login.php:60
-msgid "Address Line 2"
-msgstr "Adres Linia 2"
-
-#: myaccount/index.php:163 myaccount/index.php:164 myaccount/index.php:354
-#: myaccount/index.php:355
+#: myaccount/index.php:170 myaccount/index.php:171 myaccount/index.php:361
+#: myaccount/index.php:362
 msgid "Postcode"
 msgstr "Kod pocztowy"
 
-#: myaccount/index.php:170
+#: myaccount/index.php:177
 msgid "Order Details"
 msgstr "Inne informacje"
 
-#: myaccount/index.php:173 myaccount/index.php:174
+#: myaccount/index.php:180 myaccount/index.php:181
 msgid "Order number"
 msgstr "Numer zamówienia"
 
-#: myaccount/index.php:180
+#: myaccount/index.php:187
 msgid "Product Details"
 msgstr "Szczegóły Produktu"
 
-#: myaccount/index.php:183 myaccount/index.php:184
+#: myaccount/index.php:190 myaccount/index.php:191
 msgid "Product Returned"
 msgstr "Zwrócony Produkt"
 
-#: myaccount/index.php:198
+#: myaccount/index.php:205
 msgid "Serial No"
 msgstr "Numer seryjny"
 
-#: myaccount/index.php:205
+#: myaccount/index.php:212
 msgid "Returns Details"
 msgstr "Szczegóły zwrotu"
 
-#: myaccount/index.php:208 myaccount/index.php:209
+#: myaccount/index.php:215 myaccount/index.php:216
 msgid "Reasons for Returns"
 msgstr "Powody zwrotu"
 
-#: myaccount/index.php:222 myaccount/index.php:223
+#: myaccount/index.php:229 myaccount/index.php:230
 msgid "Action Required"
 msgstr "Konieczne działania"
 
-#: myaccount/index.php:235 myaccount/index.php:236
+#: myaccount/index.php:242 myaccount/index.php:243
 msgid "Detailed Description of Fault"
 msgstr "Szczegółowy opis usterki"
 
-#: myaccount/index.php:244
+#: myaccount/index.php:251
 msgid "ValueBasket Returns Policy"
 msgstr "ValueBasket Polityka Zwrotów"
 
-#: myaccount/index.php:247
+#: myaccount/index.php:254
 msgid ""
 "Where the dispatch has been made, you may request for a refund up to 14 days "
 "after the goods are delivered."
@@ -1643,7 +1664,7 @@ msgstr ""
 "W przypadku, gdy przesyłka została dokonana, możesz poprosić o zwrot "
 "pieniędzy do 14 dni od daty dostarczenia towaru."
 
-#: myaccount/index.php:248
+#: myaccount/index.php:255
 msgid ""
 "To submit a returns request, simply email us to start the process.  Where "
 "you are eligible for a refund, Valuebasket.com will provide authorization "
@@ -1653,21 +1674,21 @@ msgstr ""
 "Jeżeli jesteś uprawniony do refundacji, BalueBasket.com zapewni pozwolenie "
 "oraz adres zwrotny."
 
-#: myaccount/index.php:249
+#: myaccount/index.php:256
 msgid "Returning an order within the 14-day grace period from delivery date;"
 msgstr "Zwróć zamówienie w przeciągu 14-dniowego okresu od daty dostarczenia."
 
-#: myaccount/index.php:251
+#: myaccount/index.php:258
 msgid "that are new unopened item, will be eligible for refund"
 msgstr "że jest nowym nieodpakowanym przedmiotem, będzie uprawniony do zwrotu"
 
-#: myaccount/index.php:252
+#: myaccount/index.php:259
 msgid ""
 "that are found to be faulty will be eligible for replacement order or refund"
 msgstr ""
 "które są uznane za wadliwe będą kwalifikowały się do celu wymiany lub zwrotu"
 
-#: myaccount/index.php:255
+#: myaccount/index.php:262
 msgid ""
 "Good returned for a refund must be in their original condition with all "
 "original packing, accessories and included materials."
@@ -1675,7 +1696,7 @@ msgstr ""
 "Zwracane produkty muszą być w oryginalnych opakowaniach, z akcesoriami i "
 "zawartymi materiałami."
 
-#: myaccount/index.php:256
+#: myaccount/index.php:263
 msgid ""
 "You must take all due reasonable care of the goods and return them in its "
 "original and undamaged condition."
@@ -1683,7 +1704,7 @@ msgstr ""
 "Musisz podjąć nalezytą staranność o produkty oraz zwrócić je w ich "
 "oryginalnej oraz niezniszczonej kondycji."
 
-#: myaccount/index.php:257
+#: myaccount/index.php:264
 msgid ""
 "You will agree to bear the costs of returning the item(s).  The cost "
 "incurred in returning the item(s) may be eligible for reimbursement where "
@@ -1696,7 +1717,7 @@ msgstr ""
 "upoważnienie od ValueBasket.com jest wniesione i dostarczone pod warunkiem "
 "zwrotu produktu(-ów)."
 
-#: myaccount/index.php:258
+#: myaccount/index.php:265
 msgid ""
 "Where the purchases are opened and are of usable software, consumable goods, "
 "or items impacted by hygiene, such items will be ineligible for refund."
@@ -1705,39 +1726,39 @@ msgstr ""
 "towary konsumpcyjne, lub przedmioty dotknięte higenicznie, takie przedmioty "
 "nie będą kwalifikowane do wymiany."
 
-#: myaccount/index.php:259
+#: myaccount/index.php:266
 msgid "A restocking fee may be applicable at the discretion of ValueBasket.com"
 msgstr ""
 "Opłata uzupełniająca może byś zastosowana według uznania ValueBasket.com"
 
-#: myaccount/index.php:260
+#: myaccount/index.php:267
 msgid "An admin fee may be incurred if no fault found or fault caused by user"
 msgstr ""
 "Opłata administracyjna może zostać poniesiona, jeśli nie została znaleziona "
 "wina lub wina została spowodowana przez użytkownika"
 
-#: myaccount/index.php:267 myaccount/index.php:271
+#: myaccount/index.php:274 myaccount/index.php:278
 msgid "Declaration"
 msgstr "Deklaracja"
 
-#: myaccount/index.php:272
+#: myaccount/index.php:279
 msgid "I declare that I have read and agree to the Returns Policy"
 msgstr "Oświadczam, że zapoznałem się i zgadzam się z Polityką Zwrotów"
 
-#: myaccount/index.php:285
+#: myaccount/index.php:292
 msgid "Profile"
 msgstr "Profil"
 
-#: myaccount/index.php:288 myaccount/login.php:105 myaccount/login.php:108
+#: myaccount/index.php:295 myaccount/login.php:105 myaccount/login.php:108
 #: myaccount/login.php:109
 msgid "Email Address"
 msgstr "Adres mailowy"
 
-#: myaccount/index.php:293 myaccount/index.php:294
+#: myaccount/index.php:300 myaccount/index.php:301
 msgid "Old Password"
 msgstr "Stare hasło"
 
-#: myaccount/index.php:297 myaccount/login.php:118
+#: myaccount/index.php:304 myaccount/login.php:118
 msgid ""
 "Password must be between 6 to 20 characters in length. We recommend that you "
 "make your password secure by including a mixture of upper and lower case "
@@ -1746,39 +1767,39 @@ msgstr ""
 "Hasło musi mieć od 6 do 20 znaków. Zaleca się, aby hasło zawierało wielkie i "
 "małe litery, cyfry i symbole (np. #, @,!)"
 
-#: myaccount/index.php:300 myaccount/index.php:301
+#: myaccount/index.php:307 myaccount/index.php:308
 msgid "Choose a New Password"
 msgstr "Wybierz nowe hasło"
 
-#: myaccount/index.php:300 myaccount/index.php:304
+#: myaccount/index.php:307 myaccount/index.php:311
 msgid "(Optional)"
 msgstr "(Opcjonalnie)"
 
-#: myaccount/index.php:304 myaccount/index.php:305
+#: myaccount/index.php:311 myaccount/index.php:312
 msgid "Re-enter New Password"
 msgstr "Wprowadź hasło ponownie"
 
-#: myaccount/index.php:308 myaccount/login.php:85
+#: myaccount/index.php:315 myaccount/login.php:85
 msgid "Title"
 msgstr "Tytuł"
 
-#: myaccount/index.php:324 myaccount/index.php:325 myaccount/login.php:101
+#: myaccount/index.php:331 myaccount/index.php:332 myaccount/login.php:101
 msgid "Company Name"
 msgstr "Nazwa firmy"
 
-#: myaccount/index.php:329
+#: myaccount/index.php:336
 msgid "Billing Address"
 msgstr "Adres rozliczeniowy"
 
-#: myaccount/index.php:349 myaccount/login.php:58
+#: myaccount/index.php:356 myaccount/login.php:58
 msgid "Address"
 msgstr "Adres"
 
-#: myaccount/index.php:358
+#: myaccount/index.php:365
 msgid "Phone"
 msgstr "Telefon"
 
-#: myaccount/index.php:369 myaccount/index.php:370 myaccount/login.php:78
+#: myaccount/index.php:376 myaccount/index.php:377 myaccount/login.php:78
 msgid "Number"
 msgstr "Ilość"
 
@@ -1919,23 +1940,23 @@ msgstr "Zaktualizuj"
 msgid "Remove"
 msgstr "Usuń"
 
-#: review.php:59
+#: review.php:58
 msgid "Promo code"
 msgstr "Kod promocyjny"
 
-#: review.php:62
+#: review.php:61
 msgid "Enter your promo code"
 msgstr "Wprowadz swój kod promocyjny"
 
-#: review.php:67
+#: review.php:66
 msgid "Remove / Edit Code"
 msgstr "Usuń / Zmień Kod"
 
-#: review.php:71
+#: review.php:70
 msgid "Apply Code"
 msgstr " Zastosuj Kod"
 
-#: review.php:76
+#: review.php:75
 msgid ""
 "Sorry, Promotion Code Invalid. Please check if the conditions and/or minimum "
 "order amount have been met."
@@ -1943,19 +1964,23 @@ msgstr ""
 "Przepraszamy, Kod Promocyjny jest nieważny. Sprawdz czy zostały spełnione "
 "warunki i minimalna kwota."
 
-#: review.php:87
+#: review.php:95
 msgid "Subtotal"
 msgstr "Razem"
 
-#: review.php:91
+#: review.php:99
 msgid "Shipping"
 msgstr "Dostawa"
 
-#: review.php:96
+#: review.php:104
 msgid "Promotion Discount"
 msgstr "Obniżka Promocyjna"
 
-#: review.php:109 reviewEmptyCart.php:7
+#: review.php:119
+msgid "We only accept Bank Transfer payments for orders exceeding 2000 GBP"
+msgstr "Akceptujemy przelewy bankowe tylko dla zamówień większych niż 2000 EUR"
+
+#: review.php:124 reviewEmptyCart.php:7
 msgid "Continue Shopping"
 msgstr "Kontynuuj zakupy"
 
@@ -1976,6 +2001,201 @@ msgstr "Wyniki wyszukiwania dla \"% s\""
 #: search.php:162
 msgid "Display"
 msgstr "Pokaż"
+
+#: template_for_order_status.php:2
+msgid "Payment Confirmation"
+msgstr ""
+
+#: template_for_order_status.php:3
+msgid "Payment received!"
+msgstr ""
+
+#: template_for_order_status.php:6
+msgid "Order Review"
+msgstr ""
+
+#: template_for_order_status.php:7
+msgid "Order details being confirmed"
+msgstr ""
+
+#: template_for_order_status.php:10
+msgid "Held for Verification"
+msgstr ""
+
+#: template_for_order_status.php:11
+msgid ""
+"Your order is being verified and may require further details. Kindly refer "
+"to our latest email for further details or contact us directly."
+msgstr ""
+
+#: template_for_order_status.php:14
+msgid "Order Held pending Feedback"
+msgstr ""
+
+#: template_for_order_status.php:15
+msgid ""
+"Your order was held by request or due to stock constraint. Kindly refer to "
+"our latest email for further details or contact us directly."
+msgstr ""
+
+#: template_for_order_status.php:18
+msgid "Order Refund Pending"
+msgstr ""
+
+#: template_for_order_status.php:19
+msgid "Your refund is in progress"
+msgstr ""
+
+#: template_for_order_status.php:22
+msgid "Order Refunded"
+msgstr ""
+
+#: template_for_order_status.php:23
+msgid "Your order has been refunded"
+msgstr ""
+
+#: template_for_order_status.php:26
+msgid "Order Confirmed"
+msgstr ""
+
+#: template_for_order_status.php:27
+msgid "Order validated! Fulfillment stage next"
+msgstr ""
+
+#: template_for_order_status.php:30
+msgid "Stock Review"
+msgstr ""
+
+#: template_for_order_status.php:31
+msgid "Stock review and assignment"
+msgstr ""
+
+#: template_for_order_status.php:34
+msgid "Stock Confirmed"
+msgstr ""
+
+#: template_for_order_status.php:35
+msgid "Stock inspected and verified to ship!"
+msgstr ""
+
+#: template_for_order_status.php:38
+msgid "Order in Queue"
+msgstr ""
+
+#: template_for_order_status.php:39
+msgid "Order in fulfillment queue"
+msgstr ""
+
+#: template_for_order_status.php:42 template_for_order_status.php:46
+msgid "Order Delay"
+msgstr ""
+
+#: template_for_order_status.php:43
+msgid "Delay in fulfillment line. Please be patient"
+msgstr ""
+
+#: template_for_order_status.php:47
+msgid "Thanks for being so patient. Please allow an extra 2-3 working days"
+msgstr ""
+
+#: template_for_order_status.php:50
+msgid "Order Packed!"
+msgstr ""
+
+#: template_for_order_status.php:51 template_for_order_status.php:55
+msgid "Order packed and ready to ship within 1-2 working days!"
+msgstr ""
+
+#: template_for_order_status.php:54
+msgid "In Transit To Warehouse"
+msgstr ""
+
+#: template_for_order_status.php:58 template_for_order_status.php:62
+#: template_for_order_status.php:66
+msgid "Shipped"
+msgstr ""
+
+#: template_for_order_status.php:59
+msgid "Shipment picked up by delivery service"
+msgstr ""
+
+#: template_for_order_status.php:63
+msgid "In-transit to warehouse for final delivery to your address"
+msgstr ""
+
+#: template_for_order_status.php:67
+msgid "Shipment at final destination processing with delivery service."
+msgstr ""
+
+#: template_for_order_status.php:70
+msgid "In Transit"
+msgstr ""
+
+#: template_for_order_status.php:71
+msgid "Parcel in transit to your address"
+msgstr ""
+
+#: template_for_order_status.php:74
+msgid "Out for Delivery"
+msgstr ""
+
+#: template_for_order_status.php:75
+msgid "Delivery man has your parcel"
+msgstr ""
+
+#: template_for_order_status.php:78
+msgid "Delivered"
+msgstr ""
+
+#: template_for_order_status.php:79
+msgid "The shipment was delivered successfully."
+msgstr ""
+
+#: template_for_order_status.php:82
+msgid "Failed Delivery Attempt"
+msgstr ""
+
+#: template_for_order_status.php:83
+msgid ""
+"Delivery attempt failed, contact delivery service using info on calling card "
+"to arrange collection at nearest pick-up point"
+msgstr ""
+
+#: template_for_order_status.php:86
+msgid "Exception"
+msgstr ""
+
+#: template_for_order_status.php:87
+msgid ""
+"Custom hold, undelivered, returned shipment to sender or any shipping "
+"exceptions."
+msgstr ""
+
+#: template_for_order_status.php:90
+msgid "Expired"
+msgstr ""
+
+#: template_for_order_status.php:91
+msgid "Contact us to know regarding latest update of parcel"
+msgstr ""
+
+#~ msgid ""
+#~ "For enquiries, please contact us at sales@digitaldiscount.co.uk with the "
+#~ "following information and we will capture your order:"
+#~ msgstr ""
+#~ "Nous n'acceptons les paiements que via le virement bancaire pour les "
+#~ "commandes au-delà de 2000 EUR. Pour quelconque demande, veuillez nous "
+#~ "contacter au ventes@numeristock.be en nous fournissant les informations "
+#~ "suivantes et nous allons enregistrer votre commande:"
+
+#~ msgid "Address 1"
+#~ msgstr "Adres 1"
+
+#~ msgid "Address 2"
+#~ msgstr "Adres 2"
+
+#~ msgid "The billing address 1 is required"
+#~ msgstr "Pierwszy adres rozliczeniowy jest wymagany"
 
 #~ msgid "Unknow error: Please contact our CS!"
 #~ msgstr "Nieznany błąd: Proszę skontaktowac się z naszą Obsługą Klienta!"

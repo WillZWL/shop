@@ -12,7 +12,7 @@ use Zend\Validator\EmailAddress;
 *****************/
 abstract class InputFilter {
     public $validInput = true;
-    public $gatewayList = ["paypal", "moneybookers", "global_collect"];
+    public $gatewayList = ["paypal", "moneybookers", "global_collect", "m_bank_transfer"];
 
     public function __construct() {
     }
