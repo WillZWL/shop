@@ -589,10 +589,10 @@ implements PaymentGatewayRedirectServiceInterface
         $replace["client_id"] = $soObj->getClientId();
         $replace["forename"] = $client->getForename();
         $replace["delivery_name"] = $soObj->getDeliveryName();
-        $replace["delivery_address_text"] = ($soObj->getDeliveryCompany() ? $soObj->getDeliveryCompany() . "\n" : "") . trim(str_replace("|", "\n", $soObj->getDeliveryAddress())) . "\n" . $soObj->getDeliveryCity() . " " . $soObj->getDeliveryState() . " " . $soObj->getDeliveryPostcode() . "\n" . $deliveryCountryObj->getName();
+        $replace["delivery_address_text"] = ($soObj->getDeliveryCompany() ? $soObj->getDeliveryCompany() . "\n" : "") . trim(str_replace("||", "\n", $soObj->getDeliveryAddress())) . "\n" . $soObj->getDeliveryCity() . " " . $soObj->getDeliveryState() . " " . $soObj->getDeliveryPostcode() . "\n" . $deliveryCountryObj->getName();
         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
         $replace["billing_name"] = $soObj->getBillName();
-        $replace["billing_address_text"] = ($soObj->getBillCompany() ? $soObj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $soObj->getBillAddress())) . "\n" . $soObj->getBillCity() . " " . $soObj->getBillState() . " " . $soObj->getBillPostcode() . "\n" . $billingCountryObj->getName();
+        $replace["billing_address_text"] = ($soObj->getBillCompany() ? $soObj->getBillCompany() . "\n" : "") . trim(str_replace("||", "\n", $soObj->getBillAddress())) . "\n" . $soObj->getBillCity() . " " . $soObj->getBillState() . " " . $soObj->getBillPostcode() . "\n" . $billingCountryObj->getName();
         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
         $replace["promotion_code"] = $soObj->getPromotionCode();
         $replace["currency_id"] = $soObj->getCurrencyId();

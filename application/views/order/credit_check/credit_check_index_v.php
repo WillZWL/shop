@@ -147,8 +147,8 @@
 
                 $bill_company_name = $obj->getBillCompany();
                 $del_company_name = $obj->getDeliveryCompany();
-                list($d1, $d2, $d3) = explode("|", $obj->getDeliveryAddress());
-                list($b1, $b2, $b3) = explode("|", $obj->getBillAddress());
+                list($d1, $d2, $d3) = explode("||", $obj->getDeliveryAddress());
+                list($b1, $b2, $b3) = explode("||", $obj->getBillAddress());
 
                 $del_addr = "<i>" . $del_name . "</i><br>";
                 $bill_addr = "<i>" . $bill_name . "</i><br>";

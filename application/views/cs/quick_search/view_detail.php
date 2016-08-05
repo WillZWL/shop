@@ -229,7 +229,7 @@ function display_risk($title, $results)
             <td>
                 <table width="100%" cellpadding="0" cellspacing="1" border="0">
                     <?php
-                    $bill_address = explode("|", $so_obj->getBillAddress());
+                    $bill_address = explode("||", $so_obj->getBillAddress());
                     ?>
                     <tr>
                         <td width="15%" align="left" class="field2"><?= strtoupper($lang["bill_name"]) ?></td>
@@ -265,7 +265,7 @@ function display_risk($title, $results)
             </td>
         </tr>
         <?php
-        $address = explode("|", $so_obj->getDeliveryAddress());
+        $address = explode("||", $so_obj->getDeliveryAddress());
         if ($this->input->get('caddr') == "") :
             ?>
             <tr>
