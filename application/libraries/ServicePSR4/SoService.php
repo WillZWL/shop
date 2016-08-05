@@ -471,7 +471,7 @@ html;
                     $replace["amazon_order_no"] = $so_obj->getPlatformOrderId();
                     $replace["order_date"] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
                     $bcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
-                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("|", $so_obj->getBillAddress());
+                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("||", $so_obj->getBillAddress());
                     $bstatezip = trim($so_obj->getBillState() . ", " . $so_obj->getBillPostcode());
                     if ($bstatezip != ",") {
                         $bstatezip = preg_replace("{^, }", "", $bstatezip);
@@ -481,7 +481,7 @@ html;
                     }
                     $replace["billing_name"] = $so_obj->getBillName();
                     $replace["billing_address"] = ($so_obj->getBillCompany() == "" ? "" : $so_obj->getBillCompany() . "<br/>") . $bill_addr_1 . "<br/>" . ($bill_addr_2 == "" ? "" : $bill_addr_2 . "<br/>") . ($bill_addr_3 == "" ? "" : $bill_addr_3 . "<br/>") . $so_obj->getBillCity() . "<br>" . $bstatezip . $bcountry_obj->getName();
-                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->getDeliveryAddress());
+                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("||", $so_obj->getDeliveryAddress());
                     $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
                     $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
@@ -857,10 +857,10 @@ html;
                         $replace["delivery_name"] = $so_obj->getDeliveryName();
                         $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
                         $billing_country = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
-                        $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
+                        $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("||", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
                         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
                         $replace["billing_name"] = $so_obj->getBillName();
-                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->getName();
+                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("||", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->getName();
                         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
 
                         $replace["lang_order_no"] = $ar_lang[$cur_lang_id]["order_no"];
@@ -938,10 +938,10 @@ html;
                         $replace["delivery_name"] = $so_obj->getDeliveryName();
                         $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
                         $billing_country = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
-                        $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
+                        $replace["delivery_address_text"] = ($so_obj->getDeliveryCompany() ? $so_obj->getDeliveryCompany() . "\n" : "") . trim(str_replace("||", "\n", $so_obj->getDeliveryAddress())) . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState() . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
                         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
                         $replace["billing_name"] = $so_obj->getBillName();
-                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("|", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->getName();
+                        $replace["billing_address_text"] = ($so_obj->getBillCompany() ? $so_obj->getBillCompany() . "\n" : "") . trim(str_replace("||", "\n", $so_obj->getBillAddress())) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState() . " " . $so_obj->getBillPostcode() . "\n" . $billing_country->getName();
                         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
 
                         $replace["lang_order_no"] = $ar_lang[$cur_lang_id]["order_no"];
@@ -1038,7 +1038,7 @@ html;
                     $data["deliver_name"] = $so_obj->getDeliveryName();
                     $data["client_id"] = $so_obj->getClientId();
                     $line_no = 1;
-                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->getDeliveryAddress());
+                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("||", $so_obj->getDeliveryAddress());
                     $data["daddr_" . $line_no] = $delivery_addr_1;
                     $line_no++;
                     if ($delivery_addr_2 != "" || $delivery_addr_3 != "") {
@@ -1575,7 +1575,7 @@ html;
             $weight = $so_obj->get_weight();
 
             $append = "";
-            $z = explode("|", $so_obj->getDeliveryAddress());
+            $z = explode("||", $so_obj->getDeliveryAddress());
             $cnt = count($z);
             for ($j = $cnt; $j < 3; $j++) {
                 $append .= "~";
@@ -1583,7 +1583,7 @@ html;
 
             switch ($courier) {
                 case 'DPD':
-                    $deladdress = explode("|", $so_obj->getDeliveryAddress());
+                    $deladdress = explode("||", $so_obj->getDeliveryAddress());
                     $deladdr1 = $deladdress[0];
                     $deladdr2 = $deladdress[1] . ", " . $deladdress[2];
                     $deladdr2 = ereg_replace("^, ", "", $deladdr2);
@@ -1609,37 +1609,37 @@ html;
 
                 case 'RM1st':
 
-                    $deladdress = str_replace("|", "~", $so_obj->getDeliveryAddress()) . $append;
+                    $deladdress = str_replace("||", "~", $so_obj->getDeliveryAddress()) . $append;
                     $file_content .= "~2~~~" . $fullname . "~" . $fullname . "~" . $deladdress . "~~~~" . $delpostcode . "~~~~~456098002~~~STL01~~" . $ordernum . "~1~100~~~P~~~~\r\n";
                     break;
 
                 case 'RM1stRec';
-                    $deladdress = str_replace("|", "~", $so_obj->getDeliveryAddress()) . $append;
+                    $deladdress = str_replace("||", "~", $so_obj->getDeliveryAddress()) . $append;
                     $file_content .= "~2~~~" . $fullname . "~" . $fullname . "~" . $deladdress . "~~~~" . $delpostcode . "~~~~~456098002~~~STL01~~" . $ordernum . "~1~100~11~~P~~~~\r\n";
                     break;
 
                 case 'RMSD':
-                    $deladdress = str_replace("|", "~", $so_obj->getDeliveryAddress()) . $append;
+                    $deladdress = str_replace("||", "~", $so_obj->getDeliveryAddress()) . $append;
                     $file_content .= "~2~~~" . $fullname . "~" . $fullname . "~" . $deladdress . "~~~~" . $delpostcode . "~~~~~456098002~~~SD101~~" . $ordernum . "~1~1000~~~P~~~~\r\n";
                     break;
 
                 case 'RMAir':
-                    list($addr1, $addr2, $addr3) = explode("|", $so_obj->getDeliveryAddress());
-                    $addr1 = str_replace("|", ",", $so_obj->getDeliveryAddress());
+                    list($addr1, $addr2, $addr3) = explode("||", $so_obj->getDeliveryAddress());
+                    $addr1 = str_replace("||", ",", $so_obj->getDeliveryAddress());
                     $addr2 = ($delcity ? $delcity : "-");
                     $addr3 = ($delstate ? $delstate : "-");
                     $deladdress = $addr1 . "~" . $addr2 . "~" . $addr3;
-                    //$deladdress = str_replace("|","~",$so_obj->getDeliveryAddress());
+                    //$deladdress = str_replace("||","~",$so_obj->getDeliveryAddress());
                     $file_content .= "~2~~~" . $fullname . "~~" . $deladdress . "~~~~" . $delpostcode . "~" . $delcountry_id . "~~~~~~~~~" . $ordernum . "~~" . $weight . "~~\r\n";
                     break;
 
                 case 'RMInt':
-                    list($addr1, $addr2, $addr3) = explode("|", $so_obj->getDeliveryAddress());
-                    $addr1 = str_replace("|", ",", $so_obj->getDeliveryAddress());
+                    list($addr1, $addr2, $addr3) = explode("||", $so_obj->getDeliveryAddress());
+                    $addr1 = str_replace("||", ",", $so_obj->getDeliveryAddress());
                     $addr2 = ($delcity ? $delcity : "-");
                     $addr3 = ($delstate ? $delstate : "-");
                     $deladdress = $addr1 . "~" . $addr2 . "~" . $addr3;
-                    //$deladdress = str_replace("|","~",$so_obj->getDeliveryAddress());
+                    //$deladdress = str_replace("||","~",$so_obj->getDeliveryAddress());
                     $file_content .= "~2~~~" . $fullname . "~~" . $deladdress . "~~~~" . $delpostcode . "~" . $delcountry_id . "~~~~~~~~~" . $ordernum . "~~" . $weight . "~~\r\n";
                     break;
 
@@ -1735,7 +1735,7 @@ html;
             . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState()
             . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
-        $replace["billing_address_text"] = str_replace("|", "\n",
+        $replace["billing_address_text"] = str_replace("||", "\n",
                 $so_obj->getBillAddress()) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState()
             . " " . $so_obj->getBillPostcode() . "\n" . $country->getName();
         $replace["billing_address"] = nl2br($replace["billing_address_text"]);
@@ -2181,7 +2181,7 @@ html;
                     $data["amazon_order_no"] = $so_obj->getPlatformOrderId();
                     $data["order_date"] = date("d/m/Y", strtotime($so_obj->getOrderCreateDate()));
                     $bcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getBillCountryId()));
-                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("|", $so_obj->getBillAddress());
+                    list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("||", $so_obj->getBillAddress());
                     $bstatezip = trim($so_obj->getBillState() . ", " . $so_obj->getBillPostcode());
                     if ($bstatezip != ",") {
                         $bstatezip = ereg_replace("^, ", "", $bstatezip);
@@ -2191,7 +2191,7 @@ html;
                     }
                     $data["billing_name"] = $so_obj->getBillName();
                     $data["billing_address"] = ($so_obj->getBillCompany() == "" ? "" : $so_obj->getBillCompany() . "<br/>") . $bill_addr_1 . "<br/>" . ($bill_addr_2 == "" ? "" : $bill_addr_2 . "<br/>") . ($bill_addr_3 == "" ? "" : $bill_addr_3 . "<br/>") . $so_obj->getBillCity() . "<br>" . $bstatezip . $bcountry_obj->getName();
-                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("|", $so_obj->getDeliveryAddress());
+                    list($delivery_addr_1, $delivery_addr_2, $delivery_addr_3) = explode("||", $so_obj->getDeliveryAddress());
                     $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
                     $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
@@ -2362,7 +2362,7 @@ html;
             . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState()
             . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
         $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
-        $replace["billing_address_text"] = str_replace("|", "\n",
+        $replace["billing_address_text"] = str_replace("||", "\n",
                 $so_obj->getBillAddress()) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState()
             . " " . $so_obj->getBillPostcode() . "\n" . $country->getName();
         $replace["billing_address"] = nl2br($replace["billing_address_text"]);

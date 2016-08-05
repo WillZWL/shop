@@ -83,8 +83,8 @@
     $i = 0;
     if ($objlist) :
         foreach ($objlist as $obj) :
-            list($d1, $d2, $d3) = explode("|", $obj->getDeliveryAddress());
-            list($b1, $b2, $b3) = explode("|", $obj->getBillAddress());
+            list($d1, $d2, $d3) = explode("||", $obj->getDeliveryAddress());
+            list($b1, $b2, $b3) = explode("||", $obj->getBillAddress());
 
             $del_addr = $d1 . ($d2 != "" ? "<br>" . $d2 : "") . ($d3 != "" ? "<br>" . $d3 : $d3);
             $bill_addr = $b1 . ($b2 != "" ? "<br>" . $b2 : "") . ($b3 != "" ? "<br>" . $b3 : $b3);

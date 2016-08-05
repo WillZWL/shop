@@ -92,8 +92,8 @@ class GlobalCollectRequest
         $this->checkSplitAddress($billStreet, $billAddAddress);
         $this->checkSplitAddress($delStreet, $delAddAddress);
 
-        $billStreet = str_replace("|", " ", $billStreet);
-        $delStreet = str_replace("|", " ", $delStreet);
+        $billStreet = str_replace("||", " ", $billStreet);
+        $delStreet = str_replace("||", " ", $delStreet);
 
         $billFirstname = $soObj->getBillName();
         $delFirstname = $soObj->getDeliveryName();

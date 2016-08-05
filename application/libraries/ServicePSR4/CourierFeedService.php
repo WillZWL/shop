@@ -187,7 +187,7 @@ class CourierFeedService extends BaseService
 				case "DHLBBX":
 					if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 						foreach ($arr as $row) {
-							$ar_address = @explode("|", $row->getDeliveryAddress());
+							$ar_address = @explode("||", $row->getDeliveryAddress());
 							$row->setDeliveryAddress1($ar_address[0]);
 							if (empty($ar_address[1])) {
 								$row->setDeliveryAddress2('NA');
@@ -232,7 +232,7 @@ class CourierFeedService extends BaseService
 						$ts = "";
 						foreach ($arr as $row) {
 							$this->declared_value_debug .= "8total_declared_value_to_6decimals value: $total_declared_value_to_6decimals\r\n";
-							$ar_address = @explode("|", $row->getDeliveryAddress());
+							$ar_address = @explode("||", $row->getDeliveryAddress());
 							$row->setDeliveryAddress1($ar_address[0]);
 							array_shift($ar_address);
 							$row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
@@ -340,7 +340,7 @@ class CourierFeedService extends BaseService
 						if (is_array($arr)) {
 							foreach ($arr as $row) {
 								if ($row->getSoNo() != $prev_so_no) {
-									$ar_address = @explode("|", $row->getDeliveryAddress());
+									$ar_address = @explode("||", $row->getDeliveryAddress());
 									$row->setDeliveryAddress1($ar_address[0]);
 									array_shift($ar_address);
 									$row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
@@ -380,7 +380,7 @@ class CourierFeedService extends BaseService
 						$prev_so_no = "";
 						foreach ($arr as $row) {
 							if ($row->getSoNo() != $prev_so_no) {
-								$ar_address = @explode("|", $row->getDeliveryAddress());
+								$ar_address = @explode("||", $row->getDeliveryAddress());
 								$row->setDeliveryAddress1($ar_address[0]);
 								array_shift($ar_address);
 								$row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
@@ -425,7 +425,7 @@ class CourierFeedService extends BaseService
 						$prev_so_no = "";
 						foreach ($arr as $row) {
 							if ($row->getSoNo() != $prev_so_no) {
-								$ar_address = @explode("|", $row->getDeliveryAddress());
+								$ar_address = @explode("||", $row->getDeliveryAddress());
 								$row->setDeliveryAddress1($ar_address[0]);
 								array_shift($ar_address);
 								$row->setDeliveryAddress2(trim(@implode("|", $ar_address), "|"));
@@ -529,7 +529,7 @@ class CourierFeedService extends BaseService
 				case "ARAMEX_COD":
 					if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 						foreach ($arr as $row) {
-							$ar_address = @explode("|", $row->getDeliveryAddress());
+							$ar_address = @explode("||", $row->getDeliveryAddress());
 							$row->setDeliveryAddress1($ar_address[0]);
 							$row->setDeliveryAddress2($ar_address[1]);
 							$row->setDeliveryAddress3($ar_address[2]);
@@ -571,7 +571,7 @@ class CourierFeedService extends BaseService
 				case "ARAMEX":
 					if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 						foreach ($arr as $row) {
-							$ar_address = @explode("|", $row->getDeliveryAddress());
+							$ar_address = @explode("||", $row->getDeliveryAddress());
 							$row->setDeliveryAddress1($ar_address[0]);
 							$row->setDeliveryAddress2($ar_address[1]);
 							$row->setDeliveryAddress3($ar_address[2]);
@@ -627,7 +627,7 @@ class CourierFeedService extends BaseService
 						}
 
 						foreach ($arr as $row) {
-							$ar_address = @explode("|", $row->getDeliveryAddress());
+							$ar_address = @explode("||", $row->getDeliveryAddress());
 							$ar_address = str_replace(";", " ", $ar_address);
 							$row->setDeliveryAddress(trim(@implode(" ", $ar_address)));
 							$row->setShippingDate(date('dmY'));
@@ -712,7 +712,7 @@ class CourierFeedService extends BaseService
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value))
 		{
 			foreach ($arr as $row) {
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				if (empty($ar_address[1]) && empty($ar_address[2])) {
 					$row->setDeliveryAddress2('NA');
@@ -751,7 +751,7 @@ class CourierFeedService extends BaseService
 	{
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				$row->setDeliveryAddress2($ar_address[1]);
 				$row->setDeliveryAddress3($ar_address[2]);
@@ -771,7 +771,7 @@ class CourierFeedService extends BaseService
 	{
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				$row->setDeliveryAddress2($ar_address[1]);
 				if ($row->getDeliveryAddress2() == "") {
@@ -794,7 +794,7 @@ class CourierFeedService extends BaseService
 	{
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$weight = $row->getProdWeight();
 				$weight = $weight*1000;
 				$row->setProdWeight($weight);
@@ -816,7 +816,7 @@ class CourierFeedService extends BaseService
 	{
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				if ($ar_address[0] == '') {
 					$ar_address[0] = '.';
 				}
@@ -857,7 +857,7 @@ class CourierFeedService extends BaseService
 	{
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 
 				if (empty($ar_address[1]) && empty($ar_address[2])) {
@@ -907,7 +907,7 @@ class CourierFeedService extends BaseService
 	{
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				if (empty($ar_address[1]) && empty($ar_address[2])) {
 					$row->setDeliveryAddress2('NA');
@@ -953,7 +953,7 @@ class CourierFeedService extends BaseService
 
 	public function setDhlGlobalMailCourierFeed($row)
 	{
-		$ar_address = @explode("|", $row->getDeliveryAddress());
+		$ar_address = @explode("||", $row->getDeliveryAddress());
 		$row->setDeliveryAddress1($ar_address[0]);
 		if (!empty($ar_address[1]))
 		{
@@ -983,7 +983,7 @@ class CourierFeedService extends BaseService
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
 				$row->setItemNo($i);
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				$row->setDeliveryAddress2($ar_address[1]);
 				$barcode = 'ABESGPT'.$row->getSoNo();
@@ -1010,7 +1010,7 @@ class CourierFeedService extends BaseService
 		if ($arr = $this->getShipmentDeliveryInfoDhl($value)) {
 			foreach ($arr as $row) {
 				$row->setItemNo($i);
-				$ar_address = @explode("|", $row->getDeliveryAddress());
+				$ar_address = @explode("||", $row->getDeliveryAddress());
 				$row->setDeliveryAddress1($ar_address[0]);
 				$row->setDeliveryAddress2($ar_address[1]);
 				$barcode = 'PT'.$row->getSoNo();
@@ -1065,7 +1065,7 @@ class CourierFeedService extends BaseService
 
 	public function setFedexCourierFeed($row)
 	{
-		$ar_address = @explode("|", $row->getDeliveryAddress());
+		$ar_address = @explode("||", $row->getDeliveryAddress());
 		$row->setDeliveryAddress1($ar_address[0]);
 		$row->setDeliveryAddress2($ar_address[1]);
 	}

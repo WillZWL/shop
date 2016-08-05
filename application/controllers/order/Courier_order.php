@@ -107,7 +107,7 @@ class Courier_order extends MY_Controller
 							$row->setDeclaredDesc($hsDetails["description"]);
 							$row->setDeclaredHsCode($hsDetails["code"]);
 						}
-						$address= @explode("|", $row->getDeliveryAddress());
+						$address= @explode("||", $row->getDeliveryAddress());
 						$row->setDeliveryAddress1($address[0]);
 						if (!empty($address[1])){
 							$row->setDeliveryAddress2($address[1]);
