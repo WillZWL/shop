@@ -167,12 +167,12 @@ class SoFactoryService extends BaseService
             $soObj->setBillCompany($clientObj->getCompanyname());
         $billAddress = $clientObj->getAddress1();
         if ($billAddress) {
-            $billAddress .= "||" . ($clientObj->getAddress2()?$clientObj->getAddress2():"");
+            $billAddress .= "|" . ($clientObj->getAddress2()?$clientObj->getAddress2():"");
         } else {
             $billAddress = ($clientObj->getAddress2()?$clientObj->getAddress2():"");
         }
         if ($billAddress) {
-            $billAddress .= "||" . ($clientObj->getAddress3()?$clientObj->getAddress3():"");
+            $billAddress .= "|" . ($clientObj->getAddress3()?$clientObj->getAddress3():"");
         } else {
             $billAddress = ($clientObj->getAddress3()?$clientObj->getAddress3():"");
         }
@@ -191,12 +191,12 @@ class SoFactoryService extends BaseService
             $soObj->setDeliveryCompany($clientObj->getDelCompany());
         $deliveryAddress = $clientObj->getDelAddress1();
         if ($deliveryAddress) {
-            $deliveryAddress .= "||" . ($clientObj->getDelAddress2()?$clientObj->getDelAddress2():"");
+            $deliveryAddress .= "|" . ($clientObj->getDelAddress2()?$clientObj->getDelAddress2():"");
         } else {
             $deliveryAddress = ($clientObj->getDelAddress2()?$clientObj->getDelAddress2():"");
         }
         if ($deliveryAddress) {
-            $deliveryAddress .= "||" . ($clientObj->getDelAddress3()?$clientObj->getDelAddress3():"");
+            $deliveryAddress .= "|" . ($clientObj->getDelAddress3()?$clientObj->getDelAddress3():"");
         } else {
             $deliveryAddress = ($clientObj->getDelAddress3()?$clientObj->getDelAddress3():"");
         }
