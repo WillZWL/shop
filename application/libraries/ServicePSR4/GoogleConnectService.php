@@ -93,26 +93,34 @@ class GoogleConnectService extends BaseService
         $client->setApplicationName($serviceName);
         google_api_php_client_autoload("Google_Service_ShoppingContent");
         $service = new \Google_Service_ShoppingContent($client);
-        
+
         if (isset($_SESSION['service_token'])) {
             $client->setAccessToken($_SESSION['service_token']);
         }
-        $key = file_get_contents($_keyFileLocation, true);
-        $cred = new \Google_Auth_AssertionCredentials(
-            $_serviceAccountName,
-            array('https://www.googleapis.com/auth/content'),
-            $key
-        );
 
-        $client->setAssertionCredentials($cred);
-        if ($client->getAuth()->isAccessTokenExpired()) {
-            $client->getAuth()->refreshTokenWithAssertion($cred);
+        try {
+            $key = file_get_contents($_keyFileLocation, true);
+            $cred = new \Google_Auth_AssertionCredentials(
+                $_serviceAccountName,
+                array('https://www.googleapis.com/auth/content'),
+                $key
+            );
+        } catch (Exception $e) {
+            mail('will.zhang@eservicesgroup.com', '[Panther] Google Api Connect Fail', 'Please Check '.$e->getMessage());
+        }
+        try {
+            $client->setAssertionCredentials($cred);
+            if ($client->getAuth()->isAccessTokenExpired()) {
+                $client->getAuth()->refreshTokenWithAssertion($cred);
+            }
+        } catch (Exception $e) {
+            mail('will.zhang@eservicesgroup.com', '[Panther] Google Api Get Service Token Fail', 'Please Check '.$e->getMessage());
         }
         $_SESSION['service_token'] = $client->getAccessToken();
         return ["client" => $client, "service" => $service];
     }
 
-    public function getProduct($accountId, $productId) {        
+    public function getProduct($accountId, $productId) {
 // Make sure your product ID is of the form channel:languageCode:countryCode:offerId.
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Get_Product")) === false) {
@@ -144,7 +152,7 @@ class GoogleConnectService extends BaseService
         return $ret;
     }
 /* should be working, but comment it out because we won't delete 1 by 1
-    public function deleteProduct($accountId, $productId) {        
+    public function deleteProduct($accountId, $productId) {
         $ret = ["status" => FALSE, "error_message" => ""];
         if (($service = $this->_createService("Google_Shopping_Delete_Product")) === false) {
             $ret["error_message"] = __LINE__ . " METHOD: " . __METHOD__ . " - Missing/Invalid Details.";
@@ -430,7 +438,7 @@ class GoogleConnectService extends BaseService
 		$return_array = array();
 		if(is_array($array))
 		{
-			foreach ($array as $key => $value) 
+			foreach ($array as $key => $value)
 			{
 				if(is_array($value))
 				{
@@ -467,7 +475,7 @@ class GoogleConnectService extends BaseService
     }
 */
 /**
-* sieve out GSC result content and compile only product-related info into std object and utf_encode values 
+* sieve out GSC result content and compile only product-related info into std object and utf_encode values
 * Make product ready for json_encode to return
 */
     private function _convertToStdProductObject(\Google_Service_ShoppingContent_Product $object)
@@ -479,7 +487,7 @@ class GoogleConnectService extends BaseService
         {
             return $product;
         }
-        
+
         if(get_class($object) != "Google_Service_ShoppingContent_Product")
         {
             // invalid object class
@@ -553,7 +561,7 @@ class GoogleConnectService extends BaseService
         $return_array = array();
         if(is_array($array))
         {
-            foreach ($array as $key => $value) 
+            foreach ($array as $key => $value)
             {
                 if(is_array($value))
                 {

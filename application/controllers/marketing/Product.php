@@ -20,8 +20,6 @@ class Product extends MY_Controller
         $this->load->library('service/subject_domain_service');
         $this->load->library('service/translate_service');
         $this->load->library('service/platform_biz_var_service');
-//        $this->load->library('service/product_update_followup_service');
-//        $this->load->library('service/adwords_service');
         $this->load->library('service/country_service');
         $this->load->library('service/selling_platform_service.php');
     }
@@ -1009,16 +1007,15 @@ html;
             show_404();
         }
 
-
         $sub_app_id = $this->getAppId() . "02";
 
         $ar_feed = array("FROOGLE", "KELKOO", "PRICERUNNER", "PRICEGRABBER", "PRICEMINISTER");
 
-
         $data["google_feed_arr"] = $this->google_feed_arr;
 
-        define('IMG_PH', $this->context_config_service->value_of("prod_img_path"));
-        define('PROD_BANNER_PH', $this->context_config_service->value_of("prod_banner_path"));
+        define('IMG_PH', $this->sc['ContextConfig']->valueOf("prod_img_path"));
+        define('PROD_BANNER_PH', $this->sc['ContextConfig']->valueOf("prod_banner_path"));
+
         $product_content_dao = $this->product_service->get_pc_dao();
 
         $img_size = array("l", "m", "s");
@@ -1053,7 +1050,6 @@ html;
                                 $this->product_model->product_service->get_sku_map_dao()->update($map_obj);
                                 mail('chapman@eservicesgroup.com,christy.yeung@eservicesgroup.com,alice.fu@eservicesgroup.com,nicolove.ni@eservicesgroup.com', '[VB] SKU - ' . $sku . ' is mapped with another Master SKU.', 'Please noted,' . $sku . ' is mapped with another Master SKU.', "From: admin@valuebasket.com\r\n");
                             }
-
                         }
                         if ($insert_master_sku) {
                             $data["master_sku"]->set_ext_sku(trim($_POST["master_sku"]));
@@ -1061,13 +1057,11 @@ html;
                             $data["master_sku"]->set_sku($sku);
                             $data["master_sku"]->set_status(1);
                             $this->product_model->product_service->get_sku_map_dao()->insert($data["master_sku"]);
-                            file_get_contents(base_url() . "cps/webapi.pullskuprice.php?sku=" . trim($_POST["master_sku"]));
                         }
                     }
                 }
 
                 $response_psd_list = $this->input->post('ps');
-
                 $sub_cat_id = $this->input->post('sub_cat_id');
                 $sku = $this->input->post('sku');
                 $this->product_model->update_response_psd_list($sku, $sub_cat_id, $response_psd_list);
@@ -1096,7 +1090,6 @@ html;
                         $_POST['accelerator'] = 0;
                     }
 
-
                     $update_bundle = 0;
 
                     if ($_POST["website_status"] == "O" && $data["product"]->get_website_status() != "O") {
@@ -1117,12 +1110,12 @@ html;
                             $lang_osd = $lang_osd | (1 << $selectedLang);
                         }
                         $_POST["lang_restricted"] = $lang_osd;
-                    } else
+                    } else {
                         $_POST["lang_restricted"] = 0;
+                    }
                     $alert_website_status = array($_POST["before_update_website_status"], $_POST["website_status"]);
                     $alert_expected_delivery_date = array($_POST["before_expected_delivery_date"], $_POST["expected_delivery_date"]);
                     if ($_POST["before_update_website_status"] != $_POST["website_status"]) {
-//send email
                         if ($_POST["before_update_website_status"] != "")
                             $this->product_model->product_service->alert_user(Product_service::PRODUCT_STATUS_CHANGED, $sku, $alert_website_status, $alert_expected_delivery_date);
                     }
@@ -1142,22 +1135,19 @@ html;
                     $config['overwrite'] = TRUE;
                     $config['is_image'] = TRUE;
                     $this->load->library('upload', $config);
-
                     if (!empty($_FILES["image_file"]["name"])) {
                         @unlink(IMG_PH . $sku . "." . $data["product"]->get_image());
                         if ($this->upload->do_upload("image_file")) {
                             $res = $this->upload->data();
                             $ext = substr($res["file_ext"], 1);
                             $data["product"]->set_image($ext);
-                            list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_w_x_h"));
+                            list($width, $height) = explode("x", $this->sc['ContextConfig']->valueOf("thumb_w_x_h"));
                             $outputfilename = IMG_PH . $sku . "." . $ext;
                             thumbnail(IMG_PH . $sku . "." . $ext, $width, $height, $outputfilename);
                             $url = $outputfilename;
                             if (!cdn_purge($url)) $a = 1; #$_SESSION["NOTICE"] = "cdn_purge failed1";
-
-                            //watermark(IMG_PH.$sku.".".$ext, "images/watermark.png", "B", "R", "", "#000000");
                             foreach ($img_size as $size) {
-                                list($width, $height) = explode("x", $this->context_config_service->value_of("thumb_{$size}_w_x_h"));
+                                list($width, $height) = explode("x", $this->sc['ContextConfig']->valueOf("thumb_{$size}_w_x_h"));
                                 $outputfilename = IMG_PH . $sku . "_{$size}." . $ext;
                                 thumbnail(IMG_PH . $sku . "." . $ext, $width, $height, $outputfilename);
                                 $url = $outputfilename;
@@ -1182,19 +1172,12 @@ html;
                         }
                     }
 
-                    //var_dump($data["product"]);exit;
                     if ($this->product_model->update("product", $data["product"])) {
-                        // SBF 4402 warranty for different countries
-                        // for receiving the changes of list
-
                         $warranty_country_counter = 0;
                         while ($this->input->post('warranty_country_' . $warranty_country_counter)) {
-                            //var_dump($this->input->post('warranty_country_'.$warranty_country_counter));
                             $sku = $this->input->post('sku');
-
                             $warranty_platform_id = $this->input->post('warranty_country_' . $warranty_country_counter);
                             $warranty_in_month = $this->input->post('warranty_in_month_' . $warranty_country_counter);
-
                             if ($warranty_in_month === "") {
                                 if ($old_obj = $this->warranty_model->get_product_warranty_dao()->get(array('platform_id' => $warranty_platform_id, 'sku' => $sku))) {
                                     $this->warranty_model->get_product_warranty_dao()->delete($old_obj);
@@ -1206,14 +1189,10 @@ html;
                                     $country_warranty_obj->set_platform_id($warranty_platform_id);
                                     $country_warranty_obj->set_warranty_in_month($warranty_in_month);
                                     $this->warranty_model->add_country_warranty($country_warranty_obj);
-                                    //var_dump($this->db->last_query());die();
                                 }
                             }
                             $warranty_country_counter++;
                         }
-
-
-                        //if ($warranty_country_counter) die();
 
                         //update HS code
                         $pccmap = array(
@@ -1241,11 +1220,8 @@ html;
                         );
                         $cccount = count($pccmap);
 
-                        //var_dump($pccmap); die();
-
                         for ($i = 0; $i < $cccount; $i++) {
                             $cc_obj = $this->custom_class_model->get_cc(array('country_id' => $pccmap[$i]['country'], 'code' => $pccmap[$i]['code']));
-                            //var_dump($this->db->last_query()); die();
 
                             if ($cc_obj) {
                                 $pcc_obj = $this->custom_class_model->get_pcc(array('sku' => $sku, 'country_id' => $pccmap[$i]['country']));
@@ -1395,7 +1371,6 @@ html;
                         }
                         $this->product_model->product_service->get_dao()->trans_complete();
 
-                        // $this->product_update_followup_service->google_shopping_update($sku);
                         unset($_SESSION["product_obj"]);
                         unset($_SESSION["prod_cont_vo"]);
                         unset($_SESSION["prod_cont_ext_vo"]);
@@ -1589,8 +1564,6 @@ html;
                             $this->product_model->update("product", $data["product"]);
                         }
                     }
-
-                    // $this->update_banner_image($sku, $_POST);
                 }
 
                 $country_list = $this->product_model->get_list("country", array("status" => 1, "allow_sell" => 1), array("orderby" => "name ASC"));
@@ -1722,7 +1695,6 @@ html;
                         }
                     }
                 }
-
 
                 redirect(base_url() . "marketing/product/view/" . $sku . "/" . $lang_id);
             }
@@ -2272,211 +2244,6 @@ start;
                         $ad_accountid_arr = array();
                         break;
                 }
-            }
-
-            //if ($ad_accountid_arr) {
-            if (false) {
-                $cat_name = $this->product_model->get("category", array("id" => $cat_id))->get_name();
-
-                foreach ($ad_accountid_arr as $platform_id => $id) {
-                    if ($platform_id !== "DEV") {
-                        # update to google only if campaign and adgroup exists
-                        # if campaign and adgroup has been created via pricing tool,
-                        # SKU+platform_id will have an entry in db adwords_data
-                        $adwords_data_obj = $this->adwords_service->get_adwords_data_dao()->get(array("sku" => $sku, "platform_id" => $platform_id));
-                    }
-
-                    if ($adwords_data_obj === FALSE) {
-                        $subject = 'Database Error: Could not retrieve adwords_data info';
-                        $ad_content['File'] = __FILE__;
-                        $ad_content['Line'] = __LINE__;
-                        $ad_content['error'] =
-                            "\nad_accountId: $id / platform_id $platform_id" .
-                            "\ncampaign name: $cat_name" .
-                            "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id" .
-                            "\nDatabase error_msg:" . $this->db->_error_message();
-
-                        if ($debug) {
-                            echo "<pre>";
-                            var_dump($ad_content);
-                        }
-                        continue;
-                    } elseif ($adwords_data_obj || $platform_id == "DEV") {
-                        $ad_content = array();
-                        if ($user = $this->adwords_service->init_account($id)) {
-                            # get campainID
-                            $result = $this->adwords_service->get_campaign_by_name_v2($user, $cat_name);
-                            if (array_key_exists('error', $result)) {
-                                //this error most probably due to wrong ad_accoundId
-                                $subject = 'unknown Error: maybe wrong ad_accoundID';
-                                $ad_content['File'] = __FILE__;
-                                $ad_content['Line'] = __LINE__;
-                                $ad_content['error'] = $result['error'] .
-                                    "\nad_accountId: $id / platform_id $platform_id" .
-                                    "\ncampaign name: $cat_name" .
-                                    "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                if ($debug) {
-                                    echo "<pre>";
-                                    var_dump($ad_content);
-                                }
-
-                                $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                continue;
-                            } elseif (array_key_exists('duplicate', $result)) {
-                                //if found more than one campaign exists, then do not continue
-                                $subject = 'Duplicate Error: multiple campaigns found';
-                                $ad_content['File'] = __FILE__;
-                                $ad_content['Line'] = __LINE__;
-                                $ad_content['Duplicate_error'] = $result['duplicate'] .
-                                    "\nad_accountId: $id / platform_id $platform_id" .
-                                    "\ncampaign name: $cat_name" .
-                                    "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                if ($debug) {
-                                    echo "<pre>";
-                                    var_dump($ad_content);
-                                }
-
-                                $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                continue;
-                            } elseif (array_key_exists('empty', $result)) {
-                                //need to create a new campaign with category name as campaign name
-                                $subject = 'Empty Error: campaign does not exist';
-                                $ad_content['File'] = __FILE__;
-                                $ad_content['Line'] = __LINE__;
-                                $ad_content['Empty_error'] = $result['empty'] .
-                                    "\nad_accountId: $id / platform_id $platform_id" .
-                                    "\ncampaign name: $cat_name" .
-                                    "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                if ($debug) {
-                                    echo "<pre>";
-                                    var_dump($ad_content);
-                                }
-
-                                $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                continue;
-                            } else {
-                                //all this good here, then
-                                //check if adGroup exists, if yes, get adGroupID
-                                $campaignId = $result->id;
-                                $adGroupName = $sku;
-
-                                $result = $this->adwords_service->get_adGroups_by_name_v2($user, $campaignId, $adGroupName);
-
-                                if (array_key_exists('error', $result)) {
-                                    $subject = 'unknown Error: maybe wrong ad_accoundID';
-                                    $ad_content['File'] = __FILE__;
-                                    $ad_content['Line'] = __LINE__;
-                                    $ad_content['error'] = $result['error'] .
-                                        "\nad_accountId: $id / platform_id $platform_id" .
-                                        "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                    if ($debug) {
-                                        echo "<pre>";
-                                        var_dump($ad_content);
-                                    }
-
-                                    $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                    continue;
-                                } elseif (array_key_exists('duplicate', $result)) {
-                                    //if found more than one adGroup exists, then do not continue
-                                    $subject = 'Duplicate Error: multiple adGroups exist';
-                                    $ad_content['File'] = __FILE__;
-                                    $ad_content['Line'] = __LINE__;
-                                    $ad_content['Duplicate_error'] = $result['duplicate'] .
-                                        "\nad_accountId: $id / platform_id $platform_id" .
-                                        "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                    if ($debug) {
-                                        echo "<pre>";
-                                        var_dump($ad_content);
-                                    }
-
-                                    $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                    continue;
-                                } elseif (array_key_exists('empty', $result)) {
-                                    if ($debug) {
-                                        echo "<pre>";
-                                        var_dump($ad_content);
-                                    }
-
-                                    // $this->adwords_service->mail_adcontent($ad_content,$subject);
-                                    continue;
-                                } else {
-                                    # get the list of existing keywords under this adGroupId
-                                    $adGroupId = $result->id;
-                                    $result = $this->adwords_service->get_specific_keyword_v2($user, $adGroupId);
-
-                                    if (array_key_exists('error', $result)) {
-                                        $subject = 'Get Keywords Error';
-                                        $ad_content['File'] = __FILE__;
-                                        $ad_content['Line'] = __LINE__;
-                                        $ad_content['error'] = $result['error'] .
-                                            "\nad_accountId: $id / platform_id $platform_id" .
-                                            "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                        if ($debug) {
-                                            echo "<pre>";
-                                            var_dump($ad_content);
-                                        }
-
-                                        $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                        continue;
-                                    } else {
-                                        # if reach here = success in getting impt info, continue to create keywords
-                                        foreach ($keywords_arr as $k => $keyword) {
-                                            if ($result) {
-                                                /* if there are existing keywords in adGroup, loop through
-                                                    existing keywords and sieve out new keywords to append */
-
-                                                if ((in_array($keyword, $result)) === FALSE) {
-                                                    $ad_content["keyword"][] = $keyword;
-                                                }
-                                            } else {
-                                                /* if no existing keywords in adgroup */
-                                                $ad_content["keyword"][] = $keyword;
-                                            }
-                                        }
-
-                                        if ($ad_content["keyword"]) {
-                                            # create keywords in the adgroup
-                                            # all keywords added from product admin page defaulted to BROAD match type.
-                                            $keyword_result = $this->adwords_service->add_keywords_v2($user, $adGroupId, $ad_content);
-
-                                            if (array_key_exists('error', $keyword_result)) {
-                                                $subject = 'Error: keyword create failed';
-                                                $ad_content['error'] = $keyword_result['error'] .
-                                                    "\nad_accountId: $id / platform_id $platform_id" .
-                                                    "\nUnable to update Google keywords from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                                if ($debug) {
-                                                    echo "<pre>";
-                                                    var_dump($ad_content);
-                                                }
-
-                                                $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                                continue;
-                                            } else {
-                                                $subject = "$sku - Adgroup keywords updated successfully";
-                                                $ad_content['success'] = "ad_accountId: $id" . "\nGoogle adGroup keywords updated successfully from product management - " . base_url() . "/marketing/product/view/$sku/$lang_id";
-
-                                                if ($debug) {
-                                                    echo "SUCCESS! <pre>";
-                                                    var_dump($ad_content);
-                                                }
-
-                                                $this->adwords_service->mail_adcontent($ad_content, $subject);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                if ($debug) die();
             }
         }
 

@@ -35,6 +35,7 @@ class CronUpdateAutoPrice extends MY_Controller
             $price_obj->setPrice($auto_price);
             $this->sc['Price']->getDao('Price')->update($price_obj);
             $this->sc['PriceMargin']->refreshProfitAndMargin($price_obj->getPlatformId(), $price_obj->getSku());
+            $this->sc["PriceUpdateTrigger"]->triggerGoogleApi($price_obj->getSku(), $price_obj->getPlatformId());
             // $time_end = microtime();
             // error_log($time_end - $time_start);
         }
