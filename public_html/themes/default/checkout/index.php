@@ -350,8 +350,10 @@ $(document).ready(function() {
     $("#paymentOptionRow").on('change blur', 'input:radio', function(){
         if($('#Bank_Transfer').is(':checked')) {
             $("#BankTransferText").show();
+            displayCheckoutNowButton(0);
         } else {
             $("#BankTransferText").hide();
+            displayCheckoutNowButton(1);
         }
     })
 
