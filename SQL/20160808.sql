@@ -6,3 +6,5 @@ VALUES
 
 
 update `payment_option` set `set_id` = 13 where `platform_id` in ('WEBIT','WEBBE','WEBPL','WEBNL');
+
+update payment_option_set_content set `ref_from_amt` = 0.00 where card_code = 'Bank_Transfer';
