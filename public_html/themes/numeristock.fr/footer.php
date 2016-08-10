@@ -176,21 +176,21 @@
                                               </form>-->
                                                 <!-- Begin MailChimp Signup Form -->
                                                 <div id="mc_embed_signup">
-                                                    <form action="//digitaldiscount.us12.list-manage.com/subscribe/post?u=811fba9bd26f35cade0854986&id=c81a013806" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                                    <form action="//numeristock.us1.list-manage.com/subscribe/post?u=f905cba392db3ace226d01ae5&id=e560783deb" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                                                         <div id="mc_embed_signup_scroll">
                                                             <h4 class="panel-title"><?= _('Sign up for Newsletter') ?></h4>
                                                             <p class="desc-about"><?= _('Subscribe to get our latest news and promotions regularly.') ?></p>
                                                             <div class="mc-field-group">
                                                                 <!--<label for="mce-EMAIL">Email Address <span class="asterisk">*</span>
                                                                 </label>-->
-                                                                <input type="email" value="" name="EMAIL" class="required email input-newsletter" id="mce-EMAIL" placeholder="<?= _('Enter you email address') ?> *">
+                                                                <input type="email" value="" name="EMAIL" class="required email input-newsletter" id="mce-EMAIL" placeholder="<?= _('Enter you email address') ?> *" required>
                                                             </div>
                                                             <div id="mce-responses" class="clear">
                                                                 <div class="response" id="mce-error-response" style="display:none"></div>
                                                                 <div class="response" id="mce-success-response" style="display:none"></div>
                                                             </div> <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                                                             <div style="position: absolute; left: -5000px;">
-                                                                <input type="text" name="b_811fba9bd26f35cade0854986_c81a013806" tabindex="-1" value="">
+                                                                <input type="text" name="b_f905cba392db3ace226d01ae5_e560783deb" tabindex="-1" value="">
                                                             </div>
                                                             <div class="clear">
                                                                 <input type="submit" value="<?= _('Subscribe') ?>" name="subscribe" id="mc-embedded-subscribe" class="btn-newsletter">
