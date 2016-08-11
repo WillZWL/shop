@@ -13,7 +13,7 @@ class Product_image_vo extends Base_vo
     private $image_saved = '1';
     private $vb_image = '';
     private $stop_sync_image = '0';
-    private $vb_alt_text;
+    private $vb_alt_text = '';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
@@ -120,7 +120,9 @@ class Product_image_vo extends Base_vo
 
     public function set_vb_alt_text($vb_alt_text)
     {
-        $this->vb_alt_text = $vb_alt_text;
+        if ($vb_alt_text) {
+            $this->vb_alt_text = $vb_alt_text;
+        }
     }
 
     public function get_vb_alt_text()
