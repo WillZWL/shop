@@ -136,7 +136,7 @@ $xml  = "<XML>
                 <AMOUNT>" . ($soObj->getAmount() * 100) . "</AMOUNT>
                 <CURRENCYCODE>" . $soObj->getCurrencyId() . "</CURRENCYCODE>
                 <CUSTOMERID>" . $soObj->getClientId() . "</CUSTOMERID>
-                <IPADDRESSCUSTOMER>" . $this->_ourServerIp . "</IPADDRESSCUSTOMER>
+                <IPADDRESSCUSTOMER>" . $_SERVER["REMOTE_ADDR"] . "</IPADDRESSCUSTOMER>
                 <FIRSTNAME>" . xmlspecialchars($billFirstname) . "</FIRSTNAME>
                 <PREFIXSURNAME>" . xmlspecialchars($billPrefixsurname) . "</PREFIXSURNAME>
                 <SURNAME>" . xmlspecialchars($billSurname) . "</SURNAME>
