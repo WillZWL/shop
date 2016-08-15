@@ -44,7 +44,7 @@ class ReviewFianetService extends BaseService
                 $clientemail = strtolower($client_obj->getEmail());
                 $fianet_crypt = md5("{$privatekey}_{$so_no}+{$order_create_date}=$clientemail");  # fianet's authentication key
 
-                $dom = new DOMDocument('1.0', 'UTF-8');
+                $dom = new \DOMDocument('1.0', 'UTF-8');
                 $root = $dom->createElement('control');
                 $root = $dom->appendChild($root);
 

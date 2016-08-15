@@ -2184,8 +2184,9 @@ html;
                     list($bill_addr_1, $bill_addr_2, $bill_addr_3) = explode("||", $so_obj->getBillAddress());
                     $bstatezip = trim($so_obj->getBillState() . ", " . $so_obj->getBillPostcode());
                     if ($bstatezip != ",") {
-                        $bstatezip = ereg_replace("^, ", "", $bstatezip);
-                        $bstatezip = ereg_replace(",$", "", $bstatezip) . "<br>";
+//                        $bstatezip = preg_replace("/^,\s/", "", $bstatezip);
+//                        $bstatezip = preg_replace("/,$/", "", $bstatezip) . "<br>";
+                        $bstatezip = trim($bstatezip, " ,");
                     } else {
                         $bstatezip = "";
                     }
@@ -2195,8 +2196,9 @@ html;
                     $dcountry_obj = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
                     $dstatezip = trim($so_obj->getDeliveryState() . ", " . $so_obj->getDeliveryPostcode());
                     if ($dstatezip != ",") {
-                        $dstatezip = ereg_replace("^, ", "", $dstatezip);
-                        $dstatezip = ereg_replace(",$", "", $dstatezip) . "<br>";
+//                        $dstatezip = preg_replace("^, ", "", $dstatezip);
+//                        $dstatezip = preg_replace(",$", "", $dstatezip) . "<br>";
+                        $dstatezip = trim($dstatezip, " ,");
                     } else {
                         $dstatezip = "";
                     }
@@ -2329,7 +2331,7 @@ html;
     {
 
         $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
-        $so_items = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
+        //$so_items = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
         $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
         $currency_obj = $this->getDao('Currency')->get(['currency_id' => $so_obj->getCurrencyId()]);
         $sh_obj = $this->getDao('SoShipment')->get(['sh_no' => $sh_no]);
@@ -2354,7 +2356,7 @@ html;
         $replace["bill_name"] = $so_obj->getBillName();
         $replace["purchase_date"] = $so_obj->getOrderCreateDate();
         $replace["promotion_code"] = $so_obj->getPromotionCode();
-        $replace["delivery_days"] = $so_obj->get_expect_del_days();
+        $replace["delivery_days"] = $so_obj->getExpectDelDays();
         $replace["delivery_name"] = $so_obj->getDeliveryName();
         $replace["currency_id"] = $so_obj->getCurrencyId();
 
@@ -2459,9 +2461,9 @@ html;
                 $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
                 break;
         }
-        include_once(APPPATH . "hooks/country_selection.php");
+        include_once(APPPATH . "hooks/Country_selection.php");
         $country_id = $pbv_obj->getPlatformCountryId();
-        $replace = array_merge($replace, Country_selection::get_template_require_text($lang_id, $country_id));
+        $replace = array_merge($replace, \Country_selection::get_template_require_text($lang_id, $country_id));
         $email_sender = "no-reply@" . strtolower($replace["site_name"]);
         $replace["support_email"] = $email_sender;
         $replace["image_url"] = $this->getDao('Config')->valueOf("default_url");
