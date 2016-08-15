@@ -2330,19 +2330,11 @@ html;
     public function fire_aftership_thank_you_email($so_obj, $sh_no, $ap_status)
     {
 
-        $country = $this->getDao('Country')->get(array("country_id" => $so_obj->getDeliveryCountryId()));
-        //$so_items = $this->getDao('SoItemDetail')->getItemsWithName(array("so_no" => $so_obj->getSoNo(), "p.cat_id NOT IN ($ca_catid_arr)" => NULL));
         $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
-        $currency_obj = $this->getDao('Currency')->get(['currency_id' => $so_obj->getCurrencyId()]);
         $sh_obj = $this->getDao('SoShipment')->get(['sh_no' => $sh_no]);
         if ($sh_obj->getCourierId()) {
             if ($courier_obj = $this->getDao('Courier')->get(array("id" => $sh_obj->getCourierId()))) {
-                $courier_id = $courier_obj->get_courier_name();
-                if ($sh_obj->getCourierId() == 'DPD_NL' && $sh_obj->getTrackingNo() && $courier_obj->getTrackingLink()) {
-                    $tracking_no = '<a href="' . $courier_obj->getTrackingLink() . $sh_obj->getTrackingNo() . '" target="_blank">' . $sh_obj->getTrackingNo() . '</a>';
-                } else {
-                    $tracking_no = (empty($sh_obj) ? '' : $sh_obj->getTrackingNo());
-                }
+                $courier_id = $courier_obj->getCourierName();
             }
         }
         $platform_id = $so_obj->getPlatformId();
@@ -2350,279 +2342,24 @@ html;
         $lang_id = $pbv_obj->getLanguageId();
 
         $replace["so_no"] = $so_obj->getSoNo();
-        $replace["client_id"] = $so_obj->getClientId();
         $replace["forename"] = $client->getForename();
-        $replace["email"] = $client->getEmail();
-        $replace["bill_name"] = $so_obj->getBillName();
-        $replace["purchase_date"] = $so_obj->getOrderCreateDate();
-        $replace["promotion_code"] = $so_obj->getPromotionCode();
-        $replace["delivery_days"] = $so_obj->getExpectDelDays();
-        $replace["delivery_name"] = $so_obj->getDeliveryName();
-        $replace["currency_id"] = $so_obj->getCurrencyId();
-
-        $replace["delivery_address_text"] = str_replace("|", "\n", str_replace("||", "|", $so_obj->getDeliveryAddress()))
-            . "\n" . $so_obj->getDeliveryCity() . " " . $so_obj->getDeliveryState()
-            . " " . $so_obj->getDeliveryPostcode() . "\n" . $country->getName();
-        $replace["delivery_address"] = nl2br($replace["delivery_address_text"]);
-        $replace["billing_address_text"] = str_replace("||", "\n",
-                $so_obj->getBillAddress()) . "\n" . $so_obj->getBillCity() . " " . $so_obj->getBillState()
-            . " " . $so_obj->getBillPostcode() . "\n" . $country->getName();
-        $replace["billing_address"] = nl2br($replace["billing_address_text"]);
-
-        $replace['currency_sign'] = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
-        $currency_sign = (empty($currency_obj) ? $so_obj->getCurrencyId() : $currency_obj->getSign());
-        $replace["amount"] = platform_curr_format($so_obj->getAmount(), 0);
-        $replace["timestamp"] = date("d/m/Y");
-        $replace["sh_no"] = $sh_no;
-
-        switch ($lang_id) {
-            case 'de':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Versandnummer:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurier:"; //Courier ID
-                break;
-
-            case 'fr':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : "<b>Numero de Suivi:</b>"); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Courrier:"; //Courier ID
-                break;
-
-            case 'en':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Tracking ID:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
-                break;
-
-            case 'es':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de Seguimiento de Envio:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Correo:"; //Courier ID
-                break;
-
-            case 'pt':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de Rastreamento:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Correio:"; //Courier ID
-                break;
-
-            case 'nl':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Traceernummer:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Koerier:"; //Courier ID
-                break;
-
-            case 'ja':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>>追跡番号:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "宅配便"; //Courier ID
-                break;
-
-            case 'it':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero di Spedizione:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Corriere:"; //Courier ID
-                break;
-
-            case 'pl':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numerze przesyłki:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurier:"; //Courier ID
-                break;
-
-            case 'da':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sporings-ID:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
-                break;
-
-            case 'ko':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>ID:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : ":"; //Courier ID
-                break;
-
-            case 'tr':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Takip No:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurye:"; //Courier ID
-                break;
-
-            case 'sv':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sparnings ID:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurir:"; //Courier ID
-                break;
-
-            case 'no':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Sporings-ID:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Kurer:"; //Courier ID
-                break;
-
-            case 'pt-br':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Numero de rastreamento:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Entregador:"; //Courier ID
-                break;
-
-            case 'ru':
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>?оме? дл? о??леживани? г??за:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Сл?жба до??авки:"; //Courier ID
-                break;
-
-            default:
-                $replace["tracking_id_label"] = (empty($tracking_no) ? '' : '<b>Tracking ID:</b>'); // 'Tracking ID';
-                $replace["courier_id_label"] = empty($courier_id) ? '' : "Courier:"; //Courier ID
-                break;
-        }
-        include_once(APPPATH . "hooks/Country_selection.php");
-        $country_id = $pbv_obj->getPlatformCountryId();
-        $replace = array_merge($replace, \Country_selection::get_template_require_text($lang_id, $country_id));
-        $email_sender = "no-reply@" . strtolower($replace["site_name"]);
-        $replace["support_email"] = $email_sender;
-        $replace["image_url"] = $this->getDao('Config')->valueOf("default_url");
-        $replace["logo_file_name"] = $this->getDao('Config')->valueOf("logo_file_name");
-        if (!empty($courier_id)) {
-            $replace["courier_id"] = $courier_id;
-            $replace["tracking_id"] = $tracking_no;
-            $courier_obj = $this->getDao('Courier')->get(array("id" => $courier_id));
-            if ($courier_obj) {
-                $replace["tracking_link"] = $courier_obj->getTrackingLink();
-            }
-        } else {
-            $replace["courier_id"] = "";
-            $replace["courier_id_label"] = "";
-            $replace["tracking_id"] = "";
-            $replace["tracking_id_label"] = "";
-        }
-
-        $sub_total = $total_vat = $total = 0;
-        $i = 1;
-
-        include_once(APPPATH . "helpers/image_helper.php");
-
-        $dc = $so_obj->getDeliveryCharge();
-        $total += $dc;
-        $replace["subtotal"] = platform_curr_format($sub_total, 0);
-        $replace["total_vat"] = platform_curr_format($total_vat, 0);
-
-        //#2182 add the processing fee
-        $extobj = $this->getDao('SoExtend')->get(array("so_no" => $so_obj->getSoNo()));
-        if ($extobj) {
-            $processing_fee = $extobj->getOfflineFee();
-        }
-
-        if (is_null($processing_fee)) {
-            $processing_fee = 0;
-        }
-        $replace["processing_fee"] = platform_curr_format($processing_fee, 0);
-        //#2182 add the processing fee to the total fee
-        $total += $processing_fee;
-        $replace["total"] = platform_curr_format($total, 0);
-
-        $dc = $so_obj->getDeliveryCharge();
-        $total += $dc;
-        $dc_vat = $dc * ($so_obj->getVatPercent() / (100 + $so_obj->getVatPercent()));
-        $dc_sub_total = $dc - $dc_vat;
-        $replace["dc_sub_total"] = platform_curr_format($dc_sub_total, 0);
-        $replace["dc_vat"] = platform_curr_format($dc_vat, 0);
-        $replace["delivery_charge"] = platform_curr_format($dc, 0);
-        $replace["total_sub_total"] = platform_curr_format($sub_total + $dc_sub_total, 0);
-        $replace["total_total_vat"] = platform_curr_format($total_vat + $dc_vat, 0);
         $replace["last_update_time"] = '';
 
         $dto = new EventEmailDto;
-        if (($so_obj->getBizType() == 'ONLINE') && ($courier_id != 'HK POST') && ($courier_id != 'hong kong post') && ($courier_id != 'Quantium')) {
-            if ($this->is_filfull_aftership_thank_you_email_criteria($so_obj->getDeliveryCountryId(), $so_obj->getSoNo(), $replace['last_update_time'], $ap_status)) {
+        $dto->setEventId("aftership_thank_you_mail");
+        $dto->setTplId("aftership_thank_you_mail");
+        $dto->setLangId($lang_id);
+        $dto->setMailTo($client->getEmail());
+        $dto->setReplace($replace);
+        $dto->setPlatformId($platform_id);
+
+        if (($so_obj->getBizType() == 'ONLINE') && ($courier_id != 'HKPOST') && ($courier_id != 'Hongkong Post') && ($courier_id != 'Quantium')) {
+            if ($this->is_filfull_aftership_thank_you_email_criteria('', $so_obj->getSoNo(), $replace['last_update_time'], $ap_status)) {
                 # SBF #4740 - if fulfull thank you email - product delivered on time send info to FIANET
-                $send_mail = 1;
                 $this->reviewFianetService->sendOrderData($so_obj, $client);
-
-                $dto->setEventId("aftership_thank_you_mail");
-                $dto->setMailFrom($email_sender);
-                $dto->setMailTo($client->getEmail());
-                if (!$this->getDao('SoHoldReason')->getNumRows(array("so_no" => $so_obj->getSoNo(), "reason IN ('change_of_address', 'cscc', 'csvv')" => null))) {
-                    switch ($lang_id) {
-                        case 'fr':
-                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
-                            break;
-
-                        case 'en':
-                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
-                            break;
-
-                        case 'it':
-                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
-                            break;
-
-                        case 'es':
-                            $dto->setMailBcc(array("valuebasketbccemail@gmail.com", "ming@valuebasket.com"));
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-                $bcc = $dto->getMailBcc();
-
-                # sbf #4349
-                switch ($platform_id) {
-                    case 'WEBAU':
-                    case 'WEBSG':
-                    case 'WEBMY':
-                    case 'WEBNZ':
-                        $wow_bcc = array("wow-apac@valuebasket.com");
-                        break;
-
-                    case 'WEBES':
-                    case 'WEBPT':
-                    case 'WEBFI':
-                        $wow_bcc = array("wow-es@valuebasket.com");
-                        break;
-
-                    case 'WEBFR':
-                    case 'WEBBE':
-                    case 'WEBCH':
-                        $wow_bcc = array("wow-fr@valuebasket.com");
-                        break;
-
-                    case 'WEBIT':
-                        $wow_bcc = array("wow-it@valuebasket.com");
-                        break;
-
-                    case 'WEBRU':
-                    case 'WEBPL':
-                        $wow_bcc = array("wow-ru@valuebasket.com");
-                        break;
-
-                    case 'WEBGB':
-                    case 'WEBIE':
-                    case 'WEBMT':
-                        $wow_bcc = array("wow-gb@valuebasket.com");
-                        break;
-
-
-                    default:
-                        # code...
-                        break;
-                }
-
-                $sendagain = "no-reply@feedback-valuebasket.com";
-
-                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
-                    $dto->setMailFrom($email_sender);
-                    $dto->setTplId("aftership_thank_you_mail_gb");
-                    $dto->setLangId("en");
-                } else {
-                    $dto->setTplId("aftership_thank_you_mail");
-                    $dto->setLangId($lang_id);
-                }
-                $dto->setReplace($replace);
-            } else {
-                $dto->setEventId("aftership_late_delivery_mail");
-                $dto->setMailFrom($email_sender);
-                $dto->setMailTo($client->getEmail());
-                $dto->setMailBcc(array("valuebasketbccemail@gmail.com"));
-                $dto->set_platform_id($platform_id);
-
-                if (($so_obj->getBillCountryId() == 'GB') || ($so_obj->getDeliveryCountryId() == 'GB')) {
-                    $dto->setMailFrom($email_sender);
-                    $dto->setTplId("aftership_late_delivery_mail");
-                    $dto->setLangId("en");
-                } else {
-                    $dto->setTplId("aftership_late_delivery_mail");
-                    $dto->setLangId($lang_id);
-                }
-                $dto->setReplace($replace);
             }
-
         }
+
         // attach invoice to dispatch email
         $data_path = $this->getDao('Config')->valueOf("data_path");
         $html = $this->getInvoiceContent([$so_obj->getSoNo()], 1);
@@ -2631,7 +2368,6 @@ html;
         $dto->setAttFile($att_file);
         $dto->setReplace($replace);
         $this->eventService->fireEvent($dto);
-
         unlink($att_file);
     }
 
