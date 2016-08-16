@@ -2327,23 +2327,17 @@ html;
         return $body;
     }
 
-    public function fire_aftership_thank_you_email($so_obj, $sh_no, $ap_status)
+    public function fireAftershipThankYouEmail($so_obj, $soext_obj)
     {
 
         $client = $this->getDao('Client')->get(array("id" => $so_obj->getClientId()));
-        $sh_obj = $this->getDao('SoShipment')->get(['sh_no' => $sh_no]);
-        if ($sh_obj->getCourierId()) {
-            if ($courier_obj = $this->getDao('Courier')->get(array("id" => $sh_obj->getCourierId()))) {
-                $courier_id = $courier_obj->getCourierName();
-            }
-        }
         $platform_id = $so_obj->getPlatformId();
         $pbv_obj = $this->getDao('PlatformBizVar')->get(array('selling_platform_id' => $platform_id));
         $lang_id = $pbv_obj->getLanguageId();
 
         $replace["so_no"] = $so_obj->getSoNo();
         $replace["forename"] = $client->getForename();
-        $replace["last_update_time"] = '';
+        $replace["last_update_time"] = date('d/m/Y H:i:s', strtotime($soext_obj->getAftershipCheckpoint()));
 
         $dto = new EventEmailDto;
         $dto->setEventId("aftership_thank_you_mail");
@@ -2352,13 +2346,6 @@ html;
         $dto->setMailTo($client->getEmail());
         $dto->setReplace($replace);
         $dto->setPlatformId($platform_id);
-
-        if (($so_obj->getBizType() == 'ONLINE') && ($courier_id != 'HKPOST') && ($courier_id != 'Hongkong Post') && ($courier_id != 'Quantium')) {
-            if ($this->is_filfull_aftership_thank_you_email_criteria('', $so_obj->getSoNo(), $replace['last_update_time'], $ap_status)) {
-                # SBF #4740 - if fulfull thank you email - product delivered on time send info to FIANET
-                $this->reviewFianetService->sendOrderData($so_obj, $client);
-            }
-        }
 
         // attach invoice to dispatch email
         $data_path = $this->getDao('Config')->valueOf("data_path");
