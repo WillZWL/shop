@@ -217,11 +217,15 @@ class ProductApiService extends BaseService
         $website_status = $this->autoWebsiteStatus($sourcing_status, $quantity, $origin_website_status);
         if (!empty($website_status) && ($website_status != $origin_website_status)) {
             $sku = $product_obj->getSku();
-            $this->getService("PriceUpdateTrigger")->triggerGoogleApi($sku, "");
             $product_obj->setWebsiteStatus($website_status);
         }
 
         $result = $this->getDao('Product')->update($product_obj);
+
+        if (!empty($website_status) && ($website_status != $origin_website_status)) {
+            $sku = $product_obj->getSku();
+            $this->getService("PriceUpdateTrigger")->triggerGoogleApi($sku, "");
+        }
         return $result;
     }
 
