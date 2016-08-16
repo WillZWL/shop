@@ -727,7 +727,7 @@ class SoFactoryService extends BaseService
         $soidObj->setOutstandingQty(1);
         $soidObj->setUnitPrice($newObj->getPrice());
         $soidObj->setVatTotal($totalVat);
-        $soidObj->setAmount($newObj->getPrice() * 1);
+        $soidObj->setAmount(0);
         $soidObj->setItemUnitCost($newObj->getPriceHkd());
         $soidObj->setWarrantyInMonth($newObj->getWarrantyInMonth());
         $soidObj->setSupplierStatus($newObj->getSupplierStatus());
