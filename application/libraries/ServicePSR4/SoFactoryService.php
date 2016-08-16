@@ -135,7 +135,7 @@ class SoFactoryService extends BaseService
         $soPaymentStatusObj->setPaymentGatewayId($checkoutInfo->getPaymentGatewayId());
         $soPaymentStatusObj->setPayDate($checkoutInfo->getPayDate());
         $soPaymentStatusObj->setCardId($checkoutInfo->getPaymentCardId());
-        $soPaymentStatusObj->setPaymentStatus("S");
+        $soPaymentStatusObj->setPaymentStatus("N");
 
         $insertSoPaymentResult = $this->getDao("SoPaymentStatus")->insert($soPaymentStatusObj);
         if ($insertSoPaymentResult === false) {
