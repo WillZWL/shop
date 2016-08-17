@@ -710,7 +710,7 @@ class SoFactoryService extends BaseService
 
     public function compTransferIntoSoItemDtail($newObj, $soObj, $orderid)
     {
-        $this->getService("PlatformBizVar")->calculateDeclaredValue($newObj);
+        // $this->getService("PlatformBizVar")->calculateDeclaredValue($newObj);
         $totalVat = round(($newObj->getDeclaredValue() * $newObj->getVatPercent() / 100), 2);
 
         $soiNumRows = $this->getDao('SoItemDetail')->getNumRows(["so_no" => $orderid]);
