@@ -10,15 +10,15 @@ class SoItemDetailVo extends \BaseVo
     private $qty;
     private $product_type = '0';
     private $outstanding_qty;
-    private $unit_price;
-    private $vat_total;
+    private $unit_price = '0.00';
+    private $vat_total = '0.00';
     private $gst_total = '0.00';
     private $discount_total = '0.00';
     private $bundle_core_id = '0';
     private $bundle_level = '';
-    private $amount;
+    private $amount = '0.00';
     private $promo_disc_amt = '0.00';
-    private $cost;
+    private $cost = '0.00';
     private $item_declared_value = '0.00';
     private $item_unit_cost = '0.00';
     private $profit = '0.00';
@@ -245,7 +245,7 @@ class SoItemDetailVo extends \BaseVo
     {
         return $this->cost;
     }
-    
+
     public function setItemDeclaredValue($value)
     {
         if ($value !== null) {
