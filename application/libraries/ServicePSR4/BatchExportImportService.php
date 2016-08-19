@@ -93,7 +93,7 @@ class BatchExportImportService extends BaseService
 
             $this->getDao('Price')->db->trans_start();
             $affected_rows = $this->getService('Price')->updateSkuPrice($platform_id, $sku, $require_selling_price);
-
+            $this->getService("PriceUpdateTrigger")->triggerGoogleApi($sku, $platform_id);
             $price_margin_vo = $this->getDao('PriceMargin')->get(['sku' => $sku, 'platform_id' => $platform_id]);
             $action = 'update';
             if (!$price_margin_vo) {
