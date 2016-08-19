@@ -61,7 +61,7 @@ class AftershipWebhook extends PUB_Controller
                         $this->sc['So']->getDao('SoExtend')->update($soext_obj);
                         if ($ap_status_number == '6') {
                             $so_obj = $this->sc['So']->get(array("so_no" => $so_no));
-                            $this->sc['So']->fire_aftership_thank_you_email($so_obj, $sh_no, $ap_status_number);
+                            $this->sc['So']->fireAftershipThankYouEmail($so_obj, $sh_no, $ap_status_number);
                         }
                     } else {
                         mail("feeling.liu@eservicesgroup.com", "aftership - So order not found in so_extend", "Tracking Number:$tracking_no, shippment status:$tag");
