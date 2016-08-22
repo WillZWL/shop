@@ -28,7 +28,7 @@ class Integrated_order_fulfillment extends MY_Controller
         return $this->appId;
     }
 
-    public function index($warehouse = "ES_HK",  $offset = 0)
+    public function index($warehouse = "ES_HK")
     {
         $sub_app_id = $this->getAppId() . "00";
 
@@ -136,9 +136,8 @@ class Integrated_order_fulfillment extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '500';
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $limit = $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '500';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         # $sort is responsible for the ascending/descending arrow on frontend
         # for $sortstr, if there is no sort selected,
@@ -189,8 +188,9 @@ class Integrated_order_fulfillment extends MY_Controller
 
         $config['base_url'] = base_url('order/integrated_order_fulfillment/index/'.$warehouse);
         $config['total_rows'] = $data["total_order"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
         $config['per_page'] = $limit;
-
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
 
@@ -220,7 +220,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
     }
 
-    public function to_ship($offset = 0)
+    public function to_ship()
     {
         set_time_limit(300);
         $sub_app_id = $this->getAppId() . "01";
@@ -332,10 +332,8 @@ class Integrated_order_fulfillment extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '500';
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $limit = $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '500';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         # $sort is responsible for the ascending/descending arrow on frontend
         # for $sortstr, if there is no sort selected,
@@ -387,12 +385,14 @@ class Integrated_order_fulfillment extends MY_Controller
 
         $config['base_url'] = base_url('order/integrated_order_fulfillment/to_ship/');
         $config['total_rows'] = $data["total_order"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
         $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        $data['links'] = $this->pagination->create_links();
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->getLangId() . ".php");
         $data["lang"] = $lang;
-        $this->pagination->initialize($config);
-        $data['links'] = $this->pagination->create_links();
 
         $data["notice"] = notice($lang);
 
@@ -406,7 +406,7 @@ class Integrated_order_fulfillment extends MY_Controller
         }
     }
 
-    public function dispatch($offset = 0)
+    public function dispatch()
     {
         set_time_limit(300);
         $sub_app_id = $this->getAppId() . "02";
@@ -526,10 +526,8 @@ class Integrated_order_fulfillment extends MY_Controller
         $sort = $this->input->get("sort");
         $order = $this->input->get("order");
 
-        $limit = '500';
-
-        $option["limit"] = $limit;
-        $option["offset"] = $offset;
+        $limit = $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '500';
+        $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
         # $sort is responsible for the ascending/descending arrow on frontend
         # for $sortstr, if there is no sort selected,
@@ -583,10 +581,12 @@ class Integrated_order_fulfillment extends MY_Controller
 
         $config['base_url'] = base_url('order/integrated_order_fulfillment/dispatch/');
         $config['total_rows'] = $data["total_order"];
+        $config['page_query_string'] = true;
+        $config['reuse_query_string'] = true;
         $config['per_page'] = $limit;
-
         $this->pagination->initialize($config);
         $data['links'] = $this->pagination->create_links();
+
         $data["notice"] = notice($lang);
 
         $data["sortimg"][$sort] = "<img src='" . base_url() . "images/" . $order . ".gif'>";

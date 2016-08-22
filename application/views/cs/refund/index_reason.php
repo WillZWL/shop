@@ -121,7 +121,7 @@
                     onMouseOut="RemoveClassName(this, 'highlight')"
                 <?php
                     if (!($is_edit)):
-                ?>onClick="Redirect('<?= site_url('cs/refund/reason/'.$offset.'/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
+                ?>onClick="Redirect('<?= site_url('cs/refund/reason/' . $obj->getId()) ?>/?<?= $_SERVER['QUERY_STRING'] ?>')"
                 <?php
                     endif;
                 ?>>
