@@ -37,7 +37,7 @@ class Refund extends MY_Controller
         return $this->appId;
     }
 
-    public function reason($offset = 0, $id = "")
+    public function reason($id = "")
     {
         if (check_app_feature_access_right($this->getAppId(), "CS000200_refund_btn")) {
             if ($this->input->post('posted')) {
@@ -86,9 +86,8 @@ class Refund extends MY_Controller
                 $where["description LIKE "] = '%' . $this->input->get("desc") . '%';
             }
 
-            $limit = 20;
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             $sort = $this->input->get('sort');
             if ($sort == "") {
@@ -112,8 +111,9 @@ class Refund extends MY_Controller
 
             $config['base_url'] = base_url("cs/refund/reason/");
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
             $data['offset'] = $offset;
@@ -132,7 +132,7 @@ class Refund extends MY_Controller
         }
     }
 
-    public function create($offset = 0)
+    public function create()
     {
         $where = [];
         $option = [];
@@ -168,11 +168,8 @@ class Refund extends MY_Controller
                 $order = "asc";
             }
 
-            $limit = 20;
-
-            $option["limit"] = $limit;
-
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             $_SESSION["LISTPAGE"] = base_url() . "cs/refund/create?" . $_SERVER['QUERY_STRING'];
 
@@ -185,8 +182,9 @@ class Refund extends MY_Controller
 
             $config['base_url'] = base_url('cs/refund/create');
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
         }
@@ -384,7 +382,7 @@ class Refund extends MY_Controller
         $this->load->view('cs/refund/view_create', $data);
     }
 
-    public function logistics($offset = 0)
+    public function logistics()
     {
         if (check_app_feature_access_right($this->getAppId(), "CS000200_log_btn")) {
             $where = [];
@@ -419,9 +417,8 @@ class Refund extends MY_Controller
                 $order = "asc";
             }
 
-            $limit = 20;
-            $option["limit"] = $limit;
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '20';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             $_SESSION["LISTPAGE"] = base_url() . "cs/refund/logistics?" . $_SERVER['QUERY_STRING'];
             $_SESSION["QUERY_STRING"] = $_SERVER['QUERY_STRING'];
@@ -439,8 +436,9 @@ class Refund extends MY_Controller
 
             $config['base_url'] = base_url('cs/refund/logistics');
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
 
@@ -732,7 +730,7 @@ class Refund extends MY_Controller
         return array($where, $option);
     }
 
-    public function cs($offset = 0)
+    public function cs()
     {
         if (check_app_feature_access_right($this->getAppId(), "CS000200_cs_btn")) {
             $q = "";
@@ -761,8 +759,9 @@ class Refund extends MY_Controller
 
             $config['base_url'] = base_url('cs/refund/cs');
             $config['total_rows'] = $data["total"];
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
             $config['per_page'] = $limit;
-
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
 
@@ -957,7 +956,7 @@ class Refund extends MY_Controller
 
     // record yandex refund order to flex_refund
 
-    public function account($offset = 0)
+    public function account()
     {
         if (check_app_feature_access_right($this->getAppId(), "CS000200_acc_btn")) {
             $where["rstatus"] = array('CS', 'CP');
@@ -990,11 +989,8 @@ class Refund extends MY_Controller
                 $order = "asc";
             }
 
-            $limit = 500;
-
-            $option["limit"] = $limit;
-
-            $option["offset"] = $offset;
+            $option['limit'] = ($this->input->get('limit') != '') ? $this->input->get('limit') : '500';
+            $option['offset'] = ($this->input->get('per_page') != '') ? $this->input->get('per_page') : '';
 
             $_SESSION["LISTPAGE"] = base_url() . "cs/refund/account?" . $_SERVER['QUERY_STRING'];
             $_SESSION["QUERY_STRING"] = $_SERVER['QUERY_STRING'];
@@ -1039,8 +1035,9 @@ class Refund extends MY_Controller
 
             $config['base_url'] = base_url('cs/refund/account');
             $config['total_rows'] = $data["total"];
-            $config['per_page'] = $limit;
-
+            $config['page_query_string'] = true;
+            $config['reuse_query_string'] = true;
+            $config['per_page'] = $option['limit'];
             $this->pagination->initialize($config);
             $data['links'] = $this->pagination->create_links();
 
