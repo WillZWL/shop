@@ -495,7 +495,9 @@ html;
 
     public function postNewProductData($postData)
     {
-        $data["product"] = $this->sc['Product']->getDao('Product')->get();
+        $productVo = $this->sc['Product']->getDao('Product')->get();
+        $productObj = clone $productVo;
+
         $postData["status"] = 1;
         $postData["rrp"] = $postData["archive"] = $postData["clearance"] = 0;
         $postData["website_status"] = 'I';
@@ -507,7 +509,7 @@ html;
             $postData["sub_sub_cat_id"] = '0';
         }
 
-        set_value($data["product"], $postData);
+        set_value($productObj, $postData);
 
         $prodCustomClassVo = $this->sc['ProductCustomClassification']->getDao('ProductCustomClassification')->get();
 
@@ -531,13 +533,13 @@ html;
 
                 $sku = $this->sc['Product']->getDao('Product')->getNewSku();
 
-                $data["product"]->setSku($sku);
-                $data["product"]->setProdGrpCd($prodGrpCd);
-                $data["product"]->setColourId($colour_id);
-                $data["product"]->setVersionId($version_id);
-                $data["product"]->setProcStatus('0');
-                $data["product"]->setAutoRestock('1');
-                $data["product"]->setName($_POST["name"].(($subCatObj->getAddColourName()&&$colour_id!="NA")?" ({$colour_name})":""));
+                $productObj->setSku($sku);
+                $productObj->setProdGrpCd($prodGrpCd);
+                $productObj->setColourId($colour_id);
+                $productObj->setVersionId($version_id);
+                $productObj->setProcStatus('0');
+                $productObj->setAutoRestock('1');
+                $productObj->setName($_POST["name"].(($subCatObj->getAddColourName()&&$colour_id!="NA")?" ({$colour_name})":""));
 
                 if ($ccList = $this->sc['CustomClassificationMapping']->getCustomClassMappingBySubCatId($subCatId)) {
                     foreach ($ccList as $countryId=>$ccObj) {
@@ -555,7 +557,19 @@ html;
                     }
                 }
 
-                if ($newObj = $this->sc['Product']->getDao('Product')->insert($data["product"])) {
+                $supplierProdVo = $this->sc['SupplierProd']->getDao('SupplierProd')->get();
+                $supplierProdObj = clone $supplierProdVo;
+                $supplierProdObj->setSupplierId(4);
+                $supplierProdObj->setProdSku($sku);
+                $supplierProdObj->setCost($_POST["cost"]);
+                $supplierProdObj->setCurrencyId("HKD");
+                $supplierProdObj->setOrderDefault("1");
+                $supplierProdObj->setMoq("1");
+                $supplierProdObj->setSupplierStatus("A");
+
+                if ($newObj = $this->sc['Product']->getDao('Product')->insert($productObj)) {
+
+                    $this->sc['SupplierProd']->getDao('SupplierProd')->insert($supplierProdObj;
 
                     foreach($data["prodCustomClass"] as $prodCustomClassObj) {
                         if(!($newCcObj = $this->sc['ProductCustomClassification']->getDao('ProductCustomClassification')->insert($prodCustomClassObj))) {
