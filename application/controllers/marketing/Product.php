@@ -822,7 +822,7 @@ html;
         }
 
         $data["brand_list"] = $this->product_model->get_list("brand", array(), array("orderby" => "brand_name ASC", "limit" => "-1"));
-        $data["colour_list"] = $this->product_model->get_remain_colour_list($prod_grp_cd);
+        $data["colour_list"] = $this->sc['Colour']->getDao('Colour')->getRemainColourList($prod_grp_cd);
         $data["joined_list"] = array();
 
         $data["notice"] = notice($lang);
