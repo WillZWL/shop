@@ -562,6 +562,7 @@ html;
                 $supplierProdObj->setSupplierId(4);
                 $supplierProdObj->setProdSku($sku);
                 $supplierProdObj->setCost($_POST["cost"]);
+                $supplierProdObj->setPricehkd($_POST["cost"]);
                 $supplierProdObj->setCurrencyId("HKD");
                 $supplierProdObj->setOrderDefault("1");
                 $supplierProdObj->setMoq("1");
