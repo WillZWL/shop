@@ -24,4 +24,31 @@ class ColourDao extends BaseDao
 
         return $this->commonGetList($className, $where, $option, 'ce.id, c.colour_id, c.status, ce.colour_name, ce.lang_id, l.lang_name');
     }
+
+    public function getRemainColourList($prod_grp_cd)
+    {
+        $sql = "
+                SELECT c.*
+                FROM colour AS c
+                LEFT JOIN product AS p
+                ON c.id = p.colour_id AND p.prod_grp_cd = ?
+                WHERE p.sku IS NULL AND c.status = 1
+                ORDER BY c.id = 'NA' DESC
+                ";
+
+
+        if ($query = $this->db->query($sql, $prod_grp_cd)) {
+            $rs = [];
+            if ($query->num_rows() > 0) {
+                foreach ($query->result($this->getVoClassname()) as $obj) {
+                    $rs[] = $obj;
+                }
+                return (object)$rs;
+            } else {
+                return $rs;
+            }
+        } else {
+            return FALSE;
+        }
+    }
 }
