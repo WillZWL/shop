@@ -160,7 +160,7 @@
                         <tr>
                             <td class="field"><?=$lang["sub_cat"]?></td>
                             <td class="value">
-                                <select name="sub_cat_id" class="input" onChange="ChangeCat(this.value, this.form.sub_sub_cat_id)" notEmpty>
+                                <select name="sub_cat_id" class="input" onChange="ChangeCat(this.value, this.form.sub_sub_cat_id)">
                                     <option value="">
                                     </select>
                                 </td>
