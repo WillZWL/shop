@@ -569,7 +569,7 @@ html;
 
                 if ($newObj = $this->sc['Product']->getDao('Product')->insert($productObj)) {
 
-                    $this->sc['SupplierProd']->getDao('SupplierProd')->insert($supplierProdObj;
+                    $this->sc['SupplierProd']->getDao('SupplierProd')->insert($supplierProdObj);
 
                     foreach($data["prodCustomClass"] as $prodCustomClassObj) {
                         if(!($newCcObj = $this->sc['ProductCustomClassification']->getDao('ProductCustomClassification')->insert($prodCustomClassObj))) {
