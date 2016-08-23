@@ -56,7 +56,7 @@ class Colour_dao extends Base_dao
                 LEFT JOIN product AS p
                 ON c.id = p.colour_id AND p.prod_grp_cd = ?
                 WHERE p.sku IS NULL AND c.status = 1
-                ORDER BY id = 'NA' DESC
+                ORDER BY c.id = 'NA' DESC
                 ";
 
         $this->include_vo();
