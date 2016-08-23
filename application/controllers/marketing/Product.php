@@ -511,7 +511,6 @@ html;
 
         $prodCustomClassVo = $this->sc['ProductCustomClassification']->getDao('ProductCustomClassification')->get();
 
-        $sku = $this->sc['Product']->getDao('Product')->getNewSku();
         $prodGrpCd = $this->sc['Product']->getDao('Product')->getNewProductGroup();
 
         $subCatId = $this->input->post("sub_cat_id");
@@ -529,6 +528,8 @@ html;
             list($colour_id, $colour_name) = explode("::", $colour);
             foreach ($versionList as $version) {
                 list($version_id,$version_name) = explode("::",$version);
+
+                $sku = $this->sc['Product']->getDao('Product')->getNewSku();
 
                 $data["product"]->setSku($sku);
                 $data["product"]->setProdGrpCd($prodGrpCd);
