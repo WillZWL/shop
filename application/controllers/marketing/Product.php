@@ -493,24 +493,85 @@ html;
     }
 
 
-    public function testAdd(array $data)
+    public function postNewProductData($postData)
     {
-        $versionList = $data['joined_vlist'] ?: ['AA:All Version'];
-        $data['prod_sku'] = $data['sku'] = $this->product_model->product_service->get_dao()->db->query("SELECT next_value('sku') as sku")->row('sku');
-        $data['prod_grp_cd'] = $this->product_model->product_service->get_dao()->db->query("SELECT next_value('prod_grp_cd') as prod_grp_cd")->row('prod_grp_cd');
-        $data['version_id'] = 'AA';
-        $data['supplier_id'] = '4';
-        $data['currency_id'] = 'HKD';
-        $data['lead_day'] = '1';
-        $data['moq'] = 1;
+        $data["product"] = $this->sc['Product']->getDao('Product')->get();
+        $postData["status"] = 1;
+        $postData["rrp"] = $postData["archive"] = $postData["clearance"] = 0;
+        $postData["website_status"] = 'I';
+        $postData["sourcing_status"] = 'A';
+        $postData["website_quantity"] = $postData["quantity"] = 0;
+        $postData["freight_cat_id"] = $postData["freight_cat_id"] ?: 0;
 
-        $productVo = $this->sc['productVoByPost']->pick($data);
-        $supplierProdVo = $this->sc['supplierProdVoByPost']->pick($data);
+        if ($postData["sub_sub_cat_id"] == NULL) {
+            $postData["sub_sub_cat_id"] = '0';
+        }
 
-        $this->sc['productService']->getDao()->insert($productVo);
-        $this->sc['supplierProdDao']->insert($supplierProdVo);
+        set_value($data["product"], $postData);
 
-        return $data['prod_grp_cd'];
+        $prodCustomClassVo = $this->sc['ProductCustomClassification']->getDao('ProductCustomClassification')->get();
+
+        $sku = $this->sc['Product']->getDao('Product')->getNewSku();
+        $prodGrpCd = $this->sc['Product']->getDao('Product')->getNewProductGroup();
+
+        $subCatId = $this->input->post("sub_cat_id");
+        $subCatObj = $this->sc['Product']->getDao('Category')->get(['id' => $subCatId]);
+
+        if (is_array($this->input->post("joined_vlist"))) {
+            $versionList = $this->input->post("joined_vlist");
+        } else {
+            $versionList = ["AA::All Version"];
+        }
+
+        $this->sc['Product']->getDao('Product')->db->trans_start();
+
+        foreach ($this->input->post("joined_list") as $colour) {
+            list($colour_id, $colour_name) = explode("::", $colour);
+            foreach ($versionList as $version) {
+                list($version_id,$version_name) = explode("::",$version);
+
+                $data["product"]->setSku($sku);
+                $data["product"]->setProdGrpCd($prodGrpCd);
+                $data["product"]->setColourId($colour_id);
+                $data["product"]->setVersionId($version_id);
+                $data["product"]->setProcStatus('0');
+                $data["product"]->setAutoRestock('1');
+                $data["product"]->setName($_POST["name"].(($subCatObj->getAddColourName()&&$colour_id!="NA")?" ({$colour_name})":""));
+
+                if ($ccList = $this->sc['CustomClassificationMapping']->getCustomClassMappingBySubCatId($subCatId)) {
+                    foreach ($ccList as $countryId=>$ccObj) {
+                        if (empty($ccObj)) {
+                            $_SESSION["NOTICE"] = "Custom Classification Code for Sub-Category '" . $subCatObj->getName() . "' - $countryId is missing.";
+                            break 2;
+                        }
+                        $tmp = clone $prodCustomClassVo;
+                        $tmp->setSku($sku);
+                        $tmp->setCountryId($countryId);
+                        $tmp->setCode($ccObj->getCode());
+                        $tmp->setDescription($ccObj->getDescription());
+                        $tmp->setDutyPcent($ccObj->getDutyPcent());
+                        $data["prodCustomClass"][$countryId] = $tmp;
+                    }
+                }
+
+                if ($newObj = $this->sc['Product']->getDao('Product')->insert($data["product"])) {
+
+                    foreach($data["prodCustomClass"] as $prodCustomClassObj) {
+                        if(!($newCcObj = $this->sc['ProductCustomClassification']->getDao('ProductCustomClassification')->insert($prodCustomClassObj))) {
+                            $_SESSION["NOTICE"] = __FILE__ . ":" . __LINE__;
+                            break;
+                        }
+                    }
+                } else {
+                    $_SESSION["NOTICE"] = __FILE__ . ":" . __LINE__;
+                    break;
+                }
+            }
+        }
+
+        $this->sc['Product']->getDao('Product')->db->trans_complete();
+
+        return $prodGrpCd;
     }
 
     public function save()
@@ -528,8 +589,8 @@ html;
         }
         if ($this->input->post("posted")) {
 
-            $prod_grp_cd = $this->testAdd($_POST);
-            redirect(base_url() . "marketing/product/index/" . $prod_grp_cd);
+            $prodGrpCd = $this->postNewProductData($_POST);
+            redirect(base_url() . "marketing/product/index/" . $prodGrpCd);
         }
 
         include_once(APPPATH . "language/" . $sub_app_id . "_" . $this->_get_lang_id() . ".php");
