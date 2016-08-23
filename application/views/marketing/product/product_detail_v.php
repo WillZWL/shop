@@ -152,7 +152,7 @@
                         </td>
                         <td class="field"><?=$lang["freight_category"]?></td>
                         <td class="value">
-                            <select name="freight_cat_id" class="input" onChange="ChangeFCat(this.value, this.form.freight_weight)" notEmpty>
+                            <select name="freight_cat_id" class="input" onChange="ChangeFCat(this.value, this.form.freight_weight)">
                                 <option value="">
                                 </select>
                             </td>
@@ -160,7 +160,7 @@
                         <tr>
                             <td class="field"><?=$lang["sub_cat"]?></td>
                             <td class="value">
-                                <select name="sub_cat_id" class="input" onChange="ChangeCat(this.value, this.form.sub_sub_cat_id)">
+                                <select name="sub_cat_id" class="input" onChange="ChangeCat(this.value, this.form.sub_sub_cat_id)" notEmpty>
                                     <option value="">
                                     </select>
                                 </td>
