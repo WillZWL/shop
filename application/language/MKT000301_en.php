@@ -36,6 +36,7 @@
 			"submit_error" => "Submit Error",
 			"product_existed" => "Product Existed!",
 			"sql_error" => "SQL Error",
-			"prod_type"=>"Product Type"
+			"prod_type"=>"Product Type",
+			"product_warranty_type" => "Warranty Type",
 			);
 ?>
