@@ -1251,7 +1251,7 @@ html;
                     }
 
                     if ($this->product_model->update("product", $data["product"])) {
-                        $this->autoCreateWarranty($data["product"]->get_sku());
+                        // $this->autoCreateWarranty($data["product"]->get_sku());
 
                         $warranty_country_counter = 0;
                         while ($this->input->post('warranty_country_' . $warranty_country_counter)) {
