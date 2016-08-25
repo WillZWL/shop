@@ -348,9 +348,10 @@
         <select name='product_warranty_type' notempty>
             <option></option>
             <?php
+                $selected_pwt[$product->get_product_warranty_type()] = " SELECTED";
                 foreach ($warranty_type_list as $key => $value) {
             ?>
-                <option value='<?= $key ?>'><?= $value ?></option>
+                <option value='<?= $key ?>' <?= $selected_pwt[$key] ?>><?= $value ?></option>
             <?php
                 }
             ?>
