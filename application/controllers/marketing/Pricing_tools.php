@@ -141,7 +141,6 @@ class pricing_tools extends MY_Controller
         if ($this->input->post('posted')) {
             $plat = $this->input->post('selling_platform');
             $splist = $this->input->post("selling_price");
-            // $pae = $this->input->post('allow_express');
             $pia = $this->input->post('is_advertised');
             $pft = $this->input->post('formtype');
             $pls = $this->input->post('listing_status');
@@ -149,7 +148,6 @@ class pricing_tools extends MY_Controller
             $hidden_profit = $this->input->post("hidden_profit");
             $hidden_margin = $this->input->post("hidden_margin");
 
-            $status = $this->input->post('status');
             $ext_mapping_code = $this->input->post('ext_mapping_code');
             $max_order_qty = $this->input->post('max_order_qty');
 
@@ -158,9 +156,7 @@ class pricing_tools extends MY_Controller
                 $vars['sku'] = $sku;
                 $vars['platform'] = $platform;
                 $vars['sp'] = trim($splist[$platform]);
-                // $allow_express = $pae[$platform];
                 $is_advertised = $pia[$platform];
-                // $vars['ae'] = ($allow_express) ? 'Y' : 'N';
                 $vars['ia'] = ($is_advertised)? 'Y' : 'N';
 
                 $vars['cur_listing_status'] = $pls[$platform];
@@ -169,7 +165,6 @@ class pricing_tools extends MY_Controller
                 $vars['margin'] = $hidden_margin[$platform];
 
                 $vars['special_update'] = 1;
-                $vars['status'] = $status;
                 $vars['ext_mapping_code'] = $ext_mapping_code;
                 $vars['max_order_qty'] = $max_order_qty;
 
@@ -228,9 +223,7 @@ class pricing_tools extends MY_Controller
         $vars['sku'] = $this->input->post('sku');
         $vars['platform'] = $this->input->post('platform');
         $vars['sp'] = trim($this->input->post('selling_price'));
-        // $allow_express = $this->input->post('allow_express');
         $is_advertised = $this->input->post('is_advertised');
-        // $vars['ae'] = ($allow_express) ? 'Y' : 'N';
         $vars['ia'] = ($is_advertised)? 'Y' : 'N';
         $vars['cur_listing_status'] = $this->input->post('listing_status');
         $vars['formtype'] = $this->input->post('formtype');
@@ -281,7 +274,6 @@ class pricing_tools extends MY_Controller
                                     'platform_type'=>$platform_type,
                                     'platform_id'=>$platform_id,
                                     'sku' => $sku,
-                                    'status' => $this->input->post('status'),
                                     'emc' => $this->input->post('ext_mapping_code'),
                                     'moq' => $this->input->post('max_order_qty')
                                  ]);
