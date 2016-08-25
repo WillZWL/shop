@@ -569,7 +569,7 @@ html;
                 $supplierProdObj->setSupplierStatus("A");
 
                 if ($newObj = $this->sc['Product']->getDao('Product')->insert($productObj)) {
-                    $this->updateProductWarranty($newObj);
+                    $this->autoCreateWarranty($newObj->getSku());
 
                     $this->sc['SupplierProd']->getDao('SupplierProd')->insert($supplierProdObj);
 
@@ -1251,7 +1251,7 @@ html;
                     }
 
                     if ($this->product_model->update("product", $data["product"])) {
-                        $this->updateProductWarranty($data["product"]);
+                        $this->autoCreateWarranty($data["product"]->get_sku());
 
                         $warranty_country_counter = 0;
                         while ($this->input->post('warranty_country_' . $warranty_country_counter)) {
@@ -2559,16 +2559,7 @@ start;
         }
     }
 
-    public function updateProductWarranty($prodObj)
-    {
-        if ($spObjList = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList(['status'=>1], ['limit'=>-1])) {
-            foreach ($spObjList as $spObj) {
-                $this->sc['ProductWarranty']->autoCreateProductWarranty($prodObj, $spObj->getId());
-            }
-        }
-    }
-
-    public function AutoCreateWarranty($sku = '')
+    public function autoCreateWarranty($sku = '')
     {
         $product_obj = $this->sc['Product']->getDao('Product')->get(array('sku' => $sku));
         if ($product_obj) {
@@ -2576,5 +2567,3 @@ start;
         }
     }
 }
-
-
