@@ -38,7 +38,6 @@ class PricingToolWebsiteService extends BaseService
             $price_obj->setFixedRrp($vars['frrp']);
 
             if ($vars['special_update']) {
-                $price_obj->setStatus($vars['status']);
                 $price_obj->setExtMappingCode($vars['ext_mapping_code']);
                 $price_obj->setMaxOrderQty($vars['max_order_qty']);
             }

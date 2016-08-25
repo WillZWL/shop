@@ -227,7 +227,6 @@ class PricingToolService extends BaseService
         $wh = [];
         $wh['sku'] = $arr['sku'];
         $data = [
-            'status'=>$arr['status'],
             'ext_mapping_code'=> $arr['emc'],
             'max_order_qty'=>$arr['moq']
         ];
