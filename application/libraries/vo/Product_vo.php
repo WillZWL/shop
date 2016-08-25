@@ -46,6 +46,7 @@ class Product_vo extends Base_vo
     private $surplus_quantity = 0;
     private $slow_move_7_days;
     private $accelerator_salesrpt_bd;
+    private $product_warranty_type;
     private $accelerator;
     //primary key
     private $primary_key = array("sku");
@@ -513,6 +514,17 @@ class Product_vo extends Base_vo
     public function set_accelerator_salesrpt_bd($value)
     {
         $this->accelerator_salesrpt_bd = $value;
+        return $this;
+    }
+
+    public function get_product_warranty_type()
+    {
+        return $this->product_warranty_type;
+    }
+
+    public function set_product_warranty_type($value)
+    {
+        $this->product_warranty_type = $value;
         return $this;
     }
 
