@@ -71,6 +71,15 @@
         $ar_status = array($lang["inactive"], $lang["created"], $lang["listed"]);
         $ar_ws_status = array("I" => $lang["instock"], "O" => $lang["outstock"], "P" => $lang["pre-order"], "A" => $lang["arriving"]);
         $ar_src_status = array("A" => $lang["available"], "C" => $lang["stock_constraint"], "O" => $lang["temp_out_of_stock"], "L" => $lang["last_lot"], "D" => $lang["discontinued"]);
+        $warranty_type_list = array(
+            '1' => 'Accessories',
+            '2' => 'Waterproof',
+            '3' => 'Main items',
+            '4' => 'Action Camera',
+            '5' => 'Drones',
+            '6' => 'Refurbished',
+            '7' => 'No Warranty',
+        );
         $master_sku_check = 'MatchRegExI="^(\\d{1,5})-([A-Z]{2})-([A-Z]{2})$" warningMsg="wrong master sku format"';
         ?>
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -332,6 +341,23 @@
         </tr>
     </table>
 </td>
+</tr>
+<tr>
+    <td class="field"><?=$lang["product_warranty_type"]?></td>
+    <td class="value">
+        <select name='product_warranty_type' notempty>
+            <option></option>
+            <?php
+                foreach ($warranty_type_list as $key => $value) {
+            ?>
+                <option value='<?= $key ?>'><?= $value ?></option>
+            <?php
+                }
+            ?>
+        </select>
+    </td>
+    <td class="field"></td>
+    <td class="value"></td>
 </tr>
 <tr>
     <td class="field"><?=$lang["inventory"]?></td>
