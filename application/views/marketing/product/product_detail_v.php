@@ -342,24 +342,7 @@
     </table>
 </td>
 </tr>
-<tr>
-    <td class="field"><?=$lang["product_warranty_type"]?></td>
-    <td class="value">
-        <select name='product_warranty_type' notempty>
-            <option></option>
-            <?php
-                $selected_pwt[$product->get_product_warranty_type()] = " SELECTED";
-                foreach ($warranty_type_list as $key => $value) {
-            ?>
-                <option value='<?= $key ?>' <?= $selected_pwt[$key] ?>><?= $value ?></option>
-            <?php
-                }
-            ?>
-        </select>
-    </td>
-    <td class="field"></td>
-    <td class="value"></td>
-</tr>
+
 <tr>
     <td class="field"><?=$lang["inventory"]?></td>
     <td class="value"><?=$inventory?$inventory->get_inventory():"0"?></td>
@@ -387,6 +370,24 @@
     <?php
     if ($cmd == "add")
     {
+    ?>
+        <tr>
+            <td class="field"><?=$lang["product_warranty_type"]?></td>
+            <td class="value" colspan="3">
+                <select name='product_warranty_type' notempty>
+                    <option></option>
+                    <?php
+                        $selected_pwt[$product->get_product_warranty_type()] = " SELECTED";
+                        foreach ($warranty_type_list as $key => $value) {
+                    ?>
+                        <option value='<?= $key ?>' <?= $selected_pwt[$key] ?>><?= $value ?></option>
+                    <?php
+                        }
+                    ?>
+                </select>
+            </td>
+        </tr>
+    <?php
         if(!isset($add_type) || isset($add_type) && $add_type == "colour")
         {
             ?>
