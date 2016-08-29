@@ -3,7 +3,6 @@
                         <?= sprintf(_('When you shop with us we like to keep it simple, our free shipping offer applies to all orders no matter the size or value. %s not only accepts payment in your local currency but also ships directly to your doorstep free of charge* via our courier partners.'), SITE_NAME) ?>
                     </p>
                         <img src="/images/shipping/dhl.jpg" border="0">
-                        &nbsp;<img src="/images/shipping/dpd.jpg" border="0">
                         &nbsp;<img src="/images/shipping/royalmail.jpg" border="0">
                         &nbsp;<img src="/images/shipping/ups.jpg" border="0">
                     <h3><?= _('Taxes and Duties') ?></h3>
