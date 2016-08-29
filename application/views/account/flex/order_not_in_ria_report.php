@@ -25,7 +25,7 @@
             <td height="2" bgcolor="#000033"></td>
         </tr>
     </table>
-    <form name="fm" action='<?= base_url() . "account/flex/order_not_in_ria_report"; ?>' method="post"
+    <form name="fm" action='<?= base_url() . "account/flex/orderNotInRiaReport"; ?>' method="post"
           onSubmit="return verfiy_date(this)">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">
             <tr height="80">
