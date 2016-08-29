@@ -220,7 +220,7 @@
                                                         <i class="guar guar-shipping"></i>
                                                     </div>
                                                     <p class="desc-sm">
-                                                        <?= _('Free Delivery') ?><br /><?= _('For All Orders*') ?><br /><?= _('Shipping:') ?><br /><?= _('3-5 Working Days') ?>
+                                                        <?= _('Free Delivery') ?><br /><?= _('For All Orders*') ?>
                                                     </p>
                                                 </li>
                                                 <li style="vertical-align: top;">
