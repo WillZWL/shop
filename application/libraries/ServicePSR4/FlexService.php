@@ -4,7 +4,7 @@ class FlexService extends BaseService
 {
     const ROLLING_RESERVE_REPORT_FILE_NAME = "rolling_reserve.csv";
 
-    public $contact_email = 'will.zhang@eservicesgroup.com';
+    public $contact_email = 'feeling.liu@eservicesgroup.com';
     public $platform_arr = array('QOO10SG', 'RAKUES', 'FNACES', 'LAMY', 'LAZTH', 'LAZPH', 'NEUS');
     public $order_reason_category = array(
                 '1' => array('6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'),
@@ -103,7 +103,7 @@ class FlexService extends BaseService
                     }
                     $fp = fopen($file_path . "/" . $type . "/" . $list["name"], 'w');
                     if (!fwrite($fp, $list["content"])) {
-                        $subject = "<DO NOT REPLY>Fail to write file - " . $path;
+                        $subject = "<DO NOT REPLY>Fail to write file - " . $file_path;
                         $message = "CONTENT: " . $list['content'] . "<br>LINE: " . __LINE__;
                         $this->errorHandler($subject, $message);
                         return FALSE;
@@ -382,7 +382,7 @@ class FlexService extends BaseService
                     $this->reformatSpecialOrderData($obj, $reason_id);
                     $special_order[] = $obj;
                 } elseif (in_array($reason_id, $order_reason_category['2'])) {
-                    if ($fr_obj = $this->getDao('FlexRia')->getFlexRiaWithGatewayMapping(["so_no"=>$obj->get_parent_so_no()])) {
+                    if ($fr_obj = $this->getDao('FlexRia')->getFlexRiaWithGatewayMapping(["so_no"=>$obj->getParentSoNo()])) {
                         $obj->setReportPmgw($fr_obj->getReportPmgw());
                         $obj->setTranType($fr_obj->getTranType());
                     }
@@ -396,7 +396,7 @@ class FlexService extends BaseService
             } elseif (!$is_split_order && $fr_obj && ($fr_obj->getAmount() <> $so_obj->getAmount()) && !$is_platform) {
                 $obj->setRemark("Inconsistent Amount");
                 $exception[] = $obj;
-            } elseif ($fr_obj && ($fr_obj->getStatus() <> 'RIA') && !$ignore_status && !$is_platform) {
+            } elseif ($fr_obj && ($fr_obj->getStatus() <> 'RIA') && !$is_platform) {
                 $obj->setRemark("Not RIA Status");
                 $exception[] = $obj;
             } elseif (!$fr_obj && !$is_platform) {

@@ -26,7 +26,7 @@ $today = getdate();
         </tr>
     </table>
 
-    <form name="fm" action="<?= base_url() . "account/flex/pending_order_report" ?>" method="post" target="_self">
+    <form name="fm" action="<?= base_url() . "account/flex/pendingOrderReport" ?>" method="post" target="_self">
         <input type="hidden" name="is_query" value="1">
         <input type="hidden" name="search" value="1">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" class="page_header">

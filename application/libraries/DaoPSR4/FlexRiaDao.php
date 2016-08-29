@@ -85,13 +85,15 @@ class FlexRiaDao extends BaseDao
         return $this->vo_class_name;
     }
 
-    public function getFlexRiaWithGatewayMapping($where = array(), $option = array(), $classname = "Ria_gate_mapping_dto")
+    public function getFlexRiaWithGatewayMapping($where = array(), $option = array(), $classname = "RiaGateMappingDto")
     {
         $option['limit'] = 1;
         $this->db->from("flex_ria fr");
         $this->db->join("flex_gateway_mapping fgm", "fr.gateway_id = fgm.gateway_id AND fr.currency_id = fgm.currency_id", "LEFT");
-        $this->include_dto($classname);
-        return $this->commonGetList($where, $option, $classname, "fr.currency_id, fr.flex_batch_id, fr.txn_id, date_format(fr.txn_time, '%Y-%m-%d') txn_time, fr.amount, fr.status, CONCAT(fgm.gateway_code, 'I') tran_type, fgm.gateway_code AS report_pmgw");
+
+        $select_str = "fr.currency_id, fr.flex_batch_id, fr.txn_id, date_format(fr.txn_time, '%Y-%m-%d') txn_time, fr.amount, fr.status, CONCAT(fgm.gateway_code, 'I') tran_type, fgm.gateway_code AS report_pmgw";
+
+        return $this->commonGetList($classname, $where, $option, $select_str);
     }
 }
 
