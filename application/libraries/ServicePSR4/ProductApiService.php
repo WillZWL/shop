@@ -550,7 +550,7 @@ class ProductApiService extends BaseService
             if ($obj1) {
                 $res = "Master Sku: $master_sku is already in PT Admin, Please check in PT Admin first";
             } else {
-                $obj2 = $this->get_dao()->get(['sku'=>$sku]);
+                $obj2 = $this->getDao('Product')->get(['sku'=>$sku]);
                 if ($obj2) {
                     $mapVo = $this->getDao('SkuMapping')->get();
                     $mapObj = clone $mapVo;
