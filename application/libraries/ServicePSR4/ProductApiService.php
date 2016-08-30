@@ -540,6 +540,37 @@ class ProductApiService extends BaseService
         }
     }
 
+    public function cpsSkuMapping($data)
+    {
+        if ($data) {
+            $data = json_decode($data, true);
+            $master_sku = $data['master_sku'];
+            $sku = $data['sku'];
+            $obj1 = $this->getDao('SkuMapping')->get(['ext_sku'=>$master_sku, 'status'=>1]);
+            if ($obj1) {
+                $res = "Master Sku: $master_sku is already in PT Admin, Please check in PT Admin first";
+            } else {
+                $obj2 = $this->get_dao()->get(['sku'=>$sku]);
+                if ($obj2) {
+                    $mapVo = $this->getDao('SkuMapping')->get();
+                    $mapObj = clone $mapVo;
+                    $mapObj->setExtSku(trim($master_sku));
+                    $mapObj->setExtSys("WMS");
+                    $mapObj->setSku($sku);
+                    $mapObj->setStatus(1);
+                    $insert_res = $this->getDao('SkuMapping')->insert($mapObj);
+                    if (!$insert_res) {
+                        mail('brave.liu@eservicesgroup.com', 'Insert to PT Admin Failed', 'Error'.__LINE__.' Message. '.$this->getDao('SkuMapping')->db->last_query());
+                        $res = "Insert to PT Admin Failed";
+                    }
+                } else {
+                    $res = "Sku: $sku is not in PT Admin, Cann't sync mapping to PT";
+                }
+            }
+            echo $res;
+        }
+    }
+
     public function getSkuMappingDao()
     {
         return $this->sku_mapping_dao;
