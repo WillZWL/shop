@@ -48,6 +48,12 @@ class ProductApi extends PUB_Controller
         $this->sc['ProductApi']->sendWebStatusChangeEmail($batch_id);
     }
 
+    public function cpsSkuMapping()
+    {
+        $data = file_get_contents('php://input', 'r');
+        $res = $this->sc['ProductApi']->cpsSkuMapping($data);
+    }
+
     public function getAppId()
     {
         return $this->appId;
