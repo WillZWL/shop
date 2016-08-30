@@ -226,7 +226,7 @@ class CartSessionService extends BaseService
             $this->_cart->items = [];
         }
         foreach($skuList as $sku => $item) {
-            $productDetails = $this->_createCartItem($sku, $platformBizObj->getLanguageId(), $platformId, $relaxCriteria);
+            $productDetails = $this->_createCartItem($sku, $platformBizObj->getLanguageId(), $platformId, $relaxCriteria, true);
             $productDetails->setQty($item["qty"]);
             $productDetails->setPrice($item["unitPrice"]);
             $this->_cart->items[$sku] = $productDetails;
@@ -251,9 +251,9 @@ class CartSessionService extends BaseService
         }
     }
 
-    private function _createCartItem($sku, $lang, $platformId, $relaxCriteria = false) {
+    private function _createCartItem($sku, $lang, $platformId, $relaxCriteria = false, $ignoreListingStatus = false) {
         if ($this->_rebuildCartNoSessionMode || $this->getCartDetailInfo())
-            return $this->getCartItemInDetail($sku, $lang, $platformId, $relaxCriteria);
+            return $this->getCartItemInDetail($sku, $lang, $platformId, $relaxCriteria, $ignoreListingStatus);
         else
             return $this->getCartItemInfoLite($sku, $lang, $platformId);
     }
@@ -272,15 +272,18 @@ class CartSessionService extends BaseService
 **  function _getRelaxCartParameter
 **  this is only for speical order, we can remove more criteria if needed
 *********************************/
-    private function _getRelaxCartParameter($sku, $lang, $platformId) {
+    private function _getRelaxCartParameter($sku, $lang, $platformId, $ignoreListingStatus = false) {
         $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
         unset($para["where"]["pc.lang_id"]);
+        if ($ignoreListingStatus) {
+            unset($para["where"]["pr.listing_status"]);
+        }
         return $para;
     }
 
-    public function getCartItemInDetail($sku, $lang, $platformId, $relaxCriteria = false) {
+    public function getCartItemInDetail($sku, $lang, $platformId, $relaxCriteria = false, $ignoreListingStatus = false) {
         if ($relaxCriteria) {
-            $para = $this->_getRelaxCartParameter($sku, $lang, $platformId);
+            $para = $this->_getRelaxCartParameter($sku, $lang, $platformId, $ignoreListingStatus);
         } else {
             $para = $this->_getCommonCartParameter($sku, $lang, $platformId);
         }
