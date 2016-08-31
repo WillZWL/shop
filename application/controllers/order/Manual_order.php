@@ -28,7 +28,14 @@ class Manual_order extends MY_Controller
 */
             if ($this->input->post("posted")) {
                 $checkoutModel = new CheckoutModel();
-                $data["soObj"] = $checkoutModel->createManualOrder($_POST, $platform_id);
+                $newSoObj = $checkoutModel->createManualOrder($_POST, $platform_id);
+                if ($newSoObj) {
+                    $_SESSION['created'] = ['success' => $newSoObj->getSoNo()];
+                } else {
+                    $_SESSION['created'] = ['failed' => -1];
+                }
+
+                redirect("/order/manual_order/index/".$platform_type."/".$platform_id);
             }
 
             $data["country_list"] = $this->sc['Region']->getSellCountryList();
@@ -45,6 +52,12 @@ class Manual_order extends MY_Controller
         $data["sp_list"] = $this->sc['SellingPlatform']->getDao('SellingPlatform')->getList(["type"=>$platform_type], ["orderby"=>"name", "limit"=> -1]);
         $data["platform_id"] = $platform_id;
         $data["platform_type"] = $platform_type;
+
+        if (isset($_SESSION['created'])) {
+            $data['created'] = $_SESSION['created'];
+            unset($_SESSION['created']);
+        }
+
         $this->load->view($this->path . '/manual_order_v', $data);
     }
 
@@ -63,6 +76,7 @@ class Manual_order extends MY_Controller
             $platform_id = "WEBMY";
         }
 
+        $where['p.status'] = 2;
         $where["pr.platform_id"] = $platform_id;
         $submit_search = 0;
 
