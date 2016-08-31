@@ -53,6 +53,7 @@ class Special_order extends MY_Controller
         $where = [];
         $option = [];
         $where["pr.platform_id"] = $platform_id;
+        $where["p.status"] = 2;
         $submit_search = 0;
 
         if ($this->input->get("sku") != "") {

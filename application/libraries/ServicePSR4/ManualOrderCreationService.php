@@ -1,7 +1,7 @@
 <?php
 namespace ESG\Panther\Service;
 
-class ManualOrderCreationService extends OrderCreationService 
+class ManualOrderCreationService extends OrderCreationService
 implements CreateSoInterface, CreateSoEventInterface
 {
     private $_checkoutInfoDto = null;
@@ -47,7 +47,7 @@ implements CreateSoInterface, CreateSoEventInterface
             $this->_checkoutInfoDto->setBillTelNumber($this->checkoutFormData["client"]["tel_3"]);
 
             $this->_checkoutInfoDto->setMobile($this->checkoutFormData["client"]["mtel_1"] . $this->checkoutFormData["client"]["mtel_2"] . $this->checkoutFormData["client"]["mtel_3"]);
-            
+
             $this->_checkoutInfoDto->setShipCountry($this->checkoutFormData["client"]["country_id"]);
             $this->_checkoutInfoDto->setShipCompany($this->checkoutFormData["client"]["companyname"]);
             $this->_checkoutInfoDto->setShipFirstName($this->checkoutFormData["client"]["forename"]);
@@ -65,7 +65,31 @@ implements CreateSoInterface, CreateSoEventInterface
     }
 
     public function getCartDto() {
-        return $this->buildCart();
+        return $this->_buildCart();
+    }
+
+    private function _buildCart() {
+        $cartSessionService = new CartSessionService(TRUE);
+        $skuList = [];
+        if ($this->checkoutFormData["soi"]) {
+            foreach($this->checkoutFormData["soi"] as $item) {
+                if ($item["sku"]) {
+                    $unitPrice = $item["price"];
+                    $qty = $item["qty"];
+                    if (isset($skuList[$item["sku"]])) {
+                        $qty += $skuList[$item["sku"]]["qty"];
+                        $unitPrice = ($unitPrice + $skuList[$item["sku"]]["unitPrice"]) / 2;
+                    }
+                    $skuList[$item["sku"]] = ["qty" => $item["qty"], "name" => $item["name"], "unitPrice" => $item["price"]];
+                }
+            }
+            $platformId = $this->checkoutFormData["platformId"];
+            $platformBizObj = $this->getService("PlatformBizVar")->getDao("PlatformBizVar")->get(["selling_platform_id" => $platformId]);
+
+            $cartSessionService->manualAddItemsToCart($skuList, $platformId, $platformBizObj, $this->checkoutFormData["delivery_charge"], TRUE);
+            return $cartSessionService->getCart();
+        }
+        return false;
     }
 
     public function soBeforeInsertEvent($soObj) {
