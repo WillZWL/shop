@@ -53,11 +53,11 @@
         <tr>
             <td height="30" class="title"><?= $lang["title"] ?></td>
             <td width="650" align="right" class="title">
-<?php if ((isset($soObj)) && $soObj)
+<?php if ((isset($created)) && $created['success'])
       {
             print "<span style='background-color:#000000;color:#FFFFFF;font-size:18px;padding-right:20px;'>";
-            print "Order Number:" . $soObj->getSoNo() . " Created";
-      } elseif (isset($soObj)) {
+            print "Order Number:" . $created['success'] . " Created";
+      } elseif (isset($created) && $created['failed'] == -1) {
             print "Fail to create SO!!";
       }
 ?>    </span>
