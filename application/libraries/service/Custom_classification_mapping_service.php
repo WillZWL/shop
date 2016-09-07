@@ -61,8 +61,8 @@ class Custom_classification_mapping_service extends Base_service
     {
         if ($country_list = $this->get_country_dao()->get_list(array("allow_sell" => 1), array("limit" => -1))) {
             foreach ($country_list as $country_obj) {
-                $ccm_obj = $this->get_dao()->get_ccm_list(array("sub_cat_id" => $sub_cat_id, "ccm.country_id" => $country_obj->get_id()), array("limit" => 1));
-                $rs[$country_obj->get_id()] = $ccm_obj;
+                $ccm_obj = $this->get_dao()->get_ccm_list(array("sub_cat_id" => $sub_cat_id, "ccm.country_id" => $country_obj->get_country_id()), array("limit" => 1));
+                $rs[$country_obj->get_country_id()] = $ccm_obj;
             }
             return $rs;
         }

@@ -11,7 +11,7 @@ class Supplier_prod_vo extends Base_vo
     private $cost;
     private $moq;
     private $order_default = '1';
-    private $region_default;
+    private $region_default='0';
     private $supplier_status = 'A';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
