@@ -62,7 +62,7 @@ class Custom_classification_mapping_dao extends Base_dao
     public function get_ccm_list($where = array(), $option = array(), $classname = "sub_cat_custom_classification_dto")
     {
         if (isset($where["ccm.country_id"])) {
-            $ccm_clause = " AND (ccm.country_id = '" . $where['ccm.country_id'] . "')";
+            $ccm_clause = " AND ccm.country_id = '" . $where['ccm.country_id'] . "'";
             unset($where["ccm.country_id"]);
         }
         $this->db->from("category AS sc");
