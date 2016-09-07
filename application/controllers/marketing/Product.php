@@ -674,7 +674,8 @@ html;
                     foreach ($version_list as $version_id) {
                         //list($version_id,$version_name) = explode("::",$version);
 
-                        $sku = str_pad($prod_grp_cd . "-" . $version_id . "-" . $colour_id, 11, "0", STR_PAD_LEFT);
+                        $sku = $this->sc['Product']->getDao('Product')->getNewSku();
+
                         $name = $data["product"]->get_name();
                         $narr = explode("(", $name);
                         if (count($narr) > 1) {
