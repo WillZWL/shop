@@ -21,21 +21,21 @@ class Product_vo extends Base_vo
     private $ex_demo = '0';
     private $china_oem = '0';
     private $rrp = '0.00';
-    private $image;
-    private $flash;
-    private $youtube_id;
-    private $ean;
-    private $mpn;
-    private $upc;
-    private $discount;
+    private $image='';
+    private $flash='';
+    private $youtube_id='';
+    private $ean = '';
+    private $mpn = '';
+    private $upc = '';
+    private $discount = '0.00';
     private $proc_status = '0';
     private $website_status = 'I';
     private $sourcing_status = 'A';
-    private $warranty_in_month;
-    private $expected_delivery_date;
-    private $cat_upselling;
+    private $warranty_in_month = '0';
+    private $expected_delivery_date = '0000-00-00 00:00:00';
+    private $cat_upselling = '0';
     private $shipment_restricted_type;
-    private $lang_restricted;
+    private $lang_restricted = '1';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
     private $create_at = '127.0.0.1';
@@ -44,10 +44,10 @@ class Product_vo extends Base_vo
     private $modify_at = '127.0.0.1';
     private $modify_by;
     private $surplus_quantity = 0;
-    private $slow_move_7_days;
+    private $slow_move_7_days = '0';
     private $accelerator_salesrpt_bd;
-    private $product_warranty_type;
-    private $accelerator;
+    private $product_warranty_type='0';
+    private $accelerator='0';
     //primary key
     private $primary_key = array("sku");
 
