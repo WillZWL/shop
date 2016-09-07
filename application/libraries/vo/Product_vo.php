@@ -34,7 +34,7 @@ class Product_vo extends Base_vo
     private $warranty_in_month = '0';
     private $expected_delivery_date = '0000-00-00 00:00:00';
     private $cat_upselling = '0';
-    private $shipment_restricted_type;
+    private $shipment_restricted_type = '0';
     private $lang_restricted = '1';
     private $status = '1';
     private $create_on = '0000-00-00 00:00:00';
