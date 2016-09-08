@@ -2582,10 +2582,10 @@ start;
         }
     }
 
-    public function generateProductUrl($sku = '')
+    public function generateProductUrl($sku = '', $langId = 'en')
     {
         if ($sku) {
-            if ($prodContObj = $this->sc['Product']->getDao('ProductContent')->get(['prod_sku' => $sku])) {
+            if ($prodContObj = $this->sc['Product']->getDao('ProductContent')->get(['prod_sku' => $sku, 'lang_id' => $langId])) {
                 $this->_setProductUrl($prodContObj);
             }
         } else {
