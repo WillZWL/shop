@@ -731,7 +731,7 @@ html;
                                         $pc_obj->set_keywords('');
                                         $pc_obj->set_prod_sku($sku);
 
-                                        $category_table = $this->getService('Category')->getCategoryName($pc_lang_id);
+                                        $category_table = $this->sc['Category']->getCategoryName($pc_lang_id);
                                         $prod_url = '/'. $category_table[$data["product"]->getCatId()].'/'.$category_table[$data["product"]->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($pc_obj->get_prod_name())).'/product/'.$data["product"]->getSku();
                                         $pc_obj->set_product_url($prod_url);
 
@@ -921,7 +921,7 @@ html;
                                     foreach ($prod_cont as $pc_obj) {
                                         $pc_obj->set_prod_sku($sku);
                                         $pc_lang_id = $pc_obj->get_lang_id();
-                                        $category_table = $this->getService('Category')->getCategoryName($pc_lang_id);
+                                        $category_table = $this->sc['Category']->getCategoryName($pc_lang_id);
                                         $prod_url = '/'. $category_table[$data["product"]->getCatId()].'/'.$category_table[$data["product"]->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($pc_obj->get_prod_name())).'/product/'.$data["product"]->getSku();
                                         $pc_obj->set_product_url($prod_url);
 
@@ -1405,7 +1405,7 @@ html;
                             $data["prod_cont"]->set_prod_sku($sku);
                             $data["prod_cont"]->set_lang_id($_POST['lang_id']);
 
-                            $category_table = $this->getService('Category')->getCategoryName($_POST['lang_id']);
+                            $category_table = $this->sc['Category']->getCategoryName($_POST['lang_id']);
                             $prod_url = '/'. $category_table[$data["product"]->getCatId()].'/'.$category_table[$data["product"]->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($data["prod_cont"]->get_prod_name())).'/product/'.$data["product"]->getSku();
                             $data["prod_cont"]->set_product_url($prod_url);
 
