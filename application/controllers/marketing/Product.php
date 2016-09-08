@@ -2581,4 +2581,29 @@ start;
             $this->sc['ProductWarranty']->autoCreateProductWarranty($product_obj);
         }
     }
+
+    public function generateProductUrl($sku = '')
+    {
+        if ($sku) {
+            if ($prodContObj = $this->sc['Product']->getDao('ProductContent')->get(['prod_sku' => $sku])) {
+                $this->_setProductUrl($prodContObj);
+            }
+        } else {
+            if ($prodContObjList = $this->sc['Product']->getDao('ProductContent')->getList(['product_url' => ''], ['limit' => -1])) {
+                foreach ($prodContObjList as $prodContObj) {
+                    $this->_setProductUrl($prodContObj);
+                }
+            }
+        }
+    }
+
+    private function _setProductUrl($prodContObj)
+    {
+        if ($prodObj = $this->sc['Product']->getDao('Product')->get(['sku' => $prodContObj->getProdSku()])) {
+            $categoryTable = $this->sc['Category']->getCategoryName($prodContObj->getLangId());
+            $prodUrl = '/'. $categoryTable[$prodObj->getCatId()].'/'.$categoryTable[$prodObj->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($prodContObj->getProdName())).'/product/'.$prodObj->getSku();
+            $prodContObj->setProductUrl($prodUrl);
+            $this->sc['Product']->getDao('ProductContent')->update($prodContObj);
+        }
+    }
 }
