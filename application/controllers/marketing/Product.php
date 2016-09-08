@@ -732,7 +732,7 @@ html;
                                         $pc_obj->set_prod_sku($sku);
 
                                         $category_table = $this->sc['Category']->getCategoryName($pc_lang_id);
-                                        $prod_url = '/'. $category_table[$data["product"]->getCatId()].'/'.$category_table[$data["product"]->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($pc_obj->get_prod_name())).'/product/'.$data["product"]->getSku();
+                                        $prod_url = '/'. $category_table[$data["product"]->get_cat_id()].'/'.$category_table[$data["product"]->get_sub_cat_id()].'/'.str_replace(' ', '-', parse_url_char($pc_obj->get_prod_name())).'/product/'.$data["product"]->get_sku();
                                         $pc_obj->set_product_url($prod_url);
 
                                         if (!$this->product_model->add_product_content($pc_obj)) {
@@ -922,7 +922,7 @@ html;
                                         $pc_obj->set_prod_sku($sku);
                                         $pc_lang_id = $pc_obj->get_lang_id();
                                         $category_table = $this->sc['Category']->getCategoryName($pc_lang_id);
-                                        $prod_url = '/'. $category_table[$data["product"]->getCatId()].'/'.$category_table[$data["product"]->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($pc_obj->get_prod_name())).'/product/'.$data["product"]->getSku();
+                                        $prod_url = '/'. $category_table[$data["product"]->get_cat_id()].'/'.$category_table[$data["product"]->get_sub_cat_id()].'/'.str_replace(' ', '-', parse_url_char($pc_obj->get_prod_name())).'/product/'.$data["product"]->get_sku();
                                         $pc_obj->set_product_url($prod_url);
 
                                         if (!$this->product_model->add_product_content($pc_obj)) {
@@ -1406,7 +1406,7 @@ html;
                             $data["prod_cont"]->set_lang_id($_POST['lang_id']);
 
                             $category_table = $this->sc['Category']->getCategoryName($_POST['lang_id']);
-                            $prod_url = '/'. $category_table[$data["product"]->getCatId()].'/'.$category_table[$data["product"]->getSubCatId()].'/'.str_replace(' ', '-', parse_url_char($data["prod_cont"]->get_prod_name())).'/product/'.$data["product"]->getSku();
+                            $prod_url = '/'. $category_table[$data["product"]->get_cat_id()].'/'.$category_table[$data["product"]->get_sub_cat_id()].'/'.str_replace(' ', '-', parse_url_char($data["prod_cont"]->get_prod_name())).'/product/'.$data["product"]->get_sku();
                             $data["prod_cont"]->set_product_url($prod_url);
 
                             if ($this->product_model->get_product_content(array("prod_sku" => $sku, "lang_id" => $_POST['lang_id']))) {
