@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 10:09+0800\n"
-"PO-Revision-Date: 2016-08-05 10:10+0800\n"
+"POT-Creation-Date: 2016-09-18 19:31+0800\n"
+"PO-Revision-Date: 2016-09-18 19:33+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: cart/info.php:35 review.php:22 review.php:109
 msgid "Total"
@@ -329,129 +329,129 @@ msgstr "3. Número de Teléfono"
 msgid "4. Full Name of Item(s)"
 msgstr "4. Nombre completo del artículo(s):"
 
-#: checkout/index.php:409
+#: checkout/index.php:411
 msgid "Please note: remote surcharge has been applied to your basket!"
 msgstr "¡Atención! Un cargo extra por área remota se ha añadido a tu cesta."
 
-#: checkout/index.php:537 checkout/index.php:756
+#: checkout/index.php:539 checkout/index.php:758
 msgid "The email is required"
 msgstr "Se requiere e-Mail"
 
-#: checkout/index.php:540 checkout/index.php:764
+#: checkout/index.php:542 checkout/index.php:766
 msgid "The value is not a valid email address"
 msgstr "Este correo no es una dirección de correo válida"
 
-#: checkout/index.php:548
+#: checkout/index.php:550
 msgid "Please input a password"
 msgstr "Por favor ponga una contraseña"
 
-#: checkout/index.php:625
+#: checkout/index.php:627
 msgid "The billing first name is required"
 msgstr "Nombre de facturación requerido"
 
-#: checkout/index.php:630
+#: checkout/index.php:632
 msgid ""
 "The billing first name must be more than 1 and less than 50 characters long"
 msgstr ""
 "El Nombre de facturación tiene que tener más de 1 y menos de 50 caracteres"
 
-#: checkout/index.php:634
+#: checkout/index.php:636
 msgid "The billing first name can only consist of alphabetical, number"
 msgstr "El Nombre en facturación debe contener solo números o letras"
 
-#: checkout/index.php:642
+#: checkout/index.php:644
 msgid "The billing last name is required"
 msgstr "Se requiere el Apellido de facturación"
 
-#: checkout/index.php:647
+#: checkout/index.php:649
 msgid ""
 "The billing last name must be more than 1 and less than 50 characters long"
 msgstr ""
 "El Apellido de facturación tiene que tener más de 1 y menos de 50 caracteres"
 
-#: checkout/index.php:651
+#: checkout/index.php:653
 msgid "The billing last name can only consist of alphabetical, number"
 msgstr "El Apellido en facturación debe contener solo números o letras"
 
-#: checkout/index.php:660
+#: checkout/index.php:662
 msgid "The billing company name cannot be longer than 50 characters"
 msgstr ""
 "El Apellido de facturación tiene que tener más de 1 y menos de 50 caracteres"
 
-#: checkout/index.php:664
+#: checkout/index.php:666
 msgid "The billing company name can only consist of alphabetical, number"
 msgstr "La Empresa en facturación debe contener solo números o letras"
 
-#: checkout/index.php:672
+#: checkout/index.php:674
 msgid "The billing Address Line 1 is required"
 msgstr ""
 
-#: checkout/index.php:676
+#: checkout/index.php:678
 msgid "The billing address1 name can only consist of alphabetical, number"
 msgstr "La Dirección 1 en facturación debe contener solo números o letras"
 
-#: checkout/index.php:681 checkout/index.php:701
+#: checkout/index.php:683 checkout/index.php:703
 msgid ""
 "The billing address must be more than 1 and less than 1024 characters long"
 msgstr ""
 "La Dirección de facturación tiene que tener más de 1 y menos de 1024 "
 "caracteres"
 
-#: checkout/index.php:684 checkout/index.php:704
+#: checkout/index.php:686 checkout/index.php:706
 msgid "POBox Address is not allowed"
 msgstr "Código Postal no permitido"
 
-#: checkout/index.php:696
+#: checkout/index.php:698
 msgid "The billing address2 name can only consist of alphabetical, number"
 msgstr "La Dirección 2 en facturación debe contener solo números o letras"
 
-#: checkout/index.php:715
+#: checkout/index.php:717
 msgid "The billing city is required"
 msgstr "Se requiere Ciudad de facturación"
 
-#: checkout/index.php:720
+#: checkout/index.php:722
 msgid "The billing city must be more than 1 and less than 128 characters long"
 msgstr ""
 "La Ciudad de facturación tiene que tener más de 1 y menos de 128 caracteres"
 
-#: checkout/index.php:724
+#: checkout/index.php:726
 msgid "The billing city can only consist of alphabetical, number"
 msgstr "La Ciudad en facturación debe contener solo números o letras"
 
-#: checkout/index.php:732
+#: checkout/index.php:734
 msgid "The Zip/Postal Code is required"
 msgstr "Se requiere Código Postal"
 
-#: checkout/index.php:736
+#: checkout/index.php:738
 #, php-format
 msgid "The value is not valid %s Zip/Postal Code"
 msgstr "No es un Código Postal %s válido"
 
-#: checkout/index.php:744
+#: checkout/index.php:746
 msgid "The billing telephone number is required"
 msgstr "Se requiere un Número de Teléfono de facturación"
 
-#: checkout/index.php:748
+#: checkout/index.php:750
 msgid "The billing telephone is not valid"
 msgstr "El Teléfono de facturación no es válido"
 
-#: checkout/index.php:761
+#: checkout/index.php:763
 msgid "Email must be more than 3 and less than 256 characters long"
 msgstr "El e-Mail debe de tener más de 3 y menos de 256 caracteres"
 
-#: checkout/index.php:773
+#: checkout/index.php:775
 msgid "The password and its confirm are not the same"
 msgstr "Las contraseñas no coinciden"
 
-#: checkout/index.php:782
+#: checkout/index.php:784
 msgid "Please Select a state"
 msgstr "Por favor selecciona una Provincia"
 
-#: checkout/index.php:791
+#: checkout/index.php:793
 msgid "Please select a card"
 msgstr "Por favor selecciona una Tarjeta"
 
-#: checkout/index.php:843
+#: checkout/index.php:845
 msgid "Unknown error: Please contact our CS!"
 msgstr "Error desconocido. ¡Contacte con nuestro Servicio al Cliente!"
 
@@ -784,7 +784,7 @@ msgstr ""
 "Si no obtiene la respuesta que necesita, póngase en %s contacto %s con "
 "nosotros a través nuestra página de Contacto. Gracias."
 
-#: display/privacy_policy.php:2 footer.php:277
+#: display/privacy_policy.php:2 footer.php:255
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
@@ -1131,11 +1131,11 @@ msgstr ""
 "acepta pago en euros para tu comodidad y envía el producto directamente a tu "
 "casa a través de nuestros colaboradores de distribución. "
 
-#: display/shipping.php:10
+#: display/shipping.php:8
 msgid "Taxes and Duties"
 msgstr "Impuestos y Derechos"
 
-#: display/shipping.php:12
+#: display/shipping.php:10
 msgid ""
 "Worried about hidden costs? Please don't be, we'll take care of any "
 "applicable taxes and duties prior to delivery so the price on the website is "
@@ -1147,11 +1147,11 @@ msgstr ""
 "nuestra web es el precio final que pagarás. Ten por seguro que tu compra con "
 "nosotros estará a salvo de preocupaciones."
 
-#: display/shipping.php:15
+#: display/shipping.php:13
 msgid "Tracking Your Order"
 msgstr "Seguimiento de tu pedido"
 
-#: display/shipping.php:17
+#: display/shipping.php:15
 msgid ""
 "Once your order has been processed, an email containing your order and "
 "account information will be sent to your registered email. You can always "
@@ -1163,11 +1163,11 @@ msgstr ""
 "registraste. Siempre puedes comprobar el estado de tu pedido visitando la "
 "página Mi Cuenta en nuestro sitio web y ver tu historial de pedidos."
 
-#: display/shipping.php:20
+#: display/shipping.php:18
 msgid "FREE Shipping Delivery Times"
 msgstr "Tiempos de entrega de envío GRATIS"
 
-#: display/shipping.php:22
+#: display/shipping.php:20
 msgid ""
 "Orders delivered with free shipping typically arrive within 5 to 12 business "
 "days; although this is dependent on your delivery region, with many orders "
@@ -1187,7 +1187,7 @@ msgstr ""
 "distribución global con almacenes en UK, US y HK. Por favor ten en cuenta "
 "que ciertas regiones pueden experimentar un periodo de entrega más largo."
 
-#: display/shipping.php:26
+#: display/shipping.php:24
 msgid ""
 "* Shipping to and from less populated or accessible domestic and "
 "international areas carries higher operating costs. Delivery and extended or "
@@ -1198,7 +1198,7 @@ msgstr ""
 "embargo, esto ya se verá reflejado en el precio final del producto para "
 "mostrar más fielmente el coste de envío a esas poblaciones."
 
-#: display/shipping.php:28
+#: display/shipping.php:26
 msgid ""
 "United States: extended or remote areas within the contingent 48 states, "
 "Hawaii and Alaska"
@@ -1206,11 +1206,11 @@ msgstr "No realizamos envíos a las Islas Canarias, Ceuta o Melilla. "
 
 # Just "No shipping to Canarian Islands, Ceuta or Melilla"
 # Added in the previous translation as well.
-#: display/shipping.php:31
+#: display/shipping.php:29
 msgid "United Kingdom: areas in Guernsey, Jersey, and the Isle of Man"
 msgstr "-"
 
-#: display/shipping.php:36
+#: display/shipping.php:34
 msgid ""
 "** Although we do our best to ensure a smooth shipping process please note "
 "delivery speed to some regions may experience delays depending on a wide "
@@ -1230,124 +1230,116 @@ msgstr "PAGA CON CONFIANZA"
 msgid " SHOP WITH CONFIDENCE "
 msgstr "COMPRA CON CONFIANZA"
 
-#: footer.php:159
+#: footer.php:137
 msgid "About Us"
 msgstr "Acerca de nosotros"
 
-#: footer.php:162
+#: footer.php:140
 #, php-format
 msgid "%s prides itself on great deals without compromise on service! "
 msgstr ""
 "¡%s se enorgullece de ofrecer ofertas excepcionales sin comprometer el "
 "servicio!"
 
-#: footer.php:162
+#: footer.php:140
 msgid "Feel free to contact us anytime for more information"
 msgstr ""
 "Siéntete libre de contactarnos en cualquier momento para más información"
 
-#: footer.php:170 footer.php:182
+#: footer.php:148 footer.php:160
 msgid "Subscribe to get our latest news and promotions regularly."
 msgstr "Suscríbete para saber nuestras últimas noticias y promociones."
 
-#: footer.php:181
+#: footer.php:159
 msgid "Sign up for Newsletter"
 msgstr "Suscríbete a nuestra Newsletter"
 
-#: footer.php:186
+#: footer.php:164
 msgid "Enter you email address"
 msgstr "Introduce tu correo electrónico"
 
-#: footer.php:196
+#: footer.php:174
 msgid "Subscribe"
 msgstr "Suscríbite"
 
-#: footer.php:200
+#: footer.php:178
 msgid "indicates required"
 msgstr "indica requerido"
 
-#: footer.php:215
+#: footer.php:193
 msgid "100% Secure "
 msgstr "100% Seguro"
 
-#: footer.php:215
+#: footer.php:193
 msgid "with SSL encryption"
 msgstr "con encriptación SSL"
 
-#: footer.php:223
+#: footer.php:201
 msgid "Free Delivery"
 msgstr "Envío Gratuito"
 
-#: footer.php:223
+#: footer.php:201
 msgid "For All Orders*"
 msgstr "Para Todas las Compras*"
 
-#: footer.php:223
-msgid "Shipping:"
-msgstr "Envío:"
-
-#: footer.php:223
-msgid "3-5 Working Days"
-msgstr "3-5 Días Laborables"
-
-#: footer.php:243 header.php:148
+#: footer.php:221 header.php:148
 #, php-format
 msgid "%s Days Money Back Guarantee"
 msgstr "%s días Reembolso Garantizado"
 
-#: footer.php:260
+#: footer.php:238
 msgid "Warranty "
 msgstr "Garantía"
 
-#: footer.php:260
+#: footer.php:238
 msgid "Up to 2 Years"
 msgstr "Hasta 2 años"
 
-#: footer.php:272
+#: footer.php:250
 msgid "2015 All Right reserved"
 msgstr "2015 Todos los Derechos Reservados"
 
-#: footer.php:273
+#: footer.php:251
 msgid "Conditions of Use"
 msgstr "Condiciones de Uso"
 
-#: footer.php:274
+#: footer.php:252
 msgid "Shipping Policy"
 msgstr "Política de Envio"
 
-#: footer.php:275
+#: footer.php:253
 msgid "Return and Refund Policy"
 msgstr "Política de Devolución y Reembolso"
 
-#: footer.php:276
+#: footer.php:254
 msgid "Billing Terms and Conditions"
 msgstr "Términos y Condiciones de Facturación"
 
-#: footer.php:282
+#: footer.php:260
 msgid "SELECT SHIPPING COUNTRY"
 msgstr "SELECCIONA PAIS DE ENVIO"
 
-#: footer.php:285
+#: footer.php:263
 msgid "Australia"
 msgstr "Australia"
 
-#: footer.php:286
+#: footer.php:264
 msgid "Belgium"
 msgstr "Bélgica"
 
-#: footer.php:287
+#: footer.php:265
 msgid "Finland"
 msgstr "Finlandia"
 
-#: footer.php:288
+#: footer.php:266
 msgid "France"
 msgstr "Francia"
 
-#: footer.php:289
+#: footer.php:267
 msgid "Great Britain"
 msgstr "Gran Bretaña"
 
-#: footer.php:290
+#: footer.php:268
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
@@ -1845,8 +1837,8 @@ msgid "Availability"
 msgstr "Disponibilidad"
 
 #: product/detail.php:90 product/detail.php:96
-msgid " In Stock"
-msgstr "En Stock"
+msgid " Available"
+msgstr "Disponible"
 
 #: product/detail.php:92
 msgid "Out of Stock"
@@ -1876,15 +1868,15 @@ msgstr "y"
 msgid "delivered in"
 msgstr "entrega en"
 
-#: product/detail.php:166
+#: product/detail.php:143
 msgid "Specification"
 msgstr "Especificaciones"
 
-#: product/detail.php:167
+#: product/detail.php:144
 msgid "Overview"
 msgstr "Descripción"
 
-#: product/detail.php:169
+#: product/detail.php:146
 msgid "In the box"
 msgstr "En la caja"
 
@@ -2188,6 +2180,15 @@ msgid "Contact us to know regarding latest update of parcel"
 msgstr ""
 "Le recomendamos que escriba un correo electrónico a nuestro departamento de "
 "atención al cliente  para tener más datos sobre el estado de su pedido."
+
+#~ msgid "Shipping:"
+#~ msgstr "Envío:"
+
+#~ msgid "3-5 Working Days"
+#~ msgstr "3-5 Días Laborables"
+
+#~ msgid " In Stock"
+#~ msgstr "En Stock"
 
 #~ msgid ""
 #~ "For enquiries, please contact us at sales@digitaldiscount.co.uk with the "
