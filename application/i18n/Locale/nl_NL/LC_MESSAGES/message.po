@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Panther\n"
-"POT-Creation-Date: 2016-09-18 19:36+0800\n"
-"PO-Revision-Date: 2016-09-18 19:36+0800\n"
+"POT-Creation-Date: 2016-09-18 20:01+0800\n"
+"PO-Revision-Date: 2016-09-18 20:02+0800\n"
 "Last-Translator: \n"
 "Language-Team: it@eservicesgroup.net <it@eservicesgroup.net>\n"
 "Language: nl\n"
@@ -1836,7 +1836,7 @@ msgid "Availability"
 msgstr "Beschikbaarheid"
 
 #: product/detail.php:90 product/detail.php:96
-msgid " Available"
+msgid "Available"
 msgstr "Beschikbaar"
 
 #: product/detail.php:92
@@ -2170,6 +2170,9 @@ msgid "Contact us to know regarding latest update of parcel"
 msgstr ""
 "Graag verzoeken wij u om contact met ons op te nemen over de status van uw "
 "pakket "
+
+#~ msgid " Available"
+#~ msgstr "Beschikbaar"
 
 #~ msgid "Shipping:"
 #~ msgstr "Verzenden:"
