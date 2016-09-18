@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 19:33+0800\n"
-"PO-Revision-Date: 2016-09-18 19:34+0800\n"
+"POT-Creation-Date: 2016-09-18 20:00+0800\n"
+"PO-Revision-Date: 2016-09-18 20:00+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -1861,7 +1861,7 @@ msgid "Availability"
 msgstr "Disponibilité"
 
 #: product/detail.php:90 product/detail.php:96
-msgid " Available"
+msgid "Available"
 msgstr "Disponible"
 
 #: product/detail.php:92
@@ -2200,6 +2200,9 @@ msgid "Contact us to know regarding latest update of parcel"
 msgstr ""
 "l'expédition de votre colis ne dispose pas d'informations de suivi depuis 7 "
 "jours, ou de changement de statut depuis 30 jours."
+
+#~ msgid " Available"
+#~ msgstr "Disponible"
 
 #~ msgid "Shipping:"
 #~ msgstr "Expédition"

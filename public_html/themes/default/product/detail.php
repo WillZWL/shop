@@ -87,13 +87,13 @@
                                         <?php
                                             if ($listing_status == 'I') {
                                         ?>
-                                            <?=$display_qty?>&nbsp;<?= _(' Available') ?>
+                                            <?=$display_qty?>&nbsp;<?= _('Available') ?>
                                         <?php }elseif ($listing_status == 'O') { ?>
                                             <?= _('Out of Stock') ?>
                                         <?php }elseif ($listing_status == 'P') { ?>
                                             <?= _('Pre Order') ?>
                                         <?php }else { ?>
-                                            <?= _(' Available') ?>
+                                            <?= _('Available') ?>
                                         <?php } ?>
                                     </li>
                                 </ul>
