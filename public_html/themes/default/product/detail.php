@@ -87,13 +87,13 @@
                                         <?php
                                             if ($listing_status == 'I') {
                                         ?>
-                                            <?=$display_qty?>&nbsp;<?= _(' In Stock') ?>
+                                            <?=$display_qty?>&nbsp;<?= _(' Available') ?>
                                         <?php }elseif ($listing_status == 'O') { ?>
                                             <?= _('Out of Stock') ?>
                                         <?php }elseif ($listing_status == 'P') { ?>
                                             <?= _('Pre Order') ?>
                                         <?php }else { ?>
-                                            <?= _(' In Stock') ?>
+                                            <?= _(' Available') ?>
                                         <?php } ?>
                                     </li>
                                 </ul>
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="clearfix box-product-infomation tab-v4 none-border text-center">
                         <ul class="nav nav-tabs" role="tablist">
