@@ -1361,15 +1361,15 @@ class FlexService extends BaseService
 
     public function getRiaControlReport($where = array(), $option = array())
     {
-        $csv_file = "Received_Date,Dispatch_Date,Refund_Date,Order_ID,Payment_Gateway,Txn_ID,Transaction_Status,Currency,Order_Amount,RIA_Control\r\n";
+        $csv_file = "SO No., Country Code, Gateway, Txn ID, Currency, RIA blance\r\n";
         $data = array();
         $data[] = $this->getRiaOrderReport($where, $option);
-        $data[] = $this->getFullyRefundReport($where, $option);
+        // $data[] = $this->getFullyRefundReport($where, $option);
         foreach ($data as $temp) {
             foreach ($temp as $file => $obj_list) {
                 if (!empty($obj_list)) {
                     foreach ($obj_list as $obj) {
-                        $csv_file .= $obj->getFriTxnTime() .','. $obj->getDispatchDate() .','. $obj->getFreTxnTime() .','. $obj->getSoNo() .','. $obj->getGatewayId() .','. $obj->getFriTxnId() .','. $obj->getFriStatus() .','. $obj->getCurrencyId() .','. $obj->getFriAmount() .','. $obj->getRiaControl() ."\r\n";
+                        $csv_file .= $obj->getSoNo() .','. $obj->getCountryId() .','. $obj->getGatewayId() .','. $obj->getFriTxnId() .','. $obj->getCurrencyId() .','. $obj->getRiaControl() ."\r\n";
                     }
                 }
             }
@@ -1383,27 +1383,11 @@ class FlexService extends BaseService
                 'shipped' => array(),
                 'nonshipped' => array()
             );
-
         $ria_obj_list = $this->getDao('So')->getRiaOrder($where, $option);
         if ($ria_obj_list) {
             foreach ($ria_obj_list as $ro_obj) {
                 if ($ro_obj->getFriAmount() - $ro_obj->getSoAmount() == 0) {
-                    if ($ro_obj->getSoStatus() == 6) {
-                        $ro_dto = clone $this->riaControlDto;
-                        $ro_dto->setDispatchDate($ro_obj->getDispatchDate());
-                        $ro_dto->setSoNo($ro_obj->getSoNo());
-                        $ro_dto->setGatewayId($ro_obj->getGatewayId());
-                        $ro_dto->setFriTxnId('');
-                        $ro_dto->setCurrencyId($ro_obj->getCurrencyId());
-                        $ro_dto->setFriAmount(-$ro_obj->getSoAmount());
-                        $ro_dto->setFriStatus('Shipped');
-                        $ro_dto->setRiaControl(0);
-                        // $ro_obj->setDispatchDate('');
-                        $ria_order['shipped'][] = $ro_obj;
-                        $ria_order['shipped'][] = $ro_dto;
-                    } else {
-                        $ria_order['nonshipped'][] = $ro_obj;
-                    }
+                    $ria_order['nonshipped'][] = $ro_obj;
                 }
             }
         }
