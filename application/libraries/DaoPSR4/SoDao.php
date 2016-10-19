@@ -3988,10 +3988,9 @@ SQL;
         $this->db->from('flex_ria fri');
         $this->db->join('so', 'so.so_no = fri.so_no', 'LEFT');
         $this->db->join('refund rf', "rf.so_no = so.so_no and rf.status = 'C'", 'LEFT');
-        $this->db->join('selling_platform sp', 'so.platform_id = sp.id', 'LEFT');
         $this->db->where("so.status != 0");
         $this->db->order_by("so.so_no, fri.txn_time");
-        $select_str = 'so.so_no, fri.txn_time as fri_txn_time, so.dispatch_date, fri.gateway_id, fri.txn_id as fri_txn_id, fri.amount as fri_amount, so.amount as so_amount, so.currency_id, so.status as so_status, fri.status as fri_status, fri.amount as ria_control';
+        $select_str = 'so.so_no, fri.txn_time as fri_txn_time, so.dispatch_date, fri.gateway_id, fri.txn_id as fri_txn_id, fri.amount as fri_amount, so.amount as so_amount, so.currency_id, so.status as so_status, fri.status as fri_status, fri.amount as ria_control, so.bill_country_id as country_id';
         return $this->commonGetList($classname, $where, $option, $select_str);
     }
 

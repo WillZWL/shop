@@ -16,6 +16,7 @@ class riaControlDto
     protected $fri_status;
     protected $fre_status;
     protected $ria_control;
+    protected $country_id;
 
     public function getSoNo()
     {
@@ -165,5 +166,15 @@ class riaControlDto
     public function setRiaControl($value)
     {
         $this->ria_control = $value;
+    }
+
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
+
+    public function setCountryId($value)
+    {
+        $this->country_id = $value;
     }
 }
