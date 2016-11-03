@@ -16,6 +16,7 @@ class Login extends PUB_Controller
         $this->load->helper(array('url', 'object', 'lang','notice'));
         $this->load->library('encryption');
         $this->load->library('encrypt');
+/*
         if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") {
             $httpsUrl = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             if ($_SERVER['QUERY_STRING'] != "") {
@@ -25,7 +26,7 @@ class Login extends PUB_Controller
                 redirect($httpsUrl);
             }
         }
-
+*/
         $this->countryService = new CountryService;
     }
 
