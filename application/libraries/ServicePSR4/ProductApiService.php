@@ -214,7 +214,7 @@ class ProductApiService extends BaseService
         }
 
         //Website Status Automation
-        $website_status = $this->autoWebsiteStatus($sourcing_status, $quantity, $origin_website_status);
+        // $website_status = $this->autoWebsiteStatus($sourcing_status, $quantity, $origin_website_status);
         if (!empty($website_status) && ($website_status != $origin_website_status)) {
             $sku = $product_obj->getSku();
             $product_obj->setWebsiteStatus($website_status);

@@ -25,7 +25,7 @@ class ProductApi extends PUB_Controller
         }
         $this->checkInterfaceSkuInfoData($batch_id);
         $this->updateSkuData($batch_id);
-        $this->sendWebStatusChangeEmail($batch_id);
+        // $this->sendWebStatusChangeEmail($batch_id);
     }
 
     public function checkInterfaceSkuInfoData($batch_id)
