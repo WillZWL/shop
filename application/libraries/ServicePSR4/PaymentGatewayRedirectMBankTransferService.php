@@ -59,7 +59,7 @@ class PaymentGatewayRedirectMBankTransferService extends PaymentGatewayRedirectS
 
     public function getTechnicalSupportEmail()
     {
-        return "feeling.liu@eservicesgroup.com";
+        return "it@eservicesgroup.net";
     }
 
     public function processFailureAction()

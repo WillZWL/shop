@@ -16,7 +16,7 @@ class AftershipWebhook extends PUB_Controller
         $encode_text = base64_decode($_GET['encode_text']);
 
         if ($encode_text != $password) {
-            mail("feeling.liu@eservicesgroup.com", "aftership webhook", "password validation fail");
+            mail("it@eservicesgroup.net", "aftership webhook", "password validation fail");
         } else {
             //create log
             $respond_body = file_get_contents('php://input');
@@ -44,7 +44,7 @@ class AftershipWebhook extends PUB_Controller
 
             $ap_status_number = 0;
             if ( ! ($ap_status_number = array_search(strtolower($tag), array_map("strtolower", $aftership_status_mapping)))) {
-                 mail("feeling.liu@eservicesgroup.com", "aftership status not found", "$tag can not be converted into digital");
+                 mail("it@eservicesgroup.net", "aftership status not found", "$tag can not be converted into digital");
                 return false;
             } else {
                 if ($sosh_obj = $this->sc['So']->getShippingInfo(array("sosh.tracking_no" => $tracking_no))) {
@@ -64,10 +64,10 @@ class AftershipWebhook extends PUB_Controller
                             $this->sc['So']->fireAftershipThankYouEmail($so_obj, $sh_no, $ap_status_number);
                         }
                     } else {
-                        mail("feeling.liu@eservicesgroup.com", "aftership - So order not found in so_extend", "Tracking Number:$tracking_no, shippment status:$tag");
+                        mail("it@eservicesgroup.net", "aftership - So order not found in so_extend", "Tracking Number:$tracking_no, shippment status:$tag");
                     }
                 } else {
-                    mail("feeling.liu@eservicesgroup.com", "aftership - Tracking Number doesn't exist - $tracking_no", "Tracking Number:$tracking_no, shippment status:$tag");
+                    mail("it@eservicesgroup.net", "aftership - Tracking Number doesn't exist - $tracking_no", "Tracking Number:$tracking_no, shippment status:$tag");
                 }
             }
         }
@@ -83,7 +83,7 @@ class AftershipWebhook extends PUB_Controller
             file_put_contents($file_path, $respond_body, FILE_APPEND | LOCK_EX);
         } else {
             if ( ! file_put_contents($file_path, $respond_body)) {
-                mail("feeling.liu@eservicesgroup.com", "aftership - cannot create log file", "file path: $file_path");
+                mail("it@eservicesgroup.net", "aftership - cannot create log file", "file path: $file_path");
             }
         }
     }

@@ -4,7 +4,7 @@ class FlexService extends BaseService
 {
     const ROLLING_RESERVE_REPORT_FILE_NAME = "rolling_reserve.csv";
 
-    public $contact_email = 'feeling.liu@eservicesgroup.com';
+    public $contact_email = 'it@eservicesgroup.net';
     public $platform_arr = array('QOO10SG', 'RAKUES', 'FNACES', 'LAMY', 'LAZTH', 'LAZPH', 'NEUS');
     public $order_reason_category = array(
                 '1' => array('6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'),
